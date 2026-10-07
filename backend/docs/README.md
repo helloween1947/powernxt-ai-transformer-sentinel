@@ -8,3 +8,5 @@ This directory contains technical notes, architecture design records, and intern
   - Swagger UI: `http://localhost:8000/docs`
   - ReDoc: `http://localhost:8000/redoc`
   - OpenAPI JSON specification: `http://localhost:8000/openapi.json`
+
+- [Transformer asset registry API, units, migrations, and verification](asset-registry.md)
