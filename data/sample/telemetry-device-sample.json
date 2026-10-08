@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "message_id": "d053f900-0ea1-4a6c-bb4d-7e3cc0dcffec",
+  "asset_id": "XFR-SUB04-TX01",
+  "timestamp": "2026-10-07T10:45:00.000Z",
+  "source": "device",
+  "run_id": null,
+  "measurements": {
+    "voltage_r_v": 11000,
+    "current_r_a": null
+  },
+  "configuration_version": 1,
+  "measurement_quality": {
+    "current_r_a": "missing"
+  }
+}

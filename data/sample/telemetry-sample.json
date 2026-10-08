@@ -15,5 +15,9 @@
     "oil_temperature_c": 58.4,
     "ambient_temperature_c": 28.5,
     "oil_level_pct": 82.5
+  },
+  "configuration_version": 1,
+  "measurement_quality": {
+    "oil_temperature_c": "good"
   }
 }
