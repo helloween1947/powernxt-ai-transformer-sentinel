@@ -1,0 +1,90 @@
+{
+  "id": 123,
+  "asset_id": "XFR-SUB04-TX01",
+  "source": "device",
+  "run_id": null,
+  "message_id": "d053f900-0ea1-4a6c-bb4d-7e3cc0dcffec",
+  "configuration_version": 1,
+  "measurement_time": "2026-10-08T06:30:00Z",
+  "arrival_time": "2026-10-08T06:30:02Z",
+  "original_payload": {
+    "schema_version": "1.0.0",
+    "message_id": "d053f900-0ea1-4a6c-bb4d-7e3cc0dcffec",
+    "asset_id": "XFR-SUB04-TX01",
+    "timestamp": "2026-10-08T12:00:00+05:30",
+    "source": "device",
+    "run_id": null,
+    "measurements": {
+      "voltage_r_v": 11000,
+      "current_r_a": null
+    },
+    "configuration_version": 1,
+    "measurement_quality": {
+      "current_r_a": "missing"
+    }
+  },
+  "normalized_telemetry": {
+    "schema_version": "1.0.0",
+    "message_id": "d053f900-0ea1-4a6c-bb4d-7e3cc0dcffec",
+    "asset_id": "XFR-SUB04-TX01",
+    "timestamp": "2026-10-08T06:30:00Z",
+    "source": "device",
+    "run_id": null,
+    "measurements": {
+      "voltage_r_v": 11000,
+      "voltage_y_v": null,
+      "voltage_b_v": null,
+      "current_r_a": null,
+      "current_y_a": null,
+      "current_b_a": null,
+      "oil_temperature_c": null,
+      "ambient_temperature_c": null,
+      "oil_level_pct": null
+    },
+    "configuration_version": 1,
+    "measurement_quality": {
+      "voltage_r_v": "good",
+      "voltage_y_v": "missing",
+      "voltage_b_v": "missing",
+      "current_r_a": "missing",
+      "current_y_a": "missing",
+      "current_b_a": "missing",
+      "oil_temperature_c": "missing",
+      "ambient_temperature_c": "missing",
+      "oil_level_pct": "missing"
+    }
+  },
+  "quality_flags": {
+    "voltage_y_v": [
+      "missing"
+    ],
+    "voltage_b_v": [
+      "missing"
+    ],
+    "current_r_a": [
+      "missing"
+    ],
+    "current_y_a": [
+      "missing"
+    ],
+    "current_b_a": [
+      "missing"
+    ],
+    "oil_temperature_c": [
+      "missing"
+    ],
+    "ambient_temperature_c": [
+      "missing"
+    ],
+    "oil_level_pct": [
+      "missing"
+    ]
+  },
+  "out_of_order": false,
+  "analytics_status": "pending",
+  "processing_job": {
+    "id": 456,
+    "status": "pending",
+    "state_policy": "forward_only"
+  }
+}
