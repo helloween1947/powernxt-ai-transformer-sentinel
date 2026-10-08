@@ -10,3 +10,5 @@ This directory contains technical notes, architecture design records, and intern
   - OpenAPI JSON specification: `http://localhost:8000/openapi.json`
 
 - [Transformer asset registry API, units, migrations, and verification](asset-registry.md)
+
+- [Telemetry ingestion API, migrations and verification](telemetry-ingestion.md)
