@@ -1,0 +1,78 @@
+{
+  "simulator_version": "normal-operation-1.0.0",
+  "scenario": "synthetic normal-operation envelope",
+  "specification": {
+    "asset_id": "demo-normal-example",
+    "configuration_version": 1,
+    "run_id": "normal-example-v1",
+    "seed": 42,
+    "start": "2026-01-01T00:00:00Z",
+    "duration_seconds": 120,
+    "interval_seconds": 30,
+    "initial_oil_temperature_c": 45.0,
+    "parameters": {
+      "load_mean_pu": 0.6,
+      "load_amplitude_pu": 0.15,
+      "load_period_seconds": 3600.0,
+      "phase_difference_pu": 0.01,
+      "electrical_noise_pu": 0.002,
+      "voltage_variation_pu": 0.01,
+      "ambient_mean_c": 25.0,
+      "ambient_amplitude_c": 2.0,
+      "ambient_period_seconds": 86400.0,
+      "thermal_rise_c": 40.0,
+      "thermal_time_constant_minutes": 60.0,
+      "oil_level_pct": null
+    }
+  },
+  "configuration": {
+    "rated_kva": 1000.0,
+    "rated_voltage_v": 11000.0,
+    "rated_current_a": 52.49,
+    "voltage_convention": "line_to_line",
+    "measurement_side": "primary",
+    "cooling_type": "ONAN",
+    "operational_limits": {
+      "max_load_pct": 120.0,
+      "min_voltage_pu": 0.9,
+      "max_voltage_pu": 1.1,
+      "max_top_oil_temp_c": 105.0,
+      "max_hot_spot_temp_c": 120.0
+    },
+    "thermal_parameters": {
+      "rated_top_oil_rise_c": null,
+      "rated_hot_spot_rise_c": null,
+      "oil_time_constant_min": null,
+      "winding_time_constant_min": null,
+      "loss_ratio": null,
+      "oil_exponent": null,
+      "winding_exponent": null
+    },
+    "parameter_provenance": {
+      "rated_kva": "assumed",
+      "rated_voltage_v": "assumed",
+      "rated_current_a": "assumed",
+      "voltage_convention": "assumed",
+      "measurement_side": "assumed",
+      "cooling_type": "assumed",
+      "operational_limits.max_load_pct": "assumed",
+      "operational_limits.min_voltage_pu": "assumed",
+      "operational_limits.max_voltage_pu": "assumed",
+      "operational_limits.max_top_oil_temp_c": "assumed",
+      "operational_limits.max_hot_spot_temp_c": "assumed"
+    },
+    "asset_id": "demo-normal-example",
+    "version": 1,
+    "created_at": "2026-01-01T00:00:00Z"
+  },
+  "sample_count": 4,
+  "sampling_policy": "start + i*interval_seconds < start + duration_seconds; no partial final step",
+  "equations": "K=mean+amplitude*sin(2*pi*t/period); target=ambient+rise*K^2; oil_next=target_prev+(oil_prev-target_prev)*exp(-dt/(60*tau_minutes))",
+  "assumptions": [
+    "RMS magnitudes on the configured measurement side and voltage convention",
+    "constant configured ratings; assumed smooth load and bounded synthetic noise",
+    "not IEEE C57.91, validated physics, predictive analytics, or evidence of detector accuracy",
+    "producer good flags mean present synthetic values; absent oil level remains null"
+  ],
+  "csv_null_policy": "empty field represents null; zeros are numeric zero"
+}
