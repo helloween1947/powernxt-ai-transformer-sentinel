@@ -1,0 +1,1068 @@
+{
+  "type": "object",
+  "required": [
+    "electrical_metrics",
+    "thermal_assessment",
+    "condition_contributors",
+    "data_confidence",
+    "anomaly_observations",
+    "updated_state",
+    "metadata",
+    "execution_status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "electrical_metrics": {
+      "type": "object",
+      "required": [
+        "phase_loading_pct",
+        "max_phase_loading_pct",
+        "thermal_load_pu",
+        "current_magnitude_imbalance_pct",
+        "voltage_magnitude_imbalance_pct",
+        "apparent_power_kva",
+        "capacity_loading_pct",
+        "apparent_power_method",
+        "voltage_convention",
+        "measurement_side",
+        "active_power_kw",
+        "reactive_power_kvar",
+        "power_factor",
+        "symmetrical_components"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "phase_loading_pct": {
+          "type": "array",
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "max_phase_loading_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "thermal_load_pu": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "current_magnitude_imbalance_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "voltage_magnitude_imbalance_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "apparent_power_kva": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "capacity_loading_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "apparent_power_method": {
+          "type": "string"
+        },
+        "voltage_convention": {
+          "type": "string"
+        },
+        "measurement_side": {
+          "type": "string"
+        },
+        "active_power_kw": {
+          "type": "null"
+        },
+        "reactive_power_kvar": {
+          "type": "null"
+        },
+        "power_factor": {
+          "type": "null"
+        },
+        "symmetrical_components": {
+          "type": "null"
+        }
+      }
+    },
+    "thermal_assessment": {
+      "type": "object",
+      "required": [
+        "predicted_top_oil_temperature_c",
+        "measured_top_oil_temperature_c",
+        "thermal_residual_c",
+        "initial_condition",
+        "elapsed_s",
+        "prediction_source",
+        "interval_convention",
+        "winding_hot_spot_temperature_c",
+        "reasons"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "predicted_top_oil_temperature_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "measured_top_oil_temperature_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "thermal_residual_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "initial_condition": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "value",
+            "unit",
+            "source",
+            "measurement_time"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "measurement_time": {
+              "type": "string"
+            }
+          }
+        },
+        "elapsed_s": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prediction_source": {
+          "type": "string"
+        },
+        "interval_convention": {
+          "type": "string"
+        },
+        "winding_hot_spot_temperature_c": {
+          "type": "null"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "condition_contributors": {
+      "type": "object",
+      "required": [
+        "health_index",
+        "status",
+        "reason",
+        "thermal_aging_acceleration_factor",
+        "loss_of_life_rate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "health_index": {
+          "type": "null"
+        },
+        "status": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "thermal_aging_acceleration_factor": {
+          "type": "null"
+        },
+        "loss_of_life_rate": {
+          "type": "null"
+        }
+      }
+    },
+    "data_confidence": {
+      "type": "object",
+      "required": [
+        "score",
+        "status",
+        "reason",
+        "usable_required_channel_count",
+        "required_channel_count",
+        "channels"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "null"
+        },
+        "status": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "usable_required_channel_count": {
+          "type": "number"
+        },
+        "required_channel_count": {
+          "type": "number"
+        },
+        "channels": {
+          "type": "object",
+          "required": [
+            "voltage_r_v",
+            "voltage_y_v",
+            "voltage_b_v",
+            "current_r_a",
+            "current_y_a",
+            "current_b_a",
+            "oil_temperature_c",
+            "ambient_temperature_c",
+            "oil_level_pct"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "voltage_r_v": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "voltage_y_v": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "voltage_b_v": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "current_r_a": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "current_y_a": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "current_b_a": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "oil_temperature_c": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "ambient_temperature_c": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "oil_level_pct": {
+              "type": "object",
+              "required": [
+                "usable",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "usable": {
+                  "type": "boolean"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "anomaly_observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "quantity",
+          "value",
+          "threshold",
+          "unit",
+          "relation",
+          "breached",
+          "status",
+          "reasons",
+          "interpretation"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "threshold": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "unit": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          },
+          "breached": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "interpretation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "updated_state": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "schema_version",
+        "binding",
+        "last_measurement_time",
+        "last_reading_identity",
+        "thermal",
+        "held_inputs"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "stored-reading-state-1.0.0"
+        },
+        "binding": {
+          "type": "object",
+          "required": [
+            "stream",
+            "configuration_version",
+            "model_version",
+            "parameter_version"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "stream": {
+              "type": "object",
+              "required": [
+                "asset_id",
+                "source",
+                "run_id"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "asset_id": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "run_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "configuration_version": {
+              "type": "number"
+            },
+            "model_version": {
+              "const": "stored-reading-top-oil-1.0.0"
+            },
+            "parameter_version": {
+              "type": "string"
+            }
+          }
+        },
+        "last_measurement_time": {
+          "type": "string"
+        },
+        "last_reading_identity": {
+          "type": "object",
+          "required": [
+            "reading_id",
+            "message_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "reading_id": {
+              "type": "number"
+            },
+            "message_id": {
+              "type": "string"
+            }
+          }
+        },
+        "thermal": {
+          "type": "object",
+          "required": [
+            "initialized",
+            "valid",
+            "oil_temp_c",
+            "reason"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "initialized": {
+              "type": "boolean"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "oil_temp_c": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "held_inputs": {
+          "type": "object",
+          "required": [
+            "thermal_load_pu",
+            "ambient_temp_c"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "thermal_load_pu": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "ambient_temp_c": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "result_schema_version",
+        "model_version",
+        "parameter_version",
+        "reading_identity",
+        "stream",
+        "measurement_time",
+        "configuration_version",
+        "measurement_source",
+        "parameter_provenance",
+        "units"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "result_schema_version": {
+          "const": "stored-reading-result-1.0.0"
+        },
+        "model_version": {
+          "const": "stored-reading-top-oil-1.0.0"
+        },
+        "parameter_version": {
+          "type": "string"
+        },
+        "reading_identity": {
+          "type": "object",
+          "required": [
+            "reading_id",
+            "message_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "reading_id": {
+              "type": "number"
+            },
+            "message_id": {
+              "type": "string"
+            }
+          }
+        },
+        "stream": {
+          "type": "object",
+          "required": [
+            "asset_id",
+            "source",
+            "run_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "asset_id": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "run_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "measurement_time": {
+          "type": "string"
+        },
+        "configuration_version": {
+          "type": "number"
+        },
+        "measurement_source": {
+          "type": "string"
+        },
+        "parameter_provenance": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "assumed",
+              "simulated",
+              "nameplate",
+              "measured"
+            ]
+          }
+        },
+        "units": {
+          "type": "object",
+          "required": [
+            "phase_loading_pct",
+            "capacity_loading_pct",
+            "apparent_power_kva",
+            "thermal_load_pu",
+            "magnitude_imbalance",
+            "oil_temperature",
+            "thermal_residual",
+            "elapsed_s"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "phase_loading_pct": {
+              "type": "string"
+            },
+            "capacity_loading_pct": {
+              "type": "string"
+            },
+            "apparent_power_kva": {
+              "type": "string"
+            },
+            "thermal_load_pu": {
+              "type": "string"
+            },
+            "magnitude_imbalance": {
+              "type": "string"
+            },
+            "oil_temperature": {
+              "type": "string"
+            },
+            "thermal_residual": {
+              "type": "string"
+            },
+            "elapsed_s": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "execution_status": {
+      "type": "object",
+      "required": [
+        "status",
+        "state_advanced",
+        "state_policy",
+        "ordering_reasons",
+        "availability",
+        "unavailable_measurements",
+        "unsupported_outputs"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "state_advanced": {
+          "type": "boolean"
+        },
+        "state_policy": {
+          "type": "string"
+        },
+        "ordering_reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "availability": {
+          "type": "object",
+          "required": [
+            "electrical_metrics.phase_loading_pct",
+            "electrical_metrics.max_phase_loading_pct",
+            "electrical_metrics.thermal_load_pu",
+            "electrical_metrics.current_magnitude_imbalance_pct",
+            "electrical_metrics.voltage_magnitude_imbalance_pct",
+            "electrical_metrics.apparent_power_kva",
+            "electrical_metrics.capacity_loading_pct",
+            "electrical_metrics.active_power_kw",
+            "electrical_metrics.reactive_power_kvar",
+            "electrical_metrics.power_factor",
+            "electrical_metrics.symmetrical_components",
+            "thermal_assessment.predicted_top_oil_temperature_c",
+            "thermal_assessment.thermal_residual_c"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "electrical_metrics.phase_loading_pct": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.active_power_kw": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.power_factor": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "electrical_metrics.symmetrical_components": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "type": "object",
+              "required": [
+                "status",
+                "reasons"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "unavailable_measurements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unsupported_outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Person B stored-reading result 1.0.0"
+}

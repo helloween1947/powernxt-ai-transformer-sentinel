@@ -1,8 +1,18 @@
 # Person B: Digital Twin and analytics
 
+**Recommended worker handoff:** `from analytics import process_stored_reading`.
+See [Person A's tested integration contract](../docs/person-b-analytics-handoff.md),
+[simulator review](../docs/person-b-simulator-review.md), the schemas in `analytics/schemas/`,
+and `analytics/examples/worker-test-examples.json` for Person C. This conservative entrypoint
+returns explicit availability and null unsupported health/confidence outputs. It uses its own
+version-bound state; the earlier demonstration APIs below are preserved, not silently migrated.
+
+For all tests, install `analytics/requirements-test.txt` (includes backend dev dependencies and
+the test-only JSON Schema validator). Runtime remains standard-library-only.
+
 Implemented against the backend at commit `26efab6` (transactional telemetry ingestion and asset registry). Runtime needs Python 3.11+ and the standard library only. No database, backend dependency or scientific library is imported by the analytics package.
 
-## Team entrypoints
+## Preserved demonstration entrypoints
 
 ```python
 from analytics import process_reading, process_telemetry_response, compare_what_if
@@ -15,7 +25,7 @@ result = process_reading(
     previous_state=saved_state,
 )
 
-# Preferred queued-job adapter: also honors state_policy and live arrival freshness.
+# Earlier demonstration adapter: honors state_policy and live arrival freshness.
 result = process_telemetry_response(ingestion_result, bound_configuration_response, saved_state)
 # A persists result + result["updated_state"] atomically under a per-stream lock.
 
@@ -61,4 +71,4 @@ Database tests reuse A's isolated-schema fixture and migrations. [Local verifica
 
 Reusable model functions are exported from `analytics` and implemented in `analytics/transformer_twin/`. A owns worker scheduling, locking, state/results storage, job completion and transport; C renders output and scenario controls; D owns domain-event publication, acknowledgements and maintenance tasks. This component does not change A's pending-job schema or fabricate completed jobs.
 
-The existing Dockerfile copies only `backend/`, so A/D must include `analytics/` when wiring their worker into the container. No shared contract, backend, deployment or frontend file was changed by this contribution; all repository changes are local within Person B's `analytics/` directory.
+The existing Dockerfile copies only `backend/`, so A/D must include `analytics/` when wiring their worker into the container. This contribution changes only Person B's `analytics/` files and the two `docs/person-b-*` handoff documents; shared contracts, backend, deployment and frontend files are unchanged.

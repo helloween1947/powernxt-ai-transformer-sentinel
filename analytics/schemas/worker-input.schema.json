@@ -1,0 +1,722 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Person B stored-reading request 1.0.0",
+  "$defs": {
+    "Measurements": {
+      "additionalProperties": false,
+      "properties": {
+        "voltage_r_v": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voltage R V"
+        },
+        "voltage_y_v": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voltage Y V"
+        },
+        "voltage_b_v": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voltage B V"
+        },
+        "current_r_a": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current R A"
+        },
+        "current_y_a": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current Y A"
+        },
+        "current_b_a": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current B A"
+        },
+        "oil_temperature_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oil Temperature C"
+        },
+        "ambient_temperature_c": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ambient Temperature C"
+        },
+        "oil_level_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oil Level Pct"
+        }
+      },
+      "title": "Measurements",
+      "type": "object"
+    },
+    "OperationalLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_load_pct": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Load Pct"
+        },
+        "min_voltage_pu": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Voltage Pu"
+        },
+        "max_voltage_pu": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Voltage Pu"
+        },
+        "max_top_oil_temp_c": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": -273.15,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Top Oil Temp C"
+        },
+        "max_hot_spot_temp_c": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": -273.15,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Hot Spot Temp C"
+        }
+      },
+      "title": "OperationalLimits",
+      "type": "object"
+    },
+    "ThermalParameters": {
+      "additionalProperties": false,
+      "properties": {
+        "rated_top_oil_rise_c": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rated Top Oil Rise C"
+        },
+        "rated_hot_spot_rise_c": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rated Hot Spot Rise C"
+        },
+        "oil_time_constant_min": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oil Time Constant Min"
+        },
+        "winding_time_constant_min": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Winding Time Constant Min"
+        },
+        "loss_ratio": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loss Ratio"
+        },
+        "oil_exponent": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oil Exponent"
+        },
+        "winding_exponent": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Winding Exponent"
+        }
+      },
+      "title": "ThermalParameters",
+      "type": "object"
+    },
+    "State": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "schema_version",
+        "binding",
+        "last_measurement_time",
+        "last_reading_identity",
+        "thermal",
+        "held_inputs"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "stored-reading-state-1.0.0"
+        },
+        "binding": {
+          "type": "object",
+          "required": [
+            "stream",
+            "configuration_version",
+            "model_version",
+            "parameter_version"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "stream": {
+              "type": "object",
+              "required": [
+                "asset_id",
+                "source",
+                "run_id"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "asset_id": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "run_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "configuration_version": {
+              "type": "number"
+            },
+            "model_version": {
+              "const": "stored-reading-top-oil-1.0.0"
+            },
+            "parameter_version": {
+              "type": "string"
+            }
+          }
+        },
+        "last_measurement_time": {
+          "type": "string"
+        },
+        "last_reading_identity": {
+          "type": "object",
+          "required": [
+            "reading_id",
+            "message_id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "reading_id": {
+              "type": "number"
+            },
+            "message_id": {
+              "type": "string"
+            }
+          }
+        },
+        "thermal": {
+          "type": "object",
+          "required": [
+            "initialized",
+            "valid",
+            "oil_temp_c",
+            "reason"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "initialized": {
+              "type": "boolean"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "oil_temp_c": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "held_inputs": {
+          "type": "object",
+          "required": [
+            "thermal_load_pu",
+            "ambient_temp_c"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "thermal_load_pu": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "ambient_temp_c": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "stored_reading",
+    "asset_config"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "stored_reading": {
+      "type": "object",
+      "required": [
+        "id",
+        "asset_id",
+        "source",
+        "run_id",
+        "message_id",
+        "configuration_version",
+        "measurement_time",
+        "normalized_telemetry",
+        "quality_flags",
+        "processing_job"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "asset_id": {
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "device",
+            "simulator",
+            "file_replay"
+          ]
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "message_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "configuration_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "measurement_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "normalized_telemetry": {
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0",
+              "title": "Schema Version",
+              "type": "string"
+            },
+            "message_id": {
+              "format": "uuid4",
+              "title": "Message Id",
+              "type": "string"
+            },
+            "asset_id": {
+              "maxLength": 100,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "title": "Asset Id",
+              "type": "string"
+            },
+            "timestamp": {
+              "format": "date-time",
+              "title": "Timestamp",
+              "type": "string"
+            },
+            "source": {
+              "enum": [
+                "device",
+                "simulator",
+                "file_replay"
+              ],
+              "title": "Source",
+              "type": "string"
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null,
+              "title": "Run Id"
+            },
+            "configuration_version": {
+              "exclusiveMinimum": 0,
+              "title": "Configuration Version",
+              "type": "integer"
+            },
+            "measurements": {
+              "$ref": "#/$defs/Measurements"
+            },
+            "measurement_quality": {
+              "additionalProperties": {
+                "enum": [
+                  "good",
+                  "suspect",
+                  "bad",
+                  "missing"
+                ],
+                "type": "string"
+              },
+              "propertyNames": {
+                "enum": [
+                  "voltage_r_v",
+                  "voltage_y_v",
+                  "voltage_b_v",
+                  "current_r_a",
+                  "current_y_a",
+                  "current_b_a",
+                  "oil_temperature_c",
+                  "ambient_temperature_c",
+                  "oil_level_pct"
+                ]
+              },
+              "title": "Measurement Quality",
+              "type": "object"
+            }
+          },
+          "required": [
+            "schema_version",
+            "message_id",
+            "asset_id",
+            "timestamp",
+            "source",
+            "configuration_version",
+            "measurements"
+          ],
+          "title": "TelemetryCreate",
+          "type": "object"
+        },
+        "quality_flags": {
+          "type": "object",
+          "properties": {
+            "stale": {
+              "type": "boolean"
+            },
+            "clamped": {
+              "type": "boolean"
+            }
+          },
+          "propertyNames": {
+            "enum": [
+              "voltage_r_v",
+              "voltage_y_v",
+              "voltage_b_v",
+              "current_r_a",
+              "current_y_a",
+              "current_b_a",
+              "oil_temperature_c",
+              "ambient_temperature_c",
+              "oil_level_pct",
+              "stale",
+              "clamped"
+            ]
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "processing_job": {
+          "type": "object",
+          "required": [
+            "state_policy"
+          ],
+          "properties": {
+            "state_policy": {
+              "enum": [
+                "forward_only",
+                "historical_only"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "asset_config": {
+      "additionalProperties": false,
+      "properties": {
+        "rated_kva": {
+          "description": "Total three-phase apparent-power rating in kVA",
+          "exclusiveMinimum": 0,
+          "title": "Rated Kva",
+          "type": "number"
+        },
+        "rated_voltage_v": {
+          "description": "RMS volts on measurement_side, using voltage_convention",
+          "exclusiveMinimum": 0,
+          "title": "Rated Voltage V",
+          "type": "number"
+        },
+        "rated_current_a": {
+          "description": "RMS line current in amperes on measurement_side",
+          "exclusiveMinimum": 0,
+          "title": "Rated Current A",
+          "type": "number"
+        },
+        "voltage_convention": {
+          "enum": [
+            "phase_to_neutral",
+            "line_to_line"
+          ],
+          "title": "Voltage Convention",
+          "type": "string"
+        },
+        "measurement_side": {
+          "enum": [
+            "primary",
+            "secondary"
+          ],
+          "title": "Measurement Side",
+          "type": "string"
+        },
+        "cooling_type": {
+          "description": "Nameplate cooling class, e.g. ONAN",
+          "maxLength": 50,
+          "minLength": 1,
+          "title": "Cooling Type",
+          "type": "string"
+        },
+        "operational_limits": {
+          "$ref": "#/$defs/OperationalLimits"
+        },
+        "thermal_parameters": {
+          "$ref": "#/$defs/ThermalParameters"
+        },
+        "parameter_provenance": {
+          "additionalProperties": {
+            "enum": [
+              "assumed",
+              "simulated",
+              "nameplate",
+              "measured"
+            ],
+            "type": "string"
+          },
+          "description": "Source for every supplied parameter; nested keys use dotted paths",
+          "title": "Parameter Provenance",
+          "type": "object"
+        },
+        "asset_id": {
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "version": {
+          "exclusiveMinimum": 0,
+          "title": "Version",
+          "type": "integer"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rated_kva",
+        "rated_voltage_v",
+        "rated_current_a",
+        "voltage_convention",
+        "measurement_side",
+        "cooling_type",
+        "parameter_provenance",
+        "asset_id",
+        "version",
+        "created_at"
+      ],
+      "title": "ConfigurationResponse",
+      "type": "object"
+    },
+    "previous_state": {
+      "$ref": "#/$defs/State"
+    }
+  }
+}
