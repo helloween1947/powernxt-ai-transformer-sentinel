@@ -15,3 +15,11 @@ and explicit existing configuration version before submission.
 `telemetry-response-sample.json` illustrates the API response; its IDs/times are invented
 examples, not executed verification results. Missing measurements remain null. No sample
 contains fault ground truth. See `docs/contracts/telemetry-contract.md`.
+
+## Synthetic normal-operation sequence
+
+`normal-operation/` contains a curated four-packet reproducible example, corresponding CSV
+and run metadata with its explicit assumed configuration snapshot. `demo-normal-example`
+is an illustrative offline ID; register/configure an asset before submission. See
+[simulator usage](../../docs/normal-operation-simulator.md). Large outputs belong under
+ignored `data/generated/`. Metadata stays outside telemetry and detector inputs.

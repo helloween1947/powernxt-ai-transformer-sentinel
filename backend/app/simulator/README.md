@@ -1,8 +1,9 @@
-# Telemetry Simulator
+# Synthetic normal-operation simulator
 
-This directory contains the synthetic telemetry generator and playback engine managed by **Person A (Backend Engineer)**.
+Run from the repository root with Python 3.12 and installed backend dependencies:
 
-## Purpose & Scope
-- Emulate 3-phase electrical readings (voltage, current) and physical sensor signals (temperatures, oil levels) conforming strictly to `docs/contracts/telemetry-contract.md`.
-- Support configurable replay scenarios: normal load cycles, harmonic distortions, thermal overloads, and cooling anomalies.
-- **Architectural Boundary**: Simulation ground-truth fault labels (e.g., synthetic fault injection parameters) are logged separately for benchmark evaluation and are never injected into raw telemetry payloads delivered to Person B's detector models.
+```powershell
+python -m backend.app.simulator --help
+```
+
+This implementation generates a declared **synthetic normal operating envelope**, writes artifacts, and sends existing JSONL to the real ingestion API. It provides no fault scenarios, replay controls, analytics, or WebSocket delivery. Producer quality `good` means a present synthetic value, not verified physical truth. See [complete usage and assumptions](../../../docs/normal-operation-simulator.md) and [execution evidence](../../../docs/normal-operation-simulator-verification.md).
