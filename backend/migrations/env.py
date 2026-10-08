@@ -14,6 +14,7 @@ for p in [str(repo_root), str(backend_dir)]:
 
 from backend.app.config import settings
 from backend.app.db.base import Base
+from backend.app import models  # noqa: F401 — register model metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -58,24 +59,23 @@ def run_migrations_online() -> None:
     In this scenario we need to create an Engine and associate a connection with
     the context.
     """
-    configuration = config.get_section(config.config_ini_section, {})
-    configuration["sqlalchemy.url"] = settings.DATABASE_URL
-
-    connectable = engine_from_config(
-        configuration,
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-
-    with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata,
-            compare_type=True,
-        )
-
+    def migrate(connection):
+        context.configure(connection=connection, target_metadata=target_metadata, compare_type=True)
         with context.begin_transaction():
             context.run_migrations()
+
+    # Tests supply a connection scoped to their own isolated PostgreSQL schema.
+    supplied_connection = config.attributes.get("connection")
+    if supplied_connection is not None:
+        migrate(supplied_connection)
+        return
+
+    configuration = config.get_section(config.config_ini_section, {})
+    configuration["sqlalchemy.url"] = settings.DATABASE_URL
+    connectable = engine_from_config(configuration, prefix="sqlalchemy.", poolclass=pool.NullPool)
+    with connectable.connect() as connection:
+        migrate(connection)
+    connectable.dispose()
 
 
 if context.is_offline_mode():

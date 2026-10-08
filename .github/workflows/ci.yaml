@@ -2,9 +2,9 @@ name: Backend CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, chore/team-repository-setup ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, chore/team-repository-setup ]
 
 jobs:
   test:
@@ -13,6 +13,23 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.12"]
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: sentinel
+          POSTGRES_PASSWORD: ci_test_only
+          POSTGRES_DB: sentinel_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U sentinel -d sentinel_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://sentinel:ci_test_only@localhost:5432/sentinel_test
 
     steps:
       - name: Check out repository

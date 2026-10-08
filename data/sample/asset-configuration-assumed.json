@@ -1,0 +1,29 @@
+{
+  "rated_kva": 1000,
+  "rated_voltage_v": 11000,
+  "rated_current_a": 52.49,
+  "voltage_convention": "line_to_line",
+  "measurement_side": "primary",
+  "cooling_type": "ONAN",
+  "operational_limits": {
+    "max_load_pct": 120,
+    "min_voltage_pu": 0.9,
+    "max_voltage_pu": 1.1,
+    "max_top_oil_temp_c": 105,
+    "max_hot_spot_temp_c": 120
+  },
+  "thermal_parameters": {},
+  "parameter_provenance": {
+    "rated_kva": "assumed",
+    "rated_voltage_v": "assumed",
+    "rated_current_a": "assumed",
+    "voltage_convention": "assumed",
+    "measurement_side": "assumed",
+    "cooling_type": "assumed",
+    "operational_limits.max_load_pct": "assumed",
+    "operational_limits.min_voltage_pu": "assumed",
+    "operational_limits.max_voltage_pu": "assumed",
+    "operational_limits.max_top_oil_temp_c": "assumed",
+    "operational_limits.max_hot_spot_temp_c": "assumed"
+  }
+}
