@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import ReadingCard from './components/ReadingCard';
 import TrendChart from './components/TrendChart';
+import BackendReadings from './components/BackendReadings.jsx';
 import { DEMO_MODE, getAssets, getDashboard, compareScenarios, acknowledgeAlert, getTasks, createTask, updateTask } from './services/api';
 
-const screens = ['Fleet', 'Transformer', 'Alerts', 'What-if', 'Maintenance'];
+const screens = [
+  'Fleet',
+  'Transformer',
+  'Alerts',
+  'What-if',
+  'Maintenance',
+  'Backend readings',
+];
 const temperatureSeries = [
   { key: 'measuredOil', label: 'Observed oil temperature', color: '#0e7490' },
   { key: 'predictedOil', label: 'Twin prediction', color: '#a16207', dashed: true },
@@ -126,7 +134,8 @@ async function run(action) {
       {notice && <div role="status" className="success">{notice}</div>}
       {loading && <p role="status">Loading transformer data...</p>}
       {!loading && !assets.length && !error && <p>No transformers registered.</p>}
-      {dashboard && <>
+      {screen === 'Backend readings' && <BackendReadings />}
+{dashboard && <>
         <div className="status-line"><span>{dashboard.asset.name} · {dashboard.asset.rating}</span><span>{DEMO_MODE ? 'Sample timestamp' : 'Last sensor timestamp'}: {new Date(dashboard.timestamp).toLocaleString()} {stale && <strong className="warning"> STALE DATA</strong>}</span></div>
         {screen === 'Fleet' && <section className="panel"><h2>Registered transformers</h2><p>Select an asset to inspect its latest readings. This starter loads condition details for the selected asset.</p><div className="asset-grid">{assets.map(asset => <button className="asset" key={asset.id} onClick={() => { changeAsset(asset.id); setScreen('Transformer'); }}><strong>{asset.id}</strong><span>{asset.name}</span><small>{asset.rating}</small>{asset.id === assetId && <small>{dashboard.analytics.condition} · {alerts.length} alert(s)</small>}</button>)}</div></section>}
         {(screen === 'Fleet' || screen === 'Transformer') && <>
