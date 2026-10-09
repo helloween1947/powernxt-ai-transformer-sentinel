@@ -1,5 +1,10 @@
 # Person D integration readiness — 9 October 2026
 
+**Current status:** [Incorporated backend and CI handover](persond-13-incorporation.md).
+PR13 has now been human-merged into persond; the approval-blocked statements
+below are historical snapshots, not the current integration status.
+
+
 **Latest result:** [Independent PR13 verification](persond-13-independent-verification.md):
 222 backend tests independently passed; teammate approval still blocks
 incorporation into persond. D frontend PR10 is superseded by C maintenance PR12.

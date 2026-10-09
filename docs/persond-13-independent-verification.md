@@ -1,5 +1,10 @@
 # Independent verification of PR13 — 9 October 2026
 
+**Current status:** [Incorporated backend and CI handover](persond-13-incorporation.md).
+PR13 has now been human-merged into persond; the approval-blocked statements
+below are historical snapshots, not the current integration status.
+
+
 Repository is the existing Windows checkout. Initial persond working tree was
 clean. No teammate branch, main, application database or volume was changed.
 
