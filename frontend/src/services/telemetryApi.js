@@ -1,3 +1,4 @@
+import { adaptReadingAnalytics } from './analyticsAdapter.js';
 import { adaptTelemetryReading } from './telemetryAdapter.js';
 
 async function request(path, parameters = {}) {
@@ -97,4 +98,7 @@ export async function getTelemetryHistory(
     limit: page.limit,
     offset: page.offset,
   };
+}
+export async function getReadingAnalytics(readingId) {
+  return adaptReadingAnalytics(await request(`/api/v1/telemetry/${encodeURIComponent(readingId)}/analytics`));
 }

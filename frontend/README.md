@@ -224,8 +224,9 @@ Physical-phone backend access and final shared deployment remain unverified.
 - Verify the complete system and rehearse the final demonstration.
 
 Local browser telemetry and sample backend maintenance persistence are verified.
-Genuine model outputs, physical-phone backend access, production identity and
-final shared deployment remain unverified. See MAINTENANCE-INTEGRATION.md.
+Stored electrical/top-oil results from the isolated synthetic thermal run are
+verified in Backend readings. Physical-phone backend access, production identity,
+independent model calibration and final shared deployment remain unverified. See MAINTENANCE-INTEGRATION.md.
 
 ---
 
@@ -252,3 +253,5 @@ final shared deployment remain unverified. See MAINTENANCE-INTEGRATION.md.
 The scope list describes intended team responsibilities, not a claim that the
 starter implements real analytics or backend maintenance. Confirm the actual
 frontend origin and backend contract before enabling live routes.
+
+Current local analytics scope, manual evidence and deferred work: [COVERAGE.md](COVERAGE.md).

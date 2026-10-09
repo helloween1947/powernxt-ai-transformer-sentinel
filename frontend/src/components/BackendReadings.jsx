@@ -1,5 +1,7 @@
+import StoredAnalytics from './StoredAnalytics.jsx';
 import { useRef, useState } from 'react';
 import {
+  getReadingAnalytics,
   getAssetPage,
   getAssetDetails,
   getLatestTelemetry,
@@ -25,6 +27,7 @@ export default function BackendReadings() {
   const [runId, setRunId] = useState('');
   const [details, setDetails] = useState(null);
   const [latest, setLatest] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [history, setHistory] = useState([]);
   const [assetOffset, setAssetOffset] = useState(0);
   const [historyOffset, setHistoryOffset] = useState(0);
@@ -37,6 +40,7 @@ export default function BackendReadings() {
   function clearReadings() {
     setDetails(null);
     setLatest(null);
+    setAnalytics(null);
     setHistory([]);
     setHistoryOffset(0);
     setReadingsLoaded(false);
@@ -81,6 +85,7 @@ export default function BackendReadings() {
       }
 
       setLatest(null);
+      setAnalytics(null);
       setHistory([]);
       setDetails(null);
       setReadingsLoaded(false);
@@ -107,6 +112,11 @@ export default function BackendReadings() {
 
       if (latestResult.status === 'fulfilled') {
         setLatest(latestResult.value);
+        try {
+          setAnalytics(await getReadingAnalytics(latestResult.value.readingId));
+        } catch (error) {
+          notes.push(`Analytics: ${error.message}`);
+        }
       } else {
         notes.push(
           latestResult.reason.status === 404
@@ -314,10 +324,7 @@ export default function BackendReadings() {
             </table>
           </div>
 
-          <p>
-            Analytical outputs are not displayed here because no verified
-            result-retrieval contract has been connected.
-          </p>
+          {analytics && <StoredAnalytics analytics={analytics} />}
         </>
       )}
 
