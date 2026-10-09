@@ -14,11 +14,17 @@ from pydantic import (
     model_validator,
 )
 
-UTCDateTime = Annotated[
-    AwareDatetime, AfterValidator(lambda value: value.astimezone(timezone.utc))
-]
-PositiveFinite = Annotated[float, Field(gt=0, allow_inf_nan=False)]
-Finite = Annotated[float, Field(allow_inf_nan=False)]
+
+def normalize_utc(value):
+    try:
+        return value.astimezone(timezone.utc)
+    except (OverflowError, ValueError):
+        raise ValueError("timestamp cannot be represented in UTC") from None
+
+
+UTCDateTime = Annotated[AwareDatetime, AfterValidator(normalize_utc)]
+PositiveFinite = Annotated[float, Field(gt=0, allow_inf_nan=False, strict=True)]
+Finite = Annotated[float, Field(allow_inf_nan=False, strict=True)]
 Source = Literal["assumed", "simulated", "nameplate", "measured"]
 
 

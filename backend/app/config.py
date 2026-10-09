@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     # PostgreSQL Database URL
     # Format: postgresql+psycopg://<user>:<password>@<host>:<port>/<dbname>
     # Note: On local Windows without Docker use localhost; inside Docker Compose use hostname 'db'
-    DATABASE_URL: str = "postgresql+psycopg://sentinel:sentinel_dev_pw@localhost:5432/sentinel_db"
+    DATABASE_URL: str = "postgresql+psycopg://sentinel:sentinel_dev_pw@localhost:5433/sentinel_db"
 
     # CORS Origins allowed to access API
     CORS_ORIGINS: List[str] = [
