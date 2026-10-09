@@ -63,9 +63,12 @@ State schema sustained-threshold-state-1.0.0 binds stream/configuration/model/pa
 
 These are **candidate domain observations**, not the UUID/publication_time transport envelope in the shared event contract. A/D must agree publication schemas, event types and lifecycle ownership before wiring them in. Severity comes only from the explicit policy. Positive residual evidence can indicate mismatch or poor initialization/calibration; it is not automatically a cooling-fault diagnosis.
 
-Resetting to null with the exact same binding restarts incident sequences and can reuse IDs.
-For a fresh operational detector epoch, A/D must supply a new policy version or run namespace;
-for an intentional same-binding replay, deduplicate candidate IDs against retained history.
+Resetting to null with the exact same binding restarts candidate episode sequences.
+For an operational reset, A must record a new durable detector_epoch and use the
+canonical asset/epoch/episode mapping in the merged incident design. Do not change
+policy or run identity merely to manufacture a new ID. Same-epoch replay reuses
+the retained canonical mappings. See [orchestration and handover](person-b-detector-orchestration-handoff.md)
+and the pure evaluate_incident_candidates adapter for the current storage boundary.
 
 ## Forecast and what-if interfaces
 
