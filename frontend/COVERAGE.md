@@ -1,5 +1,13 @@
 # Current PR16 validation
 
+**Merged-state update:** PR16 is merged and current fetched main f288790
+contains d2d1feb. The merged dashboard passed 34 tests, lint/build and actual
+Chrome/API checks; saved maintenance records/history were checked read-only.
+PR15/PR21 subsequently added incident proposal/planning material without
+changing dashboard/backend runtime code. See [handover checklist](ROLLUP-REVIEW.md)
+for completed merges, evidence scope and remaining dependencies. What-if stays
+illustrative; phone work remains deferred. The text below is historical.
+
 PR18 is merged and PR16 now targets main. Current main `7b19626` was integrated
 without conflicts at `de5fed97`; the net diff contains only analytics frontend,
 client, tests and supporting documentation. Backend/model/integration/CI code
