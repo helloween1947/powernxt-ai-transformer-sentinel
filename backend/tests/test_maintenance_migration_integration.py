@@ -12,15 +12,16 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 
-HEAD = "d003_audit_maintenance"
+HEAD = "d004_worker_maintenance"
 
 
 def rows(connection, table):
-    return connection.execute(text(f"SELECT to_jsonb(t) FROM {table} t ORDER BY 1::text")).scalars().all()
+    return connection.execute(text(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)")).scalars().all()
 
 
 @pytest.mark.parametrize("start", ["fresh", "84b8976a7d0d", "ce21c3b8140a",
-                                  "d001_maintenance", "d002_task_workflow", "both_heads"])
+                                  "d001_maintenance", "d002_task_workflow", "both_heads",
+                                  "d003_audit_maintenance", "d730a91b4c22"])
 def test_combined_migration_paths_preserve_records(start):
     url = os.environ.get("TEST_DATABASE_URL", "")
     parsed = make_url(url)
@@ -31,8 +32,8 @@ def test_combined_migration_paths_preserve_records(start):
         connection.execute(text(f'CREATE SCHEMA "{schema}"'))
     engine = create_engine(url, connect_args={"options": f"-csearch_path={schema}"})
     config = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
-    assert ScriptDirectory.from_config(config).get_heads() == [HEAD]
     try:
+        assert ScriptDirectory.from_config(config).get_heads() == [HEAD]
         with engine.begin() as connection:
             config.attributes["connection"] = connection
             if start != "fresh":
@@ -54,7 +55,7 @@ def test_combined_migration_paths_preserve_records(start):
                 connection.execute(text("""INSERT INTO telemetry_processing_jobs
                     (reading_id,status,state_policy) SELECT id,'pending','forward_only' FROM telemetry_readings"""))
                 tables = ["assets", "asset_configurations", "telemetry_readings", "telemetry_processing_jobs"]
-                if start in {"d001_maintenance", "d002_task_workflow", "both_heads"}:
+                if start in {"d001_maintenance", "d002_task_workflow", "both_heads", "d003_audit_maintenance"}:
                     connection.execute(text("""INSERT INTO maintenance_tasks
                         (id,asset_id,alert_source,alert_id,alert_summary,action,status)
                         VALUES (:id,'migration-asset','sample','sample-existing','Old sample','Inspect','open')"""),
