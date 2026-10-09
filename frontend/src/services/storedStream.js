@@ -30,7 +30,7 @@ export function thermalPoints(readings, analytics) {
     const metric = path => result?.metrics.find(m => m.path === path);
     const predicted = metric('thermal_assessment.predicted_top_oil_temperature_c');
     const residual = metric('thermal_assessment.thermal_residual_c');
-    const measured = payload ? payload.thermal_assessment?.measured_top_oil_temperature_c : reading.measurements.oil_temperature_c;
+    const measured = payload ? (payload.metadata?.units?.oil_temperature === 'C' ? payload.thermal_assessment?.measured_top_oil_temperature_c : null) : reading.measurements.oil_temperature_c;
     return {
       readingId: reading.readingId, timestamp: reading.measurementTime,
       processedAt: result?.result?.created_at ?? null,
@@ -70,11 +70,16 @@ export async function loadStreamSnapshot(client, selection, signal) {
   const fetched = await boundedMap(ids, id => client.getReadingAnalytics(id, signal), signal);
   signal.throwIfAborted();
   const analytics = [];
+  const references = new Map([...history, ...(latest ? [latest] : [])].map(reading => [reading.readingId, reading]));
   fetched.forEach((item, index) => {
     if (!item.ok) errors.push(`Reading ${ids[index]} analytics: ${item.error.message}`);
     else {
       assertStream(item.value, selection);
       if (item.value.reading_id !== ids[index]) throw new Error('Analytics reading identity mismatch.');
+      const reference = references.get(item.value.reading_id);
+      if (reference && (reference.configurationVersion !== item.value.configuration_version || Date.parse(reference.measurementTime) !== Date.parse(item.value.measurement_time))) {
+        throw new Error('Analytics configuration or measurement time differs from telemetry.');
+      }
       analytics.push(item.value);
     }
   });

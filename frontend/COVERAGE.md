@@ -1,3 +1,104 @@
+# Latest local commit and roll-up preparation — 9 October 2026
+
+The reviewed analytics-contract corrections are committed locally on
+codex/personc-analytics-comparison; they have not been pushed. The34-test,
+lint/build and actual Chrome/API evidence is recorded in
+[ROLLUP-REVIEW.md](ROLLUP-REVIEW.md). Equivalent draft PR18 now provides the
+missing #5/#12-to-main roll-up, so no duplicate PR is prepared. Review its
+exact scope first; retarget PR16 only after prerequisites actually reach main.
+Earlier statements below describe prior snapshots and publication restrictions.
+
+# Current B-contract and PR review check — 2026-10-09 22:38 IST
+
+Local uncommitted corrections are on codex/personc-analytics-comparison after
+published82e36e0/PR16. No commit, push, base change, merge or teammate message
+was made for this update. Phone work remains deferred. Earlier snapshots below
+are historical and do not override this section.
+
+## D's review and actual merge state
+
+GitHub review, issue-comment and inline-comment collections are empty for
+PR1/PR5/PR12. No formal APPROVED, CHANGES_REQUESTED or COMMENTED review by D
+is recorded. hramith06 (D) merged all three; that is separate from review approval.
+
+| PR | Actual merge / destination | Latest-head and merge-commit checks |
+| --- | --- | --- |
+| #1 | Merged9 October22:05:55 IST into main; head72acc3b | Backend Test Suite(Python3.12) passed |
+| #5 | Merged22:06:41 into feat/frontend-setup; heade87a885 | No reported check runs or commit-status contexts |
+| #12 | Merged22:15:27 into feat/frontend-api-integration; headf0b3572 | No reported check runs or commit-status contexts |
+
+No actionable frontend review comments exist to address. An empty legacy
+combined-status result labelled pending is not proof a check is running or failed.
+No frontend CI pass is claimed. Current main090d5ee has a passing backend check.
+
+The stacked merges did NOT bring #5/#12 into main: Git ancestry checks exclude
+both heads. Main contains #1, the worker and D backend#9/PR13 integration, but
+its App lacks Backend readings/Backend maintenance. #12's mergeff6918d is on
+origin/feat/frontend-api-integration; #5's merge8c0be72 is on origin/feat/frontend-setup.
+#10 merged into persond AFTER #9 reached main; its head is also absent from main.
+PR16 remains draft/mergeable, based on codex/personc-maintenance-integration.
+
+Concrete remaining steps: obtain authorization to prepare/publish a frontend
+roll-up PR from the merged frontend API branchff6918d to current main; review
+its net diff and run applicable checks; obtain human approval and merge it.
+The read-only merge-tree check is conflict-free at the checked heads. Then,
+with authorization, retarget/review PR16 against main, preserving the conceptual
+#1 → #5 → #12 → #16 order. Closed #5/#12 cannot simply be retargeted as open
+PRs. Do not install D's duplicate frontend mounting proposal alongside C's
+authoritative BackendMaintenance. No GitHub base was changed here.
+
+## B clarification reconciled
+
+Current main's analytics contract is unchanged from pinned9d2f9cd. PR7 remains
+draft; B's exported compare_worker_scenarios callable is documented on that
+branch, while actual local OpenAPI has no scenario/forecast/what-if HTTP route.
+The previous request for supported stored fields is answered: health_index and
+confidence.score are null (not_assessed/not_estimated), risk/fault/RUL/winding
+remain unsupported. Channel counts indicate coverage, never confidence percent.
+
+Existing payload extraction, thermal sign, bootstrap gaps, zero handling,
+per-metric availability and separate latest-completed/telemetry lag already
+match. New local fixes derive metric units from metadata.units (C displays°C),
+prevent missing/incompatible units becoming chart values, show metadata source/
+measurement UTC time and explicit health/confidence statuses/coverage counts,
+and check reading/stream/configuration/time identity against metadata and
+telemetry. These edits are confined to the existing analytics implementation.
+No new API adapter, maintenance component or speculative feature was added.
+
+Validation:34 declared tests, lint and production build passed. Actual Chrome
+on http://localhost:3000 against local http://127.0.0.1:8000 passed thermal values,
+provenance, explicit unavailable health/confidence, metadata source, bootstrap
+gap, coefficient-free result, empty streams, offline/recovery, stale-response
+switching, CORS and390px layout. API readiness200/database connected. The backend
+is still the preserved isolated676dcbc preview; this is not new-main deployment
+verification. No new records/migrations were needed this turn. Artifacts remain
+local at integration-work/b-contract-review-results/verification.json and PNGs.
+
+## Remaining HTTP What-if request — UNSENT
+
+Please provide the agreed HTTP route/method, request and response schemas for
+compare_worker_scenarios: exact asset/source/run/reading/configuration/model/state
+binding; load/ambient segments with units/ranges/horizon; explicit assumptions
+and coefficient provenance; baseline/alternative point timestamps, interpolation,
+final/peak/delta and configured-limit crossing semantics; validation, unavailable,
+stale-state and error handling. The browser will consume HTTP, not execute Python.
+Until deployed and verified, What-if stays visibly illustrative. Threshold
+crossings/residuals are not calibrated risk or fault diagnoses. No message sent.
+
+## Reference coverage and scope
+
+Supported backend presentation: registry, actual normalized telemetry channels,
+electrical/top-oil stored metrics, availability/provenance and sample maintenance.
+Missing sensor channels stay unavailable. Health/RUL/risk/confidence/fault and
+winding outputs are unsupported; no fixture fills them. Report export, additional
+measurements and public deployment need separate scope agreement. No reference
+image was supplied this turn; no visual feature coverage is inferred beyond
+these confirmed categories. Independent calibration/shared deployment remain
+external dependencies; physical-phone/LAN work is deferred.
+
+---
+Historical coverage snapshots follow.
+
 # Frontend coverage — 9 October 2026
 
 This update is local on `codex/personc-maintenance-integration` (published base
@@ -61,17 +162,11 @@ the opened history),
 which addresses the user's observed below-list discoverability issue. Report
 export is optional scope to agree later; no export implementation is added.
 
-## Unsent request for Person B
+## Previous request to Person B — answered for stored outputs
 
-The stored electrical/top-oil API is connected locally. Please confirm whether
-you plan supported health/risk, oil/winding forecasts, fault diagnosis or RUL.
-For each supported output, provide the route/envelope, units, UTC measurement
-and forecast times, provenance/confidence meaning and pending/unavailable/error
-semantics. For computed what-if, please supply the POST route, exact asset/run/
-configuration references, scenario inputs (units/ranges), response time grid and
-baseline/alternative fields. Until agreed, those dashboard views stay labelled
-demonstrations. No message has been sent.
-
+B confirmed the conservative stored fields and unsupported outputs. Only the
+future HTTP What-if contract remains unresolved; see the current unsent request
+above. Historical lack-of-contract statements below describe earlier checks.
 
 ## Follow-up actual thermal verification
 
