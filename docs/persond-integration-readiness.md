@@ -92,12 +92,12 @@ merged (and verify the net diff, especially if PR9 is squash-merged).
 
 ## Verification and limits
 
-Current main + D backend suite: **172 passed**, including six new migration
-path tests, audit regressions and maintenance tests. D mapper: **3 passed**.
+Final current main + D backend suite: **173 passed**, including seven migration
+checks, audit regressions and maintenance tests. D mapper: **3 passed**.
 The separately published frontend client/mapper suite: **6 passed**.
-GitHub CI for code commit `6c649dc` also passed on PostgreSQL16/Python3.12:
-[run 37911142839](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37911142839).
-The subsequent fresh-database test is verified separately and triggers a new CI run.
+GitHub CI for final code commit `7a69531` also passed on PostgreSQL16/Python3.12:
+[run 37911449104](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37911449104).
+All seven migration checks passed locally, including a genuinely fresh database.
 CI success does not replace teammate approval.
 Backend combination uses isolated persond-current-integration based on current
 main with D changes and the permanent revision, not merged main. The migration
@@ -125,7 +125,7 @@ follow-up, or implement that exact mount in your App change? Please confirm
 VITE_API_BASE_URL/CORS settings and avoid duplicating the component/client.
 
 Ready-to-send: D's PR9 is narrowed to backend plus a permanent migration merge
-for already-merged audit PR8. The frontend proposal is in a separate draft,
+for already-merged audit PR8. The frontend proposal is in draft PR10,
 stacked on persond until backend and C's frontend land. Nothing was merged or
 force-pushed. A, please review D003 and upgrade/data preservation checks. C,
 please resolve PR1 and confirm PR5 integration plus ownership of the small mount.
