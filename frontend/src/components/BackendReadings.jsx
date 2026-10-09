@@ -1,5 +1,7 @@
+import StoredAnalytics from './StoredAnalytics.jsx';
 import { useRef, useState } from 'react';
 import {
+  getReadingAnalytics,
   getAssetPage,
   getAssetDetails,
   getLatestTelemetry,
@@ -25,6 +27,7 @@ export default function BackendReadings() {
   const [runId, setRunId] = useState('');
   const [details, setDetails] = useState(null);
   const [latest, setLatest] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [history, setHistory] = useState([]);
   const [assetOffset, setAssetOffset] = useState(0);
   const [historyOffset, setHistoryOffset] = useState(0);
@@ -37,6 +40,7 @@ export default function BackendReadings() {
   function clearReadings() {
     setDetails(null);
     setLatest(null);
+    setAnalytics(null);
     setHistory([]);
     setHistoryOffset(0);
     setReadingsLoaded(false);
@@ -81,6 +85,7 @@ export default function BackendReadings() {
       }
 
       setLatest(null);
+      setAnalytics(null);
       setHistory([]);
       setDetails(null);
       setReadingsLoaded(false);
@@ -107,6 +112,11 @@ export default function BackendReadings() {
 
       if (latestResult.status === 'fulfilled') {
         setLatest(latestResult.value);
+        try {
+          setAnalytics(await getReadingAnalytics(latestResult.value.readingId));
+        } catch (error) {
+          notes.push(`Analytics: ${error.message}`);
+        }
       } else {
         notes.push(
           latestResult.reason.status === 404
@@ -133,7 +143,7 @@ export default function BackendReadings() {
 
       <p>
         This screen requests the asset registry and stored telemetry.
-        It does not generate predictions, health scores, or alerts.
+        It does not generate predictions, health scores, or alerts. Simulator and replay timestamps describe stored demonstrations, not fresh device telemetry. Empty quality flags do not establish transformer health.
       </p>
 
       <button disabled={busy} onClick={() => loadAssets(0)}>
@@ -211,7 +221,7 @@ export default function BackendReadings() {
           <input
             value={runId}
             disabled={busy}
-            placeholder="Enter the exact run ID from Person A"
+            placeholder="Enter the run ID generated on this backend"
             onChange={event => {
               setRunId(event.target.value);
               clearReadings();
@@ -314,10 +324,7 @@ export default function BackendReadings() {
             </table>
           </div>
 
-          <p>
-            Analytical outputs are not displayed here because no verified
-            result-retrieval contract has been connected.
-          </p>
+          {analytics && <StoredAnalytics analytics={analytics} />}
         </>
       )}
 
@@ -336,7 +343,7 @@ export default function BackendReadings() {
                     <th>Reading ID</th>
                     <th>Measurement time</th>
                     <th>Oil temperature (°C)</th>
-                    <th>Analytics</th>
+                    <th>Arrival time</th><th>Configuration</th><th>Source / run</th><th>Analytics / job</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -350,7 +357,7 @@ export default function BackendReadings() {
                         {reading.measurements.oil_temperature_c
                           ?? 'Unavailable'}
                       </td>
-                      <td>{reading.analyticsStatus}</td>
+                      <td>{new Date(reading.arrivalTime).toLocaleString()}</td><td>{reading.configurationVersion}</td><td>{reading.source} / {reading.runId ?? 'None'}</td><td>{reading.analyticsStatus} / {reading.processingJobStatus}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -2,6 +2,10 @@
 
 Person C's operator dashboard, built with React and Vite.
 
+Telemetry and sample maintenance were verified in an isolated combined checkout.
+See [MAINTENANCE-INTEGRATION.md](MAINTENANCE-INTEGRATION.md) for frontend
+authority, contracts, PR dependencies, validation and remaining deployment limits.
+
 ## Current status
 
 The dashboard includes:
@@ -11,12 +15,14 @@ The dashboard includes:
 - What-if comparison.
 - Maintenance.
 - Backend readings.
+- Backend maintenance (separate PostgreSQL-backed sample tasks).
 
 The original five screens use illustrative fixtures by default.
 
 The separate Backend readings screen uses request functions matching
-Person A's documented asset and telemetry APIs. Its live connection
-has not yet been verified.
+Person A's asset and telemetry APIs. Its local browser connection is verified.
+Backend maintenance also connects to D's published sample workflow API using
+a separate local backend preview. Shared deployment remains pending review.
 
 ## Requirements
 
@@ -35,7 +41,7 @@ npm run dev
 
 Open the Local address printed by Vite.
 
-## Reopening the dashboard on this Windows laptop
+## Reopening the dashboard on a Windows laptop
 
 1. Open VS Code.
 2. Select File > Open Recent > powernxt-ai-transformer-sentinel.
@@ -43,7 +49,7 @@ Open the Local address printed by Vite.
 4. Run:
 
 ```cmd
-cd /d "C:\Users\Akash Patil\OneDrive\Documents\powernxt-ai-transformer-sentinel\frontend"
+cd /d "<your-checkout>\frontend"
 npm run dev
 ```
 
@@ -63,13 +69,13 @@ Run these from the frontend folder in another terminal:
 ```cmd
 npm run lint
 npm run build
-node --test tests/telemetryAdapter.test.js
+npm test
 ```
 
 Confirmed during development:
 - ESLint passed.
 - Production build passed.
-- Six telemetry adapter tests passed.
+- Six telemetry adapter tests and eight maintenance tests passed.
 
 The adapter tests verify:
 1. Asset, source/run, timestamps and configuration preservation.
@@ -79,7 +85,8 @@ The adapter tests verify:
 5. Genuine zero readings remain zero.
 6. Absent readings and unknown statuses are handled.
 
-These checks do not establish a successful live backend connection.
+Unit tests alone do not establish a live connection. The separate real Chrome
+checks and their exact scope are recorded in MAINTENANCE-INTEGRATION.md.
 
 ## Demo screens
 
@@ -199,23 +206,27 @@ It is not evidence of current backend readings.
 - Run ID hidden for Device and visible for Simulator/File replay.
 - Narrow-screen controls checked and layout overflow improved.
 
-Request validation, backend tables and real-data behaviour still
-need integration checks.
+Local backend browser checks are now recorded in MAINTENANCE-INTEGRATION.md.
+Physical-phone backend access and final shared deployment remain unverified.
 
 ## Remaining work
 
-- Verify requests against a reachable backend.
-- Check actual assets, empty streams, history and pagination.
-- Verify error handling and source/run isolation with real data.
+- Review and deploy the final shared A/D/C integration; local requests passed.
+- Repeat local asset/stream/history checks against the final team deployment.
+- Repeat verified source/run isolation and errors on the final team deployment.
 - Agree and display stale-data status.
 - Connect Person B's genuine analytical results when available.
-- Connect Person D's shared maintenance and incident services.
+- Review D's backend PR9 with the latest main worker migration; reconcile their
+  new dual heads and router/model registrations before shared deployment.
+- Agree genuine persisted alert provenance before real-alert task creation.
 - Agree live-update and reconnection behaviour.
 - Address teammate review feedback.
 - Verify the complete system and rehearse the final demonstration.
 
-Live integration, genuine model outputs and backend maintenance
-persistence have not yet been verified.
+Local browser telemetry and sample backend maintenance persistence are verified.
+Stored electrical/top-oil results from the isolated synthetic thermal run are
+verified in Backend readings. Physical-phone backend access, production identity,
+independent model calibration and final shared deployment remain unverified. See MAINTENANCE-INTEGRATION.md.
 
 ---
 
@@ -242,3 +253,5 @@ persistence have not yet been verified.
 The scope list describes intended team responsibilities, not a claim that the
 starter implements real analytics or backend maintenance. Confirm the actual
 frontend origin and backend contract before enabling live routes.
+
+Current local analytics scope, manual evidence and deferred work: [COVERAGE.md](COVERAGE.md).
