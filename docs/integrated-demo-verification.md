@@ -7,7 +7,8 @@
 | Component | Tested revision / observed state |
 |---|---|
 | Preserved original checkout | `main`, `9d2f9cda817bc6312d00a4fc001050b04b85a2cb`; unrelated untracked evidence preserved |
-| Current remote main incorporated in worktree | `090d5ee5fdb85ab1c59368cc05c1d009d4469f19`, includes Person D #9/#13 and starter #1 |
+| Initial remote main incorporated in worktree | `090d5ee5fdb85ab1c59368cc05c1d009d4469f19`, includes Person D #9/#13 and starter #1 |
+| Concurrent main update also incorporated | `7b19626ca49b81e99fc66bdba76fc55d305b8777`, #18 adds the C prerequisite frontend and D verification documentation/helpers |
 | Person C comparison branch | `82e36e03791aa02e815ccd711b036706e24e0ccf` |
 | Person C maintenance ancestor | `f0b3572e75ce920dc340af6922deeb60d8a6f660` |
 | C telemetry ancestor | `e87a8856e9323c88854147c5ed7d4f54c336ba9e` |
@@ -17,7 +18,7 @@
 
 The later documentation/browser-check commit is identifiable in Git history. No self-referential commit hash is invented here. Primary frontend runtime source remained unchanged from the combined merge throughout verification.
 
-GitHub observed #12 **merged**, base `feat/frontend-api-integration`, head `codex/personc-maintenance-integration` f0b3572, merge commit `ff6918d300b79a83023f2b10e937f45e2f034b9f`. #16 is **open draft**, base `codex/personc-maintenance-integration`, head `codex/personc-analytics-comparison`82e36e0, mergeable at inspection. It depends on #12. #5 is also merged **into `feat/frontend-setup`**, not into current main. Neither C maintenance nor the full C API branch was an ancestor of remote main. Incorporate that prerequisite frontend code into main, then retarget/reassess #16's intended extra diff. The combined integration draft is an alternative review of incorporation; maintainers must choose the route without double-applying changes.
+GitHub observed #12 **merged**, base `feat/frontend-api-integration`, head `codex/personc-maintenance-integration` f0b3572, merge commit `ff6918d300b79a83023f2b10e937f45e2f034b9f`. #16 is **open draft**, base `codex/personc-maintenance-integration`, head `codex/personc-analytics-comparison`82e36e0, mergeable against that base at inspection. Initially its #12 dependency and #5's feature-branch merge were absent from remote main. **At final delivery, concurrent #18 has incorporated the prerequisite frontend into main7b19626.** An ancestry check now confirms f0b3572 is in main; comparison82e36e0 is not. The integration branch was reconciled with7b19626 without conflict; additions are D's existing documentation/seed/verifier and updated maintenance documentation, with no changes to the tested frontend runtime/package files. Preserve these contributions. Retarget/reassess #16 against main now; draft [#19](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/19) offers the comparison plus Windows verification documentation/checks against current main. Choose the review route without double-applying #16.
 
 Authenticated GitHub queries returned **no review submissions, no inline review threads, no head status contexts, and no PR-triggered workflow runs** for #12/#16. Thus there are no returned unresolved inline discussions; no approval or successful hosted frontend CI is claimed. #16's clean mergeability is against its current base, not a promise about a future main retarget. Public REST initially worked then hit rate limits; the connector supplied the remaining evidence.
 
