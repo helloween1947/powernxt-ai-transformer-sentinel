@@ -1,0 +1,60 @@
+{
+  "recorded_ist": "2026-10-09T15:53:27.286766+05:30",
+  "platform": "Linux cloud, Python3.12, PostgreSQL16.15",
+  "main": "9d2f9cda817bc6312d00a4fc001050b04b85a2cb",
+  "pr9_head": "087a884e31c7942330f3cf599aa190b916bfff1e",
+  "pr10_head": "094c36416d2508095c591e19e51cee751280b564",
+  "branch": "fix/persond-main-integration",
+  "tested_source_sha256": {
+    "backend/app/api/__init__.py": "2f50a9f44978f07984df9c1bb71f6f03fb424a738d47d93efe4f0c2b13ddc698",
+    "backend/app/api/maintenance.py": "de632412b4621e020b01dd47dbf0e2ad1a98366522b80b88460a66f169892f86",
+    "backend/app/models/__init__.py": "4a8d18f2164f25252ee2703f2dee7a2a3604b0b3caae938e3b4629110ddea1bf",
+    "backend/tests/test_persond_review.py": "fea13393d235bd2e4122136c4de4fa6fcbef6d21c26ad74e9c3c2ede50754f6d",
+    "backend/tests/test_maintenance_migration_integration.py": "9a8617d8aa4b1ad1dd8849956f1aa8b28532ad69f8760ee732cd4ced0812a65c",
+    "backend/migrations/versions/20261009_d004_merge_worker_maintenance.py": "f83e4e4bfcedd6906a67d59091275cda123efae4ab98e6167e424546052cc4c0"
+  },
+  "pre_fix_combined_graph_heads": [
+    "d003_audit_maintenance",
+    "d730a91b4c22"
+  ],
+  "pre_fix_nonfinite_http_status": {
+    "POST": 500,
+    "PATCH": 500
+  },
+  "final_head": "d004_worker_maintenance",
+  "backend_tests": {
+    "command": "python -m pytest backend/tests -q --tb=short",
+    "exit_code": 0,
+    "passed": 222,
+    "warnings": 222,
+    "seconds": 49.4,
+    "database": "sentinel_test; unique isolated schemas / own fresh databases"
+  },
+  "mapper_tests": {
+    "command": "node --test integration/frontend/maintenanceAdapter.test.mjs",
+    "exit_code": 0,
+    "passed": 3
+  },
+  "migration_starts": [
+    "fresh",
+    "84b8976a7d0d",
+    "ce21c3b8140a",
+    "d001_maintenance",
+    "d002_task_workflow",
+    "both_heads",
+    "d003_audit_maintenance",
+    "d730a91b4c22"
+  ],
+  "fresh_database": "created/upgraded/checked/dropped only a uniquely named test database",
+  "preservation": "all original columns preserved; real worker result/state and maintenance/history retained",
+  "metadata_check": "passed on populated combined states",
+  "offline_upgrade_sql_exit_code": 0,
+  "reported_ci": "D reported run37911449104 at7a69531; APIForbidden, not verified here",
+  "github_metadata": "PR9 GraphQL and REST Forbidden; draft/base/checks unverified by API",
+  "reported_173_tests": "historical D report, not the new executed count",
+  "windows_or_browser_execution": false,
+  "development_restart_or_migration": false,
+  "d_branch_modified": false,
+  "pr_merged": false,
+  "genuine_alert_contract": "not implemented; incident identity/store/transport and trusted authentication require team agreement"
+}
