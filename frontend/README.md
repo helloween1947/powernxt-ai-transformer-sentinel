@@ -226,3 +226,29 @@ Physical-phone backend access and final shared deployment remain unverified.
 Local browser telemetry and sample backend maintenance persistence are verified.
 Genuine model outputs, physical-phone backend access, production identity and
 final shared deployment remain unverified. See MAINTENANCE-INTEGRATION.md.
+
+---
+
+## Shared frontend scope and backend development reference
+
+**Owner**: Person C (Frontend Engineer)
+
+### Planned Scope & Responsibilities
+- Real-time transformer telemetry monitoring dashboard.
+- 3-Phase electrical waveform & load balance visual charts.
+- Thermal behavior and anomaly indicator views.
+- "What-If" scenario simulator interface (load manipulation, ambient stress testing).
+- Alerting & maintenance notification views.
+
+### Backend Development Reference
+- **Local API Base URL**: `http://localhost:8000` (only when the backend runs on the same computer as the browser).
+- **Interactive Documentation**: `http://localhost:8000/docs`
+- **Health Verification**:
+  - `GET /health/live`: Server process check.
+  - `GET /health/ready`: Database connectivity check.
+- **CORS Configuration**:
+  - Development ports `http://localhost:3000` (React/Next) and `http://localhost:5173` (Vite) are pre-configured in `backend/app/config.py`.
+
+The scope list describes intended team responsibilities, not a claim that the
+starter implements real analytics or backend maintenance. Confirm the actual
+frontend origin and backend contract before enabling live routes.
