@@ -1,6 +1,10 @@
 # Person D incident-linked maintenance implementation plan
 
-Status: implementation gated on A/B/D contract acceptance; documentation only.
+> Current follow-up: PR15 and PR21 are now merged. See
+> [post-merge dependency verification](persond-incident-dependency-verification.md)
+> for current decisions/runtime evidence. The inspection below is the historical
+> pre-merge baseline; its PR status statements are not current.
+Status: implementation gated on explicit decisions and runtime dependencies; documentation only.
 Inspected 9 October 2026. The sample/demo maintenance handover stays closed.
 No shared contract was revised, incident feature implemented or teammate message sent.
 

@@ -51,3 +51,10 @@ See [integration-verification.md](../docs/integration-verification.md) for the
 exact tested main, C-authoritative integration proposal, native startup, real
 browser versus fixture results and genuine-incident prerequisites. The merged
 PR numbers alone do not establish that their changes reached main.
+
+## Incident runtime dependency inventory
+
+Run `python -m integration.inspect_incident_dependencies` from repository root
+with backend dependencies installed. This read-only local inventory does not
+connect to a database or certify contract acceptance/runtime readiness. See
+[post-merge dependency results](../docs/persond-incident-dependency-verification.md).
