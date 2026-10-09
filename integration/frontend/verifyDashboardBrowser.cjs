@@ -112,4 +112,3 @@ async function waitSaved(card, text) {
     await page.screenshot({ path: '.venv/dashboard-browser.png', fullPage: true });
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
-

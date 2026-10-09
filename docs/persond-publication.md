@@ -144,4 +144,3 @@ revision for ce21c3b8140a and d002_task_workflow. B: confirm the persistent aler
 identity/provenance contract before genuine-alert integration. Backend tests
 passed (D 125; latest main+D+B 227); frontend lint/build and mapper/client tests
 passed. Docker deployment is still blocked by the missing engine pipe.
-

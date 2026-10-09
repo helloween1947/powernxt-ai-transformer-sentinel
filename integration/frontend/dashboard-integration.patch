@@ -1,39 +1,17 @@
 --- a/frontend/src/App.jsx
 +++ b/frontend/src/App.jsx
-@@ -2,6 +2,7 @@
- import ReadingCard from './components/ReadingCard';
- import TrendChart from './components/TrendChart';
- import BackendReadings from './components/BackendReadings.jsx';
+@@ -4,0 +5 @@
 +import BackendMaintenance from './components/BackendMaintenance.jsx';
- import { DEMO_MODE, getAssets, getDashboard, compareScenarios, acknowledgeAlert, getTasks, createTask, updateTask } from './services/api';
- 
- const screens = [
-@@ -11,6 +12,7 @@
-   'What-if',
-   'Maintenance',
-   'Backend readings',
+@@ -13,0 +15 @@
 +  'Backend maintenance',
- ];
- const temperatureSeries = [
-   { key: 'measuredOil', label: 'Observed oil temperature', color: '#0e7490' },
-@@ -127,15 +129,16 @@
-   return <div className="shell">
-     <aside><div className="brand">Transformer<br /><strong>Sentinel</strong></div><p>Operator dashboard</p><nav aria-label="Main navigation">{screens.map(item => <button key={item} aria-current={screen === item ? 'page' : undefined} onClick={() => setScreen(item)}>{item}</button>)}</nav><div className="aside-note">Person C starter<br />{DEMO_MODE ? 'Sample data mode' : 'API mode: 5-second polling'}</div></aside>
-     <main>
+@@ -130,3 +132,3 @@
 -      <header><div><span className="eyebrow">POWER SYSTEM CONDITION MONITORING</span><h1>{screen === 'Fleet' ? 'Fleet overview' : screen === 'Transformer' ? 'Transformer detail' : screen === 'What-if' ? 'What-if comparison' : screen}</h1></div><label>Transformer<select value={assetId} disabled={busy} onChange={event => changeAsset(event.target.value)}>{assets.map(asset => <option key={asset.id} value={asset.id}>{asset.id} — {asset.name}</option>)}</select></label></header>
 -      {DEMO_MODE && <div className="banner">DEMO: sensor readings, health, alerts and forecast curves are illustrative fixtures. Tasks are saved only in this browser. This mode does not run B's model or D's maintenance backend.</div>}
 -      {DEMO_MODE && <label className="scenario">Sample condition<select value={scenario} disabled={busy} onChange={event => changeScenario(event.target.value)}><option value="normal">Normal operation</option><option value="overload">Overload / abnormal heating</option><option value="sensor-loss">Oil sensor loss</option></select></label>}
 +      <header><div><span className="eyebrow">POWER SYSTEM CONDITION MONITORING</span><h1>{screen === 'Fleet' ? 'Fleet overview' : screen === 'Transformer' ? 'Transformer detail' : screen === 'What-if' ? 'What-if comparison' : screen}</h1></div>{screen !== 'Backend maintenance' && <label>Transformer<select value={assetId} disabled={busy} onChange={event => changeAsset(event.target.value)}>{assets.map(asset => <option key={asset.id} value={asset.id}>{asset.id} — {asset.name}</option>)}</select></label>}</header>
 +      {DEMO_MODE && screen !== 'Backend maintenance' && <div className="banner">DEMO: sensor readings, health, alerts and forecast curves are illustrative fixtures. Tasks are saved only in this browser. This mode does not run B's model or D's maintenance backend.</div>}
 +      {DEMO_MODE && screen !== 'Backend maintenance' && <label className="scenario">Sample condition<select value={scenario} disabled={busy} onChange={event => changeScenario(event.target.value)}><option value="normal">Normal operation</option><option value="overload">Overload / abnormal heating</option><option value="sensor-loss">Oil sensor loss</option></select></label>}
-       {error && <div role="alert" className="error">{error} <button onClick={reloadDashboard}>Retry data loading</button></div>}
-       {notice && <div role="status" className="success">{notice}</div>}
-       {loading && <p role="status">Loading transformer data...</p>}
-       {!loading && !assets.length && !error && <p>No transformers registered.</p>}
-       {screen === 'Backend readings' && <BackendReadings />}
+@@ -138 +140,2 @@
 -{dashboard && <>
 +      {screen === 'Backend maintenance' && <BackendMaintenance />}
 +{dashboard && screen !== 'Backend maintenance' && <>
-         <div className="status-line"><span>{dashboard.asset.name} · {dashboard.asset.rating}</span><span>{DEMO_MODE ? 'Sample timestamp' : 'Last sensor timestamp'}: {new Date(dashboard.timestamp).toLocaleString()} {stale && <strong className="warning"> STALE DATA</strong>}</span></div>
-         {screen === 'Fleet' && <section className="panel"><h2>Registered transformers</h2><p>Select an asset to inspect its latest readings. This starter loads condition details for the selected asset.</p><div className="asset-grid">{assets.map(asset => <button className="asset" key={asset.id} onClick={() => { changeAsset(asset.id); setScreen('Transformer'); }}><strong>{asset.id}</strong><span>{asset.name}</span><small>{asset.rating}</small>{asset.id === assetId && <small>{dashboard.analytics.condition} · {alerts.length} alert(s)</small>}</button>)}</div></section>}
-         {(screen === 'Fleet' || screen === 'Transformer') && <>
