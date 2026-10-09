@@ -133,7 +133,7 @@ export default function BackendReadings() {
 
       <p>
         This screen requests the asset registry and stored telemetry.
-        It does not generate predictions, health scores, or alerts.
+        It does not generate predictions, health scores, or alerts. Simulator and replay timestamps describe stored demonstrations, not fresh device telemetry. Empty quality flags do not establish transformer health.
       </p>
 
       <button disabled={busy} onClick={() => loadAssets(0)}>
@@ -211,7 +211,7 @@ export default function BackendReadings() {
           <input
             value={runId}
             disabled={busy}
-            placeholder="Enter the exact run ID from Person A"
+            placeholder="Enter the run ID generated on this backend"
             onChange={event => {
               setRunId(event.target.value);
               clearReadings();
@@ -336,7 +336,7 @@ export default function BackendReadings() {
                     <th>Reading ID</th>
                     <th>Measurement time</th>
                     <th>Oil temperature (°C)</th>
-                    <th>Analytics</th>
+                    <th>Arrival time</th><th>Configuration</th><th>Source / run</th><th>Analytics / job</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -350,7 +350,7 @@ export default function BackendReadings() {
                         {reading.measurements.oil_temperature_c
                           ?? 'Unavailable'}
                       </td>
-                      <td>{reading.analyticsStatus}</td>
+                      <td>{new Date(reading.arrivalTime).toLocaleString()}</td><td>{reading.configurationVersion}</td><td>{reading.source} / {reading.runId ?? 'None'}</td><td>{reading.analyticsStatus} / {reading.processingJobStatus}</td>
                     </tr>
                   ))}
                 </tbody>

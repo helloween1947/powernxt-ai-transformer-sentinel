@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Machine-specific demonstration notes/helper and generated browser evidence
+/LOCAL-INTEGRATION.md
+/scripts/start-local-demo.ps1
+/tests/browser-results/
