@@ -10,7 +10,9 @@ const selection = {assetId:'test', source:'simulator', runId:'run', offset:0};
 function analytics(id, status = 'completed') {
   const wire = structuredClone(sample);
   Object.assign(wire,{reading_id:id, asset_id:'test', source:'simulator', run_id:'run', status});
+  wire.configuration_version=2; wire.measurement_time=reading(id).measurementTime;
   wire.result.reading_id = id;
+  Object.assign(wire.result.payload.metadata,{configuration_version:2,measurement_time:wire.measurement_time,reading_identity:{reading_id:id},stream:{asset_id:'test',source:'simulator',run_id:'run'}});
   if (['pending','processing','retry','failed'].includes(status)) wire.result = null;
   return adaptReadingAnalytics(wire);
 }
@@ -156,4 +158,11 @@ test('history page offset is preserved and only that bounded page enters the com
   const snapshot=await loadStreamSnapshot(c,{...selection,offset:20},new AbortController().signal);
   assert.equal(snapshot.page.offset,20);assert.deepEqual(snapshot.points.map(p=>p.readingId),[1]);
   assert.equal(snapshot.analytics.reading_id,2); // Latest remains separate from historical page.
+});
+
+test('a result cannot be labelled with another telemetry configuration or measurement time', async () => {
+  for (const change of [{configuration_version:99},{measurement_time:'2028-01-01T00:00:00Z'}]) {
+    const c=client(); c.getReadingAnalytics=async id=>({...analytics(id),...change});
+    await assert.rejects(loadStreamSnapshot(c,selection,new AbortController().signal),/differs from telemetry/);
+  }
 });

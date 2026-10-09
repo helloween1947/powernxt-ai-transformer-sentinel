@@ -75,7 +75,7 @@ npm test
 Confirmed during development:
 - ESLint passed.
 - Production build passed.
-- Thirty declared tests cover telemetry, maintenance, stored analytics and bounded stream loading.
+- Thirty-four declared tests cover telemetry, maintenance, stored analytics and bounded stream loading/metadata identity.
 
 The adapter tests verify:
 1. Asset, source/run, timestamps and configuration preservation.
@@ -321,3 +321,23 @@ COEFFICIENT_FREE_RUN_ID and FRONTEND_ORIGIN/BACKEND_URL, then run
 `node tests/analyticsBrowser.cjs` with separately installed Playwright/Chrome.
 Its output identifies actual API checks and explicit offline/delay injection.
 Generated evidence is ignored. Phone testing remains deferred.
+
+
+## Latest B contract clarification (local review)
+
+Metric units come from metadata.units; metadata measurement_source/time and
+parameter provenance are explicit. Missing/incompatible units cannot become
+Celsius chart values. Health is unavailable/not_assessed; numerical confidence
+is unavailable/not_estimated. Usable channel counts are coverage, not confidence
+percentages. Metadata and telemetry identities/configuration/time are checked.
+Existing null/zero/gap and latest-completed lag behaviour is retained.
+
+B's compare_worker_scenarios is a tested Python callable on unmerged PR7; no
+scenario HTTP route appears in the actual backend OpenAPI. What-if remains a
+fixture view. COVERAGE.md records the answered stored-field request and a short
+unsent request for HTTP schemas, binding/assumptions/units/validation/availability.
+
+The latest review inspection found #1/#5/#12 already merged by D without recorded
+formal reviews/comments; #5/#12 landed in stack branches and have not reached
+main. An authorized reviewed roll-up to main is still needed. No merge, push,
+PR-base change or teammate message is performed for this local update.

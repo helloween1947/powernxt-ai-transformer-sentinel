@@ -10,8 +10,11 @@ export default function StoredAnalytics({ analytics, title = 'Analytics for the 
     {!result && <p>No stored analytical result for this reading. Reload backend readings to check processing status; no sample result is substituted.</p>}
     {result && <>
       <p>Stored at (UTC): {result.created_at}. Model: {result.model_id} / {result.model_version}. Result status: {result.status}; outcome: {payload.execution_status?.outcome ?? 'Unavailable'}.</p>
-      <p>Model-bound measured oil: {payload.thermal_assessment?.measured_top_oil_temperature_c ?? 'Unavailable'} °C.</p>
+      <p>Model-bound measured oil: {payload.metadata?.units?.oil_temperature === 'C' ? payload.thermal_assessment?.measured_top_oil_temperature_c ?? 'Unavailable' : 'Unavailable'} {payload.metadata?.units?.oil_temperature === 'C' ? '°C' : payload.metadata?.units?.oil_temperature ?? 'Unit unavailable'}.</p>
       <p>Parameter version: {result.parameter_version}</p>
+      <p>Model measurement source: {payload.metadata?.measurement_source ?? 'Unavailable'}. Model measurement time (UTC): {payload.metadata?.measurement_time ?? 'Unavailable'}.</p>
+      <p>Health index: Unavailable ({analytics.assessment.healthStatus}). Numerical confidence: Unavailable ({analytics.assessment.confidenceStatus}). Risk, winding hot-spot, fault predictions and RUL are unsupported.</p>
+      <p>Usable required channels: {analytics.assessment.usableChannels ?? 'Unavailable'} / {analytics.assessment.requiredChannels ?? 'Unavailable'} — coverage count, not confidence percentage.</p>
       <div className="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th><th>Unit</th><th>Availability / reasons</th></tr></thead><tbody>
         {analytics.metrics.map(metric => <tr key={metric.path}><td>{metric.label}</td><td>{metric.value ?? 'Unavailable'}</td><td>{metric.unit}</td><td>{metric.status} {metric.reasons.join(', ')}</td></tr>)}
       </tbody></table></div>
