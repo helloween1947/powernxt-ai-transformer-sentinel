@@ -93,3 +93,32 @@ def test_combined_migration_paths_preserve_records(start):
         with admin.begin() as connection:
             connection.execute(text(f'DROP SCHEMA "{schema}" CASCADE'))
         admin.dispose()
+
+
+def test_fresh_database_upgrade_has_one_head():
+    """Create/delete only a uniquely named database owned by this test."""
+    parsed = make_url(os.environ.get("TEST_DATABASE_URL", ""))
+    assert parsed.drivername.startswith("postgresql") and parsed.database.endswith("_test")
+    database = "migration_d_" + uuid4().hex + "_test"
+    admin = create_engine(parsed, isolation_level="AUTOCOMMIT")
+    engine = None
+    created = False
+    try:
+        with admin.connect() as connection:
+            connection.execute(text(f'CREATE DATABASE "{database}"'))
+            created = True
+        engine = create_engine(parsed.set(database=database))
+        config = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
+        with engine.begin() as connection:
+            config.attributes["connection"] = connection
+            command.upgrade(config, "head")
+            assert connection.execute(text("SELECT version_num FROM alembic_version")).scalars().all() == [HEAD]
+            assert connection.scalar(text("SELECT to_regclass('maintenance_task_history')"))
+            assert connection.scalar(text("SELECT count(*) FROM pg_trigger WHERE tgname='asset_configuration_immutable' AND tgrelid='asset_configurations'::regclass")) == 1
+    finally:
+        if engine is not None:
+            engine.dispose()
+        if created:
+            with admin.connect() as connection:
+                connection.execute(text(f'DROP DATABASE "{database}"'))
+        admin.dispose()

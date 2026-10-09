@@ -16,7 +16,7 @@ volume was overwritten. Person D's initial working tree was clean.
 | feature/personb-twin-analytics | 637fbe810714d0d5c403728ddf7bcba746ea55a9 |
 
 Audit PR8 is merged into current main. C PR1 remains open against main and GitHub
-reports merge conflicts; C PR5 is open against feat/frontend-setup. Neither has
+reports an add/add conflict in frontend/README.md; C PR5 is open against feat/frontend-setup. Neither has
 changed since the earlier review. B PR7 is draft and unmerged. No submitted
 reviews, issue comments or inline review comments were available on PR1, PR5 or
 PR9. Audit PR8 has a maintainer comment reporting a successful clean Docker
@@ -55,7 +55,9 @@ Six real PostgreSQL upgrade tests cover fresh, common telemetry parent, audit,
 D001, D002 and already-applied dual heads. They seed and compare existing assets,
 configurations, readings, processing jobs, tasks and history where available;
 D001 original task fields survive and gain truthful legacy_import history.
-They assert one final head and the immutable configuration guard still rejects
+An additional test upgrades a genuinely new uniquely named database from empty
+to the final head and deletes only that database afterward. The path tests
+assert one final head and the immutable configuration guard still rejects
 updates. Each uses a new random schema in the isolated sentinel_test database
 and removes only its own schema. Existing application schemas are untouched.
 
@@ -67,7 +69,8 @@ ancestors; a normal follow-up commit removes frontend-specific files from its
 net diff. No reset or force-push was used. PR9 does not require C's dashboard
 and must include D003 when merged with current main.
 
-A separate draft on `codex/persond-dashboard-mount`, temporarily based on
+[Draft PR10](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/10)
+on `codex/persond-dashboard-mount`, temporarily based on
 persond, contains only D's component, client, client tests, browser verifier and
 small App mount patch. Its stacked base keeps backend changes out of its diff.
 It does not copy C's App or dependencies. Retarget to main only after PR9 is
@@ -92,7 +95,10 @@ merged (and verify the net diff, especially if PR9 is squash-merged).
 Current main + D backend suite: **172 passed**, including six new migration
 path tests, audit regressions and maintenance tests. D mapper: **3 passed**.
 The separately published frontend client/mapper suite: **6 passed**.
-New GitHub CI status is checked after publication; local results are not CI approval.
+GitHub CI for code commit `6c649dc` also passed on PostgreSQL16/Python3.12:
+[run 37911142839](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37911142839).
+The subsequent fresh-database test is verified separately and triggers a new CI run.
+CI success does not replace teammate approval.
 Backend combination uses isolated persond-current-integration based on current
 main with D changes and the permanent revision, not merged main. The migration
 and tests are the permanent published files, not the previous preview.
