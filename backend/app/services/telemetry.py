@@ -47,6 +47,7 @@ def response_for(db: Session, reading: TelemetryReading) -> TelemetryResponse:
         normalized_telemetry=reading.normalized_telemetry,
         quality_flags=reading.quality_flags,
         out_of_order=reading.out_of_order,
+        analytics_status=job.status,
         processing_job=job,
     )
 

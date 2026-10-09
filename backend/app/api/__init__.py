@@ -12,3 +12,6 @@ api_router.include_router(assets_router)
 api_router.include_router(telemetry_router)
 
 __all__ = ["api_router", "assets_router", "health_router", "telemetry_router"]
+
+from backend.app.api.analytics import router as analytics_router
+api_router.include_router(analytics_router)

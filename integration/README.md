@@ -39,3 +39,7 @@ counts through API plus scoped read-only Docker database inspection. Keeps all e
 records/volumes, performs no restarts, and retains ignored generated artifacts. See
 [usage and Windows commands](../docs/normal-operation-simulator.md) and
 [actual cloud evidence](../docs/normal-operation-simulator-verification.md).
+
+## Durable analytics worker
+
+`python -m integration.verify_analytics_worker --base-url http://127.0.0.1:18002` requires the dedicated `compose.analytics-test.yaml` override and a unique `analytics_worker_test_` project. It refuses development containers/volumes/API, creates unique assumed demonstration records, normally restarts its test worker and checks unfinished lease recovery. See [exact startup and Windows commands](../docs/analytics-worker-windows.md). Existing ingestion-only verifiers assume the worker is disabled; use the worker-specific verifier when processing is enabled.

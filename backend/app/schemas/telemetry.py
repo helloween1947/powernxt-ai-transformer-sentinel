@@ -92,7 +92,7 @@ class TelemetryCreate(StrictSchema):
 
 class JobResponse(StrictSchema):
     id: int
-    status: Literal["pending"]
+    status: Literal["pending", "processing", "retry", "completed", "unavailable", "failed"]
     state_policy: Literal["forward_only", "historical_only"]
 
 
@@ -109,7 +109,7 @@ class TelemetryResponse(StrictSchema):
     normalized_telemetry: TelemetryCreate
     quality_flags: dict[str, list[str]]
     out_of_order: bool
-    analytics_status: Literal["pending"] = "pending"
+    analytics_status: Literal["pending", "processing", "retry", "completed", "unavailable", "failed"] = "pending"
     processing_job: JobResponse
 
 
