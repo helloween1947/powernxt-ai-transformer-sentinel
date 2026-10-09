@@ -18,6 +18,8 @@ from backend.app.models.analytics import (
     AnalyticsStream,
 )
 from backend.app.models.telemetry import ProcessingJob, TelemetryReading
+from backend.app.services.incidents import persist_plan, mark_continuity_break
+from backend.app.analytics.person_b.incident_orchestration import IncidentPlanningError
 
 NONTERMINAL = ("pending", "retry", "processing")
 
@@ -113,6 +115,7 @@ def claim_next(factory, *, lease_seconds=60, max_attempts=3):
                     now,
                 )
                 job.claim_token = job.lease_until = None
+                mark_continuity_break(db, reading, state_policy=job.state_policy)
                 if head.active_job_id == job.id:
                     head.active_token = head.active_job_id = head.lease_until = None
                 continue
@@ -230,17 +233,18 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
             if output["execution_status"]["outcome"] == "insufficient_input_or_state"
             else "completed"
         )
-        db.add(
-            AnalyticsResult(
-                reading_id=reading.id,
-                model_id=key[3],
-                model_version=key[4],
-                parameter_version=key[6],
-                schema_version=output["metadata"]["result_schema_version"],
-                status=status,
-                payload=output,
-            )
+        result = AnalyticsResult(
+            reading_id=reading.id,
+            model_id=key[3],
+            model_version=key[4],
+            parameter_version=key[6],
+            schema_version=output["metadata"]["result_schema_version"],
+            status=status,
+            payload=output,
         )
+        db.add(result)
+        db.flush()  # Detector evidence binds to this real result ID, never a placeholder.
+        persist_plan(db, reading, result, now, state_policy=policy)
         if advancing:
             state = db.get(AnalyticsState, key)
             if state is None:
@@ -289,16 +293,20 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
 
 def record_failure(factory, claim, error, *, max_attempts=3, retry_seconds=1):
     with factory.begin() as db:
-        job, _, head, now = fenced(db, claim)
+        job, reading, head, now = fenced(db, claim)
         # Persist bounded machine codes, never exception text/payload/credentials.
         job.last_error = (
-            "invalid_computation_input"
+            error.code
+            if isinstance(error, IncidentPlanningError)
+            else "invalid_computation_input"
             if isinstance(error, ValueError)
             else "thermal_computation_error"
             if isinstance(error, ComputationError)
             else "worker_computation_error"
         )
         job.status = "failed" if job.attempts >= max_attempts else "retry"
+        if job.status == "failed":
+            mark_continuity_break(db, reading, state_policy=job.state_policy)
         job.available_at = now + timedelta(
             seconds=min(300, retry_seconds * 2 ** (job.attempts - 1))
         )

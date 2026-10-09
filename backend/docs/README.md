@@ -14,3 +14,5 @@ This directory contains technical notes, architecture design records, and intern
 - [Telemetry ingestion API, migrations and verification](telemetry-ingestion.md)
 
 The [durable worker](../../docs/analytics-worker.md) and [versioned result APIs](../../docs/contracts/analytics-contract.md) extend telemetry's persisted job status. Processing runs in a separate opt-in Compose service, not API startup.
+
+- [Canonical incidents, trusted credentials, API examples and isolated verification](incidents.md)

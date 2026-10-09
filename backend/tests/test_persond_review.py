@@ -75,7 +75,8 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
     cfg = Config("backend/alembic.ini")
     with factory.kw["bind"].begin() as connection:
         cfg.attributes["connection"] = connection
-        command.downgrade(cfg, start)
+        if start != "d730a91b4c22":
+            command.downgrade(cfg, start)
     assert (
         client.post(
             f"/api/v1/assets/{asset['asset_id']}/configurations", json=configuration
@@ -95,6 +96,9 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
         assert run_once(
             factory
         )  # Stores genuine electrical evidence with unsupported thermal reasons.
+        with factory.kw["bind"].begin() as connection:
+            cfg.attributes["connection"] = connection
+            command.downgrade(cfg, start)
     else:
         # D003 does not yet have worker tables/columns: populate maintenance first.
         task = client.post(
@@ -145,7 +149,7 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
         command.upgrade(cfg, "head")
         assert connection.execute(
             text("SELECT version_num FROM alembic_version")
-        ).scalars().all() == ["d004_worker_maintenance"]
+        ).scalars().all() == ["a001_incident_registry"]
         for name, saved in before.items():
             after = (
                 connection.execute(

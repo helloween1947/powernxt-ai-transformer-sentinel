@@ -1,0 +1,1032 @@
+{
+  "base_main_commit": "f52f56515c38fce55451fd499be81ef2508e6677",
+  "branch": "feature/persona-incident-registry",
+  "platform": "Linux, Python 3.12, isolated PostgreSQL 16",
+  "backend_tests": {
+    "passed": 246,
+    "failed": 0,
+    "warnings": 252,
+    "elapsed_seconds": 80.54
+  },
+  "merged_contract_tests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "migration_head": "a001_incident_registry",
+  "migration_paths": [
+    "fresh",
+    "84b8976a7d0d",
+    "ce21c3b8140a",
+    "d001_maintenance",
+    "d002_task_workflow",
+    "both_previous_heads",
+    "d003_audit_maintenance",
+    "d730a91b4c22",
+    "d004_worker_maintenance"
+  ],
+  "migration_checks": {
+    "fresh_isolated_database_upgrade": "passed",
+    "legacy_full_row_preservation": "passed",
+    "completed_cancelled_sample_history_preservation": "passed",
+    "metadata_alembic_check": "no new upgrade operations",
+    "offline_upgrade_sql": "generated",
+    "populated_downgrade": "refused as designed"
+  },
+  "http_worker": {
+    "executed_utc": "2026-10-09T18:38:38.151969+00:00",
+    "scope": "Actual HTTP and fenced worker; isolated PostgreSQL only; synthetic inputs",
+    "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+    "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+    "control": {
+      "schema_version": "incident-control-result-1.0.0",
+      "control_version": 1,
+      "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+      "previous_epoch": null,
+      "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+      "source": "simulator",
+      "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+      "configuration_version": 1,
+      "model_version": "stored-reading-top-oil-1.0.1",
+      "detector_version": "sustained-threshold-1.0.1",
+      "parameter_version": "asset-config-1:f725eaa04313eaffc3988c8cc438c0c4b22aecf6fac4c6a5b0438d6bef46c332",
+      "policy_fingerprint": "361f519697a38122bbe4010726ee7320a7b1745848d3b7b6b1a8866b2ccb373a",
+      "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2",
+      "boundary_measurement_time": null
+    },
+    "opened": {
+      "schema_version": "incident-1.0.0",
+      "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+      "incident_version": 1,
+      "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+      "source": "analytics",
+      "measurement_source": "simulator",
+      "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+      "category": "capacity_overload",
+      "severity": "warning",
+      "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+      "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+      "condition_status": "active",
+      "monitoring_status": "monitoring",
+      "opened_at": "2026-01-01T00:03:00Z",
+      "recovered_at": null,
+      "last_evaluated_measurement_time": "2026-01-01T00:03:00Z",
+      "last_evidence_status": "available",
+      "acknowledgement": {
+        "status": "unacknowledged",
+        "acknowledged_at": null,
+        "actor_ref": null
+      }
+    },
+    "acknowledged": {
+      "schema_version": "incident-1.0.0",
+      "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+      "incident_version": 2,
+      "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+      "source": "analytics",
+      "measurement_source": "simulator",
+      "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+      "category": "capacity_overload",
+      "severity": "warning",
+      "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+      "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+      "condition_status": "active",
+      "monitoring_status": "monitoring",
+      "opened_at": "2026-01-01T00:03:00Z",
+      "recovered_at": null,
+      "last_evaluated_measurement_time": "2026-01-01T00:03:00Z",
+      "last_evidence_status": "available",
+      "acknowledgement": {
+        "status": "acknowledged",
+        "acknowledged_at": "2026-10-09T18:38:37.944828Z",
+        "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2"
+      }
+    },
+    "recovered": {
+      "schema_version": "incident-1.0.0",
+      "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+      "incident_version": 4,
+      "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+      "source": "analytics",
+      "measurement_source": "simulator",
+      "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+      "category": "capacity_overload",
+      "severity": "warning",
+      "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+      "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+      "condition_status": "recovered",
+      "monitoring_status": "monitoring",
+      "opened_at": "2026-01-01T00:03:00Z",
+      "recovered_at": "2026-01-01T00:06:00Z",
+      "last_evaluated_measurement_time": "2026-01-01T00:06:00Z",
+      "last_evidence_status": "available",
+      "acknowledgement": {
+        "status": "acknowledged",
+        "acknowledged_at": "2026-10-09T18:38:37.944828Z",
+        "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2"
+      }
+    },
+    "evidence": {
+      "schema_version": "incident-evidence-page-1.0.0",
+      "items": [
+        {
+          "evidence_id": 4,
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 1,
+          "recorded_at": "2026-10-09T18:38:37.905361Z",
+          "payload": {
+            "reading_id": 6,
+            "message_id": "99e81099-9448-4396-82a3-ae3c2f86bb08",
+            "result_id": 6,
+            "measurement_time": "2026-01-01T00:03:00Z",
+            "observation_kind": "opened",
+            "temperatures": {
+              "measured_top_oil_temperature_c": 55.0,
+              "predicted_top_oil_temperature_c": null,
+              "thermal_residual_c": null
+            },
+            "temperature_unit": "C",
+            "rule_evidence": {
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120.0,
+              "recovery": 100.0,
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "persistence_required_s": 180.0,
+              "recovery_required_s": 120.0
+            },
+            "data_confidence": {
+              "score": null,
+              "status": "not_estimated",
+              "reason": "no_calibrated_confidence_model",
+              "usable_required_channel_count": 8,
+              "required_channel_count": 8,
+              "channels": {
+                "voltage_r_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_y_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_b_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_r_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_y_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_b_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "ambient_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_level_pct": {
+                  "usable": false,
+                  "reasons": [
+                    "missing"
+                  ]
+                }
+              }
+            },
+            "versions": {
+              "model_id": "powernxt-electrical-top-oil",
+              "model_version": "stored-reading-top-oil-1.0.1",
+              "result_schema_version": "stored-reading-result-1.1.0",
+              "parameter_version": "asset-config-1:f725eaa04313eaffc3988c8cc438c0c4b22aecf6fac4c6a5b0438d6bef46c332",
+              "configuration_version": 1,
+              "detector_version": "sustained-threshold-1.0.1",
+              "policy_version": "isolated-assumed-v1",
+              "policy_fingerprint": "361f519697a38122bbe4010726ee7320a7b1745848d3b7b6b1a8866b2ccb373a"
+            },
+            "parameter_provenance": {
+              "rated_kva": "assumed",
+              "rated_voltage_v": "assumed",
+              "rated_current_a": "assumed",
+              "voltage_convention": "assumed",
+              "measurement_side": "assumed",
+              "cooling_type": "assumed"
+            },
+            "policy_provenance": "assumed",
+            "quality_availability": {
+              "electrical_metrics.phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.max_phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.thermal_load_pu": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.current_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.voltage_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.apparent_power_kva": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.capacity_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.active_power_kw": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.reactive_power_kvar": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.power_factor": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.symmetrical_components": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "thermal_assessment.predicted_top_oil_temperature_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              },
+              "thermal_assessment.thermal_residual_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "evidence_id": 5,
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 3,
+          "recorded_at": "2026-10-09T18:38:37.981017Z",
+          "payload": {
+            "reading_id": 7,
+            "message_id": "6497435c-a74d-4d8c-bb36-d100dadc33c9",
+            "result_id": 7,
+            "measurement_time": "2026-01-01T00:04:00Z",
+            "observation_kind": "updated",
+            "temperatures": {
+              "measured_top_oil_temperature_c": 55.0,
+              "predicted_top_oil_temperature_c": null,
+              "thermal_residual_c": null
+            },
+            "temperature_unit": "C",
+            "rule_evidence": {
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120.0,
+              "recovery": 100.0,
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "persistence_required_s": 180.0,
+              "recovery_required_s": 120.0
+            },
+            "data_confidence": {
+              "score": null,
+              "status": "not_estimated",
+              "reason": "no_calibrated_confidence_model",
+              "usable_required_channel_count": 8,
+              "required_channel_count": 8,
+              "channels": {
+                "voltage_r_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_y_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_b_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_r_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_y_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_b_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "ambient_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_level_pct": {
+                  "usable": false,
+                  "reasons": [
+                    "missing"
+                  ]
+                }
+              }
+            },
+            "versions": {
+              "model_id": "powernxt-electrical-top-oil",
+              "model_version": "stored-reading-top-oil-1.0.1",
+              "result_schema_version": "stored-reading-result-1.1.0",
+              "parameter_version": "asset-config-1:f725eaa04313eaffc3988c8cc438c0c4b22aecf6fac4c6a5b0438d6bef46c332",
+              "configuration_version": 1,
+              "detector_version": "sustained-threshold-1.0.1",
+              "policy_version": "isolated-assumed-v1",
+              "policy_fingerprint": "361f519697a38122bbe4010726ee7320a7b1745848d3b7b6b1a8866b2ccb373a"
+            },
+            "parameter_provenance": {
+              "rated_kva": "assumed",
+              "rated_voltage_v": "assumed",
+              "rated_current_a": "assumed",
+              "voltage_convention": "assumed",
+              "measurement_side": "assumed",
+              "cooling_type": "assumed"
+            },
+            "policy_provenance": "assumed",
+            "quality_availability": {
+              "electrical_metrics.phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.max_phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.thermal_load_pu": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.current_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.voltage_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.apparent_power_kva": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.capacity_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.active_power_kw": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.reactive_power_kvar": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.power_factor": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.symmetrical_components": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "thermal_assessment.predicted_top_oil_temperature_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              },
+              "thermal_assessment.thermal_residual_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "evidence_id": 6,
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 4,
+          "recorded_at": "2026-10-09T18:38:38.029374Z",
+          "payload": {
+            "reading_id": 8,
+            "message_id": "704a5c62-1f06-4d15-85b5-c447d61b2e0c",
+            "result_id": 8,
+            "measurement_time": "2026-01-01T00:06:00Z",
+            "observation_kind": "recovered",
+            "temperatures": {
+              "measured_top_oil_temperature_c": 55.0,
+              "predicted_top_oil_temperature_c": null,
+              "thermal_residual_c": null
+            },
+            "temperature_unit": "C",
+            "rule_evidence": {
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120.0,
+              "recovery": 100.0,
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "persistence_required_s": 180.0,
+              "recovery_required_s": 120.0
+            },
+            "data_confidence": {
+              "score": null,
+              "status": "not_estimated",
+              "reason": "no_calibrated_confidence_model",
+              "usable_required_channel_count": 8,
+              "required_channel_count": 8,
+              "channels": {
+                "voltage_r_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_y_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "voltage_b_v": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_r_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_y_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "current_b_a": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "ambient_temperature_c": {
+                  "usable": true,
+                  "reasons": []
+                },
+                "oil_level_pct": {
+                  "usable": false,
+                  "reasons": [
+                    "missing"
+                  ]
+                }
+              }
+            },
+            "versions": {
+              "model_id": "powernxt-electrical-top-oil",
+              "model_version": "stored-reading-top-oil-1.0.1",
+              "result_schema_version": "stored-reading-result-1.1.0",
+              "parameter_version": "asset-config-1:f725eaa04313eaffc3988c8cc438c0c4b22aecf6fac4c6a5b0438d6bef46c332",
+              "configuration_version": 1,
+              "detector_version": "sustained-threshold-1.0.1",
+              "policy_version": "isolated-assumed-v1",
+              "policy_fingerprint": "361f519697a38122bbe4010726ee7320a7b1745848d3b7b6b1a8866b2ccb373a"
+            },
+            "parameter_provenance": {
+              "rated_kva": "assumed",
+              "rated_voltage_v": "assumed",
+              "rated_current_a": "assumed",
+              "voltage_convention": "assumed",
+              "measurement_side": "assumed",
+              "cooling_type": "assumed"
+            },
+            "policy_provenance": "assumed",
+            "quality_availability": {
+              "electrical_metrics.phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.max_phase_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.thermal_load_pu": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.current_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.voltage_magnitude_imbalance_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.apparent_power_kva": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.capacity_loading_pct": {
+                "status": "available",
+                "reasons": []
+              },
+              "electrical_metrics.active_power_kw": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.reactive_power_kvar": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.power_factor": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "electrical_metrics.symmetrical_components": {
+                "status": "unavailable",
+                "reasons": [
+                  "phase_angles_or_power_channels_not_supplied"
+                ]
+              },
+              "thermal_assessment.predicted_top_oil_temperature_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              },
+              "thermal_assessment.thermal_residual_c": {
+                "status": "unavailable",
+                "reasons": [
+                  "thermal_parameters.rated_top_oil_rise_c",
+                  "thermal_parameters.oil_time_constant_min",
+                  "thermal_parameters.loss_ratio",
+                  "thermal_parameters.oil_exponent"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "next_cursor": null
+    },
+    "events": {
+      "schema_version": "incident-event-page-1.0.0",
+      "items": [
+        {
+          "event_id": "9e860657-a9e0-4197-ac01-daa24b78262a",
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 1,
+          "event_type": "incident.opened",
+          "evidence_id": 4,
+          "actor_id": null,
+          "recorded_at": "2026-10-09T18:38:37.905361Z",
+          "payload": {
+            "schema_version": "incident-event-1.0.0",
+            "incident": {
+              "schema_version": "incident-1.0.0",
+              "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+              "incident_version": 1,
+              "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+              "source": "analytics",
+              "measurement_source": "simulator",
+              "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+              "category": "capacity_overload",
+              "severity": "warning",
+              "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+              "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+              "condition_status": "active",
+              "monitoring_status": "monitoring",
+              "opened_at": "2026-01-01T00:03:00Z",
+              "recovered_at": null,
+              "last_evaluated_measurement_time": "2026-01-01T00:03:00Z",
+              "last_evidence_status": "available",
+              "acknowledgement": {
+                "status": "unacknowledged",
+                "acknowledged_at": null,
+                "actor_ref": null
+              }
+            },
+            "details": {}
+          }
+        },
+        {
+          "event_id": "52ae8e9c-def1-4745-b4bd-74e2a726e80f",
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 2,
+          "event_type": "incident.acknowledged",
+          "evidence_id": null,
+          "actor_id": "4b4b1af0-9844-457e-8f79-8222aa50d6e2",
+          "recorded_at": "2026-10-09T18:38:37.944828Z",
+          "payload": {
+            "schema_version": "incident-event-1.0.0",
+            "incident": {
+              "schema_version": "incident-1.0.0",
+              "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+              "incident_version": 2,
+              "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+              "source": "analytics",
+              "measurement_source": "simulator",
+              "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+              "category": "capacity_overload",
+              "severity": "warning",
+              "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+              "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+              "condition_status": "active",
+              "monitoring_status": "monitoring",
+              "opened_at": "2026-01-01T00:03:00Z",
+              "recovered_at": null,
+              "last_evaluated_measurement_time": "2026-01-01T00:03:00Z",
+              "last_evidence_status": "available",
+              "acknowledgement": {
+                "status": "acknowledged",
+                "acknowledged_at": "2026-10-09T18:38:37.944828Z",
+                "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2"
+              }
+            },
+            "details": {}
+          }
+        },
+        {
+          "event_id": "c0808b6d-5064-47ab-af77-51e0b30330d6",
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 3,
+          "event_type": "incident.updated",
+          "evidence_id": 5,
+          "actor_id": null,
+          "recorded_at": "2026-10-09T18:38:37.981017Z",
+          "payload": {
+            "schema_version": "incident-event-1.0.0",
+            "incident": {
+              "schema_version": "incident-1.0.0",
+              "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+              "incident_version": 3,
+              "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+              "source": "analytics",
+              "measurement_source": "simulator",
+              "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+              "category": "capacity_overload",
+              "severity": "warning",
+              "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+              "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+              "condition_status": "active",
+              "monitoring_status": "monitoring",
+              "opened_at": "2026-01-01T00:03:00Z",
+              "recovered_at": null,
+              "last_evaluated_measurement_time": "2026-01-01T00:04:00Z",
+              "last_evidence_status": "available",
+              "acknowledgement": {
+                "status": "acknowledged",
+                "acknowledged_at": "2026-10-09T18:38:37.944828Z",
+                "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2"
+              }
+            },
+            "details": {}
+          }
+        },
+        {
+          "event_id": "3efb3d2a-74f2-48f2-ad3d-ccef8b57d32c",
+          "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+          "incident_version": 4,
+          "event_type": "incident.recovered",
+          "evidence_id": 6,
+          "actor_id": null,
+          "recorded_at": "2026-10-09T18:38:38.029374Z",
+          "payload": {
+            "schema_version": "incident-event-1.0.0",
+            "incident": {
+              "schema_version": "incident-1.0.0",
+              "incident_id": "174b12d0-3ee9-405a-9540-529d76f92078",
+              "incident_version": 4,
+              "asset_id": "incident-test-881ecca526994222af0c550c0af2bd39",
+              "source": "analytics",
+              "measurement_source": "simulator",
+              "run_id": "registry-a90ae07244ce493bb3a2f00637181a70",
+              "category": "capacity_overload",
+              "severity": "warning",
+              "detector_epoch": "c0280685-8fb0-43ff-9c48-5958e5776304",
+              "detector_episode_key": "f983c7b1b9e2c62e3df7283015cd8a2678b4a174d18c6044356dfe3c3ae8d1b0:capacity_overload:1",
+              "condition_status": "recovered",
+              "monitoring_status": "monitoring",
+              "opened_at": "2026-01-01T00:03:00Z",
+              "recovered_at": "2026-01-01T00:06:00Z",
+              "last_evaluated_measurement_time": "2026-01-01T00:06:00Z",
+              "last_evidence_status": "available",
+              "acknowledgement": {
+                "status": "acknowledged",
+                "acknowledged_at": "2026-10-09T18:38:37.944828Z",
+                "actor_ref": "4b4b1af0-9844-457e-8f79-8222aa50d6e2"
+              }
+            },
+            "details": {}
+          }
+        }
+      ],
+      "next_cursor": null
+    },
+    "checks": {
+      "canonical_episode": true,
+      "independent_ack_recovery": true,
+      "duplicate_no_extra_records": true,
+      "source_run_isolation": true,
+      "incident_count": 1,
+      "evidence_count": 3,
+      "event_count": 4
+    },
+    "limitations": [
+      "No browser, production detector calibration, real device fault or maintenance FK verification",
+      "No development data or services changed; no restarts"
+    ]
+  },
+  "dependency_inventory": {
+    "declared_security_schemes": [
+      "IncidentBearer"
+    ],
+    "limitations": [
+      "Declared routes and tables do not prove persistence or canonical mapping correctness.",
+      "OpenAPI security declarations do not prove trusted identity/authorization.",
+      "Contract acceptance and runtime/database/browser verification require separate review."
+    ],
+    "migration_heads": [
+      "a001_incident_registry"
+    ],
+    "operations": [
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/analytics/results/{result_id}"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets"
+      },
+      {
+        "declared_security": [],
+        "method": "POST",
+        "path": "/api/v1/assets"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets/{asset_id}"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets/{asset_id}/analytics/latest"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets/{asset_id}/configurations"
+      },
+      {
+        "declared_security": [],
+        "method": "POST",
+        "path": "/api/v1/assets/{asset_id}/configurations"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "POST",
+        "path": "/api/v1/assets/{asset_id}/detector-handovers"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets/{asset_id}/telemetry"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/assets/{asset_id}/telemetry/latest"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/incidents"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/incidents/{incident_id}"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "POST",
+        "path": "/api/v1/incidents/{incident_id}/acknowledgements"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/incidents/{incident_id}/events"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/incidents/{incident_id}/evidence"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/maintenance/tasks"
+      },
+      {
+        "declared_security": [],
+        "method": "POST",
+        "path": "/api/v1/maintenance/tasks"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/maintenance/tasks/{task_id}"
+      },
+      {
+        "declared_security": [],
+        "method": "PATCH",
+        "path": "/api/v1/maintenance/tasks/{task_id}"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/maintenance/tasks/{task_id}/history"
+      },
+      {
+        "declared_security": [
+          {
+            "IncidentBearer": []
+          }
+        ],
+        "method": "GET",
+        "path": "/api/v1/operators/me"
+      },
+      {
+        "declared_security": [],
+        "method": "POST",
+        "path": "/api/v1/telemetry"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/api/v1/telemetry/{reading_id}/analytics"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/health/live"
+      },
+      {
+        "declared_security": [],
+        "method": "GET",
+        "path": "/health/ready"
+      }
+    ],
+    "registered_tables": [
+      "analytics_results",
+      "analytics_states",
+      "analytics_streams",
+      "asset_configurations",
+      "assets",
+      "incident_detector_controls",
+      "incident_detector_epochs",
+      "incident_events",
+      "incident_evidence",
+      "incident_operations",
+      "incident_operators",
+      "incidents",
+      "maintenance_task_history",
+      "maintenance_tasks",
+      "telemetry_processing_jobs",
+      "telemetry_readings"
+    ],
+    "scope": "Local migration graph, registered metadata and OpenAPI only; no database/network I/O"
+  },
+  "source_sha256": {
+    "backend/app/analytics/person_b/INCIDENT_SOURCE.json": "9511c11c08e477059b45d6f25c7b8faa4db2ef7f461578c4266bb8089131ebe3",
+    "backend/app/analytics/person_b/incident_orchestration.py": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea",
+    "backend/app/analytics/person_b/persistence.py": "b8392a1fd45c34789b8c2fb09047788ab28928490434b93ec77bb01a9614f5c9",
+    "backend/app/analytics/person_b/validation.py": "09cc8fd9ef1b68e606864fd8f5238017985e3a9b8d9039b4be0878577933dac3",
+    "backend/app/api/__init__.py": "8595c30d2bc9325a8fd7fc1cb27ae704098c6b96ac434658bcc07badcec106a6",
+    "backend/app/api/incidents.py": "b4aab28af39d7973b1d484ff39429d31c7220ce425caeb87ad36f57a4492ad41",
+    "backend/app/models/__init__.py": "beea1951c53186329910b250d653cc513f58d3daba0732be2cb5de8754c46b2b",
+    "backend/app/models/incidents.py": "3c5f9ecd79b7be4f5df77d79ab50283a55bd10fd3d4246f4b4c4c397173b066f",
+    "backend/app/operators.py": "e7b2f5f8474e1122cd8c2cf09054c4ed681d60f4a4c652617a6418f181f2f293",
+    "backend/app/schemas/incidents.py": "d30a6c10cabaf717966b498907dedfdf0e4b4cf4784a79f091c0ab88602ef6cb",
+    "backend/app/services/analytics_worker.py": "0a7e7c076ea4ebb4b5052f8705a24f47d6a922397b9f30ae014c8c3c1461f453",
+    "backend/app/services/incidents.py": "06b21ff03aff0b29ffb95230b3884b10b4c7e761afc239db028f7a0ca6730c11",
+    "backend/migrations/versions/20261009_a001_incident_registry.py": "c839299e7928721b4450fff52e245792199b1b70265d88e5a4e0d0b684057950",
+    "backend/tests/test_incidents.py": "a274d24451a7730d0088168a9aca9231ab6499110526096635a56d756d878d2e",
+    "backend/tests/test_maintenance_migration_integration.py": "b936df1c075035eff714559b5a034068d54f6df388813545a5e02d0367a9cd2a",
+    "backend/tests/test_persond_review.py": "4f5bb9bb31615347e19a0b1a659339f1fdc67e5702d42c08cb9af1d95faea0fa",
+    "integration/verify_incident_registry.py": "252a5b82c652864839a8e9bd4036dda1d8f4d92bf5c3d61af03d5bd11c7b391c"
+  },
+  "limitations": [
+    "No Windows/browser execution",
+    "No development service rebuild/restart/migration or data changes",
+    "No shared deployment, calibration or genuine task FK implemented",
+    "Hosted PR/CI status requires GitHub access"
+  ],
+  "verification_note": "One trailing blank line removed after full suite; incident regressions rerun on the final bytes.",
+  "final_incident_regression_rerun": {
+    "passed": 23,
+    "failed": 0,
+    "warnings": 28,
+    "elapsed_seconds": 11.92
+  }
+}

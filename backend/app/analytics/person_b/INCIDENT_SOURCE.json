@@ -1,0 +1,10 @@
+{
+  "author": "Person B",
+  "commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+  "source_sha256": {
+    "analytics/persistence.py": "e6e2698ba77c495975beb771e69706dbb4cdc530c1a3702edf56b5932b48dc32",
+    "analytics/validation.py": "3fa213a186c87e6c78ef49be0cf3ba130a6a7620b78af82111cdda1efd964501",
+    "analytics/incident_orchestration.py": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea"
+  },
+  "adaptations": "persistence/validation imports use existing vendored core; unused worker_state validator excluded; model1.0.1 retained"
+}
