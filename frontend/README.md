@@ -337,7 +337,11 @@ scenario HTTP route appears in the actual backend OpenAPI. What-if remains a
 fixture view. COVERAGE.md records the answered stored-field request and a short
 unsent request for HTTP schemas, binding/assumptions/units/validation/availability.
 
-The latest review inspection found #1/#5/#12 already merged by D without recorded
-formal reviews/comments; #5/#12 landed in stack branches and have not reached
-main. An authorized reviewed roll-up to main is still needed. No merge, push,
-PR-base change or teammate message is performed for this local update.
+PR18 has merged the #5/#12 roll-up into main. PR16 now targets main, integrated
+without conflicts at de5fed97. 34 frontend tests, lint/build, 222 current-main
+backend tests and actual Chrome/API checks passed. Browser validation used a
+separate copied database upgraded to D004 and temporary ports 3001/8001;
+environment files and the original demo database/servers were preserved.
+See ../docs/person-c-analytics-integration-verification.md for current evidence.
+Human review and current-head CI remain required before merge. What-if remains
+illustrative and phone testing remains deferred; no teammate message was sent.

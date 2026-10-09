@@ -1,3 +1,17 @@
+# Current PR16 validation
+
+PR18 is merged and PR16 now targets main. Current main `7b19626` was integrated
+without conflicts at `de5fed97`; the net diff contains only analytics frontend,
+client, tests and supporting documentation. Backend/model/integration/CI code
+matches main. 34 frontend tests, lint/build, 222 backend tests and actual
+Chrome/current-main API checks passed. Browser checks used a copied demo
+database upgraded to D004 and temporary ports 3001/8001; original environments,
+database/servers and unrelated work were preserved. No physical-phone or shared
+deployment validation is claimed. What-if remains illustrative with no scenario
+HTTP route in current OpenAPI. Human review and CI are required before merge.
+See ../docs/person-c-analytics-integration-verification.md for exact evidence.
+Earlier status/verification sections below are historical snapshots.
+
 # Latest local commit and roll-up preparation — 9 October 2026
 
 The reviewed analytics-contract corrections are committed locally on

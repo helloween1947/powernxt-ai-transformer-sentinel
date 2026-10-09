@@ -1,5 +1,23 @@
 # Frontend roll-up and PR16 publication review
 
+## Current state after authorized retarget
+
+PR18 has merged. Main `7b19626` contains both `ff6918d` and `f0b3572` by
+ancestry. PR16 now targets main; C merged this main into its branch without
+conflicts at `de5fed97`. The resulting net diff is 16 analytics UI/client/test
+and supporting documentation files, with no backend, analytics-model,
+integration, CI, environment or maintenance-mount diff.
+
+34 frontend tests, lint/build, 222 backend tests in the separate test database,
+and actual Chrome/current-main API checks passed. The browser used temporary
+ports 3001/8001 and a separate copied demo database upgraded to D004; existing
+environment files, original database/servers and Date.now()) were preserved.
+See ../docs/person-c-analytics-integration-verification.md for current evidence.
+The remaining gates are current-head CI and human review/approval before merge.
+What-if stays illustrative and phone testing remains deferred.
+
+Everything below records the earlier pre-merge inspection, not current status.
+
 Inspected9 October2026; no GitHub mutation performed.
 
 ## Exact references and ancestry
