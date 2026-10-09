@@ -166,3 +166,14 @@ test('a result cannot be labelled with another telemetry configuration or measur
     await assert.rejects(loadStreamSnapshot(c,selection,new AbortController().signal),/differs from telemetry/);
   }
 });
+
+test('unsupported thermal units stay gaps through the complete chart join', () => {
+  const result = analytics(1);
+  result.result.payload.metadata.units.oil_temperature = 'F';
+  result.result.payload.metadata.units.thermal_residual = 'F';
+  const point = thermalPoints([reading(1)], [adaptReadingAnalytics(result)])[0];
+  assert.equal(point.measured, null);
+  assert.equal(point.predicted, null);
+  assert.equal(point.residual, null);
+  assert.ok(point.reasons.includes('unsupported_metric_unit'));
+});

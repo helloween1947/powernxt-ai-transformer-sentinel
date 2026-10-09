@@ -1,5 +1,10 @@
 # Transformer Sentinel — Frontend
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 Person C's operator dashboard, built with React and Vite.
 
 Telemetry and sample maintenance were verified in an isolated combined checkout.
@@ -345,3 +350,10 @@ environment files and the original demo database/servers were preserved.
 See ../docs/person-c-analytics-integration-verification.md for current evidence.
 Human review and current-head CI remain required before merge. What-if remains
 illustrative and phone testing remains deferred; no teammate message was sent.
+
+Historical pre-PR18 inspection (retained as evidence, not current status):
+
+The latest review inspection found #1/#5/#12 already merged by D without recorded
+formal reviews/comments; #5/#12 landed in stack branches and have not reached
+main. An authorized reviewed roll-up to main is still needed. No merge, push,
+PR-base change or teammate message is performed for this local update.

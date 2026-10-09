@@ -1,5 +1,10 @@
 # Current PR16 validation
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 **Merged-state update:** PR16 is merged and current fetched main f288790
 contains d2d1feb. The merged dashboard passed 34 tests, lint/build and actual
 Chrome/API checks; saved maintenance records/history were checked read-only.

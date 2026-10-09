@@ -1,5 +1,10 @@
 # Frontend roll-up and PR16 publication review
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 ## Merged dashboard handover checklist — 9 October 2026
 
 Latest fetched main: `f2887902548212c4736ed69e9dd135c537c0d1c6`.

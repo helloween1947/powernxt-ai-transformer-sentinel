@@ -1,5 +1,10 @@
 # Person C stored analytics browser verification
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 ## Current-main validation after PR18 merge
 
 Final freshness check: main advanced to `6289ed1` through PR20 while CI was
