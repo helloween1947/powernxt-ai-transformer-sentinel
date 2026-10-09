@@ -1,0 +1,3410 @@
+{
+  "origin": "Actual synthetic module execution; assumed policy, not measured fault validation or published alerts.",
+  "policy": {
+    "version": "demo-capacity-v1",
+    "provenance": "assumed",
+    "max_gap_s": 300,
+    "rules": [
+      {
+        "name": "capacity_overload",
+        "quantity": "electrical_metrics.capacity_loading_pct",
+        "unit": "%",
+        "trigger": 120,
+        "recovery": 100,
+        "persistence_s": 180,
+        "recovery_s": 120,
+        "severity": "warning"
+      }
+    ]
+  },
+  "frames": [
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            150.0,
+            150.0,
+            150.0
+          ],
+          "max_phase_loading_pct": 150.0,
+          "thermal_load_pu": 1.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 1500.103223673291,
+          "capacity_loading_pct": 150.0103223673291,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": null,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": null,
+          "initial_condition": {
+            "value": 55.0,
+            "unit": "C",
+            "source": "simulator",
+            "measurement_time": "2026-01-01T00:00:00Z"
+          },
+          "elapsed_s": null,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": [
+            "initialized_from_measurement_prediction_not_independent"
+          ]
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 150.0103223673291,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": true,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:00:00Z",
+          "last_reading_identity": {
+            "reading_id": 1,
+            "message_id": "00000000-0000-4000-8000-000000000001"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.0,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 1.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 1,
+            "message_id": "00000000-0000-4000-8000-000000000001"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:00:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "degraded",
+          "outcome": "partially_available",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "unavailable",
+              "reasons": [
+                "initialized_from_measurement_prediction_not_independent"
+              ]
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "unavailable",
+              "reasons": [
+                "initialized_from_measurement_prediction_not_independent"
+              ]
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": null,
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:00:00Z",
+        "events": [],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 150.0103223673291,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:00:00Z",
+            "reading_identity": {
+              "reading_id": 1,
+              "message_id": "00000000-0000-4000-8000-000000000001"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:00:00Z",
+          "last_reading_identity": {
+            "reading_id": 1,
+            "message_id": "00000000-0000-4000-8000-000000000001"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": false,
+              "sequence": 0,
+              "incident_id": null,
+              "pending_s": 0.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": true,
+              "previous_recoverable": false,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 150.0103223673291,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:00:00Z",
+                "reading_identity": {
+                  "reading_id": 1,
+                  "message_id": "00000000-0000-4000-8000-000000000001"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": []
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            150.0,
+            150.0,
+            150.0
+          ],
+          "max_phase_loading_pct": 150.0,
+          "thermal_load_pu": 1.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 1500.103223673291,
+          "capacity_loading_pct": 150.0103223673291,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 55.25375215178976,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -0.2537521517897616,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 150.0103223673291,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": true,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:01:00Z",
+          "last_reading_identity": {
+            "reading_id": 2,
+            "message_id": "00000000-0000-4000-8000-000000000002"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.25375215178976,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 1.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 2,
+            "message_id": "00000000-0000-4000-8000-000000000002"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:01:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:00:00Z",
+        "last_reading_identity": {
+          "reading_id": 1,
+          "message_id": "00000000-0000-4000-8000-000000000001"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": false,
+            "sequence": 0,
+            "incident_id": null,
+            "pending_s": 0.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": false,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:00:00Z",
+              "reading_identity": {
+                "reading_id": 1,
+                "message_id": "00000000-0000-4000-8000-000000000001"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:01:00Z",
+        "events": [],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 150.0103223673291,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:01:00Z",
+            "reading_identity": {
+              "reading_id": 2,
+              "message_id": "00000000-0000-4000-8000-000000000002"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:01:00Z",
+          "last_reading_identity": {
+            "reading_id": 2,
+            "message_id": "00000000-0000-4000-8000-000000000002"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": false,
+              "sequence": 0,
+              "incident_id": null,
+              "pending_s": 60.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": true,
+              "previous_recoverable": false,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 150.0103223673291,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:01:00Z",
+                "reading_identity": {
+                  "reading_id": 2,
+                  "message_id": "00000000-0000-4000-8000-000000000002"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": []
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            150.0,
+            150.0,
+            150.0
+          ],
+          "max_phase_loading_pct": 150.0,
+          "thermal_load_pu": 1.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 1500.103223673291,
+          "capacity_loading_pct": 150.0103223673291,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 55.50609847808953,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -0.5060984780895268,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 150.0103223673291,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": true,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:02:00Z",
+          "last_reading_identity": {
+            "reading_id": 3,
+            "message_id": "00000000-0000-4000-8000-000000000003"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.50609847808953,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 1.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 3,
+            "message_id": "00000000-0000-4000-8000-000000000003"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:02:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:01:00Z",
+        "last_reading_identity": {
+          "reading_id": 2,
+          "message_id": "00000000-0000-4000-8000-000000000002"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": false,
+            "sequence": 0,
+            "incident_id": null,
+            "pending_s": 60.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": false,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:01:00Z",
+              "reading_identity": {
+                "reading_id": 2,
+                "message_id": "00000000-0000-4000-8000-000000000002"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:02:00Z",
+        "events": [],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 150.0103223673291,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:02:00Z",
+            "reading_identity": {
+              "reading_id": 3,
+              "message_id": "00000000-0000-4000-8000-000000000003"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:02:00Z",
+          "last_reading_identity": {
+            "reading_id": 3,
+            "message_id": "00000000-0000-4000-8000-000000000003"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": false,
+              "sequence": 0,
+              "incident_id": null,
+              "pending_s": 120.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": true,
+              "previous_recoverable": false,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 150.0103223673291,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:02:00Z",
+                "reading_identity": {
+                  "reading_id": 3,
+                  "message_id": "00000000-0000-4000-8000-000000000003"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": []
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            150.0,
+            150.0,
+            150.0
+          ],
+          "max_phase_loading_pct": 150.0,
+          "thermal_load_pu": 1.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 1500.103223673291,
+          "capacity_loading_pct": 150.0103223673291,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 55.75704676738618,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -0.7570467673861785,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 150.0103223673291,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": true,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:03:00Z",
+          "last_reading_identity": {
+            "reading_id": 4,
+            "message_id": "00000000-0000-4000-8000-000000000004"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.75704676738618,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 1.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 4,
+            "message_id": "00000000-0000-4000-8000-000000000004"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:03:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:02:00Z",
+        "last_reading_identity": {
+          "reading_id": 3,
+          "message_id": "00000000-0000-4000-8000-000000000003"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": false,
+            "sequence": 0,
+            "incident_id": null,
+            "pending_s": 120.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": false,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:02:00Z",
+              "reading_identity": {
+                "reading_id": 3,
+                "message_id": "00000000-0000-4000-8000-000000000003"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:03:00Z",
+        "events": [
+          {
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "category": "capacity_overload",
+            "severity": "warning",
+            "lifecycle": "opened",
+            "evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:03:00Z",
+              "reading_identity": {
+                "reading_id": 4,
+                "message_id": "00000000-0000-4000-8000-000000000004"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            },
+            "persistence_required_s": 180,
+            "recovery_required_s": 120
+          }
+        ],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 150.0103223673291,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:03:00Z",
+            "reading_identity": {
+              "reading_id": 4,
+              "message_id": "00000000-0000-4000-8000-000000000004"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:03:00Z",
+          "last_reading_identity": {
+            "reading_id": 4,
+            "message_id": "00000000-0000-4000-8000-000000000004"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": true,
+              "sequence": 1,
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+              "pending_s": 0.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": true,
+              "previous_recoverable": false,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 150.0103223673291,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:03:00Z",
+                "reading_identity": {
+                  "reading_id": 4,
+                  "message_id": "00000000-0000-4000-8000-000000000004"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": [
+          {
+            "category": "capacity_overload",
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": false,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:03:00Z",
+              "reading_identity": {
+                "reading_id": 4,
+                "message_id": "00000000-0000-4000-8000-000000000004"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            50.0,
+            50.0,
+            50.0
+          ],
+          "max_phase_loading_pct": 50.0,
+          "thermal_load_pu": 0.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 500.0344078910971,
+          "capacity_loading_pct": 50.00344078910971,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 56.00660476501722,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -1.0066047650172223,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 50.00344078910971,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:04:00Z",
+          "last_reading_identity": {
+            "reading_id": 5,
+            "message_id": "00000000-0000-4000-8000-000000000005"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 56.00660476501722,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 0.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 5,
+            "message_id": "00000000-0000-4000-8000-000000000005"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:04:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:03:00Z",
+        "last_reading_identity": {
+          "reading_id": 4,
+          "message_id": "00000000-0000-4000-8000-000000000004"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": false,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 150.0103223673291,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:03:00Z",
+              "reading_identity": {
+                "reading_id": 4,
+                "message_id": "00000000-0000-4000-8000-000000000004"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:04:00Z",
+        "events": [],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 50.00344078910971,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:04:00Z",
+            "reading_identity": {
+              "reading_id": 5,
+              "message_id": "00000000-0000-4000-8000-000000000005"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:04:00Z",
+          "last_reading_identity": {
+            "reading_id": 5,
+            "message_id": "00000000-0000-4000-8000-000000000005"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": true,
+              "sequence": 1,
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+              "pending_s": 0.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": true,
+              "previous_recoverable": true,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 50.00344078910971,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:04:00Z",
+                "reading_identity": {
+                  "reading_id": 5,
+                  "message_id": "00000000-0000-4000-8000-000000000005"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": [
+          {
+            "category": "capacity_overload",
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": true,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:04:00Z",
+              "reading_identity": {
+                "reading_id": 5,
+                "message_id": "00000000-0000-4000-8000-000000000005"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            50.0,
+            50.0,
+            50.0
+          ],
+          "max_phase_loading_pct": 50.0,
+          "thermal_load_pu": 0.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 500.0344078910971,
+          "capacity_loading_pct": 50.00344078910971,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 55.96363714941713,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -0.9636371494171314,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 50.00344078910971,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:05:00Z",
+          "last_reading_identity": {
+            "reading_id": 6,
+            "message_id": "00000000-0000-4000-8000-000000000006"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.96363714941713,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 0.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 6,
+            "message_id": "00000000-0000-4000-8000-000000000006"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:05:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:04:00Z",
+        "last_reading_identity": {
+          "reading_id": 5,
+          "message_id": "00000000-0000-4000-8000-000000000005"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 0.0,
+            "previous_abnormal": true,
+            "previous_recoverable": true,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:04:00Z",
+              "reading_identity": {
+                "reading_id": 5,
+                "message_id": "00000000-0000-4000-8000-000000000005"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:05:00Z",
+        "events": [],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 50.00344078910971,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:05:00Z",
+            "reading_identity": {
+              "reading_id": 6,
+              "message_id": "00000000-0000-4000-8000-000000000006"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:05:00Z",
+          "last_reading_identity": {
+            "reading_id": 6,
+            "message_id": "00000000-0000-4000-8000-000000000006"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": true,
+              "sequence": 1,
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+              "pending_s": 0.0,
+              "recovery_s": 60.0,
+              "previous_abnormal": true,
+              "previous_recoverable": true,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 50.00344078910971,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:05:00Z",
+                "reading_identity": {
+                  "reading_id": 6,
+                  "message_id": "00000000-0000-4000-8000-000000000006"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": [
+          {
+            "category": "capacity_overload",
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 60.0,
+            "previous_abnormal": true,
+            "previous_recoverable": true,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:05:00Z",
+              "reading_identity": {
+                "reading_id": 6,
+                "message_id": "00000000-0000-4000-8000-000000000006"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "analytics_result": {
+        "electrical_metrics": {
+          "phase_loading_pct": [
+            50.0,
+            50.0,
+            50.0
+          ],
+          "max_phase_loading_pct": 50.0,
+          "thermal_load_pu": 0.5,
+          "current_magnitude_imbalance_pct": 0.0,
+          "voltage_magnitude_imbalance_pct": 0.0,
+          "apparent_power_kva": 500.0344078910971,
+          "capacity_loading_pct": 50.00344078910971,
+          "apparent_power_method": "balanced_approximation_sqrt3_mean_line_voltage_mean_line_current",
+          "voltage_convention": "line_to_line",
+          "measurement_side": "primary",
+          "active_power_kw": null,
+          "reactive_power_kvar": null,
+          "power_factor": null,
+          "symmetrical_components": null
+        },
+        "thermal_assessment": {
+          "predicted_top_oil_temperature_c": 55.920907580938334,
+          "measured_top_oil_temperature_c": 55.0,
+          "thermal_residual_c": -0.9209075809383336,
+          "initial_condition": null,
+          "elapsed_s": 60.0,
+          "prediction_source": "estimated",
+          "interval_convention": "previous_sample_zero_order_hold",
+          "winding_hot_spot_temperature_c": null,
+          "reasons": []
+        },
+        "condition_contributors": {
+          "health_index": null,
+          "status": "not_assessed",
+          "reason": "no_agreed_validated_health_model",
+          "thermal_aging_acceleration_factor": null,
+          "loss_of_life_rate": null
+        },
+        "data_confidence": {
+          "score": null,
+          "status": "not_estimated",
+          "reason": "no_calibrated_confidence_model",
+          "usable_required_channel_count": 8,
+          "required_channel_count": 8,
+          "channels": {
+            "voltage_r_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_y_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "voltage_b_v": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_r_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_y_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "current_b_a": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "ambient_temperature_c": {
+              "usable": true,
+              "reasons": []
+            },
+            "oil_level_pct": {
+              "usable": false,
+              "reasons": [
+                "missing"
+              ]
+            }
+          }
+        },
+        "anomaly_observations": [
+          {
+            "kind": "configured_limit_check",
+            "quantity": "capacity_loading_pct",
+            "value": 50.00344078910971,
+            "threshold": 120,
+            "unit": "%",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "measured_top_oil_temperature_c",
+            "value": 55.0,
+            "threshold": 105,
+            "unit": "C",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_r_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_y_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 0.9,
+            "unit": "pu",
+            "relation": "lt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          },
+          {
+            "kind": "configured_limit_check",
+            "quantity": "voltage_b_pu",
+            "value": 1.0,
+            "threshold": 1.1,
+            "unit": "pu",
+            "relation": "gt",
+            "breached": false,
+            "status": "available",
+            "reasons": [],
+            "interpretation": "Instant comparison only; not an alert, probability or maintenance recommendation."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "stored-reading-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "last_measurement_time": "2026-01-01T00:06:00Z",
+          "last_reading_identity": {
+            "reading_id": 7,
+            "message_id": "00000000-0000-4000-8000-000000000007"
+          },
+          "thermal": {
+            "initialized": true,
+            "valid": true,
+            "oil_temp_c": 55.920907580938334,
+            "reason": null
+          },
+          "held_inputs": {
+            "thermal_load_pu": 0.5,
+            "ambient_temp_c": 30.0
+          }
+        },
+        "metadata": {
+          "result_schema_version": "stored-reading-result-1.1.0",
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "reading_identity": {
+            "reading_id": 7,
+            "message_id": "00000000-0000-4000-8000-000000000007"
+          },
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "measurement_time": "2026-01-01T00:06:00Z",
+          "configuration_version": 1,
+          "measurement_source": "simulator",
+          "parameter_provenance": {
+            "rated_kva": "assumed",
+            "rated_voltage_v": "assumed",
+            "rated_current_a": "assumed",
+            "voltage_convention": "assumed",
+            "measurement_side": "assumed",
+            "cooling_type": "assumed",
+            "operational_limits.max_load_pct": "assumed",
+            "operational_limits.min_voltage_pu": "assumed",
+            "operational_limits.max_voltage_pu": "assumed",
+            "operational_limits.max_top_oil_temp_c": "assumed",
+            "operational_limits.max_hot_spot_temp_c": "assumed",
+            "thermal_parameters.rated_top_oil_rise_c": "assumed",
+            "thermal_parameters.oil_time_constant_min": "assumed",
+            "thermal_parameters.loss_ratio": "assumed",
+            "thermal_parameters.oil_exponent": "assumed"
+          },
+          "units": {
+            "phase_loading_pct": "%",
+            "capacity_loading_pct": "%",
+            "apparent_power_kva": "kVA",
+            "thermal_load_pu": "pu",
+            "magnitude_imbalance": "%",
+            "oil_temperature": "C",
+            "thermal_residual": "C",
+            "elapsed_s": "s"
+          }
+        },
+        "execution_status": {
+          "status": "computed",
+          "outcome": "completed",
+          "state_advanced": true,
+          "state_policy": "forward_only",
+          "ordering_reasons": [],
+          "availability": {
+            "electrical_metrics.phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.max_phase_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.thermal_load_pu": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.current_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.voltage_magnitude_imbalance_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.apparent_power_kva": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.capacity_loading_pct": {
+              "status": "available",
+              "reasons": []
+            },
+            "electrical_metrics.active_power_kw": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.reactive_power_kvar": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.power_factor": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "electrical_metrics.symmetrical_components": {
+              "status": "unavailable",
+              "reasons": [
+                "phase_angles_or_power_channels_not_supplied"
+              ]
+            },
+            "thermal_assessment.predicted_top_oil_temperature_c": {
+              "status": "available",
+              "reasons": []
+            },
+            "thermal_assessment.thermal_residual_c": {
+              "status": "available",
+              "reasons": []
+            }
+          },
+          "unavailable_measurements": [],
+          "unsupported_outputs": [
+            "health_index",
+            "confidence_score",
+            "fault_probability",
+            "forecasts",
+            "maintenance_recommendations",
+            "winding_hot_spot_temperature_c",
+            "thermal_aging_acceleration_factor",
+            "loss_of_life_rate",
+            "remaining_useful_life"
+          ]
+        }
+      },
+      "previous_detector_state": {
+        "schema_version": "sustained-threshold-state-1.0.0",
+        "binding": {
+          "stream": {
+            "asset_id": "personb-worker-test",
+            "source": "simulator",
+            "run_id": "personb-numerical-test-v1"
+          },
+          "configuration_version": 1,
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+          "detector_version": "sustained-threshold-1.0.1",
+          "policy_version": "demo-capacity-v1",
+          "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+        },
+        "last_measurement_time": "2026-01-01T00:05:00Z",
+        "last_reading_identity": {
+          "reading_id": 6,
+          "message_id": "00000000-0000-4000-8000-000000000006"
+        },
+        "rules": {
+          "capacity_overload": {
+            "active": true,
+            "sequence": 1,
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "pending_s": 0.0,
+            "recovery_s": 60.0,
+            "previous_abnormal": true,
+            "previous_recoverable": true,
+            "last_usable_evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:05:00Z",
+              "reading_identity": {
+                "reading_id": 6,
+                "message_id": "00000000-0000-4000-8000-000000000006"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            }
+          }
+        }
+      },
+      "detector_result": {
+        "detector_version": "sustained-threshold-1.0.1",
+        "policy_version": "demo-capacity-v1",
+        "policy_provenance": "assumed",
+        "state_advanced": true,
+        "reasons": [],
+        "measurement_time": "2026-01-01T00:06:00Z",
+        "events": [
+          {
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+            "category": "capacity_overload",
+            "severity": "warning",
+            "lifecycle": "resolved",
+            "evidence": {
+              "rule": "capacity_overload",
+              "quantity": "electrical_metrics.capacity_loading_pct",
+              "value": 50.00344078910971,
+              "unit": "%",
+              "trigger": 120,
+              "recovery": 100,
+              "measurement_time": "2026-01-01T00:06:00Z",
+              "reading_identity": {
+                "reading_id": 7,
+                "message_id": "00000000-0000-4000-8000-000000000007"
+              },
+              "available": true,
+              "reasons": [],
+              "continuity": "sampled_endpoints",
+              "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+            },
+            "persistence_required_s": 180,
+            "recovery_required_s": 120
+          }
+        ],
+        "evidence": [
+          {
+            "rule": "capacity_overload",
+            "quantity": "electrical_metrics.capacity_loading_pct",
+            "value": 50.00344078910971,
+            "unit": "%",
+            "trigger": 120,
+            "recovery": 100,
+            "measurement_time": "2026-01-01T00:06:00Z",
+            "reading_identity": {
+              "reading_id": 7,
+              "message_id": "00000000-0000-4000-8000-000000000007"
+            },
+            "available": true,
+            "reasons": [],
+            "continuity": "sampled_endpoints",
+            "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+          }
+        ],
+        "updated_state": {
+          "schema_version": "sustained-threshold-state-1.0.0",
+          "binding": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_id": "powernxt-electrical-top-oil",
+            "model_version": "stored-reading-top-oil-1.0.2",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
+            "detector_version": "sustained-threshold-1.0.1",
+            "policy_version": "demo-capacity-v1",
+            "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
+          },
+          "last_measurement_time": "2026-01-01T00:06:00Z",
+          "last_reading_identity": {
+            "reading_id": 7,
+            "message_id": "00000000-0000-4000-8000-000000000007"
+          },
+          "rules": {
+            "capacity_overload": {
+              "active": false,
+              "sequence": 1,
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
+              "pending_s": 0.0,
+              "recovery_s": 0.0,
+              "previous_abnormal": false,
+              "previous_recoverable": true,
+              "last_usable_evidence": {
+                "rule": "capacity_overload",
+                "quantity": "electrical_metrics.capacity_loading_pct",
+                "value": 50.00344078910971,
+                "unit": "%",
+                "trigger": 120,
+                "recovery": 100,
+                "measurement_time": "2026-01-01T00:06:00Z",
+                "reading_identity": {
+                  "reading_id": 7,
+                  "message_id": "00000000-0000-4000-8000-000000000007"
+                },
+                "available": true,
+                "reasons": [],
+                "continuity": "sampled_endpoints",
+                "assumption": "Qualifying endpoints approximate continuous evidence between samples."
+              }
+            }
+          }
+        },
+        "active_incidents": []
+      }
+    }
+  ]
+}
