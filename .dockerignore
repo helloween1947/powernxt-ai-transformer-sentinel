@@ -1,0 +1,18 @@
+# Compose uses the repository root as its build context.
+.git
+**/.git
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+**/__pycache__
+**/*.py[cod]
+.venv
+**/.venv
+venv
+**/node_modules
+**/.pytest_cache
+**/.ruff_cache
+data/generated
+**/dist

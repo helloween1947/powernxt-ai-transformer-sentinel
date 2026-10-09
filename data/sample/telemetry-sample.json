@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "message_id": "a3f5b721-0089-4e31-9a78-2c3b2f567e91",
+  "asset_id": "XFR-SUB04-TX01",
+  "timestamp": "2026-10-07T10:45:00.000Z",
+  "source": "simulator",
+  "run_id": "sim-run-20261007-01",
+  "measurements": {
+    "voltage_r_v": 11020.5,
+    "voltage_y_v": 11015.0,
+    "voltage_b_v": 10998.2,
+    "current_r_a": 142.3,
+    "current_y_a": 141.8,
+    "current_b_a": 144.1,
+    "oil_temperature_c": 58.4,
+    "ambient_temperature_c": 28.5,
+    "oil_level_pct": 82.5
+  },
+  "configuration_version": 1,
+  "measurement_quality": {
+    "oil_temperature_c": "good"
+  }
+}

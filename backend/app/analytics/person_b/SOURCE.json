@@ -1,0 +1,11 @@
+{
+  "author": "Person B",
+  "commit": "637fbe810714d0d5c403728ddf7bcba746ea55a9",
+  "source_sha256": {
+    "analytics/worker.py": "bd46dc75a0dbcacf581c2deeda325457eb2e8f36d8c300cef5b8c362ac2cae90",
+    "analytics/adapter.py": "a87a938fda62c075552e31ad31709b2ac734795c296c833599eb4b676ce6d66f",
+    "analytics/transformer_twin/model.py": "83a3553f4332fcc6c68663748e509072eea5c7a6c09ec6413054db2917efc997",
+    "analytics/transformer_twin/engine.py": "f3bb2dbd4d248408bcb617573074e85d387eacd66be37111975aaad2365b4498"
+  },
+  "changes": "worker import paths only; AST-extracted _normalize, finite, AssetConfig, ThermalState, _advance, _timestamp; no legacy prototype API or heuristics"
+}
