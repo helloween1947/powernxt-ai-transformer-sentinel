@@ -33,3 +33,13 @@ export function adaptReadingAnalytics(envelope) {
     }) : [],
   };
 }
+
+export function adaptLatestAnalytics(envelope) {
+  if (envelope.schema_version !== '1.0.0') throw new Error('Unsupported analytics API version.');
+  if (envelope.result && (envelope.result.schema_version !== 'stored-reading-result-1.1.0' || envelope.result.reading_id !== envelope.latest_completed_reading_id)) {
+    throw new Error('Latest completed analytics has unsupported version or reading identity.');
+  }
+  return { ...envelope,
+    lagging: envelope.latest_telemetry_reading_id !== envelope.latest_completed_reading_id,
+  };
+}
