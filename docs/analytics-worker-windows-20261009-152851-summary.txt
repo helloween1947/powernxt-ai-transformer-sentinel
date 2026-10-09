@@ -1,0 +1,32 @@
+PASS — isolated Windows analytics-worker verification
+Tested commit: 7758354db46ce7fc6a5a5537a70528be658860af
+Branch: feature/analytics-worker
+Started: 2026-10-09 15:28:51 IST (+05:30)
+Integration/cleanup completed: 2026-10-09 15:30:18 IST; supplemental retained-state read and cleanup completed afterward (timestamp in JSON).
+Host: Microsoft Windows NT 10.0.26300.0; Docker Desktop client/server 29.8.2; Compose v5.5.1.
+
+Normal backend/Dockerfile clean build (--pull --no-cache) passed for backend and worker, exit 0. Fresh apt and pip dependency steps are in the log; no substitute image was used.
+Declared verification dependencies installed in project .venv, exit 0.
+Isolated migration upgrade head, integration module, Alembic current/check, stop, and supplemental stored-state query all exited 0.
+Migration: d730a91b4c22 (head). No new upgrade operations detected.
+Integration: Windows execution true; six initial completed results; six identical retries with unchanged counts/state; restart persistence true; abandoned-claim recovery attempts 2.
+Final counts: 8 readings, 8 jobs, 8 results across two independent runs. Stored state and stream advances independently read as [1,7].
+
+Isolated project: analytics_worker_test_194fc4f6
+API: http://127.0.0.1:18002 (port bind check passed before creation)
+Database: worker_integration_test
+Retained volume: analytics_worker_test_194fc4f6-postgres_data
+Asset: demo-worker-5968103aedcf4a0b9f16bc13e8436eef
+Runs: worker-5968103aedcf4a0b9f16bc13e8436eef and worker-5968103aedcf4a0b9f16bc13e8436eef-other
+These identifiers exist only in the isolated test database, not normal development data.
+
+All three isolated services are stopped with exit 0; volume/data retained. Supplemental inspection started only the test DB plus an ephemeral query container, then stopped the stack again. Worker was not started for that inspection.
+All four changed environment variables were restored in both finally blocks: COMPOSE_PROJECT_NAME, COMPOSE_FILE, ANALYTICS_TEST_PORT, WORKER_VERIFICATION_IMAGE_BASIS. Parent shell environment was unaffected.
+Initial repository status was clean before creating the execution harness. No tracked application files or assertions changed. No development restart/migration, branch switch, volume deletion, prune, commit, push, GitHub comment, merge, or deployment occurred.
+No applicable AGENTS.md was found. Initial sandbox helper setup failed; authorized Windows commands subsequently ran outside that failed sandbox.
+Remaining blocker: none for this isolated Windows verification. Browser/front-end integration remains a separate, unexecuted check.
+
+Evidence: analytics-worker-windows-20261009-152851.log (complete command/output log; ignored by existing *.log rule), matching .json (command exit codes and integration result), -states.json and -state-query.py (supplemental database evidence), and .ps1 (executed harness).
+
+Ready-to-paste PR #11 comment:
+Isolated Windows verification PASS on feature/analytics-worker at 7758354db46ce7fc6a5a5537a70528be658860af, 9 October 2026, 15:28–15:32 IST. Normal repository Dockerfile builds for backend/worker with --pull --no-cache passed (exit 0). Test project analytics_worker_test_194fc4f6 used port 18002 and a separate retained worker_integration_test database. Integration exited 0: 6 initial completions, 6 identical retries without count/state changes, final 8 readings/8 jobs/8 results across two runs, stored state/stream advances [1,7], abandoned-claim recovery on attempt 2, and restart persistence verified. Alembic is d730a91b4c22 (head); check exited 0 with no new upgrade operations. Evidence is under docs/analytics-worker-windows-20261009-152851*. All isolated services are stopped, data retained, and environment restored. Development services/data were untouched. No remaining isolated-verification blocker; browser/front-end verification is separate.

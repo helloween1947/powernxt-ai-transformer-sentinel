@@ -1,0 +1,137 @@
+﻿{
+    "started_ist":  "2026-10-09T15:28:51.1172509+05:30",
+    "execution":  "Windows PowerShell host with Docker Desktop Linux containers",
+    "status":  "PASS",
+    "commands":  [
+                     {
+                         "command":  "git branch --show-current",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "git rev-parse HEAD",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "git status --porcelain",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker version --format {{.Client.Version}} / {{.Server.Version}}",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose version",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  ".\\.venv\\Scripts\\python.exe -m pip install -r backend/requirements-dev.txt",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose --profile analytics build --pull --no-cache backend worker",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose up -d db",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose run --rm backend alembic -c backend/alembic.ini upgrade head",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose up -d --no-build backend",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  ".\\.venv\\Scripts\\python.exe -m integration.verify_analytics_worker --base-url http://127.0.0.1:18002",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose exec -T backend alembic -c backend/alembic.ini current",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose exec -T backend alembic -c backend/alembic.ini check",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose --profile analytics stop worker backend db",
+                         "exit_code":  0
+                     },
+                     {
+                         "command":  "docker compose --profile analytics ps --all --format json",
+                         "exit_code":  0
+                     }
+                 ],
+    "limitations":  [
+                        "Browser/front-end integration remains a separate check."
+                    ],
+    "environment_restored":  true,
+    "isolated_stack_stopped":  true,
+    "branch":  "feature/analytics-worker",
+    "tested_commit":  "7758354db46ce7fc6a5a5537a70528be658860af",
+    "initial_git_status":  "?? integration/run_windows_worker_verification.ps1",
+    "docker_versions":  "29.8.2 / 29.8.2",
+    "compose_version":  "Docker Compose version v5.5.1",
+    "project":  "analytics_worker_test_194fc4f6",
+    "api_port":  18002,
+    "retained_volume":  "analytics_worker_test_194fc4f6-postgres_data",
+    "clean_build":  "PASS: normal backend/Dockerfile, --pull --no-cache, backend and worker",
+    "integration":  {
+                        "status":  "PASS",
+                        "project":  "analytics_worker_test_194fc4f6",
+                        "asset_id":  "demo-worker-5968103aedcf4a0b9f16bc13e8436eef",
+                        "run_id":  "worker-5968103aedcf4a0b9f16bc13e8436eef",
+                        "first_batch_completed":  6,
+                        "identical_retries":  6,
+                        "restart_persistence":  true,
+                        "recovery_attempts":  2,
+                        "final_readings":  8,
+                        "final_jobs":  8,
+                        "final_results":  8,
+                        "stream_advances":  [
+                                                1,
+                                                7
+                                            ],
+                        "analytics_model":  "stored-reading-top-oil-1.0.1",
+                        "image_basis":  "normal repository Dockerfile build executed on Windows",
+                        "windows_execution":  true
+                    },
+    "migration_revision":  "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nd730a91b4c22 (head)",
+    "migration_consistency":  "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments\nINFO  [alembic.ddl.postgresql] Detected sequence named \u0027analytics_results_id_seq\u0027 as owned by integer column \u0027analytics_results(id)\u0027, assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named \u0027asset_configurations_id_seq\u0027 as owned by integer column \u0027asset_configurations(id)\u0027, assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named \u0027telemetry_readings_id_seq\u0027 as owned by integer column \u0027telemetry_readings(id)\u0027, assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named \u0027telemetry_processing_jobs_id_seq\u0027 as owned by integer column \u0027telemetry_processing_jobs(id)\u0027, assuming SERIAL and omitting\nNo new upgrade operations detected.",
+    "shutdown_ps":  "{\"Command\":\"\\\"uvicorn backend.app…\\\"\",\"CreatedAt\":\"2026-10-09 15:29:55 +0530 IST\",\"Engine\":\"\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"677ad2699dd8\",\"Image\":\"analytics_worker_test_194fc4f6-backend\",\"Labels\":\"com.docker.compose.config-hash=298939e1de35131e224ec9818bbd7b0da3ec6347f37edadf532afc5c43e26858,com.docker.compose.container-number=1,com.docker.compose.project=analytics_worker_test_194fc4f6,com.docker.compose.project.working_dir=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/8000/tcp=127.0.0.1:18002,com.docker.compose.depends_on=db:service_healthy:false,com.docker.compose.image=sha256:2d47bddf49fa308b628eef13bd25432419fd5f78cf2367a3991f5ddd654df78d,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\compose.yaml,C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\integration\\\\compose.analytics-test.yaml,com.docker.compose.service=backend,com.docker.compose.version=5.5.1\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"analytics_worker_test_194fc4f6-backend\",\"Names\":\"analytics_worker_test_194fc4f6-backend\",\"Networks\":\"analytics_worker_test_194fc4f6_default\",\"Ports\":\"\",\"Project\":\"analytics_worker_test_194fc4f6\",\"Publishers\":[],\"RunningFor\":\"23 seconds ago\",\"Service\":\"backend\",\"Size\":\"0B\",\"State\":\"exited\",\"Status\":\"Exited (0) Less than a second ago\"}\n{\"Command\":\"\\\"docker-entrypoint.s…\\\"\",\"CreatedAt\":\"2026-10-09 15:29:47 +0530 IST\",\"Engine\":\"\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"36be0b88223b\",\"Image\":\"postgres:16-alpine\",\"Labels\":\"com.docker.compose.service=db,com.docker.compose.version=5.5.1,com.docker.compose.depends_on=,com.docker.compose.image=sha256:1a66d744c1b459e13b05a8fca341da84cb63383e99ce262210efee5a319d4551,com.docker.compose.project=analytics_worker_test_194fc4f6,com.docker.compose.project.working_dir=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel,desktop.docker.io/ports.scheme=v2,com.docker.compose.config-hash=6f6d913a7494d4e58e834c00da61576a25ff18f2a5931d300e9af1288c14aff1,com.docker.compose.container-number=1,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\compose.yaml,C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\integration\\\\compose.analytics-test.yaml\",\"LocalVolumes\":\"1\",\"Mounts\":\"analytics_work…\",\"Name\":\"analytics_worker_test_194fc4f6-db\",\"Names\":\"analytics_worker_test_194fc4f6-db\",\"Networks\":\"analytics_worker_test_194fc4f6_default\",\"Ports\":\"\",\"Project\":\"analytics_worker_test_194fc4f6\",\"Publishers\":[],\"RunningFor\":\"31 seconds ago\",\"Service\":\"db\",\"Size\":\"0B\",\"State\":\"exited\",\"Status\":\"Exited (0) Less than a second ago\"}\n{\"Command\":\"\\\"python -m backend.a…\\\"\",\"CreatedAt\":\"2026-10-09 15:30:01 +0530 IST\",\"Engine\":\"\",\"ExitCode\":0,\"Health\":\"\",\"ID\":\"71da68550f05\",\"Image\":\"analytics_worker_test_194fc4f6-worker\",\"Labels\":\"desktop.docker.io/ports.scheme=v2,com.docker.compose.container-number=1,com.docker.compose.image=sha256:494cb642362a04cac43cd4c8fea9892a85cd847836e79d85c3e9cf26ce1b5eed,com.docker.compose.oneoff=False,com.docker.compose.project=analytics_worker_test_194fc4f6,com.docker.compose.config-hash=5085c5c367f23fce700109a00dbb758e70232eb577d5310cc072287f0c34ca19,com.docker.compose.depends_on=db:service_healthy:false,com.docker.compose.project.config_files=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\compose.yaml,C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel\\\\integration\\\\compose.analytics-test.yaml,com.docker.compose.project.working_dir=C:\\\\Users\\\\marka\\\\.gemini\\\\antigravity\\\\scratch\\\\powernxt-ai-transformer-sentinel,com.docker.compose.service=worker,com.docker.compose.version=5.5.1\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"analytics_worker_test_194fc4f6-worker-1\",\"Names\":\"analytics_worker_test_194fc4f6-worker-1\",\"Networks\":\"analytics_worker_test_194fc4f6_default\",\"Ports\":\"\",\"Project\":\"analytics_worker_test_194fc4f6\",\"Publishers\":[],\"RunningFor\":\"17 seconds ago\",\"Service\":\"worker\",\"Size\":\"0B\",\"State\":\"exited\",\"Status\":\"Exited (0) Less than a second ago\"}",
+    "finished_ist":  "2026-10-09T15:30:18.3875154+05:30",
+    "stored_state_verification":  {
+                                      "database":  "worker_integration_test",
+                                      "asset_id":  "demo-worker-5968103aedcf4a0b9f16bc13e8436eef",
+                                      "states":  [
+                                                     {
+                                                         "run_key":  "worker-5968103aedcf4a0b9f16bc13e8436eef",
+                                                         "advances":  7
+                                                     },
+                                                     {
+                                                         "run_key":  "worker-5968103aedcf4a0b9f16bc13e8436eef-other",
+                                                         "advances":  1
+                                                     }
+                                                 ],
+                                      "streams":  [
+                                                      {
+                                                          "run_key":  "worker-5968103aedcf4a0b9f16bc13e8436eef",
+                                                          "advances":  7
+                                                      },
+                                                      {
+                                                          "run_key":  "worker-5968103aedcf4a0b9f16bc13e8436eef-other",
+                                                          "advances":  1
+                                                      }
+                                                  ],
+                                      "state_advances":  [
+                                                             1,
+                                                             7
+                                                         ]
+                                  },
+    "final_evidence_timestamp_ist":  "2026-10-09T15:32:18.0835289+05:30",
+    "pre_harness_git_status":  "clean",
+    "tracked_application_changes":  false,
+    "supplemental_commands_exit_code":  0
+}
