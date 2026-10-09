@@ -218,3 +218,7 @@ To cleanly stop the services:
 | **Database Connection Refused** (`/health/ready` returns 503) | PostgreSQL container is stopped or still starting | Ensure container is up (`docker compose ps`). Wait 5 seconds for PostgreSQL healthcheck to become healthy. Verify `.env` credentials match. |
 | **`ModuleNotFoundError: No module named 'backend'`** | Working directory or pythonpath not set | Always execute commands from repository root, or ensure `pytest.ini` is present in root. |
 | **Git Authentication Prompt** | GitHub permissions or credentials not cached | Run `gh auth login` in terminal or authenticate via Git Credential Manager browser window. |
+
+## Durable analytics worker (feature)
+
+The opt-in PostgreSQL worker stores real electrical/top-oil results with lease recovery and transactional state updates. Apply the reviewed worker migration before starting the updated API and worker. See [startup, ordering and model limitations](docs/analytics-worker.md), [result APIs](docs/contracts/analytics-contract.md), and [isolated verification / Windows commands](docs/analytics-worker-windows.md). No analytics runs in API startup or requests.

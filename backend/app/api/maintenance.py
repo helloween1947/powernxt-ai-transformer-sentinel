@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query, Response
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from backend.app.api.validation import original_payload
 from backend.app.db.session import get_db
 from backend.app.schemas.maintenance import TaskCreate, TaskPage, TaskResponse, TaskUpdate, TaskHistoryPage
 from backend.app.services import maintenance
@@ -49,7 +50,7 @@ def demo_actor(value: Annotated[str, Header(alias="X-Demo-Actor", max_length=100
     return value
 
 
-@router.post("", response_model=TaskResponse, status_code=201)
+@router.post("", response_model=TaskResponse, status_code=201, dependencies=[Depends(original_payload)])
 def create_task(payload: TaskCreate, response: Response, db: Database):
     task, created = maintenance.create_task(db, payload)
     response.status_code = 201 if created else 200
@@ -70,7 +71,7 @@ def get_task(task_id: UUID, db: Database):
     return maintenance.get_task(db, str(task_id))
 
 
-@router.patch("/{task_id}", response_model=TaskResponse)
+@router.patch("/{task_id}", response_model=TaskResponse, dependencies=[Depends(original_payload)])
 def update_task(task_id: UUID, payload: TaskUpdate, db: Database,
                 actor: Annotated[str, Depends(demo_actor)]):
     return maintenance.update_task(db, str(task_id), payload, actor)

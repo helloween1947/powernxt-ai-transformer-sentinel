@@ -227,3 +227,6 @@ __pycache__/
 .pytest_cache/
 node_modules/
 dist/
+
+# Large simulator output; curated data/sample remains tracked.
+data/generated/

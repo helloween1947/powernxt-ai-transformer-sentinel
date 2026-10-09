@@ -1,0 +1,20 @@
+# Use with compose.yaml and a UNIQUE COMPOSE_PROJECT_NAME starting analytics_worker_test_.
+# This override retains the test volume; never use down -v.
+services:
+  db:
+    container_name: ${COMPOSE_PROJECT_NAME:?Set a unique analytics_worker_test_ project}-db
+    environment:
+      POSTGRES_DB: worker_integration_test
+    ports: !reset []
+  backend:
+    container_name: ${COMPOSE_PROJECT_NAME:?Set a unique analytics_worker_test_ project}-backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-sentinel}:${POSTGRES_PASSWORD:-sentinel_dev_pw}@db:5432/worker_integration_test
+    ports: !override
+      - "127.0.0.1:${ANALYTICS_TEST_PORT:-18002}:8000"
+  worker:
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-sentinel}:${POSTGRES_PASSWORD:-sentinel_dev_pw}@db:5432/worker_integration_test
+volumes:
+  postgres_data:
+    name: ${COMPOSE_PROJECT_NAME:?Set a unique analytics_worker_test_ project}-postgres_data

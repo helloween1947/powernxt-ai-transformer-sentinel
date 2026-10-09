@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from backend.app.api.validation import original_payload
 from backend.app.db.session import get_db
 from backend.app.schemas.assets import (
     AssetCreate,
@@ -41,7 +42,12 @@ Limit = Annotated[int, Query(ge=1, le=100)]
 Offset = Annotated[int, Query(ge=0)]
 
 
-@router.post("", response_model=AssetResponse, status_code=201)
+@router.post(
+    "",
+    response_model=AssetResponse,
+    status_code=201,
+    dependencies=[Depends(original_payload)],
+)
 def create_asset(payload: AssetCreate, db: Database):
     return assets.create_asset(db, payload)
 
@@ -59,7 +65,10 @@ def get_asset(asset_id: str, db: Database):
 
 
 @router.post(
-    "/{asset_id}/configurations", response_model=ConfigurationResponse, status_code=201
+    "/{asset_id}/configurations",
+    response_model=ConfigurationResponse,
+    status_code=201,
+    dependencies=[Depends(original_payload)],
 )
 def create_configuration(asset_id: str, payload: ConfigurationCreate, db: Database):
     return assets.create_configuration(db, asset_id, payload)

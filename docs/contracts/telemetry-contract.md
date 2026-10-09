@@ -1,11 +1,11 @@
 # Telemetry Ingestion Contract
 
-**Status**: Implemented ingestion schema `1.0.0`; analytics adapter decisions require Person B review.
+**Status**: Implemented ingestion schema `1.0.0`; durable worker/result status is described in [analytics contract](analytics-contract.md).
 **Owner**: Person A. **Consumers**: Person B (Analytics), Person C (Frontend), Person D (Integration).
 
 The API accepts validated readings and queues durable **pending** jobs. Acceptance does not
-mean analytics, alerts, forecasts, or event delivery have completed. There is no worker,
-simulator, or WebSocket implementation in this task.
+mean analytics, alerts, forecasts, or event delivery have completed. The separately
+started analytics worker consumes jobs; there is no WebSocket delivery.
 
 ## Request envelope
 
@@ -39,7 +39,8 @@ accepted delivery. It is never substituted for measurement time or updated by re
 | `oil_level_pct` | Oil conservator level, percent |
 
 Omitted channels become **null**, never zero. Explicit zero remains zero. A packet with all
-channels missing is accepted as evidence of missing coverage; it does not produce analytics.
+channels missing is accepted as evidence of missing coverage; the worker stores an explicit
+unavailable outcome rather than numerical predictions.
 Quality defaults to `missing` for null channels and `good` for present channels. Explicit
 `missing` requires null; explicit good/suspect/bad requires a present number. Unknown channel
 names/flag values are rejected. `good` describes producer quality, not verified physical truth.
@@ -79,7 +80,8 @@ are different content. Original JSON structure/values are retained; exact HTTP b
 whitespace, object-key order, and lexical number spellings are not audit guarantees.
 
 First acceptance returns 201. Identical retries return 200 with the original reading, arrival
-time, flags, configuration reference, and job ID. Conflicting reuse returns 409 without
+time, flags, configuration reference, and job ID; processing status reflects current persisted
+job state. Conflicting reuse returns 409 without
 changing stored content. Asset-row locking serializes admission and configuration creation;
 PostgreSQL constraints independently guard duplicate readings and duplicate jobs. Locking is
 per asset, a deliberate throughput tradeoff for correctness in this initial implementation.
@@ -88,8 +90,9 @@ per asset, a deliberate throughput tradeoff for correctness in this initial impl
 
 Original payload, normalized telemetry, flags/configuration reference, and one pending job
 are stored in a single transaction. Any failure rolls back both reading and job. A job has a
-unique reading foreign key and always reports `status=pending`, `analytics_status=pending`.
-No completed analytics or forward model state is fabricated.
+unique reading foreign key and starts with `status=pending`, `analytics_status=pending`.
+The worker later reports processing/retry/completed/unavailable/failed without changing
+reading identity or data. No completed analytics is fabricated at admission.
 
 Latest is the greatest `(measurement_time, reading_id)` within the selected stream: time
 first, then the greatest server-generated ID. Late readings are retained and flagged
@@ -103,8 +106,8 @@ restriction, serialize state per `(asset_id, source, run_id)`, and check a stric
 **last processed** event-time watermark transactionally before modifying model state. Jobs
 may execute out of order, so admission eligibility alone is insufficient. Historical-only
 jobs must never mutate forward state; replay/simulator state must never mutate live state.
-There is no worker or model-state storage yet, so this task queues these restrictions rather
-than claiming analytics execution. Detector adapters must use only `normalized_telemetry`,
+The durable worker implements these restrictions and uses a stream-global processed
+watermark plus versioned state namespaces; see [worker ordering](../analytics-worker.md). Detector adapters must use only `normalized_telemetry`,
 quality flags and the bound configuration, not arbitrary raw metadata.
 
 ## Retrieval
