@@ -1,23 +1,13 @@
+import { useEffect, useRef, useState } from 'react';
 import StoredAnalytics from './StoredAnalytics.jsx';
-import { useRef, useState } from 'react';
-import {
-  getReadingAnalytics,
-  getAssetPage,
-  getAssetDetails,
-  getLatestTelemetry,
-  getTelemetryHistory,
-} from '../services/telemetryApi.js';
+import ThermalComparison from './ThermalComparison.jsx';
+import { telemetryClient, getAssetPage } from '../services/telemetryApi.js';
+import { createStreamLoader } from '../services/storedStream.js';
 
 const channels = [
-  ['voltage_r_v', 'R-phase voltage', 'V'],
-  ['voltage_y_v', 'Y-phase voltage', 'V'],
-  ['voltage_b_v', 'B-phase voltage', 'V'],
-  ['current_r_a', 'R-phase current', 'A'],
-  ['current_y_a', 'Y-phase current', 'A'],
-  ['current_b_a', 'B-phase current', 'A'],
-  ['oil_temperature_c', 'Oil temperature', '°C'],
-  ['ambient_temperature_c', 'Ambient temperature', '°C'],
-  ['oil_level_pct', 'Oil level', '%'],
+  ['voltage_r_v', 'R-phase voltage', 'V'], ['voltage_y_v', 'Y-phase voltage', 'V'], ['voltage_b_v', 'B-phase voltage', 'V'],
+  ['current_r_a', 'R-phase current', 'A'], ['current_y_a', 'Y-phase current', 'A'], ['current_b_a', 'B-phase current', 'A'],
+  ['oil_temperature_c', 'Oil temperature', '°C'], ['ambient_temperature_c', 'Ambient temperature', '°C'], ['oil_level_pct', 'Oil level', '%'],
 ];
 
 export default function BackendReadings() {
@@ -25,116 +15,49 @@ export default function BackendReadings() {
   const [assetId, setAssetId] = useState('');
   const [source, setSource] = useState('device');
   const [runId, setRunId] = useState('');
-  const [details, setDetails] = useState(null);
-  const [latest, setLatest] = useState(null);
-  const [analytics, setAnalytics] = useState(null);
-  const [history, setHistory] = useState([]);
   const [assetOffset, setAssetOffset] = useState(0);
-  const [historyOffset, setHistoryOffset] = useState(0);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
-  const [readingsLoaded, setReadingsLoaded] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [busy, setBusy] = useState(false);
-  const requestLock = useRef(false);
+  const [assetBusy, setAssetBusy] = useState(false);
+  const [assetError, setAssetError] = useState('');
+  const [state, setState] = useState({ phase: 'idle' });
+  const loader = useRef(null);
+  const assetRequest = useRef(null);
+  useEffect(() => {
+    const active = createStreamLoader(telemetryClient, setState);
+    loader.current = active;
+    return () => { active.cancel(); assetRequest.current?.abort(); };
+  }, []);
+
+  const snapshot = state.snapshot;
+  const details = snapshot?.details;
+  const latest = snapshot?.latest;
+  const analytics = snapshot?.analytics;
+  const history = snapshot?.history ?? [];
+  const historyOffset = snapshot?.page?.offset ?? 0;
+  const readingsLoaded = !!snapshot;
+  const busy = state.phase === 'loading';
+  const messages = [assetError, state.message, ...(snapshot?.errors ?? [])].filter(Boolean);
 
   function clearReadings() {
-    setDetails(null);
-    setLatest(null);
-    setAnalytics(null);
-    setHistory([]);
-    setHistoryOffset(0);
-    setReadingsLoaded(false);
-    setMessages([]);
+    loader.current?.cancel();
+    setState({ phase: 'idle' });
   }
-
-  async function perform(action) {
-    if (requestLock.current) return;
-
-    requestLock.current = true;
-    setBusy(true);
-    setMessages([]);
-
+  async function loadAssets(offset = 0) {
+    assetRequest.current?.abort();
+    const controller = new AbortController();
+    assetRequest.current = controller;
+    setAssetBusy(true);
+    setAssetError('');
     try {
-      await action();
-    } catch (error) {
-      setMessages([error.message]);
-    } finally {
-      requestLock.current = false;
-      setBusy(false);
-    }
+      const page = await getAssetPage(20, offset, controller.signal);
+      if (controller.signal.aborted) return;
+      setAssets(page.items); setAssetOffset(offset); setAssetsLoaded(true);
+    } catch (error) { if (!controller.signal.aborted) setAssetError(error.message); }
+    finally { if (!controller.signal.aborted) setAssetBusy(false); }
   }
-
-  function loadAssets(offset = 0) {
-    return perform(async () => {
-      const page = await getAssetPage(20, offset);
-
-      setAssets(page.items);
-      setAssetOffset(offset);
-      setAssetsLoaded(true);
-    });
-  }
-
   function loadReadings(offset = 0) {
-    return perform(async () => {
-      if (!assetId.trim()) {
-        throw new Error('Select a registered transformer first.');
-      }
-
-      if (source !== 'device' && !runId.trim()) {
-        throw new Error('Enter the simulator or replay run ID.');
-      }
-
-      setLatest(null);
-      setAnalytics(null);
-      setHistory([]);
-      setDetails(null);
-      setReadingsLoaded(false);
-
-      // Confirm the asset exists before interpreting a latest-reading 404.
-      const asset = await getAssetDetails(assetId);
-      setDetails(asset);
-
-      const selectedRun = source === 'device' ? null : runId.trim();
-
-      const results = await Promise.allSettled([
-        getLatestTelemetry(assetId, source, selectedRun),
-        getTelemetryHistory(assetId, {
-          source,
-          runId: selectedRun,
-          limit: 20,
-          offset,
-        }),
-      ]);
-
-      const notes = [];
-      const latestResult = results[0];
-      const historyResult = results[1];
-
-      if (latestResult.status === 'fulfilled') {
-        setLatest(latestResult.value);
-        try {
-          setAnalytics(await getReadingAnalytics(latestResult.value.readingId));
-        } catch (error) {
-          notes.push(`Analytics: ${error.message}`);
-        }
-      } else {
-        notes.push(
-          latestResult.reason.status === 404
-            ? 'No latest reading exists for this selected stream.'
-            : `Latest reading: ${latestResult.reason.message}`,
-        );
-      }
-
-      if (historyResult.status === 'fulfilled') {
-        setHistory(historyResult.value.items);
-        setHistoryOffset(offset);
-      } else {
-        notes.push(`History: ${historyResult.reason.message}`);
-      }
-
-      setMessages(notes);
-      setReadingsLoaded(true);
-    });
+    if (!assetId || (source !== 'device' && !runId.trim())) return;
+    loader.current?.start({assetId, source, runId: source === 'device' ? null : runId.trim(), offset});
   }
 
   return (
@@ -146,7 +69,7 @@ export default function BackendReadings() {
         It does not generate predictions, health scores, or alerts. Simulator and replay timestamps describe stored demonstrations, not fresh device telemetry. Empty quality flags do not establish transformer health.
       </p>
 
-      <button disabled={busy} onClick={() => loadAssets(0)}>
+      <button disabled={assetBusy} onClick={() => loadAssets(0)}>
         Load registered transformers
       </button>
 
@@ -159,13 +82,13 @@ export default function BackendReadings() {
 
           <div className="actions">
             <button
-              disabled={busy || assetOffset === 0}
+              disabled={assetBusy || assetOffset === 0}
               onClick={() => loadAssets(assetOffset - 20)}
             >
               Previous asset page
             </button>
             <button
-              disabled={busy || assets.length < 20}
+              disabled={assetBusy || assets.length < 20}
               onClick={() => loadAssets(assetOffset + 20)}
             >
               Next asset page
@@ -180,7 +103,6 @@ export default function BackendReadings() {
         Registered transformer
         <select
           value={assetId}
-          disabled={busy}
           onChange={event => {
             setAssetId(event.target.value);
             clearReadings();
@@ -202,7 +124,6 @@ export default function BackendReadings() {
         Telemetry source
         <select
           value={source}
-          disabled={busy}
           onChange={event => {
             setSource(event.target.value);
             setRunId('');
@@ -220,8 +141,7 @@ export default function BackendReadings() {
           Run ID
           <input
             value={runId}
-            disabled={busy}
-            placeholder="Enter the run ID generated on this backend"
+              placeholder="Enter the run ID generated on this backend"
             onChange={event => {
               setRunId(event.target.value);
               clearReadings();
@@ -242,7 +162,11 @@ export default function BackendReadings() {
         Load latest reading and history
       </button>
 
-      {busy && <p role="status">Loading backend data…</p>}
+      {busy && <p role="status">Loading backend data… Stream controls remain available; changing a filter cancels this request.</p>}
+      {assetBusy && <p role="status">Loading asset registry…</p>}
+      {state.polling && <p role="status">Processing is active. Polling every 5 seconds, up to six refreshes ({state.poll}/6).</p>}
+      {state.exhausted && <p role="status">Polling limit reached. Use Load latest reading and history to check again.</p>}
+      {snapshot && <p>Last successful API retrieval (UTC): {snapshot.retrievedAt}. Connectivity and processing status do not make historical measurement timestamps current.</p>}
 
       {messages.map(message => (
         <p className="error" role="alert" key={message}>
@@ -327,6 +251,12 @@ export default function BackendReadings() {
           {analytics && <StoredAnalytics analytics={analytics} />}
         </>
       )}
+
+      {readingsLoaded && <>
+        {!latest && <p>No latest reading exists for this selected stream.</p>}
+        <ThermalComparison points={snapshot.points} latestEnvelope={snapshot.latestEnvelope} completedAnalytics={snapshot.completedAnalytics} />
+        {snapshot.completedAnalytics && snapshot.completedAnalytics.reading_id !== analytics?.reading_id && <StoredAnalytics analytics={snapshot.completedAnalytics} title="Latest completed analytics — separate stored reading" />}
+      </>}
 
       {readingsLoaded && (
         <>

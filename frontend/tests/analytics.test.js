@@ -53,3 +53,27 @@ test('unavailable stored result retains available electrical evidence without in
 test('mismatched result identity fails visibly', () => {
   assert.throws(() => adaptReadingAnalytics({...example, result: {...example.result, reading_id: 999}}), /different reading/);
 });
+
+test('B metadata units drive display; unsupported or missing units cannot become Celsius chart values', () => {
+  const copy = structuredClone(example);
+  copy.result.payload.metadata.units.oil_temperature = 'F';
+  const predicted = adaptReadingAnalytics(copy).metrics.find(m => m.path.endsWith('predicted_top_oil_temperature_c'));
+  assert.equal(predicted.unit, 'F'); assert.equal(predicted.value, null);
+  assert.ok(predicted.reasons.includes('unsupported_metric_unit'));
+  delete copy.result.payload.metadata.units.apparent_power_kva;
+  assert.equal(adaptReadingAnalytics(copy).metrics.find(m => m.path.endsWith('apparent_power_kva')).value, null);
+});
+
+test('null confidence and not-assessed health stay unavailable; coverage counts are not percentages', () => {
+  const result = adaptReadingAnalytics(example);
+  assert.equal(result.assessment.health, null); assert.equal(result.assessment.healthStatus, 'not_assessed');
+  assert.equal(result.assessment.confidence, null); assert.equal(result.assessment.confidenceStatus, 'not_estimated');
+  assert.equal(result.assessment.usableChannels, 8); assert.equal(result.assessment.requiredChannels, 8);
+});
+
+test('model metadata must match envelope configuration, UTC measurement time and stream', () => {
+  for (const change of [{configuration_version:99}, {measurement_time:'2027-01-01T00:00:00Z'}, {measurement_source:'device'}, {stream:{asset_id:'other',source:'simulator',run_id:example.run_id}}]) {
+    const copy=structuredClone(example); Object.assign(copy.result.payload.metadata, change);
+    assert.throws(()=>adaptReadingAnalytics(copy), /metadata does not match/);
+  }
+});

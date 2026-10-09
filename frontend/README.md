@@ -75,7 +75,7 @@ npm test
 Confirmed during development:
 - ESLint passed.
 - Production build passed.
-- Six telemetry adapter tests and eight maintenance tests passed.
+- Thirty-four declared tests cover telemetry, maintenance, stored analytics and bounded stream loading/metadata identity.
 
 The adapter tests verify:
 1. Asset, source/run, timestamps and configuration preservation.
@@ -255,3 +255,93 @@ starter implements real analytics or backend maintenance. Confirm the actual
 frontend origin and backend contract before enabling live routes.
 
 Current local analytics scope, manual evidence and deferred work: [COVERAGE.md](COVERAGE.md).
+
+
+## Stored thermal comparison and processing lag
+
+Backend readings now displays separate latest telemetry/latest completed analytics,
+per-reading availability, model/version/configuration references, assumed parameter
+provenance and measured/estimated/residual curves for the selected history page.
+See [actual verification](../docs/person-c-analytics-integration-verification.md)
+for tested commit, local identifiers, browser results and limitations.
+
+Use a reachable backend with the stored analytics API/migration installed and
+its worker available. Keep `.env.local` local, e.g. VITE_DATA_MODE=demo and
+VITE_API_BASE_URL=http://127.0.0.1:8000 when browser/backend run on this laptop.
+The original fixture screens remain demo views. In the isolated review checkout,
+these values were passed as process-local settings; existing environment files
+were not copied or overwritten. Vite ran at http://localhost:3000, an origin
+already permitted by the local backend. Check readiness/CORS for your actual
+origin. Localhost/127.0.0.1 never refers to a teammate's laptop.
+
+For the preserved isolated native setup, follow LOCAL-INTEGRATION.md in the
+original frontend checkout and its local start-local-demo.ps1. For the shared
+backend, use reviewed [worker startup](../docs/analytics-worker-windows.md) and
+[worker policy](../docs/analytics-worker.md). Do not rerun migrations blindly
+against a teammate database. Worker startup may process retained pending jobs.
+
+To create a thermal demonstration in a checkout containing B's reviewed
+`integration.prepare_thermal_demo` helper and overlay, follow the handoff on
+`feature/personb-thermal-demo` at dbe6a426916fab5c9a4d0c5544f68a14240a1cfd:
+retrieve the exact existing configuration through its paginated history; save it;
+run `python -m integration.prepare_thermal_demo --configuration-json SNAPSHOT
+--output NEW_PAYLOAD`; review preserved ratings and four assumed coefficients;
+POST the new configuration and capture its returned version; generate/send a
+NEW labelled simulator run bound to that version. Duration301s/interval60s gives
+six chronological samples. Execute the reviewed worker, then retrieve each
+reading result and latest analytics. Preserve old configurations/results and
+generated artifacts. Never reuse A's asset/run IDs without checking your API.
+
+The read API routes are:
+
+```text
+GET /api/v1/telemetry/{reading_id}/analytics
+GET /api/v1/assets/{asset_id}/analytics/latest?source=simulator&run_id=RUN
+```
+
+Source/run isolation also applies to telemetry latest/history. Per-reading
+envelope1.0.0/result stored-reading-result-1.1.0 are supported. Thermal fields
+are under result.payload.thermal_assessment. A completed job may have unavailable
+metrics; bootstrap prediction/residual remain null. The chart preserves gaps,
+zeros and signed residuals and separates UTC measurement/storage/retrieval clocks.
+The latest completed result can lag telemetry and is labelled separately.
+
+Each history page has20 readings; ID requests are deduplicated and concurrency
+is capped at4. Requests have10s timeouts. Pending/processing/retry trigger at most
+six five-second refreshes after the initial load, without overlapping requests.
+Terminal states, errors, changes of stream/page and unmount stop polling. Filters
+remain usable during loading; cancellation plus generation guards prevent late
+responses repopulating another stream. At the limit, refresh manually. There is
+no WebSocket transport or automatic event recovery. Historical synthetic values
+remain historical even when API connectivity and processing are healthy.
+
+Run `npm test`, `npm run lint` and `npm run build`. For optional actual Chrome
+verification, set DEMO_ASSET_ID/DEMO_RUN_ID to the six-reading local demo, optional
+COEFFICIENT_FREE_RUN_ID and FRONTEND_ORIGIN/BACKEND_URL, then run
+`node tests/analyticsBrowser.cjs` with separately installed Playwright/Chrome.
+Its output identifies actual API checks and explicit offline/delay injection.
+Generated evidence is ignored. Phone testing remains deferred.
+
+
+## Latest B contract clarification (local review)
+
+Metric units come from metadata.units; metadata measurement_source/time and
+parameter provenance are explicit. Missing/incompatible units cannot become
+Celsius chart values. Health is unavailable/not_assessed; numerical confidence
+is unavailable/not_estimated. Usable channel counts are coverage, not confidence
+percentages. Metadata and telemetry identities/configuration/time are checked.
+Existing null/zero/gap and latest-completed lag behaviour is retained.
+
+B's compare_worker_scenarios is a tested Python callable on unmerged PR7; no
+scenario HTTP route appears in the actual backend OpenAPI. What-if remains a
+fixture view. COVERAGE.md records the answered stored-field request and a short
+unsent request for HTTP schemas, binding/assumptions/units/validation/availability.
+
+PR18 has merged the #5/#12 roll-up into main. PR16 now targets main, integrated
+without conflicts at de5fed97. 34 frontend tests, lint/build, 222 current-main
+backend tests and actual Chrome/API checks passed. Browser validation used a
+separate copied database upgraded to D004 and temporary ports 3001/8001;
+environment files and the original demo database/servers were preserved.
+See ../docs/person-c-analytics-integration-verification.md for current evidence.
+Human review and current-head CI remain required before merge. What-if remains
+illustrative and phone testing remains deferred; no teammate message was sent.
