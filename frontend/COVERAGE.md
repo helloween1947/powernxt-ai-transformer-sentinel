@@ -108,3 +108,15 @@ Final review is scoped to frontend source, tests, package test script and portab
 documentation. Environment files, ignored local integration notes, generated
 backend evidence/database files and the unrelated Date.now()) file are excluded
 from the commit. Phone testing and shared deployment remain deferred.
+
+
+## Stored comparison follow-up
+
+The new codex/personc-analytics-comparison branch is stacked after PR12. It adds
+per-page measured/predicted/residual charts, ID joins and UTC ordering, separate
+latest completed analytics/telemetry and bounded cancellable polling. Thirty
+unit tests, lint/build and actual Chrome/API checks passed, including a new
+two-reading pending-to-completed stream. See
+[current verification](../docs/person-c-analytics-integration-verification.md)
+for exact scope and local identifiers. The earlier manual and20-test snapshot
+above remains historical evidence for PR12; no teammate messages or merges.
