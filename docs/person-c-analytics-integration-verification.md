@@ -2,6 +2,14 @@
 
 ## Current-main validation after PR18 merge
 
+Final freshness check: main advanced to `6289ed1` through PR20 while CI was
+running. Its only change is 55 lines in `docs/integration-verification.md`.
+Backend, analytics-model, frontend, integration and CI code are identical to
+the tested main `7b19626`. This documentation-only advance was integrated
+without conflicts at `b71896b`; the same 16-file analytics net diff is retained.
+No additional test run is needed for unchanged application code. Current-head
+hosted CI is checked after publishing this final follow-up.
+
 PR16 now targets main. Main `7b19626ca49b81e99fc66bdba76fc55d305b8777`
 was merged without conflicts into the C branch at
 `de5fed97cf687e66a4eb3f5e503c43d3e63aca31`. Backend, analytics-model,
