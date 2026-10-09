@@ -1,5 +1,10 @@
 # Person B: Digital Twin and analytics
 
+Optional follow-on APIs: `evaluate_persistent_rules`, `forecast_from_worker_state`,
+and `compare_worker_scenarios`. See [sustained evidence and scenario handoff](../docs/person-b-next-analytics-handoff.md)
+for explicit policies, executed examples, limits and integration ownership. These do not
+change the worker schema or automatically publish alerts or expose forecast APIs.
+
 **Recommended worker handoff:** `from analytics import process_stored_reading`.
 For a direct normalized input, use `from analytics import compute_analytics`.
 The current [durable worker handoff](../docs/person-b-analytics-worker-handoff.md)

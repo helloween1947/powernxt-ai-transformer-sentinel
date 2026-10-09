@@ -1,0 +1,282 @@
+{
+  "origin": "Actual synthetic execution using assumed thermal parameters; healthy continuation, not measured validation or maintenance advice.",
+  "input": {
+    "current_state": {
+      "schema_version": "stored-reading-state-1.0.0",
+      "binding": {
+        "stream": {
+          "asset_id": "personb-worker-test",
+          "source": "simulator",
+          "run_id": "personb-numerical-test-v1"
+        },
+        "configuration_version": 1,
+        "model_version": "stored-reading-top-oil-1.0.1",
+        "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+      },
+      "last_measurement_time": "2026-01-01T00:01:00Z",
+      "last_reading_identity": {
+        "reading_id": 2,
+        "message_id": "00000000-0000-4000-8000-000000000002"
+      },
+      "thermal": {
+        "initialized": true,
+        "valid": true,
+        "oil_temp_c": 55.08310227992655,
+        "reason": null
+      },
+      "held_inputs": {
+        "thermal_load_pu": 1.0,
+        "ambient_temp_c": 30.0
+      }
+    },
+    "asset_config": {
+      "rated_kva": 1000,
+      "rated_voltage_v": 11000,
+      "rated_current_a": 52.49,
+      "voltage_convention": "line_to_line",
+      "measurement_side": "primary",
+      "cooling_type": "ONAN",
+      "operational_limits": {
+        "max_load_pct": 120,
+        "min_voltage_pu": 0.9,
+        "max_voltage_pu": 1.1,
+        "max_top_oil_temp_c": 105,
+        "max_hot_spot_temp_c": 120
+      },
+      "thermal_parameters": {
+        "rated_top_oil_rise_c": 40,
+        "oil_time_constant_min": 180,
+        "loss_ratio": 5,
+        "oil_exponent": 0.8
+      },
+      "parameter_provenance": {
+        "rated_kva": "assumed",
+        "rated_voltage_v": "assumed",
+        "rated_current_a": "assumed",
+        "voltage_convention": "assumed",
+        "measurement_side": "assumed",
+        "cooling_type": "assumed",
+        "operational_limits.max_load_pct": "assumed",
+        "operational_limits.min_voltage_pu": "assumed",
+        "operational_limits.max_voltage_pu": "assumed",
+        "operational_limits.max_top_oil_temp_c": "assumed",
+        "operational_limits.max_hot_spot_temp_c": "assumed",
+        "thermal_parameters.rated_top_oil_rise_c": "assumed",
+        "thermal_parameters.oil_time_constant_min": "assumed",
+        "thermal_parameters.loss_ratio": "assumed",
+        "thermal_parameters.oil_exponent": "assumed"
+      },
+      "asset_id": "personb-worker-test",
+      "version": 1,
+      "created_at": "2026-01-01T00:00:00Z"
+    },
+    "scenarios": [
+      {
+        "name": "baseline",
+        "profile": [
+          {
+            "duration_s": 7200,
+            "thermal_load_pu": 1.0,
+            "ambient_temp_c": 30
+          }
+        ]
+      },
+      {
+        "name": "reduced_load",
+        "profile": [
+          {
+            "duration_s": 7200,
+            "thermal_load_pu": 0.5,
+            "ambient_temp_c": 30
+          }
+        ]
+      },
+      {
+        "name": "warmer_ambient",
+        "profile": [
+          {
+            "duration_s": 7200,
+            "thermal_load_pu": 1.0,
+            "ambient_temp_c": 40
+          }
+        ]
+      }
+    ]
+  },
+  "output": {
+    "forecast_version": "healthy-top-oil-scenarios-1.0.0",
+    "baseline": "baseline",
+    "horizon_s": 7200.0,
+    "scenarios": [
+      {
+        "name": "baseline",
+        "forecast": {
+          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
+          "model_version": "stored-reading-top-oil-1.0.1",
+          "source": "estimated",
+          "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
+          "state_reference": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.1",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "initial_measurement_time": "2026-01-01T00:01:00Z",
+          "initial_top_oil_temperature_c": 55.08310227992655,
+          "horizon_s": 7200.0,
+          "profile": [
+            {
+              "duration_s": 7200,
+              "thermal_load_pu": 1.0,
+              "ambient_temp_c": 30
+            }
+          ],
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "predicted_top_oil_temperature_c": 55.08310227992655
+            },
+            {
+              "elapsed_s": 7200.0,
+              "predicted_top_oil_temperature_c": 62.34140934765605
+            }
+          ],
+          "final_top_oil_temperature_c": 62.34140934765605,
+          "peak_top_oil_temperature_c": 62.34140934765605,
+          "configured_top_oil_limit_c": 105,
+          "first_limit_crossing_s": null,
+          "limit_check_status": "available",
+          "units": {
+            "temperature": "C",
+            "time": "s",
+            "thermal_load": "pu"
+          },
+          "assumptions": [
+            "Explicit future K/ambient held constant within each segment.",
+            "Same simplified healthy thermal parameters and initial state for all scenarios.",
+            "No fault continuation, cooling intervention, measured-oil assimilation or uncertainty calibration."
+          ]
+        },
+        "explanation": "Load changes squared-current loss; ambient shifts the equilibrium. Inputs are conditional assumptions.",
+        "final_delta_from_baseline_c": 0.0
+      },
+      {
+        "name": "reduced_load",
+        "forecast": {
+          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
+          "model_version": "stored-reading-top-oil-1.0.1",
+          "source": "estimated",
+          "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
+          "state_reference": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.1",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "initial_measurement_time": "2026-01-01T00:01:00Z",
+          "initial_top_oil_temperature_c": 55.08310227992655,
+          "horizon_s": 7200.0,
+          "profile": [
+            {
+              "duration_s": 7200,
+              "thermal_load_pu": 0.5,
+              "ambient_temp_c": 30
+            }
+          ],
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "predicted_top_oil_temperature_c": 55.08310227992655
+            },
+            {
+              "elapsed_s": 7200.0,
+              "predicted_top_oil_temperature_c": 51.75868433364684
+            }
+          ],
+          "final_top_oil_temperature_c": 51.75868433364684,
+          "peak_top_oil_temperature_c": 55.08310227992655,
+          "configured_top_oil_limit_c": 105,
+          "first_limit_crossing_s": null,
+          "limit_check_status": "available",
+          "units": {
+            "temperature": "C",
+            "time": "s",
+            "thermal_load": "pu"
+          },
+          "assumptions": [
+            "Explicit future K/ambient held constant within each segment.",
+            "Same simplified healthy thermal parameters and initial state for all scenarios.",
+            "No fault continuation, cooling intervention, measured-oil assimilation or uncertainty calibration."
+          ]
+        },
+        "explanation": "Load changes squared-current loss; ambient shifts the equilibrium. Inputs are conditional assumptions.",
+        "final_delta_from_baseline_c": -10.582725014009206
+      },
+      {
+        "name": "warmer_ambient",
+        "forecast": {
+          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
+          "model_version": "stored-reading-top-oil-1.0.1",
+          "source": "estimated",
+          "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
+          "state_reference": {
+            "stream": {
+              "asset_id": "personb-worker-test",
+              "source": "simulator",
+              "run_id": "personb-numerical-test-v1"
+            },
+            "configuration_version": 1,
+            "model_version": "stored-reading-top-oil-1.0.1",
+            "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
+          },
+          "initial_measurement_time": "2026-01-01T00:01:00Z",
+          "initial_top_oil_temperature_c": 55.08310227992655,
+          "horizon_s": 7200.0,
+          "profile": [
+            {
+              "duration_s": 7200,
+              "thermal_load_pu": 1.0,
+              "ambient_temp_c": 40
+            }
+          ],
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "predicted_top_oil_temperature_c": 55.08310227992655
+            },
+            {
+              "elapsed_s": 7200.0,
+              "predicted_top_oil_temperature_c": 67.20723815733012
+            }
+          ],
+          "final_top_oil_temperature_c": 67.20723815733012,
+          "peak_top_oil_temperature_c": 67.20723815733012,
+          "configured_top_oil_limit_c": 105,
+          "first_limit_crossing_s": null,
+          "limit_check_status": "available",
+          "units": {
+            "temperature": "C",
+            "time": "s",
+            "thermal_load": "pu"
+          },
+          "assumptions": [
+            "Explicit future K/ambient held constant within each segment.",
+            "Same simplified healthy thermal parameters and initial state for all scenarios.",
+            "No fault continuation, cooling intervention, measured-oil assimilation or uncertainty calibration."
+          ]
+        },
+        "explanation": "Load changes squared-current loss; ambient shifts the equilibrium. Inputs are conditional assumptions.",
+        "final_delta_from_baseline_c": 4.865828809674078
+      }
+    ],
+    "interpretation": "Healthy expected-temperature comparison, not an action recommendation or unresolved-fault forecast."
+  }
+}
