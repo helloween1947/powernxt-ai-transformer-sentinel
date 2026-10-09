@@ -1,5 +1,11 @@
 # Person D integration readiness — 9 October 2026
 
+**Latest result:** [Independent PR13 verification](persond-13-independent-verification.md):
+222 backend tests independently passed; teammate approval still blocks
+incorporation into persond. D frontend PR10 is superseded by C maintenance PR12.
+The dated sections below retain earlier inspection snapshots.
+
+
 ## Latest prerequisite recheck — 9 October 2026
 
 Fetched origin again. Main is now `9d2f9cda817bc6312d00a4fc001050b04b85a2cb`
