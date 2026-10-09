@@ -1,5 +1,52 @@
 # Person D integration readiness — 9 October 2026
 
+## Latest prerequisite recheck — 9 October 2026
+
+Fetched origin again. Main is now `9d2f9cda817bc6312d00a4fc001050b04b85a2cb`
+(analytics worker PR11 merged). The conditional integration prerequisites are
+still missing:
+
+| Required PR | Observed status | Reviewed head |
+| --- | --- | --- |
+| PR9, D backend | Open, draft, not merged into main | 087a884e31c7942330f3cf599aa190b916bfff1e |
+| PR1, C dashboard | Open, not merged into main | 72acc3bd60842d70af0c922c370f4351fb2e4a7d |
+| PR5, C API follow-up | Open, not merged; still targets feat/frontend-setup | e87a8856e9323c88854147c5ed7d4f54c336ba9e |
+
+PR10 remains open/draft, based on persond, at
+`094c36416d2508095c591e19e51cee751280b564`. It was not retargeted or merged.
+Main still has no frontend/src implementation or D maintenance migrations.
+Browser, refresh, conflict, error and restart checks were not repeated because
+the required merged application is absent. Earlier test/CI results below apply
+to the earlier reviewed main and isolated combinations, not this latest main.
+
+Two additional changes require review before resuming:
+
+- C now has draft PR12, head codex/personc-maintenance-integration at
+  `4941d2fdc39679b691a8bb15e308b388000084ba`, targeting C's API branch.
+  It changes App.jsx and adds its own BackendMaintenance.jsx and maintenance
+  adapter/client/browser tests. PR10's same-named component/mount must be checked
+  for duplication against that work; no duplicate files were applied.
+- Main's new worker migration `d730a91b4c22` descends from `ce21c3b8140a`.
+  Combining it with PR9's current D003 leaves two heads, so the earlier D003
+  single-head conclusion is no longer sufficient for current main. The fetched
+  `fix/persond-main-integration` review branch already contains D004 and fixes
+  at `13cbb80`; these are not in main or PR9. This branch was inspected read-only
+  and not modified or merged. Its validation/approval is not assumed.
+
+Next prerequisite order: complete the backend integration review (including the
+worker/D003 join) and merge PR9; C's PR1 and API changes must reach main. Review
+how C's new PR12 overlaps PR10, then retarget/narrow PR10 against actual merged
+main and run the requested real browser checks. Do not infer completion from a
+PR's merge_commit_sha: merged_at was null for all required PRs.
+
+This recheck only updates the handover. No application or migration changes were
+made and no new runtime/browser success is claimed.
+
+---
+
+The remainder records the previous integration preparation snapshot.
+
+
 Repository: Windows `C:\Users\hrami\OneDrive\Documents\ChatGPT\final powernext\powernxt-ai-transformer-sentinel`.
 Existing published history was retained. No teammate branch, main, database or
 volume was overwritten. Person D's initial working tree was clean.
