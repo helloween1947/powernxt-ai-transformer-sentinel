@@ -1,0 +1,254 @@
+{
+  "historical_audit_october_8": {
+    "recorded_ist": "2026-10-08T23:49:28.157673+05:30",
+    "timezone": "Asia/Calcutta",
+    "os": "Linux (Debian GNU/Linux cloud workspace)",
+    "baseline_commit": "55a9c54f44f9f7dc6cdc437438bce9fcc11c1bba",
+    "main_commit": "f35d268cda49d81fac7463d8a5082cb5b1c1bc98",
+    "fixed_branch": "audit/correctness-fixes",
+    "fixed_changes": "uncommitted; source bytes matched isolated container",
+    "commands": [
+      {
+        "command": "python -m pytest backend/tests -q",
+        "checkout": "baseline 55a9c54",
+        "exit_code": 0,
+        "passed": 115
+      },
+      {
+        "command": "python -m pytest backend/tests -q",
+        "checkout": "audit/correctness-fixes + local patch",
+        "exit_code": 0,
+        "passed": 127
+      },
+      {
+        "command": "python -m pytest backend/tests analytics/tests -q",
+        "checkout": "Person B 35a8c64 native",
+        "exit_code": 0,
+        "passed": 158,
+        "skipped": 3
+      },
+      {
+        "command": "SIMULATOR_REVIEW_ROOT=/workspace/powernxt-correctness-audit python -m pytest backend/tests analytics/tests -q",
+        "checkout": "Person B 35a8c64 with simulator export",
+        "exit_code": 0,
+        "passed": 161
+      },
+      {
+        "command": "npm ci --cache /tmp/project-audit-npm-cache; npm run lint; npm run build; node --test tests/telemetryAdapter.test.js",
+        "checkout": "Person C a554786",
+        "exit_code": 0,
+        "adapter_tests_passed": 6
+      }
+    ],
+    "isolated_simulator_result": {
+      "status": "PASS",
+      "asset_id": "demo-normal-6f896644abf740cdb107dbf43a171a9e",
+      "source": "simulator",
+      "run_id": "normal-6f896644abf740cdb107dbf43a171a9e",
+      "configuration_version": 1,
+      "sample_count": 6,
+      "first_submission": {
+        "created": 6,
+        "identical_duplicates": 0,
+        "failures": 0
+      },
+      "resubmission": {
+        "created": 0,
+        "identical_duplicates": 6,
+        "failures": 0
+      },
+      "database_counts": {
+        "readings": 6,
+        "jobs": 6
+      },
+      "latest_measurement_time": "2026-01-01T00:05:00Z",
+      "latest_reading_id": 7,
+      "analytics_status": "pending",
+      "default_device_history_count": 0,
+      "output_directory": "data/generated/normal-6f896644abf740cdb107dbf43a171a9e"
+    },
+    "isolated_runtime_checks": {
+      "live_http_status": 200,
+      "ready_http_status": 200,
+      "openapi_http_status": 200,
+      "routes": [
+        "/api/v1/assets",
+        "/api/v1/assets/{asset_id}",
+        "/api/v1/assets/{asset_id}/configurations",
+        "/api/v1/assets/{asset_id}/telemetry",
+        "/api/v1/assets/{asset_id}/telemetry/latest",
+        "/api/v1/telemetry",
+        "/health/live",
+        "/health/ready"
+      ],
+      "latest_http_status": 200,
+      "deterministic_regeneration": "PASS",
+      "boolean_registry_status": 422,
+      "nonfinite_registry_status": 422,
+      "timestamp_overflow_status": 422,
+      "cors_candidates": [
+        {
+          "origin": "http://localhost:5173",
+          "status": 200,
+          "allow_origin": "http://localhost:5173"
+        },
+        {
+          "origin": "http://127.0.0.1:5173",
+          "status": 200,
+          "allow_origin": "http://127.0.0.1:5173"
+        }
+      ]
+    },
+    "isolated_stack": {
+      "project": "correctness_audit_e8354c97",
+      "backend": "audit-backend-e8354c97",
+      "db": "audit-postgres-e8354c97",
+      "volume": "audit-postgres-e8354c97",
+      "api": "http://127.0.0.1:18001"
+    },
+    "development_counts": {
+      "assets": 5,
+      "configurations": 6,
+      "readings": 14,
+      "jobs": 14,
+      "pending_jobs": 14,
+      "migration": "84b8976a7d0d"
+    },
+    "audit_stack_counts": {
+      "assets": 3,
+      "configurations": 4,
+      "readings": 7,
+      "jobs": 7,
+      "pending_jobs": 7,
+      "migration": "ce21c3b8140a"
+    },
+    "user_reported_windows": {
+      "status": "PASS",
+      "asset_id": "demo-normal-c0415109143f494581036f36d96e32fc",
+      "source": "simulator",
+      "run_id": "normal-c0415109143f494581036f36d96e32fc",
+      "configuration_version": 1,
+      "created": 6,
+      "duplicates": 6,
+      "readings": 6,
+      "jobs": 6,
+      "latest_measurement_time": "2026-01-01T00:05:00Z",
+      "analytics_status": "pending",
+      "device_history_count": 0,
+      "readiness": "ready/connected",
+      "tested_commit": "not supplied in output",
+      "timestamp": "not supplied in output",
+      "newly_executed_by_audit": false
+    },
+    "pr_and_ci_access": "GitHub GraphQL/REST Forbidden; reviews and hosted CI unknown",
+    "original_existing_files_unchanged": true,
+    "development_services_restarted": false,
+    "development_migration_applied": false,
+    "normal_docker_dependency_build": "failed at apt package retrieval/install, exit100; fixed source image reused installed development image dependencies",
+    "audit_services_at_close": "stopped normally; containers/volume/data retained"
+  },
+  "delivery_verification": {
+    "recorded_ist": "2026-10-09T11:55:08.743232+05:30",
+    "os": "Linux cloud; not Windows",
+    "branch": "audit/correctness-fixes",
+    "base_main": "f35d268cda49d81fac7463d8a5082cb5b1c1bc98",
+    "executed_runtime_sha256": {
+      "backend/app/api/assets.py": "8142965c75d0b78774896276e28408bc8abb7db61a6f4ff12b94493308320ef3",
+      "backend/app/api/telemetry.py": "2a9fe9bca92d31bcb5c2610e41c0f22672d715db1e47705282e28e41d7a32035",
+      "backend/app/api/validation.py": "06f6af2b58c86d184a46d53b08b0c848462e67ff7e3612204fc51340a230bf1d",
+      "backend/app/config.py": "ceab9a71db6143782edd0dc804af32ed74f1b6aa6831c352eac642704cd81374",
+      "backend/app/schemas/assets.py": "98e31d77d31bfd49d3e0925782e743fc56d0dffecd486dfc9f83d167afc82b8c",
+      "backend/migrations/versions/20261008_ce21c3b8140a_enforce_configuration_immutability.py": "e8ceeeb9edd8b145f2b5f92574f3603933f7e118d3d2441fe2e86e9cb6aa954f"
+    },
+    "tests": {
+      "command": "python -m pytest backend/tests -q",
+      "exit_code": 0,
+      "passed": 128,
+      "warnings": 100,
+      "seconds": 12.72,
+      "isolation": "sentinel_test fixture schemas"
+    },
+    "populated_migration": {
+      "result": "PASS",
+      "existing_rows": {
+        "asset_configurations": 4,
+        "assets": 3,
+        "telemetry_processing_jobs": 7,
+        "telemetry_readings": 7
+      },
+      "downgrade_preserved_all_rows": true,
+      "upgrade_preserved_all_rows": true,
+      "image_basis": "reused installed dependencies; NOT clean Dockerfile build"
+    },
+    "mutation_guards": {
+      "update": "SQLSTATE 23514",
+      "delete": "SQLSTATE 23514",
+      "configurations_preserved": true
+    },
+    "migration_head": "ce21c3b8140a",
+    "alembic_check": {
+      "exit_code": 0,
+      "result": "No new upgrade operations detected"
+    },
+    "offline_upgrade_and_downgrade_exit_codes": [
+      0,
+      0
+    ],
+    "integration_commands": [
+      {
+        "command": "python -m integration.verify_asset_registry --base-url http://127.0.0.1:18001",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m integration.verify_telemetry_ingestion --base-url http://127.0.0.1:18001",
+        "exit_code": 0
+      },
+      {
+        "command": "python -m integration.verify_normal_operation_simulator --base-url http://127.0.0.1:18001",
+        "exit_code": 0
+      }
+    ],
+    "simulator_result": {
+      "status": "PASS",
+      "asset_id": "demo-normal-a1e13faf869746358c05b9fc9f12fc36",
+      "source": "simulator",
+      "run_id": "normal-a1e13faf869746358c05b9fc9f12fc36",
+      "configuration_version": 1,
+      "sample_count": 6,
+      "first_submission": {
+        "created": 6,
+        "identical_duplicates": 0,
+        "failures": 0
+      },
+      "resubmission": {
+        "created": 0,
+        "identical_duplicates": 6,
+        "failures": 0
+      },
+      "database_counts": {
+        "readings": 6,
+        "jobs": 6
+      },
+      "latest_measurement_time": "2026-01-01T00:05:00Z",
+      "latest_reading_id": 14,
+      "analytics_status": "pending",
+      "default_device_history_count": 0,
+      "output_directory": "data/generated/normal-a1e13faf869746358c05b9fc9f12fc36"
+    },
+    "clean_build": {
+      "command": "docker build --pull --no-cache --progress plain -f backend/Dockerfile -t powernxt-correctness-clean:20261009 .",
+      "exit_code": 1,
+      "initial_failure": "apt exit100: Temporary failure resolving deb.debian.org",
+      "diagnostic_retries": "existing proxy arguments and proxy host mapping; no repository Dockerfile changes",
+      "final_failure": "apt succeeded; official PyPI TLS verification failed: self-signed certificate in certificate chain",
+      "result": "BLOCKED: execution environment DNS/proxy trust; not a clean-build pass"
+    },
+    "pr_lookup": "GraphQL Forbidden",
+    "hosted_ci_lookup": "REST Forbidden; no commit-specific result available",
+    "original_existing_files_unchanged": true,
+    "development_services_restarted": false,
+    "development_migration_applied": false,
+    "windows_checks_executed": false,
+    "isolated_stack_closure": "normal stop; containers/volume/data retained"
+  }
+}
