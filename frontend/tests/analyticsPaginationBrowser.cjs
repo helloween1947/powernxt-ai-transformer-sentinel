@@ -1,0 +1,50 @@
+// Optional read-only browser pagination verification against an existing >=21-reading run.
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+(async () => {
+  const api=process.env.BACKEND_URL;
+  const origin=process.env.FRONTEND_ORIGIN;
+  const asset=process.env.DEMO_ASSET_ID;
+  const run=process.env.DEMO_RUN_ID;
+  assert.ok(api&&origin&&asset&&run,'Supply actual API, frontend origin, asset and run.');
+  const response=await fetch(`${api}/api/v1/assets/${asset}/telemetry?source=simulator&run_id=${run}&limit=100`);
+  assert.equal(response.status,200);
+  const readings=(await response.json()).items.sort((a,b)=>Date.parse(a.measurement_time)-Date.parse(b.measurement_time)||a.id-b.id);
+  assert.ok(readings.length>20&&readings.length<40,'Use a two-page run');
+  const browser=await chromium.launch({executablePath:process.env.BROWSER_PATH||'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true});
+  try {
+    const page=await browser.newPage();
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.goto(origin);
+    await page.getByRole('button',{name:'Backend readings',exact:true}).click();
+    await page.getByRole('button',{name:'Load registered transformers'}).click();
+    await page.getByLabel('Registered transformer').selectOption(asset);
+    await page.getByLabel('Telemetry source').selectOption('simulator');
+    await page.getByLabel('Run ID',{exact:true}).fill(run);
+    await page.getByRole('button',{name:'Load latest reading and history'}).click();
+    const table=page.getByRole('table',{name:'Thermal history values'});
+    const rows=table.locator('tbody tr');
+    await rows.nth(19).waitFor();
+    assert.equal(await rows.count(),20);
+    const firstIds=await rows.locator('td:first-child').allTextContents();
+    assert.deepEqual(firstIds,readings.slice(0,20).map(r=>`${r.id} / ${r.configuration_version}`));
+    const next=page.getByRole('button',{name:'Next history page',exact:true});
+    await next.click();
+    await page.getByText('History page: 2',{exact:true}).waitFor();
+    assert.equal(await rows.count(),readings.length-20);
+    assert.deepEqual(await rows.locator('td:first-child').allTextContents(),readings.slice(20).map(r=>`${r.id} / ${r.configuration_version}`));
+    assert.ok(await next.isDisabled());
+    assert.ok((await page.getByRole('region',{name:'Stored thermal comparison'}).innerText()).includes(`Latest telemetry reading: ${readings.at(-1).id}`));
+    await page.getByRole('button',{name:'Previous history page',exact:true}).click();
+    await page.getByText('History page: 1',{exact:true}).waitFor();
+    assert.deepEqual(await rows.locator('td:first-child').allTextContents(),firstIds);
+    assert.deepEqual(errors,[]);
+    const directory=process.env.BROWSER_ARTIFACT_DIR||path.join(__dirname,'browser-results/pagination');
+    fs.mkdirSync(directory,{recursive:true});
+    const evidence={passed:true,timestamp:new Date().toISOString(),api,origin,asset,run,fixtureResponses:false,readingCount:readings.length,pageCounts:[20,readings.length-20],readingIds:readings.map(r=>r.id),pageErrors:errors};
+    fs.writeFileSync(path.join(directory,'pagination-browser-verification.json'),JSON.stringify(evidence,null,2));
+    console.log(JSON.stringify(evidence,null,2));
+  } finally {await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});
