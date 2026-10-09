@@ -11,7 +11,7 @@
    responsive fixes, HTTP-mobile demo task-ID fallback and frontend documentation.
    It is not independent of PR1, does not supersede PR1 and is not required to
    merge PR1. Keep its existing base `feat/frontend-setup` until PR1 lands.
-3. This focused C maintenance follow-up is stacked on
+3. **PR12**, this focused C maintenance follow-up, is stacked on
    `feat/frontend-api-integration`. After PR5 lands, retarget it to main and
    inspect the net diff again, especially after squash merges. Merge it only
    after the needed C frontend is in main and D's backend **PR9** has landed
@@ -144,3 +144,89 @@ C's frontend PRs contain no D backend files or backend conflict resolution.
 Completed analytics are not consumed by these screens. Main now has a worker,
 but C does not claim that it ran for the demonstration or that its output,
 genuine incident delivery or trusted identity is connected to maintenance.
+
+## Verified review snapshot — 9 October 2026
+
+| PR | Current base / branch | Review state |
+| --- | --- | --- |
+| [#1](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/1) | main / feat/frontend-setup | Open, conflict-free, backend CI passed at 72acc3b. |
+| [#5](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/5) | feat/frontend-setup / feat/frontend-api-integration | Open, conflict-free, nine-file telemetry follow-up at e87a885. |
+| [#9](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/9) | main / persond | Draft, conflicted against current main at 087a884; A/D reconciliation required. |
+| [#10](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/10) | persond / codex/persond-dashboard-mount | Draft, five-file proposal at 094c364; base and branch unchanged. |
+| [#12](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/12) | feat/frontend-api-integration / codex/personc-maintenance-integration | Draft, focused C maintenance alternative; source commits 708ab13 and 3aaedcc. |
+
+All C PR diffs contain frontend files only; main is an ancestor of the updated
+C branches, and D backend code is absent from their diffs. No force-push or PR
+merge occurred. Local environments and browser records were preserved; the
+accidental Date.now()) file and machine-specific local notes/helper were excluded.
+
+Checks actually rerun on the resolved branches:
+
+- Starter: npm ci, lint and build passed. GitHub Backend Test Suite (Python 3.12)
+  passed at 72acc3b ([run](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37915848879)).
+- API-only branch: npm ci, lint, build and all six telemetry adapter tests passed.
+- Maintenance branch: lint, build and npm test passed, 14 tests total (six
+  telemetry and eight maintenance). C/D mapper comparison passed: assigned
+  creation/PATCH payloads are identical; unassigned creation uses explicit null
+  in C and omitted optional owner in D, both supported by TaskCreate.
+- Actual Chrome against current main 9d2f9cd plus D 087a884, with local-only
+  registration resolutions and dedicated demo database: telemetry, maintenance
+  workflow, owner/required-note validation, 409 review, terminal rejection,
+  history, refresh, actual offline/restart persistence and CORS passed.
+- Real task/history browser pagination: 22 records paginated 20/2 and newly
+  created tasks remained visible beyond the first page. Separate intercepted
+  fixtures passed null/zero, failed 409 retrieval and terminal-latest checks.
+- 390px touch-browser emulation passed demo UUID fallback, saving/persistence
+  and layout; the physical phone was not tested. No uncaught browser page errors.
+
+PR5/PR12 have no reported GitHub check runs on their temporary stacked bases;
+local checks are evidence, not a claim of frontend CI. Recheck CI when retargeting
+to main. Current combined backend's normal upgrade head is blocked by its new
+two-head graph; the earlier 45-test backend result was on the previous main/D003
+combination and is not a result on this newer graph.
+
+## Ready-to-send handover to D
+
+I resolved C's frontend prerequisites and published normal updates. PR1's
+README conflict is fixed at 72acc3b while retaining shared scope/health/CORS
+guidance; it is now conflict-free and backend CI passed. PR5 remains the separate
+nine-file telemetry/API follow-up at e87a885, based on the corrected starter.
+New draft PR12, codex/personc-maintenance-integration, contains C's tested
+maintenance screen/service/adapter and documentation. No PR was merged and your
+branches/PR10 base were not changed.
+
+Exact sequence: PR1 into main; retarget/review PR5 to main and merge; retarget
+PR12 to main and inspect its net diff; merge/deploy PR12 once PR9 is landed with
+compatible migrations. PR9 can be reviewed in parallel. Keep PR10 targeting
+persond until PR9 and the necessary C frontend have reached main.
+
+C selects App.jsx's separate Backend maintenance mount with C's component and
+src/services/maintenanceApi.js plus maintenanceAdapter.js as the authoritative
+browser implementation. It replaces your five-file proposal. Do not apply the
+mount patch or duplicate your component/client alongside it. Your standalone
+mapper can remain for backend verification. Please acknowledge this replacement
+and revise/drop redundant PR10 content on your branch before final integration.
+
+The contract is title->action, display owner, retained notes/version/updated_at,
+lowercase API statuses with display labels, items/limit/offset for both lists,
+20-item UI pages and optional task asset filter. PATCH sends expected_version
+and X-Demo-Actor; 409 retrieves the latest task and retains the draft, blocks
+save, then requires explicit operator review. Failed refresh can be retried;
+terminal tasks cannot be resubmitted. Start needs an owner; completion/cancel
+need notes; no direct completion/reopening. Alerts are labeled samples and actor
+identity is explicitly prototype. Browser-storage tasks and forecasts stay demo.
+
+Starter/API lint/build passed; API six tests passed; maintenance lint/build and
+14 tests passed. Chrome workflow, conflict review, real 20/2 pagination, refresh
+and actual backend offline/restart checks passed in an isolated combined
+checkout, not merged main. Fixture and mobile-emulation evidence is identified
+separately; physical phone and final shared deployment remain unverified.
+
+Main has now advanced to 9d2f9cd with worker migration d730a91b4c22. PR9 is
+conflicted in backend/app/api/__init__.py and backend/app/models/__init__.py, and
+the combined graph has heads d730a91b4c22 and d003_audit_maintenance. A/D must
+publish registration resolutions and a reviewed graph merge before shared
+upgrade head/browser testing. Local preview resolutions are not in C's PRs.
+Frontend PRs are ready for human review; shared testing is ready once that
+backend revision is published, dependencies land and the reachable API URL/CORS
+origins are confirmed. No completed analytics or trusted identity is claimed.
