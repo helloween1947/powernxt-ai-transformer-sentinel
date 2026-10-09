@@ -177,4 +177,3 @@ No database was started, migrated or deleted; no new browser workflow or full
 regression suite was run for this documentation-only plan. No accepted incident
 contract/API currently supports a safe genuine-task or acknowledgement code change.
 The implementation gate is explicit; sample maintenance remains available.
-
