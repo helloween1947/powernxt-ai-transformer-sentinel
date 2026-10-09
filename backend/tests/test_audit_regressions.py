@@ -105,18 +105,28 @@ def test_populated_migration_upgrade_downgrade_preserves_rows(
         "telemetry_readings",
         "telemetry_processing_jobs",
     ]
+    original_columns = {
+        "assets": "asset_id,name,location,timezone,created_at",
+        "asset_configurations": "id,asset_id,version,created_at,rated_kva,rated_voltage_v,rated_current_a,voltage_convention,measurement_side,cooling_type,operational_limits,thermal_parameters,parameter_provenance",
+        "telemetry_readings": "id,asset_id,configuration_version,schema_version,message_id,source,run_key,measurement_time,arrival_time,original_payload,payload_fingerprint,normalized_telemetry,quality_flags,out_of_order",
+        "telemetry_processing_jobs": "id,reading_id,created_at,status,state_policy",
+    }
     with factory.kw["bind"].begin() as connection:
         config = Config("backend/alembic.ini")
         config.attributes["connection"] = connection
         command.downgrade(config, "84b8976a7d0d")
         before = {
-            table: connection.execute(text("SELECT * FROM " + table)).all()
+            table: connection.execute(
+                text("SELECT " + original_columns[table] + " FROM " + table)
+            ).all()
             for table in tables
         }
         schema = connection.scalar(text("SELECT current_schema()"))
         command.upgrade(config, "head")
         after = {
-            table: connection.execute(text("SELECT * FROM " + table)).all()
+            table: connection.execute(
+                text("SELECT " + original_columns[table] + " FROM " + table)
+            ).all()
             for table in tables
         }
         assert before == after
@@ -146,12 +156,16 @@ def test_populated_migration_upgrade_downgrade_preserves_rows(
         config = Config("backend/alembic.ini")
         config.attributes["connection"] = connection
         before = {
-            table: connection.execute(text("SELECT * FROM " + table)).all()
+            table: connection.execute(
+                text("SELECT " + original_columns[table] + " FROM " + table)
+            ).all()
             for table in tables
         }
         command.downgrade(config, "84b8976a7d0d")
         assert {
-            table: connection.execute(text("SELECT * FROM " + table)).all()
+            table: connection.execute(
+                text("SELECT " + original_columns[table] + " FROM " + table)
+            ).all()
             for table in tables
         } == before
         assert (
