@@ -1,5 +1,9 @@
 # Person D publication and dashboard integration
 
+**Current integration status:** see [persond-integration-readiness.md](persond-integration-readiness.md).
+The sections below describe the earlier publication snapshot; UI files were
+subsequently moved to a focused D-owned follow-up and audit PR8 has merged.
+
 Repository: `C:\Users\hrami\OneDrive\Documents\ChatGPT\final powernext\powernxt-ai-transformer-sentinel`
 (Windows, not WSL). The separate Downloads project is unrelated and was untouched.
 The earlier implementation was located intact and reverified before publication.
