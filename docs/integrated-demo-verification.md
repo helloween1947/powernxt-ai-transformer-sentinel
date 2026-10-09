@@ -1,5 +1,7 @@
 # Executed Windows integration verification — 9 October 2026
 
+**Latest contract refresh:** fresh Windows verification of Person C `fa12a9bfccee4731246ea84fe516f58a1fe1490b` passed with **35 tests** and updated real Chrome checks. See [the refresh evidence below](#contract-refresh--9-october-2026-22552259-ist). The original 30-test/browser/reliability execution is preserved below as history, not treated as verification of the newer source.
+
 **PASS for the real stored electrical/thermal demonstration.** Windows Chrome exercised the actual React application and backend. This is not a deployment, physical-model accuracy claim, maintenance deployment, or review approval. [Repeatable Windows procedure](integrated-demo-windows.md).
 
 ## Exact revisions and PR dependencies
@@ -87,3 +89,36 @@ Portable sanitized summary accompanies these guides. Complete local browser logs
 Development frontend3000 is left running for the presentation. Isolated services and temporary pagination frontend are stopped. No teammate message, PR merge, approval, force-push, public deployment, or database deletion occurred. The authorized branch push/draft PR submission is reported separately at delivery.
 
 Remaining review/CI: human review of C's incorporation and #16, applicable frontend CI (no success observed), and resolution of the stacked merge route. Maintenance deployment is separate; no maintenance workflow verification is claimed against the currently deployed9d backend. Physical phone/LAN access, production identity, WebSockets/automatic reconnect, independent thermal calibration and field accuracy remain unverified. Browser polling is bounded and recovery manual. Fixture health/confidence/forecasts and browser-local sample tasks remain clearly labelled illustrative screens.
+
+## Contract refresh — 9 October 2026, 22:55–22:59 IST
+
+PR #19 was open/draft at prior head `e0db8d3486114e3e62413e762472b632b89208b2`; its exact-head Backend CI run37965401940 was independently confirmed **completed/success**, rather than merely repeating supplied history. PR #16 is now open/draft **against main**, at `fa12a9bfccee4731246ea84fe516f58a1fe1490b`. Neither proposal has merged. Main remained `7b19626ca49b81e99fc66bdba76fc55d305b8777` at this refresh.
+
+Ancestry and source differences showed exactly one missing Person C commit after the previously integrated `82e36e03791aa02e815ccd711b036706e24e0ccf`. It was incorporated with a normal, conflict-free cherry-pick, retaining C's author, as `2f8a9b2738d3aead590437e8f708fbc38148ae31`. Integration guides/runners and D's already incorporated source/evidence remain present. Runtime files match Person C's fa12a9b; the integration adds only regression/browser evidence and documentation. No backend/model/application equation change.
+
+Included fixes:
+
+- Reject present metadata whose reading/configuration/stream/source/time differs from the analytical envelope.
+- Join stored results by reading_id and reject conflicting configuration/time references against joined telemetry.
+- Read units from supported metadata; absent or incompatible units retain unavailable values/reasons, never unsupported Celsius chart values. Model-bound measured oil is also unit-gated.
+- Display metadata measurement source/time and preserve model/parameter/configuration provenance.
+- Keep health/confidence null and visibly unavailable. Required-channel coverage remains a count, not a score or percentage. Initialization/null/genuine-zero behavior is preserved.
+
+Actual localhost3000 process command points to this integration worktree's Vite; its served `analyticsAdapter.js` includes the updated unit guard. Vite picked up source changes, so no frontend restart was needed. Fresh Chrome pages loaded the new source. Backend readiness remained ready; backend/worker retained their original image IDs and start times. No configuration/telemetry/job writes, restart, migration, environment-file edits, or volume operations occurred.
+
+| Fresh check | Executed result |
+|---|---|
+| `npm.cmd test` after C incorporation | Exit0,34 tests passed |
+| `npm.cmd test` with additional chart-unit regression | Exit0,**35 passed**,0 failed/skipped |
+| `npm.cmd run lint` | Exit0 |
+| `npm.cmd run build` | Exit0, Vite8.3.3 production bundle |
+| Updated `node tests/analyticsBrowser.cjs` | Exit0; real six-row/units/provenance/metadata coverage, initialization, five finite signed predictions/residuals, empty device/replay/nonexistent run, offline/manual recovery, delayed-response cancellation, desktop and390px layout |
+| Extended `node tests/integratedDemoBrowser.cjs` | Exit0; exact electrical values; unavailable health/confidence and coverage wording; labelled HTTP503, pending/lag and F-unit injections; seven total loads then polling stops; actual C-unit recovery |
+| Read-only metadata comparisons | All6 reading/message IDs, configuration/time, model ID/version and parameter version agree with actual telemetry/envelopes; oil/residual unitsC; usable/required coverage8/8; assumed provenance retained |
+| Browser page errors | None |
+
+The added regression tests the complete chart join with incompatible oil/residual units and requires all three thermal series values to remain null. The extended browser injection similarly makes one reading's model unitsF and verifies unavailable measured/predicted/residual table values and missing Celsius points, then restores real responses. It does not transform stored Celsius data into Fahrenheit or claim the backend ever returnedF. The actual backend thermal stream remains asset `demo-normal-85203b1018bc498c8b90873f383cc740`, source simulator, run `thermal-144c79522cbd4cd092b7718fea4b05fe`, configuration2, readings20–25. Historical synthetic labelling and the six-row values above remain unchanged.
+
+Fresh artifacts are under ignored `data/generated/integrated-demo-contract-20261009/`: npm/browser logs, served adapter source, actual-metadata-checks.json, desktop/narrow/detail screenshots and browser JSON results. Earlier artifacts were not overwritten. Updated sanitized `integrated-demo-evidence.json` adds this refresh separately from the earlier30-test browser run and isolated pagination/reliability history. No unrelated backend suites were rerun; frontend contract changes do not justify reprocessing development data.
+
+Final pushed-head CI is checked after the documentation/regression commit and reported in PR #19 and local final-head evidence; a successful run for old e0db8d3 does not validate the new head. Review #19 as the combined route, or merge #16 first and reassess #19's net Windows checks/docs diff. No retarget/close/review mutation of #16 was performed. Maintenance deployment, physical-phone access and independent calibration remain outside this refresh.

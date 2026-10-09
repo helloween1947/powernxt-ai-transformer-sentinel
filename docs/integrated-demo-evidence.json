@@ -231,5 +231,110 @@
     "final_remote_main_incorporated":  "7b19626ca49b81e99fc66bdba76fc55d305b8777",
     "concurrent_main_update":  "PR18 incorporated PR12 prerequisite frontend; source/package diff from tested runtime is empty; documentation/seed/verifier additions preserved",
     "final_merge_order":  "PR12 dependency is now in main; reassess/retarget draft PR16 against main. PR19 offers comparison plus Windows guides/checks; avoid double application.",
-    "draft_pr":  "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/19"
+    "draft_pr":  "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/19",
+    "contract_refresh":  {
+                             "recorded_ist":  "2026-10-09T23:01:36.0235154+05:30",
+                             "personc_previous_commit":  "82e36e03791aa02e815ccd711b036706e24e0ccf",
+                             "personc_incremental_commit":  "fa12a9bfccee4731246ea84fe516f58a1fe1490b",
+                             "integration_cherry_pick":  "2f8a9b2738d3aead590437e8f708fbc38148ae31",
+                             "runtime_source_matches_personc":  true,
+                             "main":  "7b19626ca49b81e99fc66bdba76fc55d305b8777",
+                             "prior_pr19_head":  "e0db8d3486114e3e62413e762472b632b89208b2",
+                             "prior_head_ci":  {
+                                                   "status":  "completed",
+                                                   "run_id":  37965401940,
+                                                   "name":  "Backend CI",
+                                                   "conclusion":  "success"
+                                               },
+                             "pr16":  {
+                                          "draft":  true,
+                                          "base":  "main",
+                                          "mutated":  false,
+                                          "head":  "fa12a9bfccee4731246ea84fe516f58a1fe1490b",
+                                          "state":  "open"
+                                      },
+                             "tests":  {
+                                           "exit_code":  0,
+                                           "personc_suite_passed":  34,
+                                           "failed":  0,
+                                           "lint_exit":  0,
+                                           "build_exit":  0,
+                                           "skipped":  0,
+                                           "combined_regression_suite_passed":  35
+                                       },
+                             "actual_browser":  {
+                                                    "timestamp":  "2026-10-09T17:26:52.694Z",
+                                                    "origin":  "http://localhost:3000",
+                                                    "api":  "http://127.0.0.1:8000",
+                                                    "asset":  "demo-normal-85203b1018bc498c8b90873f383cc740",
+                                                    "run":  "thermal-144c79522cbd4cd092b7718fea4b05fe",
+                                                    "readings":  [
+                                                                     20,
+                                                                     21,
+                                                                     22,
+                                                                     23,
+                                                                     24,
+                                                                     25
+                                                                 ],
+                                                    "actualAPI":  true,
+                                                    "fixtureResponses":  false,
+                                                    "checks":  [
+                                                                   "real API/CORS: six chronological records joined by ID, bootstrap gap, five predictions/residuals, clocks/units/provenance",
+                                                                   "390px responsive emulation; no page-level horizontal overflow (not physical phone)",
+                                                                   "real device and file_replay isolation/empty streams; simulator data cleared",
+                                                                   "real nonexistent simulator stream: empty, no fabricated results",
+                                                                   "browser network-offline failure and manual recovery against real backend",
+                                                                   "stream change during delayed real response: cancelled old data cannot populate device view",
+                                                                   "real completed coefficient-free configuration: electrical evidence retained, thermal gaps with four missing-parameter reasons"
+                                                               ],
+                                                    "pageErrors":  [
+
+                                                                   ],
+                                                    "passed":  true
+                                                },
+                             "extended_browser":  {
+                                                      "passed":  true,
+                                                      "timestamp":  "2026-10-09T17:28:25.913Z",
+                                                      "origin":  "http://localhost:3000",
+                                                      "api":  "http://127.0.0.1:8000",
+                                                      "asset":  "demo-normal-85203b1018bc498c8b90873f383cc740",
+                                                      "run":  "thermal-144c79522cbd4cd092b7718fea4b05fe",
+                                                      "readings":  [
+                                                                       20,
+                                                                       21,
+                                                                       22,
+                                                                       23,
+                                                                       24,
+                                                                       25
+                                                                   ],
+                                                      "checks":  [
+                                                                     "real backend: exact electrical values/model, January historical label, six-reading page controls and thermal charts",
+                                                                     "real backend: reload and reselect preserves the same six stored records",
+                                                                     "labelled HTTP503 injection: real telemetry remains visible, predictions unavailable; manual recovery restores actual results",
+                                                                     "labelled pending/lag injection: latest telemetry separate from older completed result; exactly six 5-second refreshes, then stops",
+                                                                     "real backend restored after injection; terminal completed data does not poll",
+                                                                     "real API metadata: matching measurement identity/time, unavailable health/confidence, channel coverage presented as count",
+                                                                     "labelled F-unit injection: model measured/predicted/residual values stay unavailable in Celsius charts; real C-unit responses recover"
+                                                                 ],
+                                                      "injectionUsed":  true,
+                                                      "processingInjectionPollRequests":  7,
+                                                      "pageErrors":  [
+
+                                                                     ]
+                                                  },
+                             "actual_metadata_matches_all_six":  true,
+                             "coverage":  {
+                                              "health_index":  null,
+                                              "usable":  8,
+                                              "confidence_score":  null,
+                                              "required":  8
+                                          },
+                             "frontend_source_process":  "integration worktree frontend/node_modules/vite/bin/vite.js --host localhost --port 3000 --strictPort",
+                             "frontend_restart":  false,
+                             "backend_restart":  false,
+                             "backend_database_writes":  false,
+                             "worker_reliability_rerun":  false,
+                             "generated_evidence":  "data/generated/integrated-demo-contract-20261009",
+                             "final_head_ci_note":  "Checked after final push; exact head/status recorded in PR19 and ignored final-head evidence, not inferred from prior CI."
+                         }
 }

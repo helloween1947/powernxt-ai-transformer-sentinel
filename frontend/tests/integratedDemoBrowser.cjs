@@ -111,6 +111,34 @@ const path = require('node:path');
     assert.equal(await page.locator('[data-series="predicted"] circle').count(),5);
     assert.equal(await page.getByText('Processing lag or unavailable newest result:',{exact:false}).count(),0);
     checks.push('real backend restored after injection; terminal completed data does not poll');
+    const actualText = await page.getByRole('region',{name:'Stored analytics',exact:true}).first().innerText();
+    assert.ok(actualText.includes('Health index: Unavailable (not_assessed)'));
+    assert.ok(actualText.includes('Numerical confidence: Unavailable (not_estimated)'));
+    assert.ok(actualText.includes('coverage count, not confidence percentage'));
+    assert.ok(actualText.includes(`Model measurement time (UTC): ${last.measurement_time}`));
+    checks.push('real API metadata: matching measurement identity/time, unavailable health/confidence, channel coverage presented as count');
+
+    // Labelled incompatible-unit injection verifies the final chart pipeline, not just the adapter.
+    await page.route(`${api}/api/v1/telemetry/${last.id}/analytics`, async route => {
+      const response=await route.fetch();
+      const body=await response.json();
+      body.result.payload.metadata.units.oil_temperature='F';
+      body.result.payload.metadata.units.thermal_residual='F';
+      await route.fulfill({response,json:body});
+    });
+    await load.click();
+    await page.getByText('Model-bound measured oil: Unavailable F.',{exact:true}).waitFor();
+    const lastCells=await table.locator('tbody tr').last().locator('td').allTextContents();
+    assert.deepEqual(lastCells.slice(3,6),['Unavailable','Unavailable','Unavailable']);
+    assert.ok(lastCells[7].includes('unsupported_metric_unit'));
+    assert.equal(await page.locator('[data-series="measured"] circle').count(),5);
+    assert.equal(await page.locator('[data-series="predicted"] circle').count(),4);
+    assert.equal(await page.locator('[data-series="residual"] circle').count(),4);
+    await page.unroute(`${api}/api/v1/telemetry/${last.id}/analytics`);
+    await load.click();
+    await page.getByText(`Model-bound measured oil: ${lastAnalytics.result.payload.thermal_assessment.measured_top_oil_temperature_c} °C.`,{exact:true}).waitFor();
+    assert.equal(await page.locator('[data-series="predicted"] circle').count(),5);
+    checks.push('labelled F-unit injection: model measured/predicted/residual values stay unavailable in Celsius charts; real C-unit responses recover');
     assert.deepEqual(errors,[]);
     const evidence={passed:true,timestamp:new Date().toISOString(),origin,api,asset,run,readings:readings.map(r=>r.id),checks,injectionUsed:true,processingInjectionPollRequests:polls,pageErrors:errors};
     fs.writeFileSync(path.join(output,'extended-browser-verification.json'),JSON.stringify(evidence,null,2));
