@@ -1,0 +1,75 @@
+{
+  "integration_parent": "fcfb21393df6d2712fec3089321ca9010a72694b",
+  "main_parent": "7f5aad795fa1fbdb814535a2a6e8eeb2bb29bbbb",
+  "platform": "Linux cloud; not Windows",
+  "tests": {
+    "passed": 35,
+    "failed": 0,
+    "skipped": 0
+  },
+  "lint": "passed",
+  "build": "passed",
+  "api_client": {
+    "executed_utc": "2026-10-09T17:58:07.779Z",
+    "selection": {
+      "assetId": "demo-normal-24b3d0223290429193673fc9b141d8d5",
+      "source": "simulator",
+      "runId": "normal-24b3d0223290429193673fc9b141d8d5"
+    },
+    "history_count": 6,
+    "latest_reading_id": 14,
+    "reading_ids": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "unavailable_analytics_errors": [
+      "Latest completed analytics: Backend request failed with status 404.",
+      "Reading 9 analytics: Backend request failed with status 404.",
+      "Reading 10 analytics: Backend request failed with status 404.",
+      "Reading 11 analytics: Backend request failed with status 404.",
+      "Reading 12 analytics: Backend request failed with status 404.",
+      "Reading 13 analytics: Backend request failed with status 404.",
+      "Reading 14 analytics: Backend request failed with status 404."
+    ],
+    "device_history_count": 0,
+    "history_unchanged": true,
+    "cors_origin": "http://localhost:3000",
+    "scope": "Actual frontend client and snapshot against existing API; GET requests only. No browser."
+  },
+  "source_sha256": {
+    "frontend/src/App.css": "6e25a776d3e8102da5bacb3cb99f4a5fc662a2e01e6143140671a556d28c3d5c",
+    "frontend/src/App.jsx": "c1a32a39580835d783cca2d03ec2f03896117f93ef201d626b1577cc8c652b06",
+    "frontend/src/assets/hero.png": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+    "frontend/src/assets/react.svg": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5",
+    "frontend/src/assets/vite.svg": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f",
+    "frontend/src/components/BackendMaintenance.jsx": "be8c055c8bb2724f0b7b700149f0be27de7285987112f4aa63ba63e7d084d2c2",
+    "frontend/src/components/BackendReadings.jsx": "4bc483441ead1ad6958134cca424670069f0d26f36ea2b885e0b16be82d2647d",
+    "frontend/src/components/ReadingCard.jsx": "dd4da59b5a9c8f17a741edf6858010e713fee218005eeb5b9eedd5a08c730f50",
+    "frontend/src/components/StoredAnalytics.jsx": "6962df095c31fa475e93d62fb5dc0a395c7e95e7dee2c56f22c147d66fc49f6d",
+    "frontend/src/components/ThermalComparison.jsx": "289a4a4e739cad4dff5b405aa17710e65caf0dbdf726b14c17669d85e560a1d7",
+    "frontend/src/components/TrendChart.jsx": "93042a3bbe7b3df1f21420fd82174f3042b7f76666172842fce2bfc18dfe56e6",
+    "frontend/src/data/demoData.js": "ce8bcca34fae4ec099221293af1bd7de8cfebeb47fb91bd3b49c5db37cf17ed6",
+    "frontend/src/data/telemetryResponseSample.json": "109ae0ea7d220618676a04f17233ecae658544091c72e207a65418c183620cd1",
+    "frontend/src/index.css": "fda85fffe7f006d822fb9ab4e774b9e2b8fadffa73a3806b038dc0b8456cbbeb",
+    "frontend/src/main.jsx": "b8542a4c2e89248ab5f5bde2a35b79f43d166ce50d269197d75fb79d2cfe987e",
+    "frontend/src/services/analyticsAdapter.js": "10f085be6a71c36428cf931475cb174d041a1a8ae3d113cd1bd264e64e0b9530",
+    "frontend/src/services/api.js": "308301d5db95bcbba8424b0b244d961b8ad69bb867edc4ce2718cd36d6ec977a",
+    "frontend/src/services/maintenanceAdapter.js": "91e70a18ab88c30d8f366a195a70b6357916c27e9940ee5fcf3c26bfd7b2f2d1",
+    "frontend/src/services/maintenanceApi.js": "c2676831defca861d23f22822e17b69965f1c0a3def8a92208f4f3f29666bbef",
+    "frontend/src/services/storedStream.js": "7c96a8caa43838f22bb353ea60f91d52703022e9823b8bdddde1fbdfbe80d4fc",
+    "frontend/src/services/telemetryAdapter.js": "45a4aa5d82766b5785399afefb7b5e58ccd8e82e557528e0a5989ee3d319158f",
+    "frontend/src/services/telemetryApi.js": "ce60b5068089043c622f18a47af9767e696592f3d3bee9e5ca6103a531db92a6",
+    "frontend/src/services/telemetryClient.js": "1e857ba954a507640efe185ffe7a7455ca178366883da778cf27b85179bcfada",
+    "frontend/src/styles/dashboard.css": "6121a9ae70ab390c7029f7cfe3b04552dff93d8e8984a4bdb181d9bc2a87a178",
+    "frontend/tests/storedStream.test.js": "6c1702f4241c13c8cfb36e71e8f7b57ff4994a24b4dd304b528bfc7bfd6756de",
+    "frontend/tests/analytics.test.js": "7c763aea7160b81fdfb8e383a8f5a70d44a3ecfa9835c2075f6d756a0b380be8",
+    "frontend/package.json": "9b80b7632f095c6910f660a601e3ff0fd1e8633937bdcce9f1c89d4e44aa2a59",
+    "frontend/package-lock.json": "c53e0df53d8af9f312581f06f3cb2270cefa1ba6dfd9a7eaaa4182e47e0f77b4"
+  },
+  "github_ci": "unknown; API Forbidden",
+  "browser_execution": false
+}

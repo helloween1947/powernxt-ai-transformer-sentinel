@@ -1,5 +1,54 @@
 # Person C stored analytics browser verification
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
+## Current-main validation after PR18 merge
+
+Final freshness check: main advanced to `6289ed1` through PR20 while CI was
+running. Its only change is 55 lines in `docs/integration-verification.md`.
+Backend, analytics-model, frontend, integration and CI code are identical to
+the tested main `7b19626`. This documentation-only advance was integrated
+without conflicts at `b71896b`; the same 16-file analytics net diff is retained.
+No additional test run is needed for unchanged application code. Current-head
+hosted CI is checked after publishing this final follow-up.
+
+PR16 now targets main. Main `7b19626ca49b81e99fc66bdba76fc55d305b8777`
+was merged without conflicts into the C branch at
+`de5fed97cf687e66a4eb3f5e503c43d3e63aca31`. Backend, analytics-model,
+integration and CI code exactly match that main; the PR net diff contains only
+analytics frontend/client/tests and supporting review documentation (16 files).
+No maintenance implementation or duplicate mount is introduced.
+
+Verified on 9 October 2026 at **22:56:13 IST**:
+
+- Frontend: **34 tests passed**, lint and production build passed.
+- Current-main backend: **222 tests passed** in the separate
+  `sentinel_c_integration_test` database on Windows/Python 3.14. Existing
+  dependency deprecation warnings were reported (223); no failures.
+- Actual Chrome used `http://localhost:3001` and current-main backend code at
+  `http://127.0.0.1:8001`. A new database copy of the preserved demo was upgraded
+  to D004 for this run. Original environment files, demo database, original
+  servers and unrelated work were preserved; temporary servers were stopped.
+- Six stored thermal readings 7–12 showed the bootstrap gap and five finite
+  predictions/residuals with elapsed_s=60. API/table values, units, provenance,
+  null health/confidence, channel coverage and CORS passed. Coefficient-free
+  electrical results, empty/source-isolated streams, offline/manual recovery,
+  delayed actual-response cancellation and 390px emulation passed. No invented
+  API payloads or uncaught page errors. These are browser checks against current
+  main's backend code, not a shared deployment or physical-phone test.
+- Current OpenAPI still exposes no scenario/What-if HTTP route; What-if remains
+  illustrative. The previous real-worker polling run below is historical
+  evidence; it was not repeated by creating new readings in this validation.
+
+Local evidence is retained outside Git under
+`integration-work/main-retarget-results/` (`verification.json`,
+`current-main.json`, screenshots and temporary-server logs). The cloned database
+is retained for diagnosis. Review and CI remain required before any human merge.
+All sections below are the earlier pre-retarget verification snapshot.
+
 Tested source commit: `1fdd8c246a971eb6f69c10f7fcd39a926b972c35`.
 Final actual-browser verification: **2026-10-09 22:13:48 IST**.
 Branch: `codex/personc-analytics-comparison`, based on published PR12 commit

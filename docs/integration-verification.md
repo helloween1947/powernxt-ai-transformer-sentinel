@@ -1,5 +1,60 @@
 # Combined integration verification — 9 October 2026
 
+## Maintenance integration handover: CLOSED
+
+Merged main tested: **7b19626ca49b81e99fc66bdba76fc55d305b8777**.
+GitHub confirms PR18 merged into main at this commit. Both clean local checkouts
+were synced by fast-forward only; existing branches/local work were preserved.
+C's authoritative component/client and exactly one Backend maintenance mount
+are present. No application compatibility fix was required.
+
+[Backend CI on this exact merged commit passed](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37965114062).
+The earlier full proposal checks below remain historical; the short actual
+Chrome run here is fresh verification on merged main, not an assumption from
+PR status. No unchanged local full suite was repeated.
+
+Actual Chrome smoke using the retained isolated PostgreSQL test database:
+
+- Created/listed two new labelled sample tasks through C's screen.
+- Assigned Sample smoke maintainer; open v1 -> assigned v2 -> in_progress v3 ->
+  completed v4 with notes, and terminal editor read-only.
+- Cancelled a separate open sample task with a reason, version2/read-only.
+- Reloaded the page and retrieved both records with the saved statuses, owner,
+  versions and sample provenance; no uncaught page errors.
+
+Completed ID: bed09a61-9942-4c9a-b27f-e1eb3b7275ab.
+Cancelled ID: a4aea234-a7e7-46e3-8aac-1398153f895d.
+Smoke asset: sample-merged-smoke-1ab14d32.
+No existing records/databases/volumes were removed. Temporary services are
+stopped after verification; isolated sample records and artifacts are retained.
+The update publishing this closeout changes documentation only.
+
+This closes the **sample-alert / demo-identity maintenance integration** handover.
+It does not establish genuine incidents, authenticated operators, full live
+forecast/dashboard operation or Docker deployment. Existing native startup
+commands and earlier full conflict/pagination/offline/restart results below
+remain applicable; this closeout intentionally ran the shorter requested smoke.
+
+Remaining incident-feature prerequisites: accepted A/B/D identity/version and
+worker-detector contracts; canonical incident UUID/epoch/asset-stream binding;
+durable incident/evidence/history/outbox and retrieval APIs; explicit versioned
+acknowledgement/idempotency with trusted identity/authorization; and D's genuine
+incident FK/schema migration preserving sample data. Physical recovery,
+acknowledgement and task status must stay independent. No next feature was added.
+
+Ready-to-send: merged main7b19626 has C's authoritative maintenance screen and
+passing exact-commit CI. Fresh Chrome smoke passed create/list, assignment,
+start/completion with notes, cancellation and refresh persistence, with zero page
+errors. The sample/demo maintenance integration handover is closed. Incident
+tasks/acknowledgement still require adopted contracts, persistent registry and
+versioned APIs, trusted identity and a reviewed genuine-task migration. Existing
+data was preserved; no Docker/production claim or incident feature was added.
+
+---
+
+The following sections retain the pre-merge baseline and full proposal verification.
+
+
 ## Exact baseline and the integration defect
 
 Tested fetched main: **090d5ee5fdb85ab1c59368cc05c1d009d4469f19**.

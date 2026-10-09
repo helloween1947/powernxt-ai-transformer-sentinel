@@ -1,5 +1,10 @@
 # Transformer Sentinel — Frontend
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 Person C's operator dashboard, built with React and Vite.
 
 Telemetry and sample maintenance were verified in an isolated combined checkout.
@@ -336,6 +341,17 @@ B's compare_worker_scenarios is a tested Python callable on unmerged PR7; no
 scenario HTTP route appears in the actual backend OpenAPI. What-if remains a
 fixture view. COVERAGE.md records the answered stored-field request and a short
 unsent request for HTTP schemas, binding/assumptions/units/validation/availability.
+
+PR18 has merged the #5/#12 roll-up into main. PR16 now targets main, integrated
+without conflicts at de5fed97. 34 frontend tests, lint/build, 222 current-main
+backend tests and actual Chrome/API checks passed. Browser validation used a
+separate copied database upgraded to D004 and temporary ports 3001/8001;
+environment files and the original demo database/servers were preserved.
+See ../docs/person-c-analytics-integration-verification.md for current evidence.
+Human review and current-head CI remain required before merge. What-if remains
+illustrative and phone testing remains deferred; no teammate message was sent.
+
+Historical pre-PR18 inspection (retained as evidence, not current status):
 
 The latest review inspection found #1/#5/#12 already merged by D without recorded
 formal reviews/comments; #5/#12 landed in stack branches and have not reached

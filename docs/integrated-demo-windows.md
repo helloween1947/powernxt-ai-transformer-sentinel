@@ -1,5 +1,10 @@
 # Repeatable Windows electrical and thermal demonstration
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 Use this guide from the reviewed integration checkout. [Executed evidence](integrated-demo-verification.md) distinguishes the development-browser checks from isolated worker reliability and pagination. No production deployment or calibrated fault detection is implied.
 
 **Contract refresh, 9 October 2026:** PR #19 now includes Person C's incremental `fa12a9bfccee4731246ea84fe516f58a1fe1490b` fixes through cherry-pick `2f8a9b2738d3aead590437e8f708fbc38148ae31`. PR #16 is already based on main and remains draft. Both review proposals overlap: review/merge #19 as the combined route, or land #16 first and reassess #19's remaining Windows documentation/checks. Do not double-apply the analytics implementation. The older revision/dependency sequence below is retained as execution history.

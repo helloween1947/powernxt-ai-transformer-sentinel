@@ -1,5 +1,95 @@
 # Frontend roll-up and PR16 publication review
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
+## Merged dashboard handover checklist — 9 October 2026
+
+Latest fetched main: `f2887902548212c4736ed69e9dd135c537c0d1c6`.
+PR16 merged at `b2526ad10add8f63e46f9c999fe977bd964121ea`; main contains
+its final `d2d1feb` head by ancestry. The b2526ad merge tree exactly matches
+that tested PR head. Subsequent PR15/PR21 merges add incident proposal
+schemas/examples/tests and implementation planning only; frontend/backend
+runtime code is unchanged. The local handover branch fast-forwarded to f288790.
+
+Completed:
+
+- [x] PR1 frontend starter merged into main; original README conflict resolved.
+- [x] PR5 and PR12 merged into their stack bases; PR18 brought their frontend
+  implementations into main. No remaining #1 → #5 → #12 dependency gate.
+- [x] PR9 maintenance backend and permanent D004 join are on main; PR20 closed
+  the maintenance handover. C's BackendMaintenance/maintenanceApi/adapter remain
+  authoritative. PR10 merged into persond, not as an extra main dashboard mount.
+- [x] PR16 analytics comparison/contract corrections merged into main; no
+  retarget, publication or approval step remains for this closed PR.
+- [x] PR15 incident contract proposal and PR21 incident implementation plan
+  merged. This publishes design material, not incident API/persistence support.
+- [x] Exact merged dashboard b2526ad: 34 frontend tests, lint and production build
+  passed. Actual Chrome/API checks at 23:14:42 IST passed on temporary loopback
+  ports 3001/8001 using the documented native setup and a separate copied
+  database upgraded to D004. Existing environments/database/servers preserved.
+- [x] All seven screens render; What-if remains visibly illustrative. Six real
+  stored thermal readings retain bootstrap gaps, units, provenance and explicit
+  unavailable health/confidence. Coefficient-free output, source isolation,
+  CORS, offline/recovery and delayed-response cancellation passed.
+- [x] Read-only maintenance smoke: saved completed task/version/history matches
+  the API and remains read-only after reload; no API mutations or page errors.
+- [x] Original database full-row fingerprints and counts unchanged; protected
+  environment files and Date.now()) unchanged. Temporary servers stopped;
+  original port-8000 backend remains ready. No branches deleted.
+- [x] Latest main f288790 Backend Test Suite (Python 3.12) passed:
+  https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/37968424346.
+  This is backend CI; no hosted frontend CI result is claimed.
+
+Remaining dependencies:
+
+- [ ] A/B review and adoption of PR7/PR17 model/detector/scenario changes.
+  Merged proposal documents do not invoke the detector or change stored-model
+  adoption. A callable does not supply the What-if HTTP contract.
+- [ ] Implement and agree the scenario HTTP route, request/response schemas,
+  configuration/state binding, units, availability and errors before replacing
+  illustrative What-if. Verified local OpenAPI still has no scenario route.
+- [ ] Accept and implement genuine incident identity/evidence retrieval,
+  persistence/history, acknowledgement/authenticated actor, delivery/replay and
+  incident-linked task semantics per A/B/D gates. Current maintenance is still
+  labelled sample-only; do not bypass its provenance checks.
+- [ ] Reconcile PR19's integrated Windows demonstration with now-merged PR16
+  and latest main; review PR14's assumed thermal configuration/run handoff.
+  These open follow-ups are separate from the completed frontend merge chain.
+- [ ] Shared deployment and independent calibration; unsupported numerical
+  confidence/risk/RUL outputs remain unavailable. Phone/LAN work is deferred.
+
+Evidence retained locally outside Git: `integration-work/merged-main-results/`
+contains analytics `verification.json`, `dashboard-smoke.json`,
+`current-main.json`, screenshots and logs. Browser execution was on b2526ad;
+application-code equivalence to subsequent f288790 was verified by Git, not
+claimed as a new browser run. New incident proposal tests are outside this
+frontend smoke check. Prior 222 backend tests passed before merge; they were
+not rerun for the unchanged backend. No push, PR merge or teammate message
+was performed during this handover update. Checklist changes remain local.
+
+The sections below are historical pre-merge snapshots.
+
+## Current state after authorized retarget
+
+PR18 has merged. Main `7b19626` contains both `ff6918d` and `f0b3572` by
+ancestry. PR16 now targets main; C merged this main into its branch without
+conflicts at `de5fed97`. The resulting net diff is 16 analytics UI/client/test
+and supporting documentation files, with no backend, analytics-model,
+integration, CI, environment or maintenance-mount diff.
+
+34 frontend tests, lint/build, 222 backend tests in the separate test database,
+and actual Chrome/current-main API checks passed. The browser used temporary
+ports 3001/8001 and a separate copied demo database upgraded to D004; existing
+environment files, original database/servers and Date.now()) were preserved.
+See ../docs/person-c-analytics-integration-verification.md for current evidence.
+The remaining gates are current-head CI and human review/approval before merge.
+What-if stays illustrative and phone testing remains deferred.
+
+Everything below records the earlier pre-merge inspection, not current status.
+
 Inspected9 October2026; no GitHub mutation performed.
 
 ## Exact references and ancestry

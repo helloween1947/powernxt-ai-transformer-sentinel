@@ -1,5 +1,10 @@
 # Executed Windows integration verification — 9 October 2026
 
+**PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
+See [new Linux verification](pr19-main-reconciliation.md) for the resolved merge and its
+limits. Windows/browser results below remain historical evidence for their
+listed revisions; they were not rerun for this merge.
+
 **Latest contract refresh:** fresh Windows verification of Person C `fa12a9bfccee4731246ea84fe516f58a1fe1490b` passed with **35 tests** and updated real Chrome checks. See [the refresh evidence below](#contract-refresh--9-october-2026-22552259-ist). The original 30-test/browser/reliability execution is preserved below as history, not treated as verification of the newer source.
 
 **PASS for the real stored electrical/thermal demonstration.** Windows Chrome exercised the actual React application and backend. This is not a deployment, physical-model accuracy claim, maintenance deployment, or review approval. [Repeatable Windows procedure](integrated-demo-windows.md).
