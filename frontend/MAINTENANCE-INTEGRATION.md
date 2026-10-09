@@ -1,5 +1,11 @@
 # C frontend maintenance integration
 
+**Current combined verification:** see [D integration report](../docs/integration-verification.md).
+The backend now has permanent D004 and passed combined checks. The graph and
+PR-status statements below retain C's earlier review snapshot. C's component
+and services remain the authoritative maintenance implementation.
+
+
 ## Review and merge sequence
 
 1. Review and merge **PR1** (`feat/frontend-setup`) into main. Its README
@@ -76,7 +82,7 @@ Content-Type and X-Demo-Actor.
 - POST/GET `/api/v1/maintenance/tasks`, GET/PATCH `/api/v1/maintenance/tasks/{id}`,
   GET `/api/v1/maintenance/tasks/{id}/history`.
 - **Both task list and history** return `{items, limit, offset}`. Actual D route
-  definitions accept limit 1–100 (default 20), offset >=0 (default 0). Task lists
+  definitions accept limit 1â€“100 (default 20), offset >=0 (default 0). Task lists
   optionally filter by `asset_id`; history does not use an asset filter. The UI
   uses 20-item pages and keeps backend ordering. With no total count, a full
   page permits Next; the next page may be empty.
@@ -145,7 +151,7 @@ Completed analytics are not consumed by these screens. Main now has a worker,
 but C does not claim that it ran for the demonstration or that its output,
 genuine incident delivery or trusted identity is connected to maintenance.
 
-## Verified review snapshot — 9 October 2026
+## Verified review snapshot â€” 9 October 2026
 
 | PR | Current base / branch | Review state |
 | --- | --- | --- |
