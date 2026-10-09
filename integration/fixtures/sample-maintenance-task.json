@@ -1,0 +1,9 @@
+{
+  "alert": {
+    "source": "sample",
+    "alert_id": "sample-cooling-inspection-001",
+    "asset_id": "sample-transformer-d",
+    "summary": "Illustrative alert for maintenance API verification; not a detector result."
+  },
+  "action": "Sample task: arrange a cooling-system inspection for demonstration only."
+}
