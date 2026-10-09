@@ -1,12 +1,12 @@
 """Ingestion and stream-isolated retrieval; all database errors are sanitized."""
 
-import json
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
+from backend.app.api.validation import original_payload
 from backend.app.db.session import get_db
 from backend.app.schemas.telemetry import (
     Identifier,
@@ -62,22 +62,6 @@ def stream(source: Source = "device", run_id: Identifier | None = None):
 
 
 Stream = Annotated[tuple, Depends(stream)]
-
-
-async def original_payload(request: Request):
-    # Reject JSON's nonstandard NaN/Infinity tokens before validation errors can
-    # try to serialize them; keep the original parsed object for auditing.
-    def invalid_constant(value):
-        raise ValueError("Non-finite JSON constant")
-
-    try:
-        original = json.loads(await request.body(), parse_constant=invalid_constant)
-        json.dumps(original, allow_nan=False)  # Also rejects overflowing exponents.
-        return original
-    except (ValueError, UnicodeDecodeError):
-        raise HTTPException(
-            422, "Payload must be valid JSON with finite numbers"
-        ) from None
 
 
 @router.post(
