@@ -10,7 +10,7 @@
           "run_id": "personb-numerical-test-v1"
         },
         "configuration_version": 1,
-        "model_version": "stored-reading-top-oil-1.0.1",
+        "model_version": "stored-reading-top-oil-1.0.2",
         "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
       },
       "last_measurement_time": "2026-01-01T00:01:00Z",
@@ -104,15 +104,15 @@
     ]
   },
   "output": {
-    "forecast_version": "healthy-top-oil-scenarios-1.0.0",
+    "forecast_version": "healthy-top-oil-scenarios-1.0.1",
     "baseline": "baseline",
     "horizon_s": 7200.0,
     "scenarios": [
       {
         "name": "baseline",
         "forecast": {
-          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "forecast_version": "healthy-top-oil-scenarios-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "source": "estimated",
           "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
           "state_reference": {
@@ -122,7 +122,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "initial_measurement_time": "2026-01-01T00:01:00Z",
@@ -167,8 +167,8 @@
       {
         "name": "reduced_load",
         "forecast": {
-          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "forecast_version": "healthy-top-oil-scenarios-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "source": "estimated",
           "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
           "state_reference": {
@@ -178,7 +178,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "initial_measurement_time": "2026-01-01T00:01:00Z",
@@ -223,8 +223,8 @@
       {
         "name": "warmer_ambient",
         "forecast": {
-          "forecast_version": "healthy-top-oil-scenarios-1.0.0",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "forecast_version": "healthy-top-oil-scenarios-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "source": "estimated",
           "initial_condition_source": "healthy_worker_prediction_or_observed_bootstrap",
           "state_reference": {
@@ -234,7 +234,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "initial_measurement_time": "2026-01-01T00:01:00Z",

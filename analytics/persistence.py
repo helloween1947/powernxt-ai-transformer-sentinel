@@ -8,8 +8,9 @@ import json
 
 from .transformer_twin.engine import _timestamp
 from .transformer_twin.model import finite
+from .validation import mapping, strict_json, identity as validate_identity
 
-DETECTOR_VERSION = "sustained-threshold-1.0.0"
+DETECTOR_VERSION = "sustained-threshold-1.0.1"
 STATE_VERSION = "sustained-threshold-state-1.0.0"
 QUANTITIES = {
     "electrical_metrics.capacity_loading_pct": "%",
@@ -26,6 +27,7 @@ def _digest(value):
 
 
 def _policy(policy):
+    mapping(policy, "Detector policy")
     if set(policy) != {"version", "provenance", "max_gap_s", "rules"}:
         raise ValueError("Policy requires version, provenance, max_gap_s and rules only")
     if not isinstance(policy["version"], str) or not policy["version"] or policy["provenance"] not in ("assumed", "measured", "team_agreed"):
@@ -36,6 +38,7 @@ def _policy(policy):
         raise ValueError("Require one to six named rules")
     names = set()
     for rule in policy["rules"]:
+        mapping(rule, "Detector rule")
         if set(rule) != {"name", "quantity", "unit", "trigger", "recovery", "persistence_s", "recovery_s", "severity"}:
             raise ValueError("Unexpected or missing rule fields")
         if not isinstance(rule["name"], str) or not rule["name"] or rule["name"] in names:
@@ -59,6 +62,10 @@ def evaluate_persistent_rules(analytics_result: dict, policy: dict,
     between consecutive qualifying samples. A/D own orchestration and publication.
     """
     _policy(policy)
+    mapping(analytics_result, "Analytics result", ("metadata", "execution_status"))
+    execution = mapping(analytics_result["execution_status"], "Execution status", ("state_advanced", "outcome"))
+    if type(execution["state_advanced"]) is not bool:
+        raise ValueError("State advancement must be an explicit boolean")
     meta = analytics_result["metadata"]
     stamp = _timestamp(meta["measurement_time"]).isoformat().replace("+00:00", "Z")
     binding = {k: deepcopy(meta[k]) for k in
@@ -66,11 +73,28 @@ def evaluate_persistent_rules(analytics_result: dict, policy: dict,
     binding.update(detector_version=DETECTOR_VERSION, policy_version=policy["version"], policy_fingerprint=_digest(policy))
     # Ignore arbitrary raw metadata / labels. Only whitelisted result values enter rules.
     identity = deepcopy(meta["reading_identity"])
+    validate_identity(identity)
     elapsed = None
     if previous_state is not None:
-        json.dumps(previous_state, allow_nan=False)
+        mapping(previous_state, "Detector state", ("schema_version", "binding", "last_measurement_time", "last_reading_identity", "rules"))
+        strict_json(previous_state)
         if previous_state.get("schema_version") != STATE_VERSION or previous_state.get("binding") != binding:
             raise ValueError("Detector binding changed; select matching state or deliberately reset/replay")
+        validate_identity(previous_state["last_reading_identity"])
+        history = mapping(previous_state["rules"], "Detector rule history")
+        if set(history) != {rule["name"] for rule in policy["rules"]}:
+            raise ValueError("Detector history must match the policy rules")
+        for name, item in history.items():
+            mapping(item, "Detector rule state", ("active", "sequence", "incident_id", "pending_s", "recovery_s", "previous_abnormal", "previous_recoverable", "last_usable_evidence"))
+            if any(type(item[key]) is not bool for key in ("active", "previous_abnormal", "previous_recoverable")):
+                raise ValueError("Detector state flags must be booleans")
+            if type(item["sequence"]) is not int or item["sequence"] < 0:
+                raise ValueError("Detector sequence must be a nonnegative integer")
+            if any(not finite(item[key]) or item[key] < 0 for key in ("pending_s", "recovery_s")):
+                raise ValueError("Detector durations must be finite and nonnegative")
+            expected = f"{_digest(binding)}:{name}:{item['sequence']}" if item["sequence"] else None
+            if item["incident_id"] != expected or (item["active"] and not item["sequence"]):
+                raise ValueError("Detector episode key is inconsistent with its state")
         elapsed = (_timestamp(stamp)-_timestamp(previous_state["last_measurement_time"])).total_seconds()
         prior = previous_state["last_reading_identity"]
         if (identity["reading_id"] == prior["reading_id"] or identity["message_id"] == prior["message_id"]) and elapsed != 0:

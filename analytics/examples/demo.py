@@ -2,7 +2,6 @@
 from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
-from uuid import uuid4
 
 from analytics import process_reading, compare_what_if
 from analytics.transformer_twin import TwinEngine, update_thermal_state
@@ -33,7 +32,7 @@ def main():
             measurements["oil_temperature_c"] = expected + (12 if minute >= 4 else 0)
         reading = {
             "schema_version": "1.0.0", "asset_id": configuration["asset_id"], "configuration_version": 1,
-            "message_id": str(uuid4()), "timestamp": (start + timedelta(minutes=minute)).isoformat(),
+            "message_id": f"30000000-0000-4000-8000-{minute+1:012d}", "timestamp": (start + timedelta(minutes=minute)).isoformat(),
             "source": "simulator", "run_id": "personb-offset-demo", "measurements": measurements,
             "measurement_quality": {k: "good" for k in measurements},
         }

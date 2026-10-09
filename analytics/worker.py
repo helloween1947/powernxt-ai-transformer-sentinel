@@ -9,13 +9,14 @@ import json
 import math
 from uuid import UUID
 
-from .adapter import CHANNELS, THERMAL_KEYS, _normalize
+from .normalization import CHANNELS, THERMAL_KEYS, _normalize
+from .validation import mapping, worker_state
 from .transformer_twin import AssetConfig, ThermalState
 from .transformer_twin.engine import _timestamp
 from .transformer_twin.model import _advance, finite
 
 MODEL_ID = "powernxt-electrical-top-oil"
-MODEL_VERSION = "stored-reading-top-oil-1.0.1"
+MODEL_VERSION = "stored-reading-top-oil-1.0.2"
 STATE_VERSION = "stored-reading-state-1.0.0"
 RESULT_VERSION = "stored-reading-result-1.1.0"
 MAX_GAP_S = 300.0
@@ -29,6 +30,7 @@ def compute_analytics(normalized_telemetry: dict, asset_config: dict, quality_fl
     Elapsed time is derived from normalized timestamp and the previous-state watermark.
     ValueError indicates invalid input or incompatible state; no job/session is needed.
     """
+    mapping(normalized_telemetry, "Normalized telemetry", ("timestamp",))
     stored = {"id": reading_id,
               **{key: normalized_telemetry.get(key) for key in
                  ("asset_id", "source", "run_id", "message_id", "configuration_version")},
@@ -53,6 +55,7 @@ def _parameter_version(config):
 
 
 def _validate_config(reading, config):
+    mapping(config, "Configuration", ("asset_id", "version", "created_at", "rated_current_a", "rated_voltage_v", "rated_kva", "voltage_convention", "measurement_side", "cooling_type"))
     if config.get("asset_id") != reading["asset_id"] or config.get("version") != reading["configuration_version"]:
         raise ValueError("Use the reading-bound immutable ConfigurationResponse")
     if not _positive_integer(config.get("version")):
@@ -67,6 +70,10 @@ def _validate_config(reading, config):
     provenance = config.get("parameter_provenance", {})
     if not all(isinstance(v, dict) for v in (thermal, limits, provenance)):
         raise ValueError("Configuration parameter groups must be maps")
+    thermal_fields = set(THERMAL_KEYS) | {"rated_hot_spot_rise_c", "winding_time_constant_min", "winding_exponent"}
+    limit_fields = {"max_load_pct", "min_voltage_pu", "max_voltage_pu", "max_top_oil_temp_c", "max_hot_spot_temp_c"}
+    if set(thermal) - thermal_fields or set(limits) - limit_fields:
+        raise ValueError("Unknown configuration parameter")
     required = {"rated_kva", "rated_voltage_v", "rated_current_a", "voltage_convention", "measurement_side", "cooling_type"}
     for group, values in (("thermal_parameters", thermal), ("operational_limits", limits)):
         for key, value in values.items():
@@ -82,10 +89,20 @@ def _validate_config(reading, config):
     return [f"thermal_parameters.{key}" for key in THERMAL_KEYS if thermal.get(key) is None]
 
 
+def _thermal_core(config):
+    """Construct the shared core with explicit coefficients; no parameter fallback."""
+    params = config["thermal_parameters"]
+    return AssetConfig(asset_id=config["asset_id"], rated_current_a=config["rated_current_a"],
+                       rated_phase_voltage_v=config["rated_voltage_v"] / (math.sqrt(3) if config["voltage_convention"] == "line_to_line" else 1),
+                       rated_oil_rise_c=params["rated_top_oil_rise_c"], time_constant_s=params["oil_time_constant_min"] * 60,
+                       loss_ratio=params["loss_ratio"], oil_exponent=params["oil_exponent"])
+
+
 def _reading(record):
+    mapping(record, "Stored reading", ("id", "normalized_telemetry", "asset_id", "source", "configuration_version", "message_id", "measurement_time", "quality_flags", "processing_job"))
     if not _positive_integer(record.get("id")):
         raise ValueError("Stored reading requires a positive database id")
-    normalized = record["normalized_telemetry"]
+    normalized = mapping(record["normalized_telemetry"], "Normalized telemetry", ("message_id", "asset_id", "source", "configuration_version", "timestamp", "measurements"))
     # Allow a complete A response, but copy only known normalized fields into calculations.
     known = ("schema_version", "message_id", "asset_id", "source", "run_id", "configuration_version", "timestamp", "measurements", "measurement_quality")
     reading = {key: deepcopy(normalized[key]) for key in known if key in normalized}
@@ -109,7 +126,23 @@ def _imbalance(values):
     if any(v is None for v in values):
         return None
     mean = sum(values) / 3
-    return 100 * max(abs(v - mean) for v in values) / mean if mean else None
+    if not finite(mean):
+        mean = sum(v / 3 for v in values)
+    if not mean:
+        return None
+    deviation = max(abs(v - mean) for v in values)
+    answer = 100 * deviation / mean
+    return answer if finite(answer) else 100 * (deviation / mean)
+
+
+def _scaled_product(first, second, scale):
+    """Overflow-safe fallback for mathematically representable positive products."""
+    a, exponent_a = math.frexp(first)
+    b, exponent_b = math.frexp(second)
+    try:
+        return math.ldexp(a * b / scale, exponent_a + exponent_b)
+    except OverflowError:
+        return None
 
 
 def _rule(quantity, value, threshold, unit, relation):
@@ -130,10 +163,8 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     """
     reading = _reading(stored_reading)
     if previous_state is not None:
-        json.dumps(previous_state, allow_nan=False)
+        worker_state(previous_state, STATE_VERSION)
     missing_parameters = _validate_config(reading, asset_config)
-    if set(stored_reading["quality_flags"]) - set(CHANNELS) - {"stale", "clamped"}:
-        raise ValueError("Only channel quality reasons and explicit stale/clamped controls are supported")
     _row, clean, channel_reasons = _normalize(reading, stored_reading["quality_flags"], asset_config)
     stamp = _utc(reading["timestamp"])
     identity = {"reading_id": stored_reading["id"], "message_id": reading["message_id"]}
@@ -141,7 +172,7 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     parameter_version = _parameter_version(asset_config)
     binding = {"stream": stream, "configuration_version": reading["configuration_version"],
                "model_version": MODEL_VERSION, "parameter_version": parameter_version}
-    policy = stored_reading["processing_job"]["state_policy"]
+    policy = mapping(stored_reading["processing_job"], "Processing job", ("state_policy",))["state_policy"]
     if policy not in ("forward_only", "historical_only"):
         raise ValueError("Unknown processing job state policy")
     advance, ordering_reasons = policy == "forward_only", []
@@ -169,6 +200,7 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     volts = [clean[f"voltage_{p}_v"] for p in "ryb"]
     rated_current = asset_config["rated_current_a"]
     loading = [100 * value / rated_current if value is not None else None for value in currents]
+    loading = [value if value is None or finite(value) else 100 * (current / rated_current) for value, current in zip(loading, currents)]
     complete_current = all(v is not None for v in currents)
     k = math.sqrt(sum((v / rated_current)**2 for v in currents) / 3) if complete_current else None
     complete_electrical = all(v is not None for v in currents + volts)
@@ -177,8 +209,22 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     if complete_electrical:
         apparent = math.sqrt(3) * (sum(volts) / 3) * (sum(currents) / 3) / 1000 if line_line else sum(v * i for v, i in zip(volts, currents)) / 1000
     if apparent is not None and not finite(apparent):
-        apparent = None
+        if line_line:
+            mean_v, mean_i = sum(v / 3 for v in volts), sum(i / 3 for i in currents)
+            apparent = _scaled_product(mean_v, mean_i, 1000 / math.sqrt(3))
+        else:
+            parts = [_scaled_product(v, i, 1000) for v, i in zip(volts, currents)]
+            try:
+                apparent = math.fsum(parts) if all(v is not None for v in parts) else None
+            except OverflowError:
+                apparent = None
     capacity_loading = apparent / asset_config["rated_kva"] * 100 if apparent is not None else None
+    arithmetic_unavailable = set()
+    if complete_electrical and apparent is None:
+        arithmetic_unavailable.update(("apparent_power_kva", "capacity_loading_pct"))
+    if capacity_loading is not None and not finite(capacity_loading):
+        capacity_loading = None
+        arithmetic_unavailable.add("capacity_loading_pct")
     electrical = {"phase_loading_pct": loading, "max_phase_loading_pct": max(loading) if complete_current else None,
                   "thermal_load_pu": k, "current_magnitude_imbalance_pct": _imbalance(currents),
                   "voltage_magnitude_imbalance_pct": _imbalance(volts), "apparent_power_kva": apparent,
@@ -211,13 +257,9 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
         thermal_reasons.append(thermal["reason"])
     else:
         # Reuse the tested existing physical core, with all thermal coefficients explicit.
-        params = asset_config["thermal_parameters"]
         held = previous_state["held_inputs"]
         try:
-            core = AssetConfig(asset_id=reading["asset_id"], rated_current_a=rated_current,
-                               rated_phase_voltage_v=asset_config["rated_voltage_v"] / (math.sqrt(3) if line_line else 1),
-                               rated_oil_rise_c=params["rated_top_oil_rise_c"], time_constant_s=params["oil_time_constant_min"] * 60,
-                               loss_ratio=params["loss_ratio"], oil_exponent=params["oil_exponent"])
+            core = _thermal_core(asset_config)
             next_state = _advance(ThermalState(thermal["oil_temp_c"], held["ambient_temp_c"], core), held["thermal_load_pu"], held["ambient_temp_c"], elapsed)
             predicted = next_state.predicted_oil_temp_c
             if not finite(predicted):
@@ -250,11 +292,13 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
             continue
         available = all(v is not None for v in value) if isinstance(value, list) else value is not None
         reason = "phase_angles_or_power_channels_not_supplied" if key in ("active_power_kw", "reactive_power_kvar", "power_factor", "symmetrical_components") else "usable_required_channels_missing_or_zero_reference"
+        if key in arithmetic_unavailable:
+            reason = "electrical_arithmetic_unavailable"
         availability[f"electrical_metrics.{key}"] = {"status": "available" if available else "unavailable", "reasons": [] if available else [reason]}
     availability["thermal_assessment.predicted_top_oil_temperature_c"] = {"status": "available" if predicted is not None else "unavailable", "reasons": [] if predicted is not None else thermal_reasons}
     availability["thermal_assessment.thermal_residual_c"] = {"status": "available" if residual is not None else "unavailable", "reasons": [] if residual is not None else thermal_reasons}
     unavailable_channels = [c for c in CHANNELS[:8] if clean[c] is None]
-    status = "insufficient_data" if not advance or not complete_current else "computed" if predicted is not None and residual is not None and complete_electrical else "degraded"
+    status = "insufficient_data" if not advance or not complete_current else "computed" if predicted is not None and residual is not None and complete_electrical and not arithmetic_unavailable else "degraded"
     outcome = ("computation_error" if "thermal_arithmetic_unavailable" in thermal_reasons else
                "insufficient_input_or_state" if not advance or not complete_current else
                "unsupported_configuration" if missing_parameters else

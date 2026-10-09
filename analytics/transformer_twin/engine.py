@@ -2,6 +2,7 @@
 from dataclasses import asdict
 from datetime import datetime, timezone
 from copy import deepcopy
+import json
 
 from .model import (AssetConfig, ThermalState, finite, calculate_electrical_metrics,
                     update_thermal_state, assess_condition, detect_anomalies)
@@ -13,7 +14,10 @@ def _timestamp(value):
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
         raise ValueError("timestamp requires timezone")
-    return parsed.astimezone(timezone.utc)
+    try:
+        return parsed.astimezone(timezone.utc)
+    except (OverflowError, ValueError):
+        raise ValueError("timestamp cannot be represented in UTC") from None
 
 
 class TwinEngine:
@@ -41,6 +45,24 @@ class TwinEngine:
 
     @classmethod
     def restore(cls, snapshot):
+        if not isinstance(snapshot, dict) or not {"schema_version", "config", "thermal_state", "last_timestamp", "alert_history"}.issubset(snapshot):
+            raise ValueError("Engine snapshot requires its complete state maps")
+        try:
+            json.dumps(snapshot, allow_nan=False)
+        except (ValueError, TypeError, OverflowError):
+            raise ValueError("Engine snapshot must be finite JSON") from None
+        if any(not isinstance(snapshot[key], dict) for key in ("config", "thermal_state", "alert_history")):
+            raise ValueError("Engine snapshot state fields must be maps")
+        for item in snapshot["alert_history"].values():
+            if not isinstance(item, dict) or not {"active", "pending_s", "recovery_s", "sequence"}.issubset(item):
+                raise ValueError("Incomplete restored alert state")
+            if type(item["active"]) is not bool or type(item["sequence"]) is not int or item["sequence"] < 0:
+                raise ValueError("Invalid restored alert flags or sequence")
+            if any(not finite(item[key]) or item[key] < 0 for key in ("pending_s", "recovery_s")):
+                raise ValueError("Invalid restored alert duration")
+            for key in ("previous_abnormal", "previous_recoverable", "evidence_available"):
+                if key in item and type(item[key]) is not bool:
+                    raise ValueError("Invalid restored alert continuity flag")
         if snapshot["schema_version"] != "1.0":
             raise ValueError("Unsupported state version")
         engine = cls(AssetConfig(**snapshot["config"]))

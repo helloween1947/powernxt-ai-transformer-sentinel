@@ -1,3 +1,5 @@
+Review update: see [Person B code audit](../docs/person-b-code-audit.md). This branch contains model `stored-reading-top-oil-1.0.2`; adopting it in A's worker requires explicit version/state handling.
+
 # Person B: Digital Twin and analytics
 
 Optional follow-on APIs: `evaluate_persistent_rules`, `forecast_from_worker_state`,

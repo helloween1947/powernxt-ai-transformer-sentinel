@@ -6,11 +6,12 @@ from copy import deepcopy
 import math
 import json
 
-from .transformer_twin import AssetConfig, ThermalState
+from .transformer_twin import ThermalState
 from .transformer_twin.model import _advance, finite
-from .worker import MODEL_VERSION, STATE_VERSION, _parameter_version, _validate_config
+from .worker import MODEL_VERSION, STATE_VERSION, _parameter_version, _validate_config, _thermal_core
+from .validation import mapping, worker_state, strict_json
 
-FORECAST_VERSION = "healthy-top-oil-scenarios-1.0.0"
+FORECAST_VERSION = "healthy-top-oil-scenarios-1.0.1"
 
 
 def forecast_from_worker_state(current_state: dict, asset_config: dict,
@@ -20,8 +21,7 @@ def forecast_from_worker_state(current_state: dict, asset_config: dict,
     Every segment requires duration_s, thermal_load_pu and ambient_temp_c.
     No measured oil reinitialization or uncalibrated cooling factor is introduced.
     """
-    if current_state.get("schema_version") != STATE_VERSION:
-        raise ValueError("Unsupported worker state schema")
+    worker_state(current_state, STATE_VERSION)
     binding = current_state["binding"]
     missing = _validate_config({"asset_id": binding["stream"]["asset_id"], "configuration_version": binding["configuration_version"]}, asset_config)
     if binding["model_version"] != MODEL_VERSION or binding["parameter_version"] != _parameter_version(asset_config):
@@ -33,6 +33,7 @@ def forecast_from_worker_state(current_state: dict, asset_config: dict,
         raise ValueError("Require one to 96 explicit profile segments")
     horizon = 0.0
     for row in future_load_profile:
+        mapping(row, "Forecast segment")
         if set(row) != {"duration_s", "thermal_load_pu", "ambient_temp_c"}:
             raise ValueError("Segments require duration_s, thermal_load_pu and ambient_temp_c only")
         if not all(finite(row[k]) for k in row) or row["duration_s"] <= 0 or not 0 <= row["thermal_load_pu"] <= 10 or not -50 <= row["ambient_temp_c"] <= 80:
@@ -40,12 +41,8 @@ def forecast_from_worker_state(current_state: dict, asset_config: dict,
         horizon += row["duration_s"]
     if not finite(horizon) or horizon > 86400:
         raise ValueError("Maximum forecast horizon is 24 hours")
-    params = asset_config["thermal_parameters"]
-    tau = params["oil_time_constant_min"]*60
-    core = AssetConfig(asset_id=asset_config["asset_id"], rated_current_a=asset_config["rated_current_a"],
-                       rated_phase_voltage_v=asset_config["rated_voltage_v"]/(math.sqrt(3) if asset_config["voltage_convention"] == "line_to_line" else 1),
-                       rated_oil_rise_c=params["rated_top_oil_rise_c"], time_constant_s=tau,
-                       loss_ratio=params["loss_ratio"], oil_exponent=params["oil_exponent"])
+    core = _thermal_core(asset_config)
+    tau = core.time_constant_s
     temperature, elapsed = thermal["oil_temp_c"], 0.0
     points = [{"elapsed_s": elapsed, "predicted_top_oil_temperature_c": temperature}]
     limit = asset_config.get("operational_limits", {}).get("max_top_oil_temp_c")
@@ -87,6 +84,7 @@ def compare_worker_scenarios(current_state: dict, asset_config: dict,
         raise ValueError("Require one to 12 scenarios")
     names, results = set(), []
     for item in scenarios:
+        mapping(item, "Scenario")
         if set(item) != {"name", "profile"} or not isinstance(item["name"], str) or not item["name"] or item["name"] in names:
             raise ValueError("Scenarios need unique names and explicit profiles only")
         names.add(item["name"])
@@ -98,6 +96,8 @@ def compare_worker_scenarios(current_state: dict, asset_config: dict,
     baseline = results[0]["forecast"]["final_top_oil_temperature_c"]
     for item in results:
         item["final_delta_from_baseline_c"] = item["forecast"]["final_top_oil_temperature_c"]-baseline
-    return {"forecast_version": FORECAST_VERSION, "baseline": results[0]["name"],
+    output = {"forecast_version": FORECAST_VERSION, "baseline": results[0]["name"],
             "horizon_s": results[0]["forecast"]["horizon_s"], "scenarios": results,
             "interpretation": "Healthy expected-temperature comparison, not an action recommendation or unresolved-fault forecast."}
+    strict_json(output)
+    return output

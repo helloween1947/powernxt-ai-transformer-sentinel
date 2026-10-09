@@ -45,7 +45,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "3f999282-e3d5-45c4-bcb1-9acf50de7126",
+      "message_id": "30000000-0000-4000-8000-000000000001",
       "timestamp": "2026-01-01T00:00:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -76,7 +76,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "c7130817-6342-4de9-83e3-38f26fdfbb7d",
+      "message_id": "30000000-0000-4000-8000-000000000002",
       "timestamp": "2026-01-01T00:01:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -107,7 +107,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "a5ebf962-0cea-4c92-9802-b173193b3e1f",
+      "message_id": "30000000-0000-4000-8000-000000000003",
       "timestamp": "2026-01-01T00:02:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -138,7 +138,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "7b3b8d6e-994a-48b5-b3b4-9656d924b00c",
+      "message_id": "30000000-0000-4000-8000-000000000004",
       "timestamp": "2026-01-01T00:03:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -169,7 +169,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "47b9f70f-a607-45ce-8171-fc5d816462f8",
+      "message_id": "30000000-0000-4000-8000-000000000005",
       "timestamp": "2026-01-01T00:04:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -200,7 +200,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "d7665288-bd37-4db4-8485-c3711d4e681e",
+      "message_id": "30000000-0000-4000-8000-000000000006",
       "timestamp": "2026-01-01T00:05:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -231,7 +231,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "42430499-06c1-4be7-8171-603cc7ea23f1",
+      "message_id": "30000000-0000-4000-8000-000000000007",
       "timestamp": "2026-01-01T00:06:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -262,7 +262,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "4b8cdb07-ead7-4078-904d-3ce40b951cad",
+      "message_id": "30000000-0000-4000-8000-000000000008",
       "timestamp": "2026-01-01T00:07:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -293,7 +293,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "20346d10-d798-4a7d-80fb-1def1b2d3bb6",
+      "message_id": "30000000-0000-4000-8000-000000000009",
       "timestamp": "2026-01-01T00:08:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -324,7 +324,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "0d5f60f4-fced-45f3-a4c2-1280e5548c83",
+      "message_id": "30000000-0000-4000-8000-000000000010",
       "timestamp": "2026-01-01T00:09:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -355,7 +355,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "4cbcbc51-fcf6-493c-9454-451ff67c5b8a",
+      "message_id": "30000000-0000-4000-8000-000000000011",
       "timestamp": "2026-01-01T00:10:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -386,7 +386,7 @@
       "schema_version": "1.0.0",
       "asset_id": "XFR-SUB04-TX01",
       "configuration_version": 1,
-      "message_id": "175cd118-9040-4a0b-8e26-683fa08bb748",
+      "message_id": "30000000-0000-4000-8000-000000000012",
       "timestamp": "2026-01-01T00:11:00+00:00",
       "source": "simulator",
       "run_id": "personb-offset-demo",
@@ -437,9 +437,9 @@
         "measurement_side": "primary"
       },
       "thermal_assessment": {
-        "predicted_top_oil_temperature_c": 55.0,
+        "predicted_top_oil_temperature_c": 55,
         "measured_top_oil_temperature_c": 55,
-        "thermal_residual_c": 0.0,
+        "thermal_residual_c": 0,
         "winding_hot_spot_temperature_c": null,
         "prediction_source": "estimated",
         "valid": true,
@@ -479,7 +479,7 @@
           },
           {
             "name": "thermal_residual",
-            "value": 0.0,
+            "value": 0,
             "unit": "C",
             "penalty": 0.0,
             "weight": 20.0,
@@ -541,7 +541,7 @@
             "max_gap_s": 300.0
           },
           "thermal_state": {
-            "predicted_oil_temp_c": 55.0,
+            "predicted_oil_temp_c": 55,
             "ambient_temp_c": 30,
             "valid": true,
             "reason": null
@@ -615,7 +615,7 @@
               "sequence": 0,
               "evidence_available": true,
               "evidence": {
-                "value": 0.0,
+                "value": 0,
                 "unit": "C",
                 "trigger": 8.0,
                 "recovery": 4.0,
@@ -642,7 +642,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -652,7 +652,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:00:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.832849+00:00",
+        "evaluation_time": "2026-01-01T00:00:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -924,7 +924,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -934,7 +934,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:01:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.833256+00:00",
+        "evaluation_time": "2026-01-01T00:01:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -1204,7 +1204,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -1214,7 +1214,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:02:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.833574+00:00",
+        "evaluation_time": "2026-01-01T00:02:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -1484,7 +1484,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -1494,7 +1494,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:03:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.833876+00:00",
+        "evaluation_time": "2026-01-01T00:03:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -1764,7 +1764,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -1774,7 +1774,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:04:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.834173+00:00",
+        "evaluation_time": "2026-01-01T00:04:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -2044,7 +2044,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -2054,7 +2054,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:05:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.834449+00:00",
+        "evaluation_time": "2026-01-01T00:05:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -2345,7 +2345,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -2355,7 +2355,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:06:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.834721+00:00",
+        "evaluation_time": "2026-01-01T00:06:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -2666,7 +2666,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -2676,7 +2676,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:07:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.834997+00:00",
+        "evaluation_time": "2026-01-01T00:07:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -2987,7 +2987,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -2997,7 +2997,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:08:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.835273+00:00",
+        "evaluation_time": "2026-01-01T00:08:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -3308,7 +3308,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -3318,7 +3318,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:09:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.835549+00:00",
+        "evaluation_time": "2026-01-01T00:09:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -3629,7 +3629,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -3639,7 +3639,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:10:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.835840+00:00",
+        "evaluation_time": "2026-01-01T00:10:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",
@@ -3950,7 +3950,7 @@
         }
       },
       "metadata": {
-        "model_version": "sentinel-twin-0.2.0",
+        "model_version": "sentinel-twin-0.2.1",
         "detector_policy_version": "threshold-persistence-1.0",
         "configuration_version": 1,
         "configuration_fingerprint": "53da6802c3db8bf4f285798faccda152e13750eeb07e2c926b558f9def5032f6",
@@ -3960,7 +3960,7 @@
           "run_id": "personb-offset-demo"
         },
         "measurement_time": "2026-01-01T00:11:00+00:00",
-        "evaluation_time": "2026-10-08T17:05:24.836155+00:00",
+        "evaluation_time": "2026-01-01T00:11:00+00:00",
         "parameter_provenance": {
           "rated_kva": "assumed",
           "rated_voltage_v": "assumed",

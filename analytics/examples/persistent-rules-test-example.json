@@ -219,7 +219,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:00:00Z",
@@ -241,7 +241,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 1,
@@ -371,7 +371,7 @@
       },
       "previous_detector_state": null,
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -407,9 +407,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -644,7 +644,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:01:00Z",
@@ -666,7 +666,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 2,
@@ -800,9 +800,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -841,7 +841,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -877,9 +877,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -1114,7 +1114,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:02:00Z",
@@ -1136,7 +1136,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 3,
@@ -1270,9 +1270,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -1311,7 +1311,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -1347,9 +1347,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -1584,7 +1584,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:03:00Z",
@@ -1606,7 +1606,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 4,
@@ -1740,9 +1740,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -1781,7 +1781,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -1789,7 +1789,7 @@
         "measurement_time": "2026-01-01T00:03:00Z",
         "events": [
           {
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "category": "capacity_overload",
             "severity": "warning",
             "lifecycle": "opened",
@@ -1843,9 +1843,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -1858,7 +1858,7 @@
             "capacity_overload": {
               "active": true,
               "sequence": 1,
-              "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
               "pending_s": 0.0,
               "recovery_s": 0.0,
               "previous_abnormal": true,
@@ -1888,7 +1888,7 @@
             "category": "capacity_overload",
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 0.0,
             "previous_abnormal": true,
@@ -2108,7 +2108,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:04:00Z",
@@ -2130,7 +2130,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 5,
@@ -2264,9 +2264,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -2279,7 +2279,7 @@
           "capacity_overload": {
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 0.0,
             "previous_abnormal": true,
@@ -2305,7 +2305,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -2341,9 +2341,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -2356,7 +2356,7 @@
             "capacity_overload": {
               "active": true,
               "sequence": 1,
-              "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
               "pending_s": 0.0,
               "recovery_s": 0.0,
               "previous_abnormal": true,
@@ -2386,7 +2386,7 @@
             "category": "capacity_overload",
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 0.0,
             "previous_abnormal": true,
@@ -2606,7 +2606,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:05:00Z",
@@ -2628,7 +2628,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 6,
@@ -2762,9 +2762,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -2777,7 +2777,7 @@
           "capacity_overload": {
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 0.0,
             "previous_abnormal": true,
@@ -2803,7 +2803,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -2839,9 +2839,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -2854,7 +2854,7 @@
             "capacity_overload": {
               "active": true,
               "sequence": 1,
-              "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
               "pending_s": 0.0,
               "recovery_s": 60.0,
               "previous_abnormal": true,
@@ -2884,7 +2884,7 @@
             "category": "capacity_overload",
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 60.0,
             "previous_abnormal": true,
@@ -3104,7 +3104,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:06:00Z",
@@ -3126,7 +3126,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 7,
@@ -3260,9 +3260,9 @@
           },
           "configuration_version": 1,
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-          "detector_version": "sustained-threshold-1.0.0",
+          "detector_version": "sustained-threshold-1.0.1",
           "policy_version": "demo-capacity-v1",
           "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
         },
@@ -3275,7 +3275,7 @@
           "capacity_overload": {
             "active": true,
             "sequence": 1,
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "pending_s": 0.0,
             "recovery_s": 60.0,
             "previous_abnormal": true,
@@ -3301,7 +3301,7 @@
         }
       },
       "detector_result": {
-        "detector_version": "sustained-threshold-1.0.0",
+        "detector_version": "sustained-threshold-1.0.1",
         "policy_version": "demo-capacity-v1",
         "policy_provenance": "assumed",
         "state_advanced": true,
@@ -3309,7 +3309,7 @@
         "measurement_time": "2026-01-01T00:06:00Z",
         "events": [
           {
-            "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+            "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
             "category": "capacity_overload",
             "severity": "warning",
             "lifecycle": "resolved",
@@ -3363,9 +3363,9 @@
             },
             "configuration_version": 1,
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -3378,7 +3378,7 @@
             "capacity_overload": {
               "active": false,
               "sequence": 1,
-              "incident_id": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+              "incident_id": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
               "pending_s": 0.0,
               "recovery_s": 0.0,
               "previous_abnormal": false,

@@ -1,3 +1,5 @@
+Audit update: the reviewed B branch uses model `stored-reading-top-oil-1.0.2`. A's deployed copy remains `1.0.1`. See [code audit](person-b-code-audit.md) for adoption and state-isolation requirements.
+
 # Person B -> Person A: stored-reading analytics handoff
 
 Historical first handoff and verification below. For the current model1.0.1/result1.1.0,
