@@ -21,8 +21,9 @@ recorded handover. The storage planner explicitly accepts either version with
 model_id `powernxt-electrical-top-oil` and result schema
 `stored-reading-result-1.1.0`. It does not convert results or silently upgrade the
 thermal state. B's reviewed detector is `sustained-threshold-1.0.1`.
-PR17 remains an adoption dependency for the reviewed detector/validation code;
-this branch continues that work without changing A's vendored model.
+The reviewed detector/validation code from PR17 is bundled in this branch;
+adopting this full branch needs no separate PR17 merge. A's vendored model remains
+unchanged until A deliberately adopts a model handover.
 
 Policy must be a persisted, explicit version/provenance/max_gap_s/rules snapshot
 accepted by evaluate_persistent_rules. Hash its complete content. No default
@@ -220,17 +221,17 @@ configuration/model/parameter handover; explicit versions/errors; label exclusio
 The earlier targeted pure regression run passed 203 tests before the final six
 additional cases; final integrated validation below covers all current cases.
 
-Current main was exported to /private/tmp/personb-orchestration-main-f288790,
+Final main566b431 was exported to /private/tmp/personb-orchestration-main-566b431,
 overlaid with B analytics and the existing thermal handoff only. A's deployed
 model and D's maintenance code were unchanged. Against isolated PostgreSQL:
 
 ```sh
 TEST_DATABASE_URL=postgresql+psycopg://sentinel@127.0.0.1:55432/sentinel_test \
   /Users/vgnxh/Code/Projects/powernext/teammates/.venv/bin/python -m pytest \
-  backend/tests analytics/tests analytics/contracts integration/tests/test_thermal_demo.py -q --tb=short
+  backend/tests analytics/tests analytics/contracts analytics/reviewed_incident_contract integration/tests/test_thermal_demo.py -q --tb=short
 ```
 
-**464 passed**, 232 existing dependency deprecation warnings. These verify existing
+**473 passed**, 232 existing dependency deprecation warnings. These verify existing
 backend/worker/sample maintenance and B computation, not the unimplemented incident
 transaction or trusted identity. One additional API/worker integration test stores four isolated readings, consumes
 actual model1.0.1 results and verifies opening/update/recovery plans with exact
@@ -258,3 +259,15 @@ Next: A confirms worker-integrated adoption, implements registry/mapping/outbox,
 handover/barrier persistence, trusted actor and exact read/ack APIs with examples.
 D then adds the sample-preserving genuine task FK/union. C integrates those APIs.
 Acknowledgement, observed recovery and task completion remain three separate axes.
+
+
+## Main freshness and merged-contract preservation
+
+Main advanced to 566b4311763dd31edd1dbbd4ce7f498a10b77adf through PR19/23.
+The net changes from inspected f288790 are frontend/browser evidence and documents;
+backend/models/migrations are unchanged. No branch merge or force push was used.
+Merged PR15 schema, tests, builder, document and historical model1.0.1 fixture
+retain main's exact bytes at their original paths. PR17's improved schema/test/
+builder and model1.0.2 fixture remain available separately under
+analytics/reviewed_incident_contract; they do not supersede the merged baseline.
+This avoids add/add conflicts and preserves both accepted and reviewed artifacts.

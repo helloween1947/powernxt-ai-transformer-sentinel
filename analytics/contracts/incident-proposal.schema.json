@@ -3,485 +3,88 @@
   "title": "PROPOSED genuine analytics incident read model; not an implemented API",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "incident_id",
-    "incident_version",
-    "asset_id",
-    "source",
-    "measurement_source",
-    "run_id",
-    "category",
-    "severity",
-    "detector_epoch",
-    "detector_episode_key",
-    "condition_status",
-    "opened_at",
-    "recovered_at",
-    "last_evaluated_measurement_time",
-    "last_evidence_status",
-    "acknowledgement",
-    "evidence"
-  ],
+  "required": ["schema_version", "incident_id", "incident_version", "asset_id", "source", "measurement_source", "run_id", "category", "severity", "detector_epoch", "detector_episode_key", "condition_status", "opened_at", "recovered_at", "last_evaluated_measurement_time", "last_evidence_status", "acknowledgement", "evidence"],
   "properties": {
-    "schema_version": {
-      "const": "incident-proposal-1.0.0"
-    },
-    "incident_id": {
-      "type": "string",
-      "format": "uuid",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
-    },
-    "incident_version": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "asset_id": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 100,
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
-    },
-    "source": {
-      "const": "analytics"
-    },
-    "measurement_source": {
-      "enum": [
-        "device",
-        "simulator",
-        "file_replay"
-      ]
-    },
-    "run_id": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "category": {
-      "type": "string",
-      "minLength": 1
-    },
-    "severity": {
-      "enum": [
-        "info",
-        "warning",
-        "critical"
-      ]
-    },
-    "detector_epoch": {
-      "type": "string",
-      "format": "uuid"
-    },
-    "detector_episode_key": {
-      "type": "string",
-      "minLength": 1
-    },
-    "condition_status": {
-      "enum": [
-        "active",
-        "recovered"
-      ]
-    },
-    "opened_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "recovered_at": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "format": "date-time"
-    },
-    "last_evaluated_measurement_time": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "last_evidence_status": {
-      "enum": [
-        "available",
-        "unavailable"
-      ]
-    },
+    "schema_version": {"const": "incident-proposal-1.0.0"},
+    "incident_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"},
+    "incident_version": {"type": "integer", "minimum": 1},
+    "asset_id": {"type": "string", "minLength": 1, "maxLength": 100, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "source": {"const": "analytics"},
+    "measurement_source": {"enum": ["device", "simulator", "file_replay"]},
+    "run_id": {"type": ["string", "null"]},
+    "category": {"type": "string", "minLength": 1},
+    "severity": {"enum": ["info", "warning", "critical"]},
+    "detector_epoch": {"type": "string", "format": "uuid"},
+    "detector_episode_key": {"type": "string", "minLength": 1},
+    "condition_status": {"enum": ["active", "recovered"]},
+    "opened_at": {"type": "string", "format": "date-time"},
+    "recovered_at": {"type": ["string", "null"], "format": "date-time"},
+    "last_evaluated_measurement_time": {"type": "string", "format": "date-time"},
+    "last_evidence_status": {"enum": ["available", "unavailable"]},
     "acknowledgement": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "status",
-        "acknowledged_at",
-        "actor_ref"
-      ],
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "acknowledged_at", "actor_ref"],
       "properties": {
-        "status": {
-          "enum": [
-            "unacknowledged",
-            "acknowledged"
-          ]
-        },
-        "acknowledged_at": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "format": "date-time"
-        },
-        "actor_ref": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
+        "status": {"enum": ["unacknowledged", "acknowledged"]},
+        "acknowledged_at": {"type": ["string", "null"], "format": "date-time"},
+        "actor_ref": {"type": ["string", "null"]}
       },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "status": {
-                "const": "unacknowledged"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "acknowledged_at": {
-                "type": "null"
-              },
-              "actor_ref": {
-                "type": "null"
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "acknowledged_at": {
-                "type": "string"
-              },
-              "actor_ref": {
-                "type": "string",
-                "minLength": 1
-              }
-            }
-          }
-        }
-      ]
+      "allOf": [{"if": {"properties": {"status": {"const": "unacknowledged"}}}, "then": {"properties": {"acknowledged_at": {"type": "null"}, "actor_ref": {"type": "null"}}}, "else": {"properties": {"acknowledged_at": {"type": "string"}, "actor_ref": {"type": "string", "minLength": 1}}}}]
     },
-    "evidence": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#/$defs/evidence"
-      }
-    }
+    "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}
   },
   "allOf": [
-    {
-      "if": {
-        "properties": {
-          "condition_status": {
-            "const": "active"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "recovered_at": {
-            "type": "null"
-          }
-        }
-      },
-      "else": {
-        "properties": {
-          "recovered_at": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "measurement_source": {
-            "const": "device"
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "run_id": {
-            "type": "null"
-          }
-        }
-      },
-      "else": {
-        "properties": {
-          "run_id": {
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      }
-    }
+    {"if": {"properties": {"condition_status": {"const": "active"}}}, "then": {"properties": {"recovered_at": {"type": "null"}}}, "else": {"properties": {"recovered_at": {"type": "string"}}}},
+    {"if": {"properties": {"measurement_source": {"const": "device"}}}, "then": {"properties": {"run_id": {"type": "null"}}}, "else": {"properties": {"run_id": {"type": "string", "minLength": 1}}}}
   ],
   "$defs": {
     "evidence": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "reading_id",
-        "result_id",
-        "message_id",
-        "measurement_time",
-        "observation_kind",
-        "temperatures",
-        "temperature_unit",
-        "rule_evidence",
-        "data_confidence",
-        "versions",
-        "parameter_provenance",
-        "policy_provenance",
-        "quality_availability"
-      ],
+      "type": "object", "additionalProperties": false,
+      "required": ["reading_id", "result_id", "message_id", "measurement_time", "observation_kind", "temperatures", "temperature_unit", "rule_evidence", "data_confidence", "versions", "parameter_provenance", "policy_provenance", "quality_availability"],
       "properties": {
-        "reading_id": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "result_id": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "message_id": {
-          "type": "string",
-          "format": "uuid"
-        },
-        "measurement_time": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "observation_kind": {
-          "enum": [
-            "opened",
-            "updated",
-            "recovered",
-            "evidence_unavailable"
-          ]
-        },
+        "reading_id": {"type": "integer", "minimum": 1},
+        "result_id": {"type": "integer", "minimum": 1},
+        "message_id": {"type": "string", "format": "uuid"},
+        "measurement_time": {"type": "string", "format": "date-time"},
+        "observation_kind": {"enum": ["opened", "updated", "recovered", "evidence_unavailable"]},
         "temperatures": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "measured_top_oil_temperature_c",
-            "predicted_top_oil_temperature_c",
-            "thermal_residual_c"
-          ],
+          "type": "object", "additionalProperties": false,
+          "required": ["measured_top_oil_temperature_c", "predicted_top_oil_temperature_c", "thermal_residual_c"],
           "properties": {
-            "measured_top_oil_temperature_c": {
-              "type": [
-                "number",
-                "null"
-              ]
-            },
-            "predicted_top_oil_temperature_c": {
-              "type": [
-                "number",
-                "null"
-              ]
-            },
-            "thermal_residual_c": {
-              "type": [
-                "number",
-                "null"
-              ]
-            }
+            "measured_top_oil_temperature_c": {"type": ["number", "null"]},
+            "predicted_top_oil_temperature_c": {"type": ["number", "null"]},
+            "thermal_residual_c": {"type": ["number", "null"]}
           }
         },
-        "temperature_unit": {
-          "const": "C"
-        },
+        "temperature_unit": {"const": "C"},
         "rule_evidence": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "quantity",
-            "value",
-            "unit",
-            "trigger",
-            "recovery",
-            "persistence_required_s",
-            "recovery_required_s",
-            "available",
-            "reasons",
-            "continuity"
-          ],
+          "type": "object", "additionalProperties": false,
+          "required": ["quantity", "value", "unit", "trigger", "recovery", "persistence_required_s", "recovery_required_s", "available", "reasons", "continuity"],
           "properties": {
-            "quantity": {
-              "enum": [
-                "electrical_metrics.capacity_loading_pct",
-                "electrical_metrics.max_phase_loading_pct",
-                "electrical_metrics.current_magnitude_imbalance_pct",
-                "electrical_metrics.voltage_magnitude_imbalance_pct",
-                "thermal_assessment.thermal_residual_c",
-                "thermal_assessment.measured_top_oil_temperature_c"
-              ]
-            },
-            "value": {
-              "type": [
-                "number",
-                "null"
-              ]
-            },
-            "unit": {
-              "enum": [
-                "%",
-                "C"
-              ]
-            },
-            "trigger": {
-              "type": "number"
-            },
-            "recovery": {
-              "type": "number"
-            },
-            "persistence_required_s": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "recovery_required_s": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "available": {
-              "type": "boolean"
-            },
-            "reasons": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "continuity": {
-              "enum": [
-                "sampled_endpoints",
-                "gap_reset"
-              ]
-            }
-          },
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "quantity": {
-                    "enum": [
-                      "thermal_assessment.thermal_residual_c",
-                      "thermal_assessment.measured_top_oil_temperature_c"
-                    ]
-                  }
-                }
-              },
-              "then": {
-                "properties": {
-                  "unit": {
-                    "const": "C"
-                  }
-                }
-              },
-              "else": {
-                "properties": {
-                  "unit": {
-                    "const": "%"
-                  }
-                }
-              }
-            }
-          ]
+            "quantity": {"type": "string"}, "value": {"type": ["number", "null"]},
+            "unit": {"enum": ["%", "C"]}, "trigger": {"type": "number"}, "recovery": {"type": "number"},
+            "persistence_required_s": {"type": "number", "exclusiveMinimum": 0},
+            "recovery_required_s": {"type": "number", "exclusiveMinimum": 0},
+            "available": {"type": "boolean"}, "reasons": {"type": "array", "items": {"type": "string"}},
+            "continuity": {"enum": ["sampled_endpoints", "gap_reset"]}
+          }
         },
         "data_confidence": {
-          "type": "object",
-          "required": [
-            "score",
-            "status",
-            "reason",
-            "channels"
-          ],
-          "properties": {
-            "score": {
-              "type": "null"
-            },
-            "status": {
-              "const": "not_estimated"
-            },
-            "reason": {
-              "type": "string"
-            },
-            "channels": {
-              "type": "object"
-            }
-          }
+          "type": "object", "required": ["score", "status", "reason", "channels"],
+          "properties": {"score": {"type": "null"}, "status": {"const": "not_estimated"}, "reason": {"type": "string"}, "channels": {"type": "object"}}
         },
         "versions": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "model_id",
-            "model_version",
-            "result_schema_version",
-            "parameter_version",
-            "configuration_version",
-            "detector_version",
-            "policy_version",
-            "policy_fingerprint"
-          ],
+          "type": "object", "additionalProperties": false,
+          "required": ["model_id", "model_version", "result_schema_version", "parameter_version", "configuration_version", "detector_version", "policy_version", "policy_fingerprint"],
           "properties": {
-            "model_id": {
-              "type": "string"
-            },
-            "model_version": {
-              "type": "string"
-            },
-            "result_schema_version": {
-              "type": "string"
-            },
-            "parameter_version": {
-              "type": "string"
-            },
-            "configuration_version": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "detector_version": {
-              "type": "string"
-            },
-            "policy_version": {
-              "type": "string"
-            },
-            "policy_fingerprint": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            }
+            "model_id": {"type": "string"}, "model_version": {"type": "string"}, "result_schema_version": {"type": "string"},
+            "parameter_version": {"type": "string"}, "configuration_version": {"type": "integer", "minimum": 1},
+            "detector_version": {"type": "string"}, "policy_version": {"type": "string"}, "policy_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
           }
         },
-        "parameter_provenance": {
-          "type": "object",
-          "additionalProperties": {
-            "enum": [
-              "assumed",
-              "simulated",
-              "nameplate",
-              "measured"
-            ]
-          }
-        },
-        "policy_provenance": {
-          "enum": [
-            "assumed",
-            "measured",
-            "team_agreed"
-          ]
-        },
-        "quality_availability": {
-          "type": "object"
-        }
+        "parameter_provenance": {"type": "object", "additionalProperties": {"enum": ["assumed", "simulated", "nameplate", "measured"]}},
+        "policy_provenance": {"enum": ["assumed", "measured", "team_agreed"]},
+        "quality_availability": {"type": "object"}
       }
     }
   }

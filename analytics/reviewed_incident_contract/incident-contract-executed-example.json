@@ -1,6 +1,6 @@
 {
   "contract_status": "PROPOSED; no incident API/persistence exists",
-  "origin": "Values copied from actual synthetic detector execution at B564b174; UUIDs/result IDs are illustrative unpersisted references, not genuine incidents.",
+  "origin": "Values copied from the supplied executed synthetic detector fixture; UUIDs/result IDs are illustrative unpersisted references, not genuine incidents.",
   "task_status_example": "completed",
   "incident_snapshots": [
     {
@@ -14,7 +14,7 @@
       "run_id": "personb-numerical-test-v1",
       "category": "capacity_overload",
       "detector_epoch": "20000000-0000-4000-8000-000000000001",
-      "detector_episode_key": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+      "detector_episode_key": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
       "condition_status": "active",
       "opened_at": "2026-01-01T00:03:00Z",
       "recovered_at": null,
@@ -99,11 +99,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -201,7 +201,7 @@
       "run_id": "personb-numerical-test-v1",
       "category": "capacity_overload",
       "detector_epoch": "20000000-0000-4000-8000-000000000001",
-      "detector_episode_key": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+      "detector_episode_key": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
       "condition_status": "active",
       "opened_at": "2026-01-01T00:03:00Z",
       "recovered_at": null,
@@ -286,11 +286,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -448,11 +448,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -550,7 +550,7 @@
       "run_id": "personb-numerical-test-v1",
       "category": "capacity_overload",
       "detector_epoch": "20000000-0000-4000-8000-000000000001",
-      "detector_episode_key": "fe3640d401d978ebef4d9c792d23c169cc2f794741ef4244038f0792f6105754:capacity_overload:1",
+      "detector_episode_key": "62cd956a2d7abebb3fe31dd0ee5ad24101a6e775e4bd866dd78a37c09ca3749e:capacity_overload:1",
       "condition_status": "recovered",
       "opened_at": "2026-01-01T00:03:00Z",
       "recovered_at": "2026-01-01T00:06:00Z",
@@ -635,11 +635,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -797,11 +797,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },
@@ -959,11 +959,11 @@
           },
           "versions": {
             "model_id": "powernxt-electrical-top-oil",
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "result_schema_version": "stored-reading-result-1.1.0",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
             "configuration_version": 1,
-            "detector_version": "sustained-threshold-1.0.0",
+            "detector_version": "sustained-threshold-1.0.1",
             "policy_version": "demo-capacity-v1",
             "policy_fingerprint": "4e8b0a1f0b3dfeb1cb1198c5eff4634dbde095ddd319b4b401b0be8f947c360c"
           },

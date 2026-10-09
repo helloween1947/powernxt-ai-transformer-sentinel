@@ -1,3 +1,5 @@
+Orchestration-branch integration note: merged PR15 files are preserved at their original paths. The audited schema, tests, builder and model1.0.2 incident fixture are retained separately under `analytics/reviewed_incident_contract/`. PR17 and its original audited artifacts remain unchanged.
+
 # Person B code audit and refactor
 
 Reviewed on 2026-10-09. Review branch: `feature/personb-analytics-audit`.

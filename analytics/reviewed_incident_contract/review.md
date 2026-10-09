@@ -1,3 +1,7 @@
+This is the separate audited proposal/example from PR17; the merged PR15 artifacts retain their original paths and model1.0.1 examples. This copy does not supersede the accepted baseline.
+
+Audit update: this branch regenerates synthetic fixtures with B model `1.0.2` and detector `1.0.1`. A's deployed model remains `1.0.1`; storage/API sections below remain proposals.
+
 # Genuine analytics incident integration: B -> A -> D
 
 **Status: reviewed B proposal, awaiting A/D acceptance.** This document does not claim agreement by absent teammates, implemented incident storage, delivered alerts or genuine-alert maintenance support. It can be reviewed alongside D's backend PR without changing the sample workflow. No existing shared contract, A/D backend, database or deployment is modified.
@@ -10,7 +14,7 @@ Reviewed 9 October 2026: main9d2f9cd, B564b174, Dpersond f293ef9, Dcurrent-main 
 |---|---|---|
 | A main worker/model1.0.1 | Stores each reading's analytics and state; result API references immutable configuration, measurements, prediction/residual, quality and provenance | Does not run B's sustained detector or persist incidents |
 | payload.anomaly_observations | Instant configured_limit_check records, including breached true/false/null and evidence | A breach on one reading is **not** a persistent incident or fault probability |
-| B optional evaluate_persistent_rules, sustained-threshold1.0.0 | Pure endpoint-based persistence/recovery; stable candidate episode keys, evidence, active history; tests and synthetic examples | Still unmerged/not invoked by A; no backend persistence/publication |
+| B optional evaluate_persistent_rules, sustained-threshold1.0.1 | Pure endpoint-based persistence/recovery; stable candidate episode keys, evidence, active history; tests and synthetic examples | Still unmerged/not invoked by A; no backend persistence/publication |
 | Older B prototype adapter | Earlier heuristic lifecycle demo exists on B's branch | Not the adopted deployed interface; its scores/IDs are not authoritative for this integration |
 | D maintenance PR | Sample-only task creation, assignment/status/notes/history; optimistic task versions and permanent sample identity | SampleAlert source=sample and sample-* IDs; genuine incidents are rejected by schema and DB constraint |
 
@@ -30,7 +34,7 @@ Configuration/model/policy changes need an explicit handover decision. The curre
 
 ## Evidence D must retrieve
 
-Proposed typed read model: `analytics/contracts/incident-proposal.schema.json`, version incident-proposal-1.0.0. The labelled [example](../examples/incident-contract-proposed-example.json) shows opened/update/recovery snapshots with one canonical UUID. Quantities come from B's actual synthetic detector execution; canonical UUIDs and result IDs are illustrative, unpersisted references. This example is not an accepted backend response or a genuine detected field incident.
+Proposed typed read model: `analytics/reviewed_incident_contract/incident-proposal.schema.json`, version incident-proposal-1.0.0. The labelled [example](incident-contract-executed-example.json) shows opened/update/recovery snapshots with one canonical UUID. Quantities come from B's actual synthetic detector execution; canonical UUIDs and result IDs are illustrative, unpersisted references. This example is not an accepted backend response or a genuine detected field incident.
 
 Each persisted evidence snapshot must include:
 
@@ -89,6 +93,6 @@ A completed task can coexist with an active unacknowledged incident. A recovered
 
 Only proposal artifacts are added. `analytics/contracts/requirements-test.txt` declares test-only JSON Schema validation; runtime backend dependencies are unchanged. Actual command `.venv/bin/python -m pytest analytics/contracts/test_incident_contract.py -q --tb=short`:9 passed. Tests check UUID rather than reading/result identity, stable episode identity over three snapshots, changing evidence references, distinct task/recovery/acknowledgement states, residual sign/units/null confidence/provenance and rejection of sample/scenario/task-state substitutions. They validate schema/example consistency, **not** backend persistence, delivery or end-to-end maintenance integration.
 
-The example builder ran on B564b174's exported executed detector fixture without switching/merging that branch. Regenerate with `python -m analytics.examples.build_incident_contract_example --detector-example <B persistent-rules-test-example.json> --output <new example path>`. Synthetic threshold evidence does not establish physical fault accuracy; policy thresholds remain assumed and calibration/independent measured validation is outstanding.
+The example builder ran on B564b174's exported executed detector fixture without switching/merging that branch. Regenerate with `python -m analytics.reviewed_incident_contract.build_example --detector-example <B persistent-rules-test-example.json> --output <new example path>`. Synthetic threshold evidence does not establish physical fault accuracy; policy thresholds remain assumed and calibration/independent measured validation is outstanding.
 
 A/D acceptance required before implementation: canonical UUID mapping and detector epoch, transition/handover policy, worker-integrated versus ordered-result-consumer transaction, tables/constraints/outbox/cursor, exact incident/evidence/ack APIs and trusted identity, and genuine task schema/FK. B recommends the concrete design above but has not received teammate acceptance. Existing BPR7 contains tested detector logic; DPR9/13 remain sample maintenance. This branch/PR shares the reviewable contract only; no automatic teammate messages/review comments or merge are performed.

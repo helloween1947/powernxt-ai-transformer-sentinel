@@ -5,16 +5,17 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 import pytest
+from analytics.worker import MODEL_VERSION
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def fixture():
-    return json.loads((ROOT/"analytics/examples/incident-contract-proposed-example.json").read_text())
+    return json.loads((ROOT/"analytics/reviewed_incident_contract/incident-contract-executed-example.json").read_text())
 
 
 def validator():
-    schema = json.loads((ROOT/"analytics/contracts/incident-proposal.schema.json").read_text())
+    schema = json.loads((ROOT/"analytics/reviewed_incident_contract/incident-proposal.schema.json").read_text())
     Draft202012Validator.check_schema(schema)
     return Draft202012Validator(schema, format_checker=FormatChecker())
 
@@ -45,7 +46,7 @@ def test_residual_units_confidence_and_provenance_remain_honest():
         assert e["temperature_unit"] == "C"
         assert e["data_confidence"]["score"] is None
         assert e["policy_provenance"] == "assumed"
-        assert e["versions"]["model_version"] == "stored-reading-top-oil-1.0.1"
+        assert e["versions"]["model_version"] == MODEL_VERSION
         assert e["parameter_provenance"]["thermal_parameters.oil_exponent"] == "assumed"
 
 
@@ -62,4 +63,11 @@ def test_predicted_and_confidence_values_can_remain_unavailable():
     case["evidence"][0]["temperatures"]["thermal_residual_c"] = None
     validator().validate(case)
     case["evidence"][0]["data_confidence"]["score"] = 0.99
+    assert list(validator().iter_errors(case))
+
+
+@pytest.mark.parametrize("field,value", [("quantity", "original_payload.scenario"), ("unit", "C")])
+def test_rule_evidence_rejects_labels_and_incompatible_units(field, value):
+    case = fixture()["incident_snapshots"][0]
+    case["evidence"][0]["rule_evidence"][field] = value
     assert list(validator().iter_errors(case))
