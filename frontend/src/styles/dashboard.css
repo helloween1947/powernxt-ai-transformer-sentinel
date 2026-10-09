@@ -65,3 +65,52 @@ form button:hover { background: #155e75; }
 @media (max-width: 1000px) { .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .shell { grid-template-columns: 1fr; } aside { padding: 18px; } .brand { font-size: 20px; } nav { display: flex; flex-wrap: wrap; margin-top: 10px; gap: 5px; } .aside-note { display: none; } main { padding: 18px; } header { align-items: stretch; } header label { width: 100%; } .asset-grid { grid-template-columns: 1fr; } }
 @media (max-width: 410px) { .metrics { grid-template-columns: 1fr; } }
+/* Keep small-screen content within the available width. */
+main,
+aside,
+header,
+header > *,
+nav,
+label,
+.panel,
+.banner,
+.status-line {
+  min-width: 0;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-width: 0;
+}
+
+button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+p,
+li,
+.eyebrow,
+.status-line {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 410px) {
+  main,
+  aside,
+  .panel {
+    padding: 12px;
+  }
+}

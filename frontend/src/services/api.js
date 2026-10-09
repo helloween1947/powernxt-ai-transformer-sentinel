@@ -41,7 +41,7 @@ export async function getTasks() {
 export async function createTask(task) {
   if (!DEMO_MODE) return request(tasksPath, { method: 'POST', body: JSON.stringify(task) });
   const tasks = await getTasks();
-  const saved = { ...task, id: crypto.randomUUID(), status: 'Open', notes: '', createdAt: new Date().toISOString() };
+  const saved = { ...task, id: (globalThis.crypto?.randomUUID?.() ?? `demo-${Date.now()}-${Math.random().toString(36).slice(2)}`), status: 'Open', notes: '', createdAt: new Date().toISOString() };
   localStorage.setItem(storeKey, JSON.stringify([saved, ...tasks]));
   return saved;
 }
