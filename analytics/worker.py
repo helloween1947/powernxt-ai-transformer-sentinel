@@ -14,10 +14,28 @@ from .transformer_twin import AssetConfig, ThermalState
 from .transformer_twin.engine import _timestamp
 from .transformer_twin.model import _advance, finite
 
-MODEL_VERSION = "stored-reading-top-oil-1.0.0"
+MODEL_ID = "powernxt-electrical-top-oil"
+MODEL_VERSION = "stored-reading-top-oil-1.0.1"
 STATE_VERSION = "stored-reading-state-1.0.0"
-RESULT_VERSION = "stored-reading-result-1.0.0"
+RESULT_VERSION = "stored-reading-result-1.1.0"
 MAX_GAP_S = 300.0
+
+
+def compute_analytics(normalized_telemetry: dict, asset_config: dict, quality_flags: dict,
+                      reading_id: int, previous_state: dict | None = None,
+                      *, state_policy: str = "forward_only") -> dict:
+    """Pure normalized-input facade; reading_id is A's durable identity, not a new ID.
+
+    Elapsed time is derived from normalized timestamp and the previous-state watermark.
+    ValueError indicates invalid input or incompatible state; no job/session is needed.
+    """
+    stored = {"id": reading_id,
+              **{key: normalized_telemetry.get(key) for key in
+                 ("asset_id", "source", "run_id", "message_id", "configuration_version")},
+              "measurement_time": normalized_telemetry["timestamp"],
+              "normalized_telemetry": normalized_telemetry, "quality_flags": quality_flags,
+              "processing_job": {"state_policy": state_policy}}
+    return process_stored_reading(stored, asset_config, previous_state)
 
 
 def _positive_integer(value):
@@ -111,6 +129,8 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     returned state and job completion. This function does not provide exactly-once I/O.
     """
     reading = _reading(stored_reading)
+    if previous_state is not None:
+        json.dumps(previous_state, allow_nan=False)
     missing_parameters = _validate_config(reading, asset_config)
     if set(stored_reading["quality_flags"]) - set(CHANNELS) - {"stale", "clamped"}:
         raise ValueError("Only channel quality reasons and explicit stale/clamped controls are supported")
@@ -200,8 +220,11 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
                                loss_ratio=params["loss_ratio"], oil_exponent=params["oil_exponent"])
             next_state = _advance(ThermalState(thermal["oil_temp_c"], held["ambient_temp_c"], core), held["thermal_load_pu"], held["ambient_temp_c"], elapsed)
             predicted = next_state.predicted_oil_temp_c
+            if not finite(predicted):
+                raise ValueError("Non-finite thermal result")
             thermal["oil_temp_c"] = predicted
         except (OverflowError, ValueError):
+            predicted = None
             thermal.update(valid=False, reason="thermal_arithmetic_unavailable")
             thermal_reasons.append(thermal["reason"])
         if predicted is not None and clean["oil_temperature_c"] is not None:
@@ -232,6 +255,10 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
     availability["thermal_assessment.thermal_residual_c"] = {"status": "available" if residual is not None else "unavailable", "reasons": [] if residual is not None else thermal_reasons}
     unavailable_channels = [c for c in CHANNELS[:8] if clean[c] is None]
     status = "insufficient_data" if not advance or not complete_current else "computed" if predicted is not None and residual is not None and complete_electrical else "degraded"
+    outcome = ("computation_error" if "thermal_arithmetic_unavailable" in thermal_reasons else
+               "insufficient_input_or_state" if not advance or not complete_current else
+               "unsupported_configuration" if missing_parameters else
+               "completed" if status == "computed" else "partially_available")
     output = {
         "electrical_metrics": electrical,
         "thermal_assessment": {"predicted_top_oil_temperature_c": predicted, "measured_top_oil_temperature_c": clean["oil_temperature_c"],
@@ -245,12 +272,12 @@ def process_stored_reading(stored_reading: dict, asset_config: dict, previous_st
                             "channels": {c: {"usable": clean[c] is not None, "reasons": channel_reasons.get(c, [])} for c in CHANNELS}},
         "anomaly_observations": rules,
         "updated_state": updated,
-        "metadata": {"result_schema_version": RESULT_VERSION, "model_version": MODEL_VERSION, "parameter_version": parameter_version,
+        "metadata": {"result_schema_version": RESULT_VERSION, "model_id": MODEL_ID, "model_version": MODEL_VERSION, "parameter_version": parameter_version,
                      "reading_identity": identity, "stream": stream, "measurement_time": stamp, "configuration_version": reading["configuration_version"],
                      "measurement_source": reading["source"], "parameter_provenance": deepcopy(asset_config["parameter_provenance"]),
                      "units": {"phase_loading_pct": "%", "capacity_loading_pct": "%", "apparent_power_kva": "kVA", "thermal_load_pu": "pu",
                                "magnitude_imbalance": "%", "oil_temperature": "C", "thermal_residual": "C", "elapsed_s": "s"}},
-        "execution_status": {"status": status, "state_advanced": advance, "state_policy": policy,
+        "execution_status": {"status": status, "outcome": outcome, "state_advanced": advance, "state_policy": policy,
                              "ordering_reasons": ordering_reasons, "availability": availability,
                              "unavailable_measurements": unavailable_channels,
                              "unsupported_outputs": ["health_index", "confidence_score", "fault_probability", "forecasts", "maintenance_recommendations",

@@ -113,9 +113,18 @@ def main():
                       "properties": {"stored_reading": {"type": "object", "required": list(properties), "properties": properties},
                                      "asset_config": config_schema, "previous_state": {"$ref": "#/$defs/State"}}}
     result_schema.update({"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "Person B stored-reading result 1.0.0"})
+    result_schema["title"] = "Person B analytics result 1.1.0"
+    p["execution_status"]["properties"]["outcome"] = {"enum": ["completed", "partially_available", "unsupported_configuration", "insufficient_input_or_state", "computation_error"]}
+    normalized_schema = {"$schema": request_schema["$schema"], "$defs": deepcopy(defs),
+                         "title": "Person B normalized analytics request 1.0.0", "type": "object", "additionalProperties": False,
+                         "required": ["normalized_telemetry", "asset_config", "quality_flags", "reading_id"],
+                         "properties": {"normalized_telemetry": telemetry_schema, "asset_config": config_schema,
+                                        "quality_flags": properties["quality_flags"], "reading_id": properties["id"],
+                                        "previous_state": {"$ref": "#/$defs/State"},
+                                        "state_policy": {"enum": ["forward_only", "historical_only"], "default": "forward_only"}}}
     schema_dir = root / "analytics/schemas"
     schema_dir.mkdir(exist_ok=True)
-    for name, schema in (("worker-input.schema.json", request_schema), ("worker-output.schema.json", result_schema)):
+    for name, schema in (("worker-input.schema.json", request_schema), ("worker-output.schema.json", result_schema), ("normalized-input.schema.json", normalized_schema)):
         (schema_dir / name).write_text(json.dumps(schema, indent=2) + "\n")
     print("Generated worker-test-examples.json and worker input/output JSON schemas.")
 

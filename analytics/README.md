@@ -1,6 +1,9 @@
 # Person B: Digital Twin and analytics
 
 **Recommended worker handoff:** `from analytics import process_stored_reading`.
+For a direct normalized input, use `from analytics import compute_analytics`.
+The current [durable worker handoff](../docs/person-b-analytics-worker-handoff.md)
+records loading/cadence decisions, five computation outcomes and current-main compatibility.
 See [Person A's tested integration contract](../docs/person-b-analytics-handoff.md),
 [simulator review](../docs/person-b-simulator-review.md), the schemas in `analytics/schemas/`,
 and `analytics/examples/worker-test-examples.json` for Person C. This conservative entrypoint

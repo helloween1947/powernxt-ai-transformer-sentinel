@@ -1,5 +1,9 @@
 # Person B -> Person A: stored-reading analytics handoff
 
+Historical first handoff and verification below. For the current model1.0.1/result1.1.0,
+direct normalized interface, explicit outcomes and 9 October current-main compatibility,
+see [durable worker handoff](person-b-analytics-worker-handoff.md).
+
 ## Implemented callable subset
 
 ```python

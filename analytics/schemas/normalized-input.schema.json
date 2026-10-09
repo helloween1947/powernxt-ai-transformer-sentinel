@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Person B stored-reading request 1.0.0",
   "$defs": {
     "Measurements": {
       "additionalProperties": false,
@@ -423,33 +422,39 @@
       }
     }
   },
+  "title": "Person B normalized analytics request 1.0.0",
   "type": "object",
-  "required": [
-    "stored_reading",
-    "asset_config"
-  ],
   "additionalProperties": false,
+  "required": [
+    "normalized_telemetry",
+    "asset_config",
+    "quality_flags",
+    "reading_id"
+  ],
   "properties": {
-    "stored_reading": {
-      "type": "object",
-      "required": [
-        "id",
-        "asset_id",
-        "source",
-        "run_id",
-        "message_id",
-        "configuration_version",
-        "measurement_time",
-        "normalized_telemetry",
-        "quality_flags",
-        "processing_job"
-      ],
+    "normalized_telemetry": {
+      "additionalProperties": false,
       "properties": {
-        "id": {
-          "type": "integer",
-          "minimum": 1
+        "schema_version": {
+          "const": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "message_id": {
+          "format": "uuid4",
+          "title": "Message Id",
+          "type": "string"
         },
         "asset_id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "title": "Asset Id",
+          "type": "string"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
           "type": "string"
         },
         "source": {
@@ -457,131 +462,42 @@
             "device",
             "simulator",
             "file_replay"
-          ]
+          ],
+          "title": "Source",
+          "type": "string"
         },
         "run_id": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "message_id": {
-          "type": "string",
-          "format": "uuid"
-        },
-        "configuration_version": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "measurement_time": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "normalized_telemetry": {
-          "additionalProperties": false,
-          "properties": {
-            "schema_version": {
-              "const": "1.0.0",
-              "title": "Schema Version",
-              "type": "string"
-            },
-            "message_id": {
-              "format": "uuid4",
-              "title": "Message Id",
-              "type": "string"
-            },
-            "asset_id": {
+          "anyOf": [
+            {
               "maxLength": 100,
               "minLength": 1,
               "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
-              "title": "Asset Id",
               "type": "string"
             },
-            "timestamp": {
-              "format": "date-time",
-              "title": "Timestamp",
-              "type": "string"
-            },
-            "source": {
-              "enum": [
-                "device",
-                "simulator",
-                "file_replay"
-              ],
-              "title": "Source",
-              "type": "string"
-            },
-            "run_id": {
-              "anyOf": [
-                {
-                  "maxLength": 100,
-                  "minLength": 1,
-                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "default": null,
-              "title": "Run Id"
-            },
-            "configuration_version": {
-              "exclusiveMinimum": 0,
-              "title": "Configuration Version",
-              "type": "integer"
-            },
-            "measurements": {
-              "$ref": "#/$defs/Measurements"
-            },
-            "measurement_quality": {
-              "additionalProperties": {
-                "enum": [
-                  "good",
-                  "suspect",
-                  "bad",
-                  "missing"
-                ],
-                "type": "string"
-              },
-              "propertyNames": {
-                "enum": [
-                  "voltage_r_v",
-                  "voltage_y_v",
-                  "voltage_b_v",
-                  "current_r_a",
-                  "current_y_a",
-                  "current_b_a",
-                  "oil_temperature_c",
-                  "ambient_temperature_c",
-                  "oil_level_pct"
-                ]
-              },
-              "title": "Measurement Quality",
-              "type": "object"
+            {
+              "type": "null"
             }
-          },
-          "required": [
-            "schema_version",
-            "message_id",
-            "asset_id",
-            "timestamp",
-            "source",
-            "configuration_version",
-            "measurements"
           ],
-          "title": "TelemetryCreate",
-          "type": "object"
+          "default": null,
+          "title": "Run Id"
         },
-        "quality_flags": {
-          "type": "object",
-          "properties": {
-            "stale": {
-              "type": "boolean"
-            },
-            "clamped": {
-              "type": "boolean"
-            }
+        "configuration_version": {
+          "exclusiveMinimum": 0,
+          "title": "Configuration Version",
+          "type": "integer"
+        },
+        "measurements": {
+          "$ref": "#/$defs/Measurements"
+        },
+        "measurement_quality": {
+          "additionalProperties": {
+            "enum": [
+              "good",
+              "suspect",
+              "bad",
+              "missing"
+            ],
+            "type": "string"
           },
           "propertyNames": {
             "enum": [
@@ -593,33 +509,24 @@
               "current_b_a",
               "oil_temperature_c",
               "ambient_temperature_c",
-              "oil_level_pct",
-              "stale",
-              "clamped"
+              "oil_level_pct"
             ]
           },
-          "additionalProperties": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "processing_job": {
-          "type": "object",
-          "required": [
-            "state_policy"
-          ],
-          "properties": {
-            "state_policy": {
-              "enum": [
-                "forward_only",
-                "historical_only"
-              ]
-            }
-          }
+          "title": "Measurement Quality",
+          "type": "object"
         }
-      }
+      },
+      "required": [
+        "schema_version",
+        "message_id",
+        "asset_id",
+        "timestamp",
+        "source",
+        "configuration_version",
+        "measurements"
+      ],
+      "title": "TelemetryCreate",
+      "type": "object"
     },
     "asset_config": {
       "additionalProperties": false,
@@ -715,8 +622,51 @@
       "title": "ConfigurationResponse",
       "type": "object"
     },
+    "quality_flags": {
+      "type": "object",
+      "properties": {
+        "stale": {
+          "type": "boolean"
+        },
+        "clamped": {
+          "type": "boolean"
+        }
+      },
+      "propertyNames": {
+        "enum": [
+          "voltage_r_v",
+          "voltage_y_v",
+          "voltage_b_v",
+          "current_r_a",
+          "current_y_a",
+          "current_b_a",
+          "oil_temperature_c",
+          "ambient_temperature_c",
+          "oil_level_pct",
+          "stale",
+          "clamped"
+        ]
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "reading_id": {
+      "type": "integer",
+      "minimum": 1
+    },
     "previous_state": {
       "$ref": "#/$defs/State"
+    },
+    "state_policy": {
+      "enum": [
+        "forward_only",
+        "historical_only"
+      ],
+      "default": "forward_only"
     }
   }
 }
