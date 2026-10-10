@@ -61,6 +61,7 @@ export default function OperatorAuthBar({ operator, onLogin, onLogout, busy = fa
           Incident investigations, acknowledgements, and genuine maintenance tasks require a valid Bearer token.
         </p>
       )}
+      <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#64748b' }}>Local prototype credentials verify server roles. Production SSO is not configured by this screen.</p>
 
       {error && <p role="alert" className="error" style={{ margin: '10px 0 0', padding: '8px 12px' }}>{error}</p>}
       {notice && <p role="status" className="success" style={{ margin: '10px 0 0', padding: '8px 12px' }}>{notice}</p>}

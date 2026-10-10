@@ -52,6 +52,7 @@ export function createIncidentClient({ baseUrl, fetchImpl = globalThis.fetch }) 
     }
 
     if (!response.ok) {
+      if (response.status === 401 && token) globalThis.dispatchEvent?.(new Event('powernxt-credential-invalid'));
       const code = result.code || 'error';
       const message = result.message || result.detail || `Incident request failed (${response.status}).`;
       const currentVersion = result.current_version ?? null;

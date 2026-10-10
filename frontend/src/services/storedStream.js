@@ -139,6 +139,12 @@ export function createStreamLoader(client, publish, { delay = 5000, maxPolls = 6
         if (polling) timer = schedule(() => execute(poll + 1), delay);
       } catch (error) {
         if (current !== generation || signal.aborted) return;
+        if (retained) retained = {
+          ...retained, analytics: null, completedAnalytics: null, latestEnvelope: null,
+          historyAnalytics: [],
+          points: thermalPoints(retained.history, []).map(point => ({ ...point, reasons: ['refresh_failed'] })),
+          pending: false, errors: [],
+        };
         publish({ phase: 'error', message: error.message, snapshot: retained });
       }
     }

@@ -13,7 +13,7 @@ function validateProvenance(result) {
   if (!result) return;
   const metadata = result.payload?.metadata;
   for (const key of ['model_id', 'model_version', 'parameter_version']) {
-    if (typeof result[key] !== 'string' || !result[key].trim() || metadata?.[key] !== result[key]) throw new Error('Stored analytics model or parameter provenance does not match its payload.');
+    if (typeof result[key] !== 'string' || !result[key].trim() || metadata?.[key] !== result[key]) throw new Error('Stored analytics payload model or parameter identity does not match its provenance.');
   }
   if (metadata.result_schema_version !== result.schema_version) throw new Error('Stored result schema provenance does not match its payload.');
 }

@@ -14,6 +14,11 @@ import EvidenceRail from './components/telemetry/EvidenceRail.jsx';
 import { conditionRating } from './domain/conditionRating.js';
 import { inspectHistoryRecord, metricTrend } from './domain/inspection.js';
 import { motionTiming } from './domain/motion.js';
+import BackendIncidents from './components/BackendIncidents.jsx';
+import BackendWhatIf from './components/BackendWhatIf.jsx';
+import BackendMaintenance from './components/BackendMaintenance.jsx';
+import OperatorAuthBar from './components/OperatorAuthBar.jsx';
+import { useOperatorSession } from './hooks/useOperatorSession.js';
 import { useRuntimeContract } from './hooks/useRuntimeContract.js';
 import { useAssets, useWorkstation } from './hooks/useWorkstation.js';
 import { navigation } from './data/navigation.js';
@@ -26,23 +31,24 @@ import { number, readPreference, savePreference, time } from './lib/utils.js';
 const temperatureSeries = [{ key: 'measured', label: 'Measured oil', color: 'var(--chart-measured)' }, { key: 'predicted', label: 'Estimated top-oil', color: 'var(--chart-estimated)', dashed: true }];
 const tabs = ['Overview', 'Electrical', 'Thermal', 'Condition', 'Data quality'];
 const titles = { capabilities: 'Condition explorer', twin: 'Digital twin', fleet: 'Fleet overview', trends: 'Trends & history', incidents: 'Alerts & incidents', maintenance: 'Maintenance', whatif: 'What-if analysis', reports: 'Reports' };
-const descriptions = { capabilities: 'Inspect measurements, instruments and future model requirements.', fleet: 'Your distribution network, in one place.', trends: 'Inspect measurements and stored estimates over time.', incidents: 'Trace configured-limit evidence to its source reading.', maintenance: 'Review assignments, task progress and recorded work.', whatif: 'Explore inputs for a future scenario comparison.', reports: 'Export retrieved records and inspect validation references.' };
+const descriptions = { capabilities: 'Inspect measurements, instruments and future model requirements.', fleet: 'Your distribution network, in one place.', trends: 'Inspect measurements and stored estimates over time.', incidents: 'Trace configured-limit evidence to its source reading.', maintenance: 'Review assignments, task progress and recorded work.', whatif: 'Compare conditional healthy-model forecasts from immutable backend state.', reports: 'Export retrieved records and inspect validation references.' };
 
 function initialScreen() { return navigation.some(item => item.id === location.hash.slice(1)) ? location.hash.slice(1) : 'twin'; }
 function initialTheme() { return readPreference('powernxt-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
 
 export default function App() {
   const [screen, setScreen] = useState(initialScreen);
+  const [openedTaskId, setOpenedTaskId] = useState(null);
   const [theme, setTheme] = useState(initialTheme);
   const [mode, setMode] = useState(() => import.meta.env.VITE_DATA_MODE === 'live' ? 'live' : 'sample');
   const [baseUrl, setBaseUrl] = useState(() => readPreference('powernxt-api-origin', import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'));
   const [baseDraft, setBaseDraft] = useState(baseUrl);
   const [settingsError, setSettingsError] = useState('');
-  const [assetId, setAssetId] = useState('');
+  const [assetId, setAssetId] = useState(() => readPreference(`powernxt-context:${baseUrl}:asset`));
   const [assetOffset, setAssetOffset] = useState(0);
-  const [source, setSource] = useState('device');
-  const [runId, setRunId] = useState('');
-  const [runDraft, setRunDraft] = useState('');
+  const [source, setSource] = useState(() => readPreference(`powernxt-context:${baseUrl}:source`, 'device'));
+  const [runId, setRunId] = useState(() => readPreference(`powernxt-context:${baseUrl}:run`));
+  const [runDraft, setRunDraft] = useState(runId);
   const [range, setRange] = useState('24h');
   const [offset, setOffset] = useState(0);
   const [condition, setCondition] = useState('steady');
@@ -60,7 +66,16 @@ export default function App() {
   const [trendMetric, setTrendMetric] = useState('temperature');
   const assets = useAssets(mode, baseUrl, assetOffset, refresh);
   const activeAssetId = assetId || assets.items[0]?.asset_id || '';
+  useEffect(() => {
+    if (mode !== 'live') return;
+    savePreference(`powernxt-context:${baseUrl}:asset`, activeAssetId);
+    savePreference(`powernxt-context:${baseUrl}:source`, source);
+    savePreference(`powernxt-context:${baseUrl}:run`, runId);
+  }, [mode, baseUrl, activeAssetId, source, runId]);
   const runtime = useRuntimeContract(mode, baseUrl, refresh);
+  const auth = useOperatorSession(baseUrl, mode === 'live');
+  const workflowKey = JSON.stringify({ baseUrl, activeAssetId, source, runId, actor: auth.operator?.actorRef });
+  const workflowProps = { baseUrl, selectedAssetId: activeAssetId, selectedSource: source, selectedRunId: runId };
   const state = useWorkstation({ mode, baseUrl, assetId: activeAssetId, source, runId, range, offset, condition, refresh, analyticsEnabled: runtime.analytics === true });
   const snapshot = state.snapshot;
   const asset = snapshot?.details ?? assets.items.find(item => item.asset_id === activeAssetId);
@@ -118,13 +133,16 @@ export default function App() {
   </> : screen === 'trends' ? <>
     <section className="card"><div className="panel-head"><h2>Measurement history</h2><div className="trend-controls"><label><span className="sr-only">History measurement</span><select aria-label="History measurement" value={trendMetric} onChange={event => setTrendMetric(event.target.value)}><option value="temperature">Oil temperature</option><option value="residual">Thermal residual</option><option value="voltage">Phase voltage</option><option value="current">Phase current</option><option value="loading">Loading</option><option value="power">Apparent power</option><option value="oil_level">Oil level</option></select></label><label><span className="sr-only">History range</span><select aria-label="History range" value={range} onChange={event => setTimeRange(event.target.value)}><option value="1h">Last hour</option><option value="6h">Last 6 hours</option><option value="24h">Last 24 hours</option><option value="all">All stored time</option></select></label></div></div><HistoryChart title={trendMetric === 'temperature' ? 'Measured and estimated oil temperature' : trendMetric === 'residual' ? 'Thermal residual' : trendMetric === 'loading' ? 'Capacity and worst-phase loading' : trendMetric === 'power' ? 'Apparent power' : trendMetric === 'oil_level' ? 'Oil level' : `Three-phase ${trendMetric}`} points={points} series={series} onSelect={selectReading} selectedId={selectedReadingId} unit={['temperature', 'residual'].includes(trendMetric) ? '°C' : trendMetric === 'voltage' ? 'V' : trendMetric === 'current' ? 'A' : trendMetric === 'power' ? 'kVA' : '%'} /></section>
     <EvidenceRail snapshot={snapshot} selectedId={inspection.historical ? selectedReadingId : null} onSelect={selectReading} onLatest={clearHistory} mode={mode} />{inspection.historical && <section className="card historical-record"><h2>Historical reading {displayId(inspectedSnapshot.latest.readingId)}</h2><MetricDetails metric={selected} snapshot={inspectedSnapshot} mode={mode} /></section>}<div className="history-pager"><span>{snapshot?.history?.length ?? 0} retrieved records · Page {Math.floor(offset / 20) + 1}</span><div><Button variant="outline" size="sm" disabled={mode === 'sample' || offset === 0 || state.phase === 'loading'} onClick={() => setOffset(value => Math.max(0, value - 20))}>Previous</Button><Button variant="outline" size="sm" disabled={mode === 'sample' || (snapshot?.history?.length ?? 0) < 20 || state.phase === 'loading'} onClick={() => setOffset(value => value + 20)}>Next page<ChevronRight size={14} /></Button></div></div><QualityView snapshot={inspectedSnapshot} mode={mode} />
-  </> : screen === 'incidents' ? <IncidentsView snapshot={inspectedSnapshot} mode={mode} /> : screen === 'maintenance' ? <MaintenanceView key={`${mode}:${baseUrl}:${activeAssetId}`} mode={mode} baseUrl={baseUrl} assetId={activeAssetId} contractEnabled={runtime.sampleMaintenance === true} onAssetChange={selectAsset} /> : screen === 'whatif' ? <WhatIfView key={`${activeAssetId}:${measured?.readingId}`} snapshot={inspectedSnapshot} mode={mode} /> : <ReportsView snapshot={snapshot} mode={mode} onExport={() => setNotice('Retrieved history page exported as CSV.')} />;
+  </> : screen === 'incidents' ? (mode === 'live' && runtime.incidents ? <BackendIncidents key={workflowKey} {...workflowProps} operator={auth.operator} onOpenMaintenanceTask={task => { setOpenedTaskId(task.id); navigate('maintenance'); }} /> : <IncidentsView snapshot={inspectedSnapshot} mode={mode} />) : screen === 'maintenance' ? (mode === 'live' && runtime.sampleMaintenance ? <BackendMaintenance key={`${workflowKey}:${openedTaskId}`} {...workflowProps} operator={auth.operator} initialTaskId={openedTaskId} /> : <MaintenanceView key={`${mode}:${baseUrl}:${activeAssetId}`} mode={mode} baseUrl={baseUrl} assetId={activeAssetId} contractEnabled={runtime.sampleMaintenance === true} onAssetChange={selectAsset} />) : screen === 'whatif' ? (mode === 'live' && runtime.whatIf ? <BackendWhatIf key={workflowKey} {...workflowProps} /> : <WhatIfView key={`${activeAssetId}:${measured?.readingId}`} snapshot={inspectedSnapshot} mode={mode} />) : <ReportsView snapshot={snapshot} mode={mode} onExport={() => setNotice('Retrieved history page exported as CSV.')} />;
 
   return <MotionConfig reducedMotion="user" transition={motionTiming.micro}><LayoutGroup id="sentinel"><div className={`app-shell ${collapsed ? 'rail-collapsed' : ''}`}><a className="skip-link" href="#main-content">Skip to content</a><Sidebar screen={screen} onNavigate={navigate} mode={mode} onSettings={openSettings} collapsed={collapsed} onCollapse={() => setCollapsed(value => !value)} /><div className="workspace-main"><Topbar screen={screen} mode={mode} theme={theme} onTheme={() => setTheme(value => value === 'dark' ? 'light' : 'dark')} onMenu={() => setMenuOpen(true)} onMode={changeMode} onSettings={openSettings} />
     <main id="main-content" className="main-content"><div className="page-heading"><div><div className="eyebrow"><span />ASSET INTELLIGENCE</div><h1>{titles[screen]}</h1>{screen !== 'twin' && <p>{descriptions[screen]}</p>}</div><div className="heading-actions"><Button variant="outline" size="sm" disabled={state.phase === 'loading' || assets.phase === 'loading'} onClick={() => setRefresh(value => value + 1)}><RefreshCw size={14} />Refresh</Button><Button size="sm" disabled={!snapshot?.history?.length} onClick={exportData}><ArrowDownToLine size={14} />Export report</Button></div></div>
       <section className="asset-context" aria-label="Selected transformer"><span className="asset-context-icon"><Zap size={21} strokeWidth={1.5} /></span><div className="asset-selection"><label><span className="sr-only">Selected transformer</span><select aria-label="Selected transformer" value={activeAssetId} onChange={event => selectAsset(event.target.value)}>{!activeAssetId && <option value="">{assets.phase === 'loading' ? 'Loading assets…' : 'No registered assets'}</option>}{activeAssetId && !assets.items.some(item => item.asset_id === activeAssetId) && <option value={activeAssetId}>{asset?.name ?? activeAssetId}</option>}{assets.items.map(item => <option value={item.asset_id} key={item.asset_id}>{item.name}</option>)}</select></label><span><span className="asset-id">{displayId(activeAssetId || null, 'No asset')}</span><span className="context-separator">·</span><MapPin size={12} />{displayLocation(asset?.location)}</span></div><div className="asset-context-rating"><strong>{number(asset?.current_configuration?.rated_kva, 0)} <small>kVA</small></strong><span>{asset?.current_configuration?.cooling_type ?? 'Cooling unavailable'} · {asset?.current_configuration?.measurement_side ?? 'Side unknown'}</span></div><div className="data-freshness"><span><span className={`status-dot ${mode === 'live' && source === 'device' && age != null && age > 2 ? 'warning-dot' : 'neutral'}`} />{freshness}</span><small>{measured ? `Measured ${time(measured.measurementTime, true)} IST` : 'Measurement time unavailable'}</small></div></section>
       <div className="stream-toolbar">{mode === 'sample' ? <><label><span className="sr-only">Operating condition</span><select aria-label="Operating condition" value={condition} onChange={event => setCondition(event.target.value)}><option value="steady">Steady loading</option><option value="overload">High loading & temperature</option><option value="missing">Missing oil sensor</option></select></label></> : <><label>Source<select aria-label="Telemetry source" value={source} onChange={event => { setSource(event.target.value); setRunId(''); setRunDraft(''); setOffset(0); }}><option value="device">Device</option><option value="simulator">Stored run</option><option value="file_replay">File replay</option></select></label>{source !== 'device' && <form className="run-form" onSubmit={event => { event.preventDefault(); setRunId(runDraft.trim()); setOffset(0); }}><label><span className="sr-only">Run ID</span><input aria-label="Run ID" maxLength={100} pattern="[A-Za-z0-9][A-Za-z0-9._-]*" required placeholder="Enter stored run ID" value={runDraft} onChange={event => setRunDraft(event.target.value)} /></label><Button type="submit" variant="outline" size="sm">Apply run</Button></form>}<span className="stream-hint">{runId || (source === 'device' ? 'Device stream · run ID is null' : 'Run ID required')}</span><span className="processing-tag">Processing: {displayStatus(snapshot?.analytics?.status ?? snapshot?.latest?.processingJobStatus)}</span></>}
       </div>
+      {mode === 'sample' && <div className="inline-notice" role="status">Sample UI illustration. These readings, limits and workflow examples are not persisted incidents or physical measurements.</div>}
+      {mode === 'live' && source !== 'device' && <div className="inline-notice">{source === 'simulator' ? 'Simulator stream: synthetic inputs' : 'File replay stream: historical inputs'}. Persisted records do not establish physical validation.</div>}
+      {mode === 'live' && runtime.incidents && <div className="backend-workflow"><OperatorAuthBar {...auth} /></div>}
       {allErrors.length > 0 && <div className="request-errors" role="alert"><Database size={17} /><div><strong>{assets.phase === 'error' ? 'Asset registry could not be retrieved' : 'Some evidence is unavailable'}</strong><p>{[...new Set(allErrors)].slice(0, 4).join(' ')}</p><small>A request failure does not establish asset failure. Available records remain visible.</small></div><Button size="sm" variant="outline" onClick={() => setRefresh(value => value + 1)}>Retry</Button></div>}
       {mode === 'live' && assets.phase === 'ready' && !assets.items.length && !activeAssetId && <section className="card"><EmptyState title="No transformers registered">Register an asset and configuration through the backend before loading telemetry.</EmptyState></section>}
       {state.phase === 'loading' && <div className="loading-status" role="status"><RefreshCw size={14} />Retrieving selected stream…</div>}

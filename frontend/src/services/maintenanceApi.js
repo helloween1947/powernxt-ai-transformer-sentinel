@@ -6,10 +6,14 @@ export class MaintenanceApiError extends Error {
 
 export function createMaintenanceClient({ baseUrl, fetchImpl = globalThis.fetch }) {
   const base = (baseUrl ?? '').trim().replace(/\/+$/, '');
+  const controllers = new Set();
   const root = '/api/v1/maintenance/tasks';
 
   async function request(path, { parameters = {}, method = 'GET', body, actor, token } = {}) {
     if (!base) throw new Error('Set VITE_API_BASE_URL to a reachable backend and restart Vite.');
+    const controller = new AbortController();
+    controllers.add(controller);
+    try {
     const url = new URL(`${base}${path}`);
     for (const [key, value] of Object.entries(parameters)) {
       if (value !== '' && value != null) url.searchParams.set(key, value);
@@ -29,7 +33,7 @@ export function createMaintenanceClient({ baseUrl, fetchImpl = globalThis.fetch 
         method,
         headers,
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-        signal: AbortSignal.timeout(10000),
+        signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
       });
     } catch {
       throw new Error('Cannot reach the maintenance backend. Check its address, server, network and browser CORS errors.');
@@ -41,16 +45,19 @@ export function createMaintenanceClient({ baseUrl, fetchImpl = globalThis.fetch 
     }
 
     if (!response.ok) {
+      if (response.status === 401 && token) globalThis.dispatchEvent?.(new Event('powernxt-credential-invalid'));
       const detail = result.detail;
-      const message = typeof detail === 'string' ? detail : Array.isArray(detail)
+      const message = result.message || (typeof detail === 'string' ? detail : Array.isArray(detail)
         ? detail.map(item => `${item.loc?.join('.') ?? 'request'}: ${item.msg}`).join('; ')
-        : `Maintenance request failed (${response.status}).`;
+        : `Maintenance request failed (${response.status}).`);
       throw new MaintenanceApiError(response.status, message);
     }
     return result;
+    } finally { controllers.delete(controller); }
   }
 
   return {
+    cancelAll() { for (const controller of controllers) controller.abort(); controllers.clear(); },
     assets: (offset = 0) => request('/api/v1/assets', { parameters: pageParameters(20, offset) }),
     tasks: async (assetId = '', offset = 0, source = 'sample', token = null) => {
       const parameters = { ...pageParameters(20, offset), source };
