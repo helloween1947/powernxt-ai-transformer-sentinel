@@ -230,3 +230,9 @@ dist/
 
 # Large simulator output; curated data/sample remains tracked.
 data/generated/
+
+# Local worktrees, database backups, and scratch scripts
+.worktrees/
+backups/
+*.dump
+scratch/
