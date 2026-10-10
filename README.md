@@ -4,21 +4,46 @@ An explainable digital twin and operational intelligence platform for electrical
 
 ---
 
-## Implemented Scope vs. Roadmap
+## Implemented scope and integration status
 
-- **Currently Implemented (Foundation Phase)**:
-  - Shared repository skeleton with isolated teammate ownership boundaries.
-  - Runnable minimal FastAPI backend with structured logging, CORS, and Pydantic configuration.
-  - Liveness (`GET /health/live`) and readiness (`GET /health/ready`) probe endpoints with resilient error masking.
-  - PostgreSQL connectivity layer (SQLAlchemy 2 + psycopg 3) and Alembic migration infrastructure.
-  - Formal data contracts (`telemetry-contract.md`, `analytics-contract.md`, `event-contract.md`) and sample telemetry payload.
-  - Docker Compose definitions (`compose.yaml`) with containerized PostgreSQL and backend service.
-  - Automated CI workflow (`.github/workflows/ci.yaml`) and pytest test suite.
-- **Upcoming Team Scope**:
-  - Person A: Database tables (Asset registry, telemetry store), sensor simulator, live streaming.
-  - Person B: Physics-based thermal equations (IEEE C57.91), electrical symmetrical components, anomaly detectors.
-  - Person C: React/Vite dashboard, live charts, scenario simulator controls.
-  - Person D: End-to-end integration workflows, maintenance tickets, and demo scripts.
+Status reviewed against main f52f565 on 10 October 2026. Source availability,
+passing tests and a running deployment are separate facts. Consult the exact
+commit in each dated report; laptop-local IDs are not shared deployment IDs.
+
+- **Implemented on main:** registered assets and immutable configurations;
+  transactional telemetry/deduplication and simulator; ordered durable analytics
+  worker/result APIs; C's stored electrical/thermal dashboard; sample-backed
+  maintenance tasks/history and the separate labelled sample maintenance screen.
+- **Conservative adopted model:** magnitude electrical quantities and simplified
+  top-oil evolution/residual, model stored-reading-top-oil-1.0.1. Coefficients are
+  assumed; bootstrap/gap values remain unavailable. No calibrated fault score,
+  winding hotspot, health/confidence, RUL, PF/sequences or IEEE compliance claim.
+- **Review branches, not main/deployment:** A's incident registry/authentication
+  and newer outbox, D's genuine task linkage, and A's immutable-state What-if API.
+  These require a combined migration join and explicit review. B's model1.0.2
+  hardening requires A/B adoption and a recorded state transition; do not apply
+  bundled PR17/24 twice or relabel existing results.
+- **UI/deployment boundaries:** genuine authenticated incident/task UI remains C's
+  next work. Existing fixture acknowledgements, What-if/Restore cooling and browser
+  tasks stay illustrative. Audit reports a development backend behind main with
+  maintenance404; that is dated deployment evidence, not every checkout's status.
+  A must separately schedule any data-preserving upgrade; this overview does not
+  authorize a development restart/migration or claim public deployment.
+
+Current guides and evidence:
+
+| Area | Contract / verification |
+|---|---|
+| Asset and telemetry | [Asset registry](backend/docs/asset-registry.md), [telemetry contract](docs/contracts/telemetry-contract.md) |
+| Adopted analytics | [Result API contract](docs/contracts/analytics-contract.md), [worker policy](docs/analytics-worker.md) |
+| Main sample maintenance | [Combined verification](docs/integration-verification.md), [workflow](docs/persond-maintenance-workflow.md) |
+| Stored dashboard / Windows demonstration | [Windows guide](docs/integrated-demo-windows.md), [C verification](docs/person-c-analytics-integration-verification.md) |
+| Incident design and D dependency gates | [Merged proposal](analytics/docs/genuine-incident-integration-contract.md), [D plan](docs/persond-incident-implementation-plan.md), [dated readiness](docs/persond-incident-dependency-verification.md) |
+| Events | [Proposed generic event contract](docs/contracts/event-contract.md); it is not an implemented global feed |
+| Current D alignment follow-up | [Owners, CI scope and integration order](docs/persond-team-alignment-followup.md) |
+
+Historical reports remain intact. Source review and green CI are not evidence of
+teammate approval, trusted device identity, field calibration or shared deployment.
 
 ---
 
@@ -44,7 +69,7 @@ powernxt-ai-transformer-sentinel/
 │   └── README.md
 ├── backend/                     # Person A: FastAPI application & database
 │   ├── app/
-│   │   ├── api/                 # Endpoints & routing (health probes)
+│   │   ├── api/                 # Health, assets, telemetry, analytics, maintenance APIs
 │   │   ├── db/                  # SQLAlchemy 2 engine, sessions, base model
 │   │   ├── schemas/             # Pydantic schemas
 │   │   ├── services/            # Business logic (asset registry, ingestion)
