@@ -20,15 +20,16 @@ commit in each dated report; laptop-local IDs are not shared deployment IDs.
   winding hotspot, health/confidence, RUL, PF/sequences or IEEE compliance claim.
 - **Review branches, not main/deployment:** A's incident registry/authentication
   and newer outbox, D's genuine task linkage, and A's immutable-state What-if API.
-  These require a combined migration join and explicit review. B's model1.0.2
+  D006 joins their migrations on A's review branch; main adoption and explicit
+  review remain. B's model1.0.2
   hardening requires A/B adoption and a recorded state transition; do not apply
   bundled PR17/24 twice or relabel existing results.
 - **UI/deployment boundaries:** genuine authenticated incident/task UI remains C's
   next work. Existing fixture acknowledgements, What-if/Restore cooling and browser
-  tasks stay illustrative. Audit reports a development backend behind main with
-  maintenance404; that is dated deployment evidence, not every checkout's status.
-  A must separately schedule any data-preserving upgrade; this overview does not
-  authorize a development restart/migration or claim public deployment.
+  tasks stay illustrative. The earlier audit's maintenance404 is historical;
+  maintenance upgrade is now reported complete but its runtime identity was not
+  independently inspected here. See D's dated evidence correction below. Further
+  reviewed upgrades require data preservation; no public deployment is claimed.
 
 Current guides and evidence:
 
@@ -41,6 +42,7 @@ Current guides and evidence:
 | Incident design and D dependency gates | [Merged proposal](analytics/docs/genuine-incident-integration-contract.md), [D plan](docs/persond-incident-implementation-plan.md), [dated readiness](docs/persond-incident-dependency-verification.md) |
 | Events | [Proposed generic event contract](docs/contracts/event-contract.md); it is not an implemented global feed |
 | Current D alignment follow-up | [Owners, CI scope and integration order](docs/persond-team-alignment-followup.md) |
+| D thermal evidence correction / PR28 review | [Unresolved cross-report discrepancy and fresh independent checks](docs/persond-phase0-provenance-review-20261010.md) |
 
 Historical reports remain intact. Source review and green CI are not evidence of
 teammate approval, trusted device identity, field calibration or shared deployment.

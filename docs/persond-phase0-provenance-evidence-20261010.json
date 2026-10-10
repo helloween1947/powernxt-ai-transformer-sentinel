@@ -1,0 +1,252 @@
+{
+  "recorded_utc": "2026-10-10T13:02:37.858720+00:00",
+  "main": "cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda",
+  "phase0": {
+    "status": "unresolved",
+    "old_report_reading25": {
+      "measured_c": 44.678637,
+      "predicted_c": 45.08079,
+      "residual_c": -0.402153
+    },
+    "new_plan_quoted_reading25": {
+      "predicted_c": 46.351297,
+      "residual_c": 0.648703,
+      "implied_measured_c": 47.0
+    },
+    "raw_cross_report_envelopes_available": false,
+    "original_reports_preserved": true,
+    "plan_attachment_sha256": "217A97E7E741CDFDD32AA946F3092164A4E34285A67069A2AC4E1684FE363C24",
+    "audit_manifest_attachment_sha256": "06BF481126449C92ADDC4F20D3C76AACDE4FBA41CD4AEBF212ECDA7F5F12B3E9"
+  },
+  "pr28": {
+    "head": "23ab1b6ff825bc46140d5994ee3e01ddc5aad9c5",
+    "base": "main",
+    "diff": {
+      "files": 5,
+      "additions": 346,
+      "deletions": 1
+    },
+    "fresh_unit_tests": 41,
+    "lint": "passed",
+    "build": "passed",
+    "hosted_ci": "success",
+    "hosted_run": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/38052359720",
+    "reviews_observed": [],
+    "actual_chrome": {
+      "passed": true,
+      "selection": {
+        "asset": "d-provenance-synthetic-f8483656c86742d189874c3267cdbabc",
+        "run": "d-provenance-finite-984b749d2e5e448193757bcae1817767",
+        "readings": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "source_sha": "23ab1b6ff825bc46140d5994ee3e01ddc5aad9c5",
+        "scope": "New isolated synthetic stream; unrelated to disputed A or C IDs"
+      },
+      "real_checks": [
+        "Actual browser network responses: six ID-joined chronological rows, exact numeric values/sign, bootstrap nulls, C units and both endpoint provenance identities",
+        "Returning to actual API after fixtures restores legitimate stored results"
+      ],
+      "labelled_fixture_checks": [
+        "**/api/v1/telemetry/*/analytics: contradictory fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "**/api/v1/telemetry/*/analytics: missing-metadata fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "**/api/v1/telemetry/*/analytics: blank-outer fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "**/api/v1/assets/*/analytics/latest?*: contradictory fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "**/api/v1/assets/*/analytics/latest?*: missing-metadata fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "**/api/v1/assets/*/analytics/latest?*: blank-outer fixture clears rejected/stale analytics; independent valid telemetry retained",
+        "Matching future-version fixture accepted on both endpoints without a 1.0.1 pin",
+        "Labelled pending/null-result fixtures retain telemetry, show unavailable analytics and do not fabricate results"
+      ],
+      "api_bodies": [
+        {
+          "url": "http://127.0.0.1:15451/api/v1/assets?limit=20&offset=0",
+          "file": "real-api-0.json",
+          "sha256": "4c6765bb40124e7940546271aef73f281cba797dc16d1c31238b47cb06effead"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/assets/d-provenance-synthetic-f8483656c86742d189874c3267cdbabc",
+          "file": "real-api-1.json",
+          "sha256": "5af946fcb141d4ac1b4a682a4c5317e940d5875b2f2f6b114c041b32b5b7f709"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/assets/d-provenance-synthetic-f8483656c86742d189874c3267cdbabc/telemetry/latest?source=simulator&run_id=d-provenance-finite-984b749d2e5e448193757bcae1817767",
+          "file": "real-api-2.json",
+          "sha256": "5a24da870a29040d4a67c95f267d5079c8c01f90d5ee2621a549445fe7ce9f9c"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/assets/d-provenance-synthetic-f8483656c86742d189874c3267cdbabc/analytics/latest?source=simulator&run_id=d-provenance-finite-984b749d2e5e448193757bcae1817767",
+          "file": "real-api-3.json",
+          "sha256": "33d698bd1fe5e1b7d100e3683ff94222631dbcd88a4fb3d5a8f82acfcbe8f71b"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/assets/d-provenance-synthetic-f8483656c86742d189874c3267cdbabc/telemetry?source=simulator&run_id=d-provenance-finite-984b749d2e5e448193757bcae1817767&limit=20&offset=0",
+          "file": "real-api-4.json",
+          "sha256": "8e184c0ff05d479084e988b74b87b22cc1c5d8b71f9d60a59db4489e10aba06c"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/8/analytics",
+          "file": "real-api-5.json",
+          "sha256": "906cea36ad915af0096eb3ff124109fbe5e35cacd0a9f852a0cd2c139e93ed5c"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/7/analytics",
+          "file": "real-api-6.json",
+          "sha256": "230b8882ce5672f2017a3383c238b33fc7c405a6bdbb38001456bf26750b02f8"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/9/analytics",
+          "file": "real-api-7.json",
+          "sha256": "f1f42132b6adadd5fe999befb56e9b0d6a79b3df4ee575f72da3bd873a342010"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/12/analytics",
+          "file": "real-api-8.json",
+          "sha256": "2d96227ae7c5e1f522d6a32c82dd2c67b582c7df253a0067d4849010b74689f1"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/11/analytics",
+          "file": "real-api-9.json",
+          "sha256": "68d34b15b5142340247092ebc68dcbc1f30e32b13c5ed4e3263657976dfaef9c"
+        },
+        {
+          "url": "http://127.0.0.1:15451/api/v1/telemetry/10/analytics",
+          "file": "real-api-10.json",
+          "sha256": "1fc9cc0998aa36d9b8966afe4add561f338cadc0b8f8b855fb496aa53ed5d306"
+        }
+      ],
+      "browser_database_before": {
+        "alembic_version": {
+          "count": 1,
+          "sha256": "437ac00d1e1ffad1fc4866c6646bff31c9d369956ad4443cdf15742ef006c2be"
+        },
+        "analytics_results": {
+          "count": 12,
+          "sha256": "6631e0f957b4ed70c3366e490906b2887942ffadb4eaef6de78d1eba204c8bd5"
+        },
+        "analytics_states": {
+          "count": 2,
+          "sha256": "16bb2fb916b76703c8f92f3c9a8bdc115d82954916f9ab6f1ae9e611646f3622"
+        },
+        "analytics_streams": {
+          "count": 2,
+          "sha256": "3770223c7390f4e1a903a4dc191c4ba3ea2733a68c978c6475d10460650956cc"
+        },
+        "asset_configurations": {
+          "count": 2,
+          "sha256": "6615d7050215700dc59b39a2ff85991376498eab00de0c6d8b38eafcaf5e907e"
+        },
+        "assets": {
+          "count": 1,
+          "sha256": "f75a1663eba51d2937ae73f14ce978e4017793d426739f9460a81570df42905e"
+        },
+        "maintenance_task_history": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "maintenance_tasks": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "telemetry_processing_jobs": {
+          "count": 12,
+          "sha256": "e7a96445d0ff1e2b22c9063f0449950e966ee30f0abe506c7a75403f476d05cf"
+        },
+        "telemetry_readings": {
+          "count": 12,
+          "sha256": "ac63f601fc9539f626285a22a6cc343f39c38e72d639139c934a277088dbc473"
+        }
+      },
+      "browser_database_after": {
+        "alembic_version": {
+          "count": 1,
+          "sha256": "437ac00d1e1ffad1fc4866c6646bff31c9d369956ad4443cdf15742ef006c2be"
+        },
+        "analytics_results": {
+          "count": 12,
+          "sha256": "6631e0f957b4ed70c3366e490906b2887942ffadb4eaef6de78d1eba204c8bd5"
+        },
+        "analytics_states": {
+          "count": 2,
+          "sha256": "16bb2fb916b76703c8f92f3c9a8bdc115d82954916f9ab6f1ae9e611646f3622"
+        },
+        "analytics_streams": {
+          "count": 2,
+          "sha256": "3770223c7390f4e1a903a4dc191c4ba3ea2733a68c978c6475d10460650956cc"
+        },
+        "asset_configurations": {
+          "count": 2,
+          "sha256": "6615d7050215700dc59b39a2ff85991376498eab00de0c6d8b38eafcaf5e907e"
+        },
+        "assets": {
+          "count": 1,
+          "sha256": "f75a1663eba51d2937ae73f14ce978e4017793d426739f9460a81570df42905e"
+        },
+        "maintenance_task_history": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "maintenance_tasks": {
+          "count": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "telemetry_processing_jobs": {
+          "count": 12,
+          "sha256": "e7a96445d0ff1e2b22c9063f0449950e966ee30f0abe506c7a75403f476d05cf"
+        },
+        "telemetry_readings": {
+          "count": 12,
+          "sha256": "ac63f601fc9539f626285a22a6cc343f39c38e72d639139c934a277088dbc473"
+        }
+      },
+      "records_equal": true,
+      "original_retained_D_database_unchanged": true,
+      "scope": "Independent new synthetic stream, not A disputed runtime or C laptop"
+    }
+  },
+  "native_backup_restore": {
+    "original_D_QA_records_equal_on_new_database_restore": true,
+    "backup_sha256": "D8A02EB17D7DEC4B538B465055BE12B3751F44A0DF7B775189EBBEFCDD1F3E61",
+    "scope": "Native retained D QA database; not a development backup"
+  },
+  "adoption": {
+    "original_source": "35d21edca689385ef8bf032c025848b8cae2b5fa",
+    "original_suite": {
+      "passed": 350,
+      "failed": 1,
+      "failure": "Timezone-sensitive scalar subquery in blocked-job test, CardinalityViolation"
+    },
+    "D_QA_source": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+    "fresh_suite": {
+      "passed": 351,
+      "failed": 0,
+      "warnings": 392,
+      "seconds": 153.27,
+      "python": "3.13",
+      "postgresql": "18",
+      "timezone": "Asia/Calcutta"
+    },
+    "pr": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/30",
+    "migration_head": "d006_combined_integration",
+    "alembic_upgrade_heads_check": "passed",
+    "adopted_into_main_or_runtime": false
+  },
+  "setup_failures": [
+    "Copied artificial migration configuration lacks required API provenance; copy retained",
+    "Harness used reading_id instead of telemetry history id",
+    "Coefficient-free synthetic stream correctly lacked predictions; retained; fresh assumed configuration/run appended",
+    "Initial Chrome CORS origin mismatch; isolated process setting corrected and same assertions rerun"
+  ],
+  "limitations": [
+    "Phase0 raw old/new A artifacts unavailable",
+    "C external manifest unavailable locally",
+    "No automated GitHub teammate approval or message",
+    "Docker engine unavailable; no Docker runtime verification",
+    "No combined genuine authenticated UI E2E",
+    "No development deployment, model adoption, SSO, transport or physical validation"
+  ]
+}
