@@ -1,0 +1,126 @@
+{
+  "phase": "Phase 6 Final Acceptance Verification & Documentation Alignment",
+  "candidate_commit": "41252377a0fc62947eeb4c7fc5208f16b2eb2019",
+  "candidate_branch": "feature/phase4-full-implementation",
+  "base_lineage": "feature/persona-phase3-combined-integration (a0689417efd0b674b93198eb537d940cb3547285)",
+  "target_branch": "main (744c76538235e7d04da250fcfdcf4f7a8d6e9218)",
+  "timestamp": "2026-10-10T18:05:00Z",
+  "coordinator": "Person A (Backend Lead & Integration Coordinator)",
+  "status": "Phase 6 documentation/demo preparation PASS; remaining gates: formal GitHub review approvals on PRs #32, #33, #29, and repository owner authorization for live development stack upgrade",
+  "acceptance_matrix": {
+    "asset_registry_and_configuration": {
+      "revision": "ce21c3b8 (main)",
+      "merged": true,
+      "running_in_dev": true,
+      "test_result": "PASS (pytest backend/tests/test_assets.py)",
+      "scope_limitations": "Immutable nameplate/assumed parameters; no physical hardware auto-discovery"
+    },
+    "telemetry_ingestion_and_deduplication": {
+      "revision": "db17a8d8 (main)",
+      "merged": true,
+      "running_in_dev": true,
+      "test_result": "PASS (pytest backend/tests/test_telemetry.py)",
+      "scope_limitations": "Simulated streaming; pre-shared bearer token authentication"
+    },
+    "normal_operation_simulator": {
+      "revision": "55a9c54f (main)",
+      "merged": true,
+      "running_in_dev": true,
+      "test_result": "PASS (pytest backend/tests/test_simulator.py)",
+      "scope_limitations": "Synthetic mathematical curves; not field fault reproduction"
+    },
+    "durable_worker_and_model_101": {
+      "revision": "d730a91b (main)",
+      "merged": true,
+      "running_in_dev": true,
+      "test_result": "PASS (pytest backend/tests/test_analytics_worker.py)",
+      "scope_limitations": "Assumed parameters; unavailable power quantities explicitly labeled"
+    },
+    "model_102_adoption_and_handover": {
+      "revision": "508c7b1f (PR #32)",
+      "merged": false,
+      "running_in_dev": false,
+      "test_result": "PASS (pytest backend/tests/test_model_adoption.py, isolated probe 10/10)",
+      "scope_limitations": "Uncalibrated coefficients; stale 1.0.1 handover rejected with 409"
+    },
+    "incident_registry_and_outbox": {
+      "revision": "2e934c85 (feature/persona-incident-registry)",
+      "merged": false,
+      "running_in_dev": false,
+      "test_result": "PASS (pytest backend/tests/test_incidents.py, test_incident_contract.py)",
+      "scope_limitations": "Durable PostgreSQL outbox queue; local operator auth tokens"
+    },
+    "acknowledgement_and_genuine_maintenance": {
+      "revision": "3b92b197 (PR #29) + candidate",
+      "merged": false,
+      "running_in_dev": false,
+      "test_result": "PASS (pytest backend/tests/test_incident_maintenance.py, isolated probe)",
+      "scope_limitations": "Foreign key enforced; sample alerts mode preserved for demo"
+    },
+    "what_if_scenario_forecasting": {
+      "revision": "20ccaddc (w001) + candidate",
+      "merged": false,
+      "running_in_dev": false,
+      "test_result": "PASS (pytest backend/tests/test_what_if.py, isolated probe)",
+      "scope_limitations": "Constant-load assumption; labeled 'Conditional healthy-model estimates'"
+    },
+    "authentication_and_operator_ui": {
+      "revision": "4dc73512 (PR #33) + candidate",
+      "merged": false,
+      "running_in_dev": false,
+      "test_result": "PASS (55/55 node tests, 0 lint errors, build in 119ms, browser capture)",
+      "scope_limitations": "Local Bearer token session; no third-party identity provider"
+    }
+  },
+  "automated_test_gates": {
+    "backend_suite": {
+      "command": "pytest analytics/contracts backend/tests -q",
+      "total_tests": 351,
+      "passed": 351,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "frontend_suite": {
+      "command": "npm test (node --test frontend/tests/*.test.js)",
+      "total_tests": 55,
+      "passed": 55,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "frontend_lint": {
+      "command": "npm run lint",
+      "errors": 0,
+      "warnings": 0,
+      "exit_code": 0
+    },
+    "frontend_build": {
+      "command": "npm run build",
+      "build_time_ms": 119,
+      "exit_code": 0
+    },
+    "live_isolated_probe": {
+      "script": "integration/verify_phase4_e2e.py / scratch/probe_phase5_rehearsal.py",
+      "checks_passed": "10/10",
+      "exit_code": 0
+    }
+  },
+  "verified_backup": {
+    "custom_format_dump": {
+      "path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-backups\\phase5\\sentinel_db_dev_d004.dump",
+      "bytes": 49544,
+      "sha256": "B6BCCAF1DF95F56D7509721C056A8A52751F31A1DAEDEA7E9114891F4C0F13B5"
+    },
+    "sql_format_dump": {
+      "path": "C:\\Users\\marka\\.gemini\antigravity\\scratch\\powernxt-backups\\phase5\\sentinel_db_dev_d004.sql",
+      "bytes": 309108,
+      "sha256": "EC56BA195C9F06AAF78D2C7727EED1CAB45E3C43F870C19EA6FBEA523A56320D"
+    },
+    "restoration_parity": "100% table and row count match"
+  },
+  "running_development_services_preserved": {
+    "database": "PostgreSQL 16 on port 5433 (Up 35+ hours, d004_worker_maintenance)",
+    "backend": "FastAPI on port 8000 (Up 9+ hours)",
+    "worker": "Model 1.0.1 worker (Up 9+ hours)",
+    "frontend": "Vite demo mode on port 3000 (PID 43464)"
+  }
+}

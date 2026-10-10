@@ -6,44 +6,28 @@ An explainable digital twin and operational intelligence platform for electrical
 
 ## Implemented scope and integration status
 
-Status reviewed against main f52f565 on 10 October 2026. Source availability,
-passing tests and a running deployment are separate facts. Consult the exact
-commit in each dated report; laptop-local IDs are not shared deployment IDs.
+Status reviewed against main `744c765` and candidate `4125237` on 10 October 2026. Source availability, passing tests, and running deployments are distinct facts. Consult exact commits and evidence files in `docs/`; laptop-local IDs are not shared deployment IDs.
 
-- **Implemented on main:** registered assets and immutable configurations;
-  transactional telemetry/deduplication and simulator; ordered durable analytics
-  worker/result APIs; C's stored electrical/thermal dashboard; sample-backed
-  maintenance tasks/history and the separate labelled sample maintenance screen.
-- **Conservative adopted model:** magnitude electrical quantities and simplified
-  top-oil evolution/residual, model stored-reading-top-oil-1.0.1. Coefficients are
-  assumed; bootstrap/gap values remain unavailable. No calibrated fault score,
-  winding hotspot, health/confidence, RUL, PF/sequences or IEEE compliance claim.
-- **Review branches, not main/deployment:** A's incident registry/authentication
-  and newer outbox, D's genuine task linkage, and A's immutable-state What-if API.
-  These require a combined migration join and explicit review. B's model1.0.2
-  hardening requires A/B adoption and a recorded state transition; do not apply
-  bundled PR17/24 twice or relabel existing results.
-- **UI/deployment boundaries:** genuine authenticated incident/task UI remains C's
-  next work. Existing fixture acknowledgements, What-if/Restore cooling and browser
-  tasks stay illustrative. Audit reports a development backend behind main with
-  maintenance404; that is dated deployment evidence, not every checkout's status.
-  A must separately schedule any data-preserving upgrade; this overview does not
-  authorize a development restart/migration or claim public deployment.
+- **Implemented on main:** registered assets and immutable configurations; transactional telemetry/deduplication and simulator; ordered durable analytics worker/result APIs; C's stored electrical/thermal dashboard; sample-backed maintenance tasks/history and separate sample maintenance screen.
+- **Implemented on candidate branch (`feature/phase4-full-implementation`):** single migration head `d006_combined_integration` (19 tables); Model 1.0.2 worker adoption with epoch handover; immutable What-if scenario forecasting with automatic 1.0.1/1.0.2 dispatch; operator Bearer token authentication (`/api/v1/operators/me`); stream-aware incident triage console (`BackendIncidents`); What-if comparison cockpit (`BackendWhatIf`); dual-mode maintenance management (`BackendMaintenance`); and 10-step automated E2E integration probes.
+- **Running in development stack:** development PostgreSQL on port 5433 (running `d004_worker_maintenance`, 10 tables, 25 readings, 25 Model 1.0.1 results); development backend on port 8000; Model 1.0.1 worker; demo frontend on port 3000. Upgraded stack is fully rehearsed on isolated ports (55435/8802) and documented in `docs/phase5-upgrade-plan.md` awaiting execution authorization.
+- **Conservative adopted physical model:** magnitude electrical quantities and IEEE exponential top-oil evolution/residual. Default coefficients are assumed or nameplate; bootstrap/gap values remain unavailable. What-if forecasts are explicitly labeled *"Conditional healthy-model estimates under constant-load assumptions"*. No calibrated fault score, winding hotspot, health/confidence, RUL, PF/sequences, or physical cooling intervention is claimed.
 
 Current guides and evidence:
 
-| Area | Contract / verification |
+| Area | Guide / Verification / Contract |
 |---|---|
-| Asset and telemetry | [Asset registry](backend/docs/asset-registry.md), [telemetry contract](docs/contracts/telemetry-contract.md) |
-| Adopted analytics | [Result API contract](docs/contracts/analytics-contract.md), [worker policy](docs/analytics-worker.md) |
-| Main sample maintenance | [Combined verification](docs/integration-verification.md), [workflow](docs/persond-maintenance-workflow.md) |
-| Stored dashboard / Windows demonstration | [Windows guide](docs/integrated-demo-windows.md), [C verification](docs/person-c-analytics-integration-verification.md) |
-| Incident design and D dependency gates | [Merged proposal](analytics/docs/genuine-incident-integration-contract.md), [D plan](docs/persond-incident-implementation-plan.md), [dated readiness](docs/persond-incident-dependency-verification.md) |
-| Events | [Proposed generic event contract](docs/contracts/event-contract.md); it is not an implemented global feed |
-| Current D alignment follow-up | [Owners, CI scope and integration order](docs/persond-team-alignment-followup.md) |
+| **Phase 6 Acceptance Matrix** | [Final Acceptance & Status Matrix](docs/phase6-final-acceptance.md), [Evidence Manifest](docs/phase6-evidence.json) |
+| **Mentor / Judge Demonstration** | [Mentor Demo Guide & Script](docs/mentor-demo-guide.md) |
+| **Team Final Handoff** | [Team Final Handoff](docs/team-final-handoff.md) |
+| **Development Upgrade Plan** | [Phase 5 Upgrade Plan](docs/phase5-upgrade-plan.md), [Rehearsal Record](docs/phase5-rehearsal-verification.md) |
+| **Phase 4 Full Implementation** | [Implementation Report](docs/phase4-implementation-report.md), [Verification Record](docs/phase4-verification.md) |
+| **Asset and Telemetry Contracts** | [Asset registry](backend/docs/asset-registry.md), [Telemetry contract](docs/contracts/telemetry-contract.md) |
+| **Adopted Analytics & Models** | [Result API contract](docs/contracts/analytics-contract.md), [Worker policy](docs/analytics-worker.md) |
+| **Main Sample Maintenance** | [Combined verification](docs/integration-verification.md), [Workflow](docs/persond-maintenance-workflow.md) |
+| **Incident Design & Contracts** | [Genuine incident contract](analytics/docs/genuine-incident-integration-contract.md), [Incident test evidence](docs/incident-registry-evidence.json) |
 
-Historical reports remain intact. Source review and green CI are not evidence of
-teammate approval, trusted device identity, field calibration or shared deployment.
+Historical reports remain intact. Source review and passing CI are not evidence of teammate approval, trusted device identity, field calibration, or shared deployment.
 
 ---
 
