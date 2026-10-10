@@ -1,0 +1,823 @@
+{
+  "status": "PASS",
+  "timestamp_utc": "2026-10-10T21:14:19.157Z",
+  "timestamp_ist": "2026-10-11T02:44:19.158+05:30",
+  "scope": "Windows host, isolated Docker complete single-transformer application; no development deployment",
+  "branch": "feature/single-transformer-app-20261011",
+  "tested_application_commit": "ffbdfbb81d00af0fb89f397ae4c00b55991f7506",
+  "integration_reference": "493092ee1fbca71245c8f4e3e01f81df134bded5",
+  "backend_dependency": "fae21510c83e2595708078df39f6468b70cfb2a0",
+  "backend_runtime": "52053168475aac45a112bc122b1fa8fe87cfd775",
+  "integration_ancestor": true,
+  "backend_dependency_ancestor": true,
+  "pr_base": "feature/backend-completion-20261011",
+  "project": "powernxt_single_71a55838",
+  "frontend": "http://127.0.0.1:18300",
+  "backend": "http://127.0.0.1:18301",
+  "database_port": 18302,
+  "database": "single_transformer_app_test",
+  "migration": "d006_combined_integration",
+  "migration_check_exit": 0,
+  "seed": {
+    "status": "PASS",
+    "asset_id": "powernxt-single-transformer",
+    "source": "simulator",
+    "run_id": "single-transformer-demo-v1",
+    "configuration_version": 1,
+    "model_version": "stored-reading-top-oil-1.0.2",
+    "reading_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "incident_ids": [
+      "8ea3e30b-625f-451e-84ad-d43bc506ce97",
+      "ba7e0a7b-e530-4302-ac71-5625dd3df85e"
+    ],
+    "synthetic": true,
+    "assumed_coefficients": true
+  },
+  "checks": {
+    "backend_contract_tests": 354,
+    "backend_contract_exit": 0,
+    "frontend_tests": 100,
+    "frontend_exit": 0,
+    "lint_exit": 0,
+    "production_docker_build_exit": 0,
+    "startup_helper_exit": 0,
+    "independent_sample_mapper_tests": 3,
+    "worker_exit": 0,
+    "browser_exit": 0,
+    "browser": {
+      "timestamp": "2026-10-10T21:09:53.997Z",
+      "project": "powernxt_single_71a55838",
+      "ui": "http://127.0.0.1:18300",
+      "api": "http://127.0.0.1:18301",
+      "asset_id": "powernxt-single-transformer",
+      "source": "simulator",
+      "run_id": "single-transformer-demo-v1",
+      "configuration": 1,
+      "checks": [
+        "All genuine monitoring screens use the fixed asset, actual electrical/thermal values, stream/config/model provenance, six joined records and bootstrap chart gap",
+        "Real completed/cancelled linked tasks retained and matched to the same asset/incidents; earlier actual creation/lifecycle trace retained separately",
+        "Actual backend What-if captures/reuses eligible immutable state, clears stale forecasts, and preserves all reading/job/result/worker-state/configuration hashes",
+        "Actual reader mutation controls and invalid-credential HTTP401; credentials remain origin-scoped and private",
+        "Real isolated API stop/restart: offline error/recovery in Chrome and exact hashes/counts across all persisted tables",
+        "Real browser offline recovery, empty device isolation, unavailable What-if state, and return to stored simulator records",
+        "390px responsive navigation, reduced motion and no page horizontal overflow (emulation, not a physical phone)"
+      ],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/openapi.json",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets?limit=20&offset=0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A09%3A54.565Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A09%3A54.673Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/1/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/2/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/4/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/3/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/5/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/6/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/operators/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/events?cursor=0&limit=20",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/evidence?cursor=0&limit=20",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/operators/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/events?cursor=0&limit=20",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/evidence?cursor=0&limit=20",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/operators/me",
+          "status": 401
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/operators/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/openapi.json",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/operators/me",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets?limit=20&offset=0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A10%3A02.296Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/2/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/3/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/1/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/4/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/5/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/6/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks?limit=20&offset=0&source=analytics&asset_id=powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks?limit=20&offset=0&source=analytics&asset_id=powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/openapi.json",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets?limit=20&offset=0",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A10%3A09.906Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/1/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/2/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/4/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/6/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/5/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/3/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=device",
+          "status": 404
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=device&limit=20&offset=0&end=2026-10-10T21%3A10%3A10.011Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=device",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+          "status": 409
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A10%3A10.732Z",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/4/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/1/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/2/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/3/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/6/analytics",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "url": "http://127.0.0.1:18301/api/v1/telemetry/5/analytics",
+          "status": 200
+        }
+      ],
+      "page_errors": [],
+      "actual_api": true,
+      "fixture_responses": false,
+      "browser_version": "154.0.8037.99",
+      "completed_task_id": "3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+      "cancelled_task_id": "98d2a1d6-ded3-4136-8310-8f9c49fe2438",
+      "prior_lifecycle_trace": "browser-lifecycle-partial.json",
+      "state_ref": "dcf4682c-e534-4066-819a-ca906921a425",
+      "restart_tables": 19,
+      "status": "PASS"
+    },
+    "worker": {
+      "status": "PASS",
+      "timestamp": "2026-10-10T21:01:11.207Z",
+      "project": "powernxt_single_71a55838",
+      "asset_id": "powernxt-single-transformer",
+      "qa_run": "single-worker-qa-15070dae",
+      "first_batch": 6,
+      "identical_retries": 6,
+      "qa_final_counts": {
+        "readings": 8,
+        "jobs": 8,
+        "results": 8
+      },
+      "database_counts": {
+        "readings": 21,
+        "jobs": 21,
+        "results": 21,
+        "assets": 1
+      },
+      "recovery_attempts": 2,
+      "stream_advances": [
+        1,
+        7
+      ],
+      "worker_restart_persistence": true,
+      "demo_records_unchanged": true,
+      "windows_execution": true
+    },
+    "full_stack_shutdown_exit": 0,
+    "full_stack_startup_exit": 0
+  },
+  "persistence": {
+    "tables": 19,
+    "all_explicit_column_counts_and_hashes_equal": true,
+    "counts": {
+      "alembic_version": 1,
+      "analytics_results": 21,
+      "analytics_states": 4,
+      "analytics_streams": 4,
+      "asset_configurations": 1,
+      "assets": 1,
+      "incident_deliveries": 7,
+      "incident_detector_controls": 1,
+      "incident_detector_epochs": 1,
+      "incident_events": 7,
+      "incident_evidence": 6,
+      "incident_operations": 2,
+      "incident_operators": 3,
+      "incidents": 2,
+      "maintenance_task_history": 6,
+      "maintenance_tasks": 2,
+      "telemetry_processing_jobs": 21,
+      "telemetry_readings": 21,
+      "what_if_snapshots": 1
+    },
+    "default_demo_results_unchanged": true,
+    "configurations_unchanged": true,
+    "full_stack_all_table_hashes_equal": true,
+    "full_stack_tables": 19
+  },
+  "development": {
+    "api": "http://127.0.0.1:8000",
+    "read_only_asset_inventory": true,
+    "mutations": false,
+    "restarts": false,
+    "migrations": false,
+    "volumes_deleted": false
+  },
+  "runtime": {
+    "isolated_stack_left_running": true,
+    "retained_volume": true,
+    "parent_environment_unchanged": true,
+    "private_settings_and_credentials_ignored": true
+  },
+  "setup_findings": [
+    "Frontend health probe changed from localhost to IPv4 loopback after actual Nginx readiness failure.",
+    "Seed helper corrected UUIDv4-format message IDs and paginated configuration-history route to match actual schemas/OpenAPI; rejected submissions did not create readings.",
+    "Initial worker QA attempt left seven valid readings in its own run after a stale keep-alive connection; all were preserved. Successful retry added eight in separate runs. Database totals are21 readings/jobs/results, not14.",
+    "Browser locator/error-message assumptions corrected using actual controls and HTTP401; earlier genuine task lifecycle trace retained separately. Existing terminal tasks were not rewritten during repeated verification.",
+    "Final Windows text-formatting error was caught by lint and corrected before the final startup/build/Chrome pass."
+  ],
+  "limitations": [
+    "All telemetry and detector rules are synthetic; thermal coefficients are assumed, residuals are not fault labels or calibration.",
+    "Local expiring prototype credentials; production SSO is outside scope.",
+    "Actual installed headless Windows Chrome154,390px emulation; not physical-phone or manual visible-browser proof.",
+    "Inherited backend acceptance documents do not constitute endorsed teammate sign-off.",
+    "PR34/36 prerequisite review/adoption and this draft review remain required; no merge or deployment.",
+    "Normal Dockerfile builds used cached layers where available; no new no-cache clean-build claim."
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/.gitattributes",
+      "bytes": 87,
+      "sha256": "9d3f54c1fc642e1ec056e595c29773b51126f80c81738affe56cbc0c14de7065"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/alembic-check.log",
+      "bytes": 4212,
+      "sha256": "dd5b0637004b2b8d2072c68c3aa53d075a4b6fa182e8c8649df5ee21171f0d7b"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/backend-contract-tests.log",
+      "bytes": 2466,
+      "sha256": "be9d1c96a00994e7cb6ecc583ad285df65baeea19bd57ab06edd29c681d96add"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-final-source.log",
+      "bytes": 80,
+      "sha256": "5fe74e1958493c0246e52dbdad3f0fb54d35b769d2db3941ea85bb8694c2e223"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-lifecycle-partial.json",
+      "bytes": 8896,
+      "sha256": "604a65329b078116f7719f980d1bc79b48b97748849d9987ea9d4d0bcfb360c7"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-run-complete.log",
+      "bytes": 80,
+      "sha256": "5fe74e1958493c0246e52dbdad3f0fb54d35b769d2db3941ea85bb8694c2e223"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-run-final.log",
+      "bytes": 788,
+      "sha256": "8cce013d559256804ba49e6379ccc7969062bdaf0e4608805aec53fd5780d156"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-run-retry.log",
+      "bytes": 932,
+      "sha256": "d707ed3e93d23f89ea28db410c80568e14e65e5182fc1db1cf65f488c0b2776f"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-run-workflows.log",
+      "bytes": 736,
+      "sha256": "a15e10abb74a43f141857dc8d9236f925d7e2285fa7b1ea5e6db99b7f35bcfb6"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-run.log",
+      "bytes": 1738,
+      "sha256": "8d6280417a6674c3fe4ccb5ad645ff9ee6d1e916645f52777e19e2807fb2e49b"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-tooling.log",
+      "bytes": 54,
+      "sha256": "2e308eddb4949efb4542edc2098b8db27c4e909050dd83eafac6220b2ccb22f5"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/browser-verification.json",
+      "bytes": 12639,
+      "sha256": "dce0ca453ab94a9115f73097b2f770b6b3fdaeb309928a70b0ecf0b617ecce55"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/checks.json",
+      "bytes": 2437,
+      "sha256": "72dc2031c5ae3ea3ad9245dcd6192762c5bed6c187c936bc2892c41f30499808"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/chrome-dark.png",
+      "bytes": 273713,
+      "sha256": "07d2c1fc208ab1dbb690a2b37525b107b0e31598e5c3f99e6c1332fc3ba73eea"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/chrome-failure.png",
+      "bytes": 217319,
+      "sha256": "7410efd3bd332f4313e7ee9d077c45d09e443baaf4e15cdd3ce63f5c94ab0c84"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/chrome-maintenance.png",
+      "bytes": 195853,
+      "sha256": "eff3423e26ff8916e371a82f7d2de02715b365b2e9f6461d768ac053b0b52dff"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/chrome-mobile.png",
+      "bytes": 141353,
+      "sha256": "639741a820b83f8e6a29b93ab26d765782bdc9ed69ab3132dd13478fefaa86a5"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/chrome-overview.png",
+      "bytes": 270118,
+      "sha256": "52da4dcdb69337fc2aa4d44adb96cf60310cf407a78d68b1cf8ba1f94aa4672f"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/configuration.json",
+      "bytes": 1223,
+      "sha256": "cdf2aca37b06454fed03d3deaa816fa5116458e1e4468f286ac15ac1fad6ae13"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/contract-database.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/development-assets-readonly.json",
+      "bytes": 27112,
+      "sha256": "44a4ab3a27b179602a3cb9ae4a4e18467423c8473ca4ef59d1b32dc242f0faa5"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/docker-build.log",
+      "bytes": 29136,
+      "sha256": "306ebc2254610d691f833406729d24a0e83c9beeae9e4fbae43dfcff36dafe17"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/final-docker-build.log",
+      "bytes": 6167,
+      "sha256": "b12b8b44ca0cc4d699ad4284e7e400247a092397b3cb6a42d7684c362321dd21"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-build.log",
+      "bytes": 616,
+      "sha256": "61008dd4ee2e47bfb6a1db9c9b4bcbb49a66e846092bb505370f53b33e277557"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-lint-final.log",
+      "bytes": 80,
+      "sha256": "7483b9466dcd46ce5fef494e3ef9a06ac2fe303eb61d5518a6fc8309e08e99e0"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-lint.log",
+      "bytes": 39,
+      "sha256": "98cdc628d09a5242698fda93e945f0e0efa0645207f11c522f5bffab308bd486"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-refresh.log",
+      "bytes": 346,
+      "sha256": "350d3b839f8e57551243638b4b73d8665d7bb70b436f490a2f48697dc4bf0e2d"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-tests-final.log",
+      "bytes": 19204,
+      "sha256": "37d7b1ad8b67757a50fb4d542f82b93ae27722e592d71ffb4745839054d48b2f"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/frontend-tests.log",
+      "bytes": 9817,
+      "sha256": "2a302af05dd1a88db8571961989463e9fb3a6d05309124cf60633603890a6862"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/full-stack-after.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/full-stack-before.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/full-stack-startup.log",
+      "bytes": 15106,
+      "sha256": "80e0ecf4184e137ce878874acd598e0d19bdd3e4c05971a331f53895499963d8"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/npm-install.log",
+      "bytes": 304,
+      "sha256": "a82f2ba376ec737011e4056b2e78d3fdd7a21ceced41979795c6e02a03238b12"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/packets.jsonl",
+      "bytes": 2760,
+      "sha256": "d19b90ebc3b4e3e034474c5ec840ffcfb241e4406aff423c88dc221a57a3c2b0"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/restart-after.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/restart-before.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/results.json",
+      "bytes": 77960,
+      "sha256": "b795a9a4978a416f8afe867eba7d6b20234c76f22a929b1030d1e3798c602290"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/sample-mapper-tests.log",
+      "bytes": 349,
+      "sha256": "025df830308fbecadbd4080a9304b1f70147001cd25a9c5f9347a6ff87b039e2"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/seed-final.log",
+      "bytes": 938,
+      "sha256": "f1228d7448dffbdd166943dfd4b3e8bce0b26ae11a92c91909f398dd272b868b"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/seed-retry.log",
+      "bytes": 2186,
+      "sha256": "15f5082f9d133da88f15c84370c6628f7ed6b43a40a49e8492c321557912e1d3"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/seed.json",
+      "bytes": 446,
+      "sha256": "14ed0241c182e1d86bfd554278ca5b4e6bc35f0bbeb100012824f4afc70fa046"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/seed.log",
+      "bytes": 2460,
+      "sha256": "77a479ba53e4f1db758bf5b9236bb0fcc91b3472f3eddab062e9f8562d95c7c1"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/shutdown-helper.log",
+      "bytes": 1922,
+      "sha256": "710af1d24a33d486b9912769b2c5b692a8fa9e084b79495920675fffda4db9d1"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/startup-helper.log",
+      "bytes": 17022,
+      "sha256": "961f6ebf07f8230e2098b1d0c64b3a1750fc98a68da0f15412fcc4df17815f74"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/startup-retry.log",
+      "bytes": 3322,
+      "sha256": "b3a969e724ecf78847eeb74b3acbc6ba1cfb754c69f5fbf2373c6df1faae9851"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/startup.log",
+      "bytes": 5784,
+      "sha256": "9fb6cd48cee31518f99f35b52b9ea24886d831a8358f9d4582bde5ad4cb0d61a"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/what-if-after.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/what-if-before.json",
+      "bytes": 8130,
+      "sha256": "72751f380c9dd024d5b1acb90510abfdab0920130ce7dc116e8bf2d52fbec806"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-after-retries.json",
+      "bytes": 7933,
+      "sha256": "8cb2453092fd723137c59b77fd713b3a8352b37ea196776b51ba144c54bc2ebf"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-after-worker-restart.json",
+      "bytes": 7933,
+      "sha256": "8cb2453092fd723137c59b77fd713b3a8352b37ea196776b51ba144c54bc2ebf"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-baseline.json",
+      "bytes": 7742,
+      "sha256": "0eccc2917da1916e4eda5181217546a863823f9d03b32726e013216e0553e73d"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-before-retries.json",
+      "bytes": 7933,
+      "sha256": "8cb2453092fd723137c59b77fd713b3a8352b37ea196776b51ba144c54bc2ebf"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-final.json",
+      "bytes": 8130,
+      "sha256": "4624580e0ff9993b315c0a1bf204d90d2d8df452e462c91ee275df010dbe820f"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-pending.json",
+      "bytes": 7742,
+      "sha256": "2f8c2c464e20ddca71eac084db156cf73000a5035d6addb7d03910fd184487f0"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-verification-retry.log",
+      "bytes": 1228,
+      "sha256": "f17fc77f57ae6ef7e1a8ad0fb0a9749ceec378f75b69330da959e43ea93cf64d"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-verification.json",
+      "bytes": 585,
+      "sha256": "8e97a79221c7f8951e7443e5cba2197e7514e726ccfbf5d31a7699a2340d8e29"
+    },
+    {
+      "path": "docs/evidence/single-transformer-app-20261011/worker-verification.log",
+      "bytes": 662,
+      "sha256": "e4248e41b81c70efd498914dd344f8703757afe2efb9748bda59efc3eaf7338f"
+    }
+  ],
+  "timezone": "Asia/Kolkata",
+  "images": {
+    "backend": "sha256:f83aad53520bc06654a4e8fa595a12a805022a38f0a956c3391a4b1a87e50286",
+    "worker": "sha256:f83aad53520bc06654a4e8fa595a12a805022a38f0a956c3391a4b1a87e50286",
+    "frontend": "sha256:cac1581237d10cd83c1e2b4c654b1034fb25cbe1a3594ed67256cb49661ee754",
+    "db": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea"
+  }
+}

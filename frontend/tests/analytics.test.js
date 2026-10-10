@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { adaptReadingAnalytics } from '../src/services/analyticsAdapter.js';
 
-const example = JSON.parse(readFileSync(new URL('../../data/sample/analytics-worker-result.json', import.meta.url)));
+const example = JSON.parse(readFileSync(new URL('./fixtures/analytics-worker-result.json', import.meta.url)));
 test('stored sample maps units, separate UTC clocks and exact provenance without converting it to live evidence', () => {
   const actual = adaptReadingAnalytics(example);
   assert.equal(actual.metrics.find(m => m.unit === 'kVA').value, example.result.payload.electrical_metrics.apparent_power_kva);

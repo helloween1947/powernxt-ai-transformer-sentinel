@@ -1,391 +1,170 @@
-import { useEffect, useRef, useState } from 'react';
-import ReadingCard from './components/ReadingCard';
-import TrendChart from './components/TrendChart';
-import BackendReadings from './components/BackendReadings.jsx';
-import BackendMaintenance from './components/BackendMaintenance.jsx';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, LayoutGroup, motion, MotionConfig } from 'motion/react';
+import { Activity, ArrowDownToLine, ArrowUpRight, ChevronRight, CircleHelp, Database, MapPin, RefreshCw, ShieldCheck, Thermometer, Zap } from 'lucide-react';
+import { Sidebar, Topbar } from './components/layout/AppShell.jsx';
+import DigitalTwin from './components/digital-twin/DigitalTwin.jsx';
+import MetricPanel, { MetricDetails, Parameters } from './components/metrics/MetricPanel.jsx';
+import HistoryChart from './components/charts/HistoryChart.jsx';
+import { EmptyState, IncidentsView, MaintenanceView, QualityView, ReportsView, WhatIfView } from './components/workflows/OperatorViews.jsx';
+import { Button } from './components/ui/button.jsx';
+import { DetailDialog } from './components/ui/dialog.jsx';
+import ConditionRating, { RatingExplanation } from './components/condition/ConditionRating.jsx';
+import CapabilityExplorer from './components/condition/CapabilityExplorer.jsx';
+import EvidenceRail from './components/telemetry/EvidenceRail.jsx';
+import { conditionRating } from './domain/conditionRating.js';
+import { inspectHistoryRecord, metricTrend } from './domain/inspection.js';
+import { chartPointsForContext } from './domain/chartProvenance.js';
+import { motionTiming } from './domain/motion.js';
 import BackendIncidents from './components/BackendIncidents.jsx';
 import BackendWhatIf from './components/BackendWhatIf.jsx';
+import BackendMaintenance from './components/BackendMaintenance.jsx';
 import OperatorAuthBar from './components/OperatorAuthBar.jsx';
-import { DEMO_MODE, getAssets, getDashboard, compareScenarios, acknowledgeAlert, getTasks, createTask, updateTask } from './services/api';
-import { fetchOperatorMe, getStoredToken, saveToken, clearStoredToken } from './services/auth.js';
+import { useOperatorSession } from './hooks/useOperatorSession.js';
+import { useRuntimeContract } from './hooks/useRuntimeContract.js';
+import { useAssets, useWorkstation } from './hooks/useWorkstation.js';
+import { navigation } from './data/navigation.js';
+import { resolveMetrics } from './data/capabilities.js';
+import { downloadReport } from './services/reportExport.js';
+import { usableMeasurement } from './services/telemetryAdapter.js';
+import { displayId, displayLocation, displayStatus } from './lib/presentation.js';
+import { number, readPreference, savePreference, time } from './lib/utils.js';
 
-const screens = [
-  'Fleet',
-  'Transformer',
-  'Alerts',
-  'What-if',
-  'Maintenance',
-  'Backend readings',
-  'Backend maintenance',
-  'Backend incidents',
-  'Backend what-if',
-];
-const temperatureSeries = [
-  { key: 'measuredOil', label: 'Observed oil temperature', color: '#0e7490' },
-  { key: 'predictedOil', label: 'Twin prediction', color: '#a16207', dashed: true },
-];
+const temperatureSeries = [{ key: 'measured', label: 'Measured oil', color: 'var(--chart-measured)' }, { key: 'predicted', label: 'Estimated top-oil', color: 'var(--chart-estimated)', dashed: true }];
+const focusedAssetId = import.meta.env.VITE_FOCUSED_ASSET_ID || '';
+const focused = Boolean(focusedAssetId);
+const tabs = ['Overview', 'Electrical', 'Thermal', 'Condition', 'Data quality'];
+const titles = { capabilities: 'Condition explorer', twin: 'Digital twin', trends: 'Trends & history', incidents: 'Alerts & incidents', maintenance: 'Maintenance', whatif: 'What-if analysis', reports: 'Reports' };
+const descriptions = { capabilities: 'Inspect measurements, instruments and future model requirements.', trends: 'Inspect measurements and stored estimates over time.', incidents: 'Trace configured-limit evidence to its source reading.', maintenance: 'Review assignments, task progress and recorded work.', whatif: 'Compare conditional healthy-model forecasts from immutable backend state.', reports: 'Export retrieved records and inspect validation references.' };
+
+function initialScreen() { return navigation.some(item => item.id === location.hash.slice(1)) ? location.hash.slice(1) : 'twin'; }
+function initialTheme() { return readPreference('powernxt-theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
 
 export default function App() {
-  const [screen, setScreen] = useState('Fleet');
-  const [assets, setAssets] = useState([]);
-  const [assetId, setAssetId] = useState('');
-  const [scenario, setScenario] = useState('overload');
-  const [dashboard, setDashboard] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [screen, setScreen] = useState(initialScreen);
+  const [openedTaskId, setOpenedTaskId] = useState(null);
+  const [theme, setTheme] = useState(initialTheme);
+  const [mode, setMode] = useState(() => focused || import.meta.env.VITE_DATA_MODE === 'live' ? 'live' : 'sample');
+  const [baseUrl, setBaseUrl] = useState(() => focused ? import.meta.env.VITE_API_BASE_URL : readPreference('powernxt-api-origin', import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'));
+  const [baseDraft, setBaseDraft] = useState(baseUrl);
+  const [settingsError, setSettingsError] = useState('');
+  const [assetId, setAssetId] = useState(() => focusedAssetId || readPreference(`powernxt-context:${baseUrl}:asset`));
+  const [assetOffset, setAssetOffset] = useState(0);
+  const [source, setSource] = useState(() => readPreference(`powernxt-context:${baseUrl}:source`, import.meta.env.VITE_DEFAULT_SOURCE || 'device'));
+  const [runId, setRunId] = useState(() => readPreference(`powernxt-context:${baseUrl}:run`, import.meta.env.VITE_DEFAULT_RUN_ID || ''));
+  const [runDraft, setRunDraft] = useState(runId);
+  const [range, setRange] = useState(focused ? 'all' : '24h');
+  const [offset, setOffset] = useState(0);
+  const [condition, setCondition] = useState('steady');
+  const [refresh, setRefresh] = useState(0);
+  const [tab, setTab] = useState('Overview');
+  const [selectedId, setSelectedId] = useState('oil_temperature_c');
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [notice, setNotice] = useState('');
-  const [busy, setBusy] = useState(false);
-  const actionLock = useRef(false);
-  const [retry, setRetry] = useState(0);
+  const [ratingOpen, setRatingOpen] = useState(false);
+  const [historicalSelection, setHistoricalSelection] = useState({});
+  const [collapsed, setCollapsed] = useState(true);
   const [clock, setClock] = useState(() => Date.now());
-  const [alternative, setAlternative] = useState('lower-load');
-  const [comparison, setComparison] = useState(null);
-  const [tasks, setTasks] = useState([]);
-  const [owner, setOwner] = useState('');
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskAlert, setTaskAlert] = useState(null);
-
-  // Authenticated operator session for backend operations
-  const [operator, setOperator] = useState(null);
-  const [authBusy, setAuthBusy] = useState(false);
-  const [authError, setAuthError] = useState('');
-  const [authNotice, setAuthNotice] = useState('');
-
+  const [trendMetric, setTrendMetric] = useState('temperature');
+  const assets = useAssets(mode, baseUrl, assetOffset, refresh);
+  const activeAssetId = assetId || assets.items[0]?.asset_id || '';
   useEffect(() => {
-    let cancelled = false;
-    const stored = getStoredToken();
-    if (stored) {
-      fetchOperatorMe(import.meta.env.VITE_API_BASE_URL, stored)
-        .then(op => {
-          if (!cancelled) {
-            setOperator(op);
-            setAuthNotice(`Operator session restored: ${op.name} (${op.role})`);
-          }
-        })
-        .catch(() => {
-          if (!cancelled) clearStoredToken();
-        });
-    }
-    return () => { cancelled = true; };
+    if (mode !== 'live') return;
+    savePreference(`powernxt-context:${baseUrl}:asset`, activeAssetId);
+    savePreference(`powernxt-context:${baseUrl}:source`, source);
+    savePreference(`powernxt-context:${baseUrl}:run`, runId);
+  }, [mode, baseUrl, activeAssetId, source, runId]);
+  const runtime = useRuntimeContract(mode, baseUrl, refresh);
+  const auth = useOperatorSession(baseUrl, mode === 'live');
+  const workflowKey = JSON.stringify({ baseUrl, activeAssetId, source, runId, actor: auth.operator?.actorRef });
+  const workflowProps = { focusedContext: focused, baseUrl, selectedAssetId: activeAssetId, selectedSource: source, selectedRunId: runId };
+  const state = useWorkstation({ mode, baseUrl, assetId: activeAssetId, source, runId, range, offset, condition, refresh, analyticsEnabled: runtime.analytics === true });
+  const snapshot = state.snapshot;
+  const asset = snapshot?.details ?? assets.items.find(item => item.asset_id === activeAssetId);
+  const inspectionKey = JSON.stringify({ mode, baseUrl, activeAssetId, source, runId, range, offset });
+  const selectedReadingId = historicalSelection.key === inspectionKey ? historicalSelection.readingId : null;
+  const inspection = inspectHistoryRecord(snapshot, selectedReadingId, mode);
+  const inspectedSnapshot = inspection.snapshot;
+  const rating = conditionRating(inspectedSnapshot, mode, clock);
+  const metrics = resolveMetrics(inspectedSnapshot, mode, rating);
+  const selected = metrics.find(metric => metric.id === selectedId) ?? metrics[0];
+  const metric = id => metrics.find(item => item.id === id);
+  const measured = inspectedSnapshot?.latest;
+  const age = measured ? Math.max(0, Math.floor((clock - Date.parse(measured.measurementTime)) / 60000)) : null;
+  const freshness = inspection.historical ? 'Historical reading' : mode === 'sample' ? 'Recorded history' : !measured ? 'No reading retrieved' : source !== 'device' ? 'Stored history' : age > 2 ? `Stored device reading · ${age >= 1440 ? `${Math.floor(age / 1440)}d` : `${age}m`} old` : 'Recent device measurement';
+
+  useEffect(() => { document.documentElement.dataset.theme = theme; savePreference('powernxt-theme', theme); }, [theme]);
+  useEffect(() => {
+    const changed = () => setScreen(initialScreen());
+    window.addEventListener('popstate', changed);
+    const timer = setInterval(() => setClock(Date.now()), 30000);
+    return () => { window.removeEventListener('popstate', changed); clearInterval(timer); };
   }, []);
+  useEffect(() => { if (!notice) return; const timer = setTimeout(() => setNotice(''), 5000); return () => clearTimeout(timer); }, [notice]);
+  function navigate(next) { window.scrollTo({ top: 0, behavior: 'instant' }); setScreen(next); history.pushState(null, '', `#${next}`); setNotice(''); }
+  function selectAsset(next) { setAssetId(next); setOffset(0); setSelectedId('oil_temperature_c'); setNotice(''); }
+  function selectMetric(id, expand = false) { if (id === 'condition_rating') { setRatingOpen(true); return; } setSelectedId(id); setTrendMetric(metricTrend(id)); if (expand || window.innerWidth < 1000) setDetailsOpen(true); }
+  function selectReading(readingId) { setHistoricalSelection({ key: inspectionKey, readingId }); }
+  function clearHistory() { setHistoricalSelection({}); }
+  function openTrend(next) { setTrendMetric(next); navigate('trends'); }
+  function changeMode(next) { setMode(next); setAssetId(''); setOffset(0); setAssetOffset(0); setNotice(''); setDetailsOpen(false); }
+  function exportData() { if (downloadReport(snapshot, mode)) setNotice('History exported as CSV.'); }
+  function setTimeRange(next) { setRange(next); setOffset(0); }
+  function openSettings() { setBaseDraft(baseUrl); setSettingsOpen(true); }
+  const allErrors = [assets.message, state.message, ...(snapshot?.errors ?? [])].filter(Boolean);
+  const historyPoints = snapshot?.points ?? [];
+  const ungroupedPoints = ['temperature', 'residual', 'loading', 'power'].includes(trendMetric) ? historyPoints : (snapshot?.history ?? []).map(reading => ({ timestamp: reading.measurementTime, readingId: reading.readingId, configurationVersion: reading.configurationVersion, ...Object.fromEntries(Object.keys(reading.measurements).map(name => [name, usableMeasurement(reading, name)])), status: reading.processingJobStatus, reasons: Object.values(reading.qualityFlags ?? {}).flat() }));
+  const chartConfiguration = inspectedSnapshot?.latest?.configurationVersion ?? null;
+  const chartModel = inspectedSnapshot?.analytics?.result?.model_version ?? null;
+  const points = mode === 'sample' ? ungroupedPoints : chartPointsForContext(ungroupedPoints, chartConfiguration, chartModel);
+  const series = trendMetric === 'temperature' ? temperatureSeries : trendMetric === 'residual' ? [{ key: 'residual', label: 'Measured minus estimated', color: 'var(--chart-measured)' }] : trendMetric === 'loading' ? [{ key: 'capacityLoading', label: 'Capacity loading', color: 'var(--chart-measured)' }, { key: 'phaseLoading', label: 'Worst-phase loading', color: 'var(--chart-estimated)', dashed: true }] : trendMetric === 'power' ? [{ key: 'apparentPower', label: 'Apparent power', color: 'var(--chart-measured)' }] : trendMetric === 'oil_level' ? [{ key: 'oil_level_pct', label: 'Oil level', color: 'var(--chart-measured)' }] : ['r', 'y', 'b'].map((phase, index) => ({ key: `${trendMetric}_${phase}_${trendMetric === 'voltage' ? 'v' : 'a'}`, label: `${phase.toUpperCase()} phase`, color: ['var(--chart-measured)', 'var(--chart-estimated)', 'var(--chart-third)'][index] }));
 
-  async function handleLogin(token) {
-    setAuthBusy(true);
-    setAuthError('');
-    setAuthNotice('');
-    try {
-      const op = await fetchOperatorMe(import.meta.env.VITE_API_BASE_URL, token);
-      saveToken(token);
-      setOperator(op);
-      setAuthNotice(`Authenticated as ${op.name} (${op.role}).`);
-    } catch (err) {
-      setAuthError(err.message);
-    } finally {
-      setAuthBusy(false);
-    }
-  }
-
-  function handleLogout() {
-    clearStoredToken();
-    setOperator(null);
-    setAuthNotice('Operator session ended.');
-    setAuthError('');
-  }
-
-  useEffect(() => {
-    let cancelled = false;
-    getAssets().then(result => { if (!cancelled) { setAssets(result); setAssetId(current => current || result[0]?.id || ''); if (!result.length) setLoading(false); } }).catch(err => { if (!cancelled) { setError(err.message); setLoading(false); } });
-    return () => { cancelled = true; };
-  }, [retry]);
-
-  useEffect(() => {
-    if (!assetId) return;
-    let cancelled = false;
-    let pending = false;
-    async function load() {
-      if (pending) return;
-      pending = true;
-      try {
-        const result = await getDashboard(assetId, scenario);
-        if (!cancelled) { setDashboard(result); setError(''); }
-      } catch (err) { if (!cancelled) setError(err.message); }
-      finally { pending = false; if (!cancelled) setLoading(false); }
-    }
-    load();
-    const timer = DEMO_MODE ? null : setInterval(load, 5000);
-    return () => { cancelled = true; if (timer) clearInterval(timer); };
-  }, [assetId, scenario, retry]);
-
-  useEffect(() => {
-    const timer = setInterval(() => setClock(Date.now()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    if (screen === 'Maintenance') getTasks().then(setTasks).catch(err => setError(err.message));
-  }, [screen]);
-
-  function resetDashboardView() {
-    setDashboard(null);
-    setLoading(true);
-    setComparison(null);
-    setError('');
-    setNotice('');
-  }
-
-  function changeAsset(nextId) {
-    if (nextId !== assetId) {
-      resetDashboardView();
-      setAssetId(nextId);
-    }
-    setTaskAlert(null);
-    setTaskTitle('');
-  }
-
-  function changeScenario(nextScenario) {
-    if (nextScenario !== scenario) {
-      resetDashboardView();
-      setScenario(nextScenario);
-    }
-    setTaskAlert(null);
-    setTaskTitle('');
-  }
-
-  function reloadDashboard() {
-    resetDashboardView();
-    setRetry(value => value + 1);
-  }
-
-  async function run(action) {
-    if (actionLock.current) return;
-    actionLock.current = true; setBusy(true); setError(''); setNotice('');
-    try { await action(); }
-    catch (err) { setError(err.message); }
-    finally { actionLock.current = false; setBusy(false); }
-  }
-
-  const stale = dashboard && !DEMO_MODE && clock - Date.parse(dashboard.timestamp) > (dashboard.staleAfterSeconds ?? 30) * 1000;
-  const alerts = dashboard?.alerts ?? [];
-
-  function openTask(alert) {
-    setTaskAlert(alert); setTaskTitle(alert.recommendation); setScreen('Maintenance');
-  }
-
-  async function saveTask(event) {
-    event.preventDefault();
-    await run(async () => {
-      const saved = await createTask({ title: taskTitle.trim(), owner: owner.trim(), assetId, alertId: taskAlert?.id ?? null, evidence: taskAlert?.evidence ?? '', recommendation: taskAlert?.recommendation ?? '' });
-      setTasks(await getTasks()); setTaskTitle(''); setTaskAlert(null);
-      setNotice(`Task saved: ${saved.title}`);
-    });
-  }
-
-  return (
-    <div className="shell">
-      <aside>
-        <div className="brand">Transformer<br /><strong>Sentinel</strong></div>
-        <p>Operator dashboard</p>
-        <nav aria-label="Main navigation">
-          {screens.map(item => (
-            <button
-              key={item}
-              aria-current={screen === item ? 'page' : undefined}
-              onClick={() => setScreen(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </nav>
-        <div className="aside-note">Person C starter<br />{DEMO_MODE ? 'Sample data mode' : 'API mode: 5-second polling'}</div>
-      </aside>
-      <main>
-        <header>
-          <div>
-            <span className="eyebrow">POWER SYSTEM CONDITION MONITORING</span>
-            <h1>
-              {screen === 'Fleet' ? 'Fleet overview' :
-               screen === 'Transformer' ? 'Transformer detail' :
-               screen === 'What-if' ? 'What-if comparison' :
-               screen}
-            </h1>
-          </div>
-          {!screen.startsWith('Backend ') && (
-            <label>
-              Transformer
-              <select value={assetId} disabled={busy} onChange={event => changeAsset(event.target.value)}>
-                {assets.map(asset => <option key={asset.id} value={asset.id}>{asset.id} — {asset.name}</option>)}
-              </select>
-            </label>
-          )}
-        </header>
-
-        {DEMO_MODE && (
-          <div className="banner">
-            DEMO: sensor readings, health, alerts and forecast curves are illustrative fixtures. Tasks on the Maintenance screen are saved only in this browser. The separate Backend readings, Backend maintenance, Backend incidents and Backend what-if screens make backend requests; their data is not these fixtures.
-          </div>
-        )}
-
-        {DEMO_MODE && !screen.startsWith('Backend ') && (
-          <label className="scenario">
-            Sample condition
-            <select value={scenario} disabled={busy} onChange={event => changeScenario(event.target.value)}>
-              <option value="normal">Normal operation</option>
-              <option value="overload">Overload / abnormal heating</option>
-              <option value="sensor-loss">Oil sensor loss</option>
-            </select>
-          </label>
-        )}
-
-        {screen.startsWith('Backend ') && (
-          <OperatorAuthBar
-            operator={operator}
-            onLogin={handleLogin}
-            onLogout={handleLogout}
-            busy={authBusy}
-            error={authError}
-            notice={authNotice}
-          />
-        )}
-
-        {error && <div role="alert" className="error">{error} <button onClick={reloadDashboard}>Retry data loading</button></div>}
-        {notice && <div role="status" className="success">{notice}</div>}
-        {loading && !screen.startsWith('Backend ') && <p role="status">Loading transformer data...</p>}
-        {!loading && !assets.length && !error && !screen.startsWith('Backend ') && <p>No transformers registered.</p>}
-
-        {screen === 'Backend readings' && <BackendReadings />}
-        {screen === 'Backend maintenance' && <BackendMaintenance operator={operator} />}
-        {screen === 'Backend incidents' && <BackendIncidents operator={operator} onOpenMaintenanceTask={() => setScreen('Backend maintenance')} />}
-        {screen === 'Backend what-if' && <BackendWhatIf />}
-
-        {dashboard && !screen.startsWith('Backend ') && (
-          <>
-            <div className="status-line">
-              <span>{dashboard.asset.name} · {dashboard.asset.rating}</span>
-              <span>{DEMO_MODE ? 'Sample timestamp' : 'Last sensor timestamp'}: {new Date(dashboard.timestamp).toLocaleString()} {stale && <strong className="warning"> STALE DATA</strong>}</span>
-            </div>
-            {screen === 'Fleet' && (
-              <section className="panel">
-                <h2>{DEMO_MODE ? 'Demo transformers' : 'Registered transformers'}</h2>
-                <p>Select an asset to inspect its latest readings. This starter loads condition details for the selected asset.</p>
-                <div className="asset-grid">
-                  {assets.map(asset => (
-                    <button className="asset" key={asset.id} onClick={() => { changeAsset(asset.id); setScreen('Transformer'); }}>
-                      <strong>{asset.id}</strong>
-                      <span>{asset.name}</span>
-                      <small>{asset.rating}</small>
-                      {asset.id === assetId && <small>{dashboard.analytics.condition} · {alerts.length} alert(s)</small>}
-                    </button>
-                  ))}
-                </div>
-              </section>
-            )}
-            {(screen === 'Fleet' || screen === 'Transformer') && (
-              <>
-                <div className="metrics">
-                  <ReadingCard label="Loading" value={dashboard.readings.loading} unit="%" source={dashboard.source} />
-                  <ReadingCard label="Oil temperature" value={dashboard.readings.oilTemperature} unit="C" source={dashboard.source} />
-                  <ReadingCard label="Ambient temperature" value={dashboard.readings.ambientTemperature} unit="C" source={dashboard.source} />
-                  <ReadingCard label="Data confidence" value={dashboard.analytics.confidence} unit="" source={DEMO_MODE ? 'Sample assessment' : 'Analytics assessment'} />
-                </div>
-                <section className="panel">
-                  <h2>Condition: {dashboard.analytics.condition}</h2>
-                  <p>Data quality: {dashboard.dataQuality}</p>
-                  <ul>{dashboard.analytics.contributors.map(item => <li key={item}>{item}</li>)}</ul>
-                  <button onClick={() => setScreen('Alerts')}>Inspect alerts ({alerts.length})</button>
-                </section>
-              </>
-            )}
-            {screen === 'Transformer' && (
-              <>
-                <section className="panel">
-                  <h2>Electrical readings</h2>
-                  <div className="table-wrap">
-                    <table>
-                      <thead><tr><th>Phase</th><th>Voltage (V)</th><th>Current (A)</th><th>Source</th></tr></thead>
-                      <tbody>{['A', 'B', 'C'].map((phase, index) => <tr key={phase}><td>{phase}</td><td>{dashboard.readings.voltage[index] ?? 'Unavailable'}</td><td>{dashboard.readings.current[index] ?? 'Unavailable'}</td><td>{dashboard.source}</td></tr>)}</tbody>
-                    </table>
-                  </div>
-                </section>
-                <section className="panel"><TrendChart title="Observed temperature versus twin prediction" points={dashboard.history} series={temperatureSeries} /></section>
-              </>
-            )}
-            {screen === 'Alerts' && (
-              <section className="panel">
-                <h2>Alert investigation</h2>
-                {!alerts.length && <p>No active alerts for this transformer.</p>}
-                {alerts.map(alert => (
-                  <article className="alert-card" key={alert.id}>
-                    <span className="badge">{alert.severity} · {alert.status}</span>
-                    <h3>{alert.type}</h3>
-                    <p><strong>Evidence:</strong> {alert.evidence}</p>
-                    <p><strong>Recommendation:</strong> {alert.recommendation}</p>
-                    <p>First seen: {new Date(alert.firstSeen).toLocaleString()}</p>
-                    <div className="actions">
-                      <button disabled={busy || alert.status === 'Acknowledged'} onClick={() => run(async () => {
-                        await acknowledgeAlert(alert.id);
-                        setDashboard(current => ({ ...current, alerts: current.alerts.map(item => item.id === alert.id ? { ...item, status: 'Acknowledged' } : item) }));
-                        setNotice(DEMO_MODE ? 'Acknowledged in this preview; acknowledgement resets when sample data reloads.' : 'Alert acknowledged.');
-                      })}>Acknowledge</button>
-                      <button disabled={busy} onClick={() => openTask(alert)}>Create demo maintenance task</button>
-                    </div>
-                  </article>
-                ))}
-                {alerts.length > 0 && <TrendChart title="Temperature evidence" points={dashboard.history} series={temperatureSeries} />}
-              </section>
-            )}
-            {screen === 'What-if' && (
-              <section className="panel">
-                <h2>Compare possible actions</h2>
-                <p>{DEMO_MODE ? 'Try two fixed UI examples. The sample curves are not tied to the selected operating condition.' : 'The scenario identifiers and result format must be agreed with Person B.'}</p>
-                <label>Alternative<select value={alternative} disabled={busy} onChange={event => { setAlternative(event.target.value); setComparison(null); }}><option value="lower-load">Reduce loading</option><option value="restore-cooling">Restore cooling</option></select></label>
-                <button className="compare-button" disabled={busy} onClick={() => run(async () => setComparison(await compareScenarios(assetId, alternative)))}>{busy ? 'Comparing...' : 'Compare scenarios'}</button>
-                {comparison && (
-                  <>
-                    <p>{comparison.assumptions}</p>
-                    <p>{comparison.explanation}</p>
-                    <TrendChart title="Future oil temperature — baseline and alternative" points={comparison.points} series={[{ key: 'baseline', label: 'Baseline forecast', color: '#a16207', dashed: true }, { key: 'alternative', label: 'Alternative forecast', color: '#0e7490', dashed: true }]} />
-                    <button onClick={() => { setTaskTitle('Review the scenario comparison and arrange an inspection'); setTaskAlert(null); setScreen('Maintenance'); }}>Prepare demo maintenance task</button>
-                  </>
-                )}
-              </section>
-            )}
-            {screen === 'Maintenance' && (
-              <section className="panel">
-                <h2>Create browser demo maintenance task</h2>
-                {taskAlert && <p>Linked alert: {taskAlert.id} · {taskAlert.evidence}</p>}
-                <form onSubmit={saveTask}>
-                  <label>Task title<input required maxLength={200} value={taskTitle} onChange={event => setTaskTitle(event.target.value)} /></label>
-                  <label>Assigned person<input required maxLength={100} value={owner} onChange={event => setOwner(event.target.value)} /></label>
-                  <button disabled={busy || !taskTitle.trim() || !owner.trim()} type="submit">{busy ? 'Saving...' : 'Save task'}</button>
-                </form>
-                <h2>Saved tasks</h2>
-                {!tasks.length && <p>No maintenance tasks created yet.</p>}
-                {tasks.map(task => (
-                  <article key={task.id} className="task">
-                    <h3>{task.title}</h3>
-                    <p>{task.assetId} · Assigned to {task.owner} · {task.status}</p>
-                    {task.alertId && <p>Linked alert: {task.alertId}</p>}
-                    {task.evidence && <p>Evidence: {task.evidence}</p>}
-                    <form onSubmit={event => {
-                      event.preventDefault();
-                      const values = new FormData(event.currentTarget);
-                      run(async () => {
-                        await updateTask(task.id, { status: values.get('status'), notes: values.get('notes') });
-                        setTasks(await getTasks());
-                        setNotice('Task updated.');
-                      });
-                    }}>
-                      <label>Status<select name="status" defaultValue={task.status}><option>Open</option><option>In progress</option><option>Completed</option></select></label>
-                      <label>Completion / progress notes<textarea name="notes" defaultValue={task.notes} maxLength={2000} /></label>
-                      <button disabled={busy}>Save changes</button>
-                    </form>
-                  </article>
-                ))}
-              </section>
-            )}
-          </>
-        )}
-      </main>
+  const pageContent = screen === 'capabilities' ? <CapabilityExplorer metrics={metrics} selected={selected} onSelect={selectMetric} snapshot={inspectedSnapshot} onTrend={openTrend} /> : screen === 'twin' ? <>
+    <div className="view-tabs" role="tablist" aria-label="Transformer views">{tabs.map(item => <button key={item} role="tab" id={`tab-${item.replaceAll(' ', '-')}`} aria-controls="transformer-tabpanel" aria-selected={tab === item} tabIndex={tab === item ? 0 : -1} onKeyDown={event => {
+      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+        event.preventDefault(); const index = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (tabs.indexOf(item) + (event.key === 'ArrowLeft' ? -1 : 1) + tabs.length) % tabs.length;
+        setTab(tabs[index]); document.getElementById(`tab-${tabs[index].replaceAll(' ', '-')}`)?.focus();
+      }
+    }} onClick={() => setTab(item)}>{item}{tab === item && <motion.span className="tab-indicator" layoutId="transformer-tab-indicator" transition={motionTiming.micro} aria-hidden="true" />}</button>)}</div>
+    <div role="tabpanel" id="transformer-tabpanel" aria-labelledby={`tab-${tab.replaceAll(' ', '-')}`}>
+      <ConditionRating result={rating} onOpen={() => setRatingOpen(true)} />
+        {inspection.historical && <div className="historical-banner" role="status">Historical inspection · reading {displayId(inspectedSnapshot.latest.readingId)} · {inspectedSnapshot.latest.measurementTime} UTC<Button variant="outline" size="sm" onClick={clearHistory}>Return to latest</Button></div>}
+      <motion.div key={tab} className="tab-content" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={motionTiming.view}>{tab === 'Overview' ? <>
+        <div className="twin-layout"><DigitalTwin metrics={metrics} selected={selected} onSelect={selectMetric} onInspect={id => selectMetric(id, true)} mode={mode} dark={theme === 'dark'} /><MetricPanel metrics={metrics} selected={selected} onSelect={selectMetric} snapshot={inspectedSnapshot} mode={mode} onTrend={() => openTrend(metricTrend(selected.id))} onClear={() => selectMetric('oil_temperature_c')} onExpand={() => setDetailsOpen(true)} /></div>
+        <EvidenceRail snapshot={snapshot} selectedId={inspection.historical ? selectedReadingId : null} onSelect={selectReading} onLatest={clearHistory} mode={mode} /><div className="summary-strip">{[{ id: 'rated_capacity', icon: Zap, label: 'Rated capacity' }, { id: 'apparent_power', icon: Activity, label: 'Apparent power' }, { id: 'ambient_temperature_c', icon: Thermometer, label: 'Ambient temperature' }, { id: 'health', icon: ShieldCheck, label: 'Health assessment' }].map(({ id, icon: Icon, label }) => <button key={id} onClick={() => selectMetric(id, true)}><span className="summary-icon"><Icon size={18} strokeWidth={1.6} /></span><div><span>{label}</span><strong>{id === 'health' ? 'Not assessed' : number(metric(id)?.value, metric(id)?.digits)}{id !== 'health' && <small>{metric(id)?.unit}</small>}</strong>{id !== 'health' && metric(id)?.state !== 'Sample' && <em>{metric(id)?.type === 'configuration' ? `Configuration v${asset?.current_configuration?.version ?? '—'}` : metric(id)?.state}</em>}</div><ArrowUpRight size={13} /></button>)}</div>
+        <div className="overview-lower"><section className="card overview-chart"><div className="panel-head"><div><h2>Selected measurement history</h2></div><div className="range-picker" aria-label="History time range">{['1h', '6h', '24h', 'all'].map(item => <button key={item} aria-pressed={range === item} onClick={() => setTimeRange(item)}>{item === 'all' ? 'All' : item.toUpperCase()}</button>)}</div></div><HistoryChart title={`Related ${selected?.label ?? 'measurement'} evidence`} points={points} series={series} unit={trendMetric === 'voltage' ? 'V' : trendMetric === 'current' ? 'A' : trendMetric === 'power' ? 'kVA' : ['loading', 'oil_level'].includes(trendMetric) ? '%' : '°C'} compact onSelect={selectReading} selectedId={selectedReadingId} /><button className="text-link" onClick={() => navigate('trends')}>Explore trends & history<ArrowUpRight size={13} /></button></section><section className="card assessment-card"><div className="panel-head"><h2>Condition assessment</h2><CircleHelp size={16} /></div><span className="assessment-icon"><ShieldCheck size={25} strokeWidth={1.5} /></span><h3>Evidence before assessment</h3><p>Review measurements against configured limits.</p>{mode !== 'sample' && <div><span>Analytics</span><strong>{displayStatus(inspectedSnapshot?.analytics?.status)}</strong></div>}<button className="text-link" onClick={() => navigate('incidents')}>Inspect limit checks<ArrowUpRight size={13} /></button></section></div>
+      </> : tab === 'Data quality' ? <QualityView snapshot={inspectedSnapshot} mode={mode} /> : <Parameters category={tab} metrics={metrics} selected={selected} onSelect={id => selectMetric(id, true)} />}</motion.div>
     </div>
-  );
+  </> : screen === 'trends' ? <>
+    <section className="card"><div className="panel-head"><h2>Measurement history</h2><div className="trend-controls"><label><span className="sr-only">History measurement</span><select aria-label="History measurement" value={trendMetric} onChange={event => setTrendMetric(event.target.value)}><option value="temperature">Oil temperature</option><option value="residual">Thermal residual</option><option value="voltage">Phase voltage</option><option value="current">Phase current</option><option value="loading">Loading</option><option value="power">Apparent power</option><option value="oil_level">Oil level</option></select></label><label><span className="sr-only">History range</span><select aria-label="History range" value={range} onChange={event => setTimeRange(event.target.value)}><option value="1h">Last hour</option><option value="6h">Last 6 hours</option><option value="24h">Last 24 hours</option><option value="all">All stored time</option></select></label></div></div><HistoryChart title={trendMetric === 'temperature' ? 'Measured and estimated oil temperature' : trendMetric === 'residual' ? 'Thermal residual' : trendMetric === 'loading' ? 'Capacity and worst-phase loading' : trendMetric === 'power' ? 'Apparent power' : trendMetric === 'oil_level' ? 'Oil level' : `Three-phase ${trendMetric}`} points={points} series={series} onSelect={selectReading} selectedId={selectedReadingId} unit={['temperature', 'residual'].includes(trendMetric) ? '°C' : trendMetric === 'voltage' ? 'V' : trendMetric === 'current' ? 'A' : trendMetric === 'power' ? 'kVA' : '%'} /></section>
+    <EvidenceRail snapshot={snapshot} selectedId={inspection.historical ? selectedReadingId : null} onSelect={selectReading} onLatest={clearHistory} mode={mode} />{inspection.historical && <section className="card historical-record"><h2>Historical reading {displayId(inspectedSnapshot.latest.readingId)}</h2><MetricDetails metric={selected} snapshot={inspectedSnapshot} mode={mode} /></section>}<div className="history-pager"><span>{snapshot?.history?.length ?? 0} retrieved records · Page {Math.floor(offset / 20) + 1}</span><div><Button variant="outline" size="sm" disabled={mode === 'sample' || offset === 0 || state.phase === 'loading'} onClick={() => setOffset(value => Math.max(0, value - 20))}>Previous</Button><Button variant="outline" size="sm" disabled={mode === 'sample' || (snapshot?.history?.length ?? 0) < 20 || state.phase === 'loading'} onClick={() => setOffset(value => value + 20)}>Next page<ChevronRight size={14} /></Button></div></div><QualityView snapshot={inspectedSnapshot} mode={mode} />
+  </> : screen === 'incidents' ? (mode === 'live' && runtime.incidents ? <BackendIncidents key={workflowKey} {...workflowProps} operator={auth.operator} onOpenMaintenanceTask={task => { setOpenedTaskId(task.id); navigate('maintenance'); }} /> : <IncidentsView snapshot={inspectedSnapshot} mode={mode} />) : screen === 'maintenance' ? (mode === 'live' && runtime.sampleMaintenance ? <BackendMaintenance key={`${workflowKey}:${openedTaskId}`} {...workflowProps} operator={auth.operator} initialTaskId={openedTaskId} /> : <MaintenanceView key={`${mode}:${baseUrl}:${activeAssetId}`} mode={mode} baseUrl={baseUrl} assetId={activeAssetId} contractEnabled={runtime.sampleMaintenance === true} onAssetChange={selectAsset} />) : screen === 'whatif' ? (mode === 'live' && runtime.whatIf ? <BackendWhatIf key={workflowKey} {...workflowProps} /> : <WhatIfView key={`${activeAssetId}:${measured?.readingId}`} snapshot={inspectedSnapshot} mode={mode} />) : <ReportsView snapshot={snapshot} mode={mode} onExport={() => setNotice('Retrieved history page exported as CSV.')} />;
+
+  return <MotionConfig reducedMotion="user" transition={motionTiming.micro}><LayoutGroup id="sentinel"><div className={`app-shell ${collapsed ? 'rail-collapsed' : ''}`}><a className="skip-link" href="#main-content">Skip to content</a><Sidebar screen={screen} onNavigate={navigate} mode={mode} onSettings={openSettings} collapsed={collapsed} onCollapse={() => setCollapsed(value => !value)} /><div className="workspace-main"><Topbar screen={screen} mode={mode} theme={theme} onTheme={() => setTheme(value => value === 'dark' ? 'light' : 'dark')} onMenu={() => setMenuOpen(true)} onMode={changeMode} onSettings={openSettings} focused={focused} />
+    <main id="main-content" className="main-content"><div className="page-heading"><div><div className="eyebrow"><span />ASSET INTELLIGENCE</div><h1>{titles[screen]}</h1>{screen !== 'twin' && <p>{descriptions[screen]}</p>}</div><div className="heading-actions"><Button variant="outline" size="sm" disabled={state.phase === 'loading' || assets.phase === 'loading'} onClick={() => setRefresh(value => value + 1)}><RefreshCw size={14} />Refresh</Button><Button size="sm" disabled={!snapshot?.history?.length} onClick={exportData}><ArrowDownToLine size={14} />Export report</Button></div></div>
+      <section className="asset-context" aria-label="Selected transformer"><span className="asset-context-icon"><Zap size={21} strokeWidth={1.5} /></span><div className="asset-selection"><label><span className="sr-only">Selected transformer</span><select aria-label="Selected transformer" disabled={focused} value={activeAssetId} onChange={event => selectAsset(event.target.value)}>{!activeAssetId && <option value="">{assets.phase === 'loading' ? 'Loading assets…' : 'No registered assets'}</option>}{activeAssetId && !assets.items.some(item => item.asset_id === activeAssetId) && <option value={activeAssetId}>{asset?.name ?? activeAssetId}</option>}{assets.items.filter(item => !focused || item.asset_id === focusedAssetId).map(item => <option value={item.asset_id} key={item.asset_id}>{item.name}</option>)}</select></label><span><span className="asset-id">{displayId(activeAssetId || null, 'No asset')}</span><span className="context-separator">·</span><MapPin size={12} />{displayLocation(asset?.location)}</span></div><div className="asset-context-rating"><strong>{number(asset?.current_configuration?.rated_kva, 0)} <small>kVA</small></strong><span>{asset?.current_configuration?.cooling_type ?? 'Cooling unavailable'} · {asset?.current_configuration?.measurement_side ?? 'Side unknown'}</span></div><div className="data-freshness"><span><span className={`status-dot ${mode === 'live' && source === 'device' && age != null && age > 2 ? 'warning-dot' : 'neutral'}`} />{freshness}</span><small>{measured ? `Measured ${time(measured.measurementTime, true)} IST` : 'Measurement time unavailable'}</small></div></section>
+      <div className="stream-toolbar">{mode === 'sample' ? <><label><span className="sr-only">Operating condition</span><select aria-label="Operating condition" value={condition} onChange={event => setCondition(event.target.value)}><option value="steady">Steady loading</option><option value="overload">High loading & temperature</option><option value="missing">Missing oil sensor</option></select></label></> : <><label>Source<select aria-label="Telemetry source" value={source} onChange={event => { setSource(event.target.value); setRunId(''); setRunDraft(''); setOffset(0); }}><option value="device">Device</option><option value="simulator">Stored run</option><option value="file_replay">File replay</option></select></label>{source !== 'device' && <form className="run-form" onSubmit={event => { event.preventDefault(); setRunId(runDraft.trim()); setOffset(0); }}><label><span className="sr-only">Run ID</span><input aria-label="Run ID" maxLength={100} pattern="[A-Za-z0-9][A-Za-z0-9._-]*" required placeholder="Enter stored run ID" value={runDraft} onChange={event => setRunDraft(event.target.value)} /></label><Button type="submit" variant="outline" size="sm">Apply run</Button></form>}<span className="stream-hint">{runId || (source === 'device' ? 'Device stream · run ID is null' : 'Run ID required')}</span><span className="processing-tag">Processing: {displayStatus(snapshot?.analytics?.status ?? snapshot?.latest?.processingJobStatus)}</span></>}
+      </div>
+      <p className="subtle-note" data-testid="focused-provenance">Asset: {activeAssetId || 'Unavailable'} | Source: {source} | Run: {source === 'device' ? 'none' : runId || 'Unavailable'} | Chart configuration: {chartConfiguration ?? 'Unavailable'} | Stored model: {chartModel ?? 'Unavailable'}. Charts show one configuration/model; historical records remain available in the evidence list.</p>
+      {mode === 'sample' && <div className="inline-notice" role="status">Sample UI illustration. These readings, limits and workflow examples are not persisted incidents or physical measurements.</div>}
+      {mode === 'live' && source !== 'device' && <div className="inline-notice">{source === 'simulator' ? 'Simulator stream: synthetic inputs' : 'File replay stream: historical inputs'}. Persisted records do not establish physical validation.</div>}
+      {mode === 'live' && runtime.incidents && <div className="backend-workflow"><OperatorAuthBar {...auth} /></div>}
+      {allErrors.length > 0 && <div className="request-errors" role="alert"><Database size={17} /><div><strong>{assets.phase === 'error' ? 'Asset registry could not be retrieved' : 'Some evidence is unavailable'}</strong><p>{[...new Set(allErrors)].slice(0, 4).join(' ')}</p><small>A request failure does not establish asset failure. Available records remain visible.</small></div><Button size="sm" variant="outline" onClick={() => setRefresh(value => value + 1)}>Retry</Button></div>}
+      {mode === 'live' && assets.phase === 'ready' && !assets.items.length && !activeAssetId && <section className="card"><EmptyState title="No transformers registered">Register an asset and configuration through the backend before loading telemetry.</EmptyState></section>}
+      {state.phase === 'loading' && <div className="loading-status" role="status"><RefreshCw size={14} />Retrieving selected stream…</div>}
+      {mode === 'live' && state.phase === 'ready' && !snapshot?.latest && <div className="inline-notice">This selected stream has no telemetry. Measurements and assessments remain unavailable.</div>}
+      <AnimatePresence initial={false} mode="popLayout"><motion.div key={screen} className="page-content" initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, pointerEvents: 'none', transition: motionTiming.exit }} transition={motionTiming.view}>{pageContent}</motion.div></AnimatePresence>
+    </main>
+  </div><AnimatePresence>{notice && <motion.div key={notice} className="toast" role="status" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 3 }} transition={motionTiming.micro}><CheckIcon />{notice}</motion.div>}</AnimatePresence>
+  <DetailDialog open={detailsOpen} onOpenChange={setDetailsOpen} title={selected?.label ?? 'Measurement'} sheet><MetricDetails metric={selected} snapshot={inspectedSnapshot} mode={mode} rating={rating} onTrend={() => { setDetailsOpen(false); openTrend(metricTrend(selected.id)); }} /></DetailDialog>
+  <DetailDialog open={ratingOpen} onOpenChange={setRatingOpen} title="Transformer Condition Rating" description="Transparent factors, configured limits and coverage" sheet><RatingExplanation result={rating} /></DetailDialog>
+  <DetailDialog open={menuOpen} onOpenChange={setMenuOpen} title="Navigation" description="Operator workflows"><Sidebar screen={screen} onNavigate={navigate} mode={mode} onSettings={openSettings} close={() => setMenuOpen(false)} /></DetailDialog>
+  <DetailDialog open={settingsOpen} onOpenChange={setSettingsOpen} title="Backend connection" description="Use the verified /api/v1 contracts on your server."><form className="connection-form" onSubmit={event => {
+    event.preventDefault();
+    if (focused) return;
+    try { const url = new URL(baseDraft.trim()); if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) throw new Error('Use an HTTP(S) address without credentials, query or fragment.'); const next = url.href.replace(/\/+$/, ''); setBaseUrl(next); savePreference('powernxt-api-origin', next); setSettingsOpen(false); setSettingsError(''); setRefresh(value => value + 1); } catch (failure) { setSettingsError(failure.message); }
+  }}><label>API base URL<input required type="url" readOnly={focused} value={baseDraft} onChange={event => setBaseDraft(event.target.value)} placeholder="http://localhost:8000" /></label><p>Also configurable with <code>VITE_API_BASE_URL</code>. {focused ? 'The isolated application uses its configured API address.' : 'This browser preference takes precedence.'}</p>{settingsError && <p role="alert" className="error">{settingsError}</p>}<Button type="submit" disabled={focused}>Save connection</Button></form><div className="connection-contracts"><h3>Verified route families</h3><p>Asset registry and telemetry are implemented in this checkout. Analytics and maintenance use the connected server.</p></div></DetailDialog>
+  </div></LayoutGroup></MotionConfig>;
 }
+function CheckIcon() { return <ShieldCheck size={16} />; }

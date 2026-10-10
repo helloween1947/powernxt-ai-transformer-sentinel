@@ -1,0 +1,300 @@
+{
+    "items":  [
+                  {
+                      "asset_id":  "demo-normal-85203b1018bc498c8b90873f383cc740",
+                      "name":  "DEMONSTRATION - synthetic normal-operation",
+                      "location":  "Assumed simulator lab",
+                      "timezone":  "UTC",
+                      "created_at":  "2026-10-09T06:40:10.163964Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  120.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  40.0,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  180.0,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  5.0,
+                                                                               "oil_exponent":  0.8,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "voltage_convention":  "assumed",
+                                                                                 "thermal_parameters.rated_top_oil_rise_c":  "assumed",
+                                                                                 "thermal_parameters.oil_time_constant_min":  "assumed",
+                                                                                 "thermal_parameters.loss_ratio":  "assumed",
+                                                                                 "thermal_parameters.oil_exponent":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-normal-85203b1018bc498c8b90873f383cc740",
+                                                    "version":  2,
+                                                    "created_at":  "2026-10-09T16:13:41.593012Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "demo-normal-baa53c0540514e999ba5ecc9a4f77462",
+                      "name":  "DEMONSTRATION - synthetic normal-operation",
+                      "location":  "Assumed simulator lab",
+                      "timezone":  "UTC",
+                      "created_at":  "2026-10-08T17:22:24.889518Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  120.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  null,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  null,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  null,
+                                                                               "oil_exponent":  null,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "voltage_convention":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-normal-baa53c0540514e999ba5ecc9a4f77462",
+                                                    "version":  1,
+                                                    "created_at":  "2026-10-08T17:22:24.946414Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "demo-normal-c0415109143f494581036f36d96e32fc",
+                      "name":  "DEMONSTRATION - synthetic normal-operation",
+                      "location":  "Assumed simulator lab",
+                      "timezone":  "UTC",
+                      "created_at":  "2026-10-08T17:47:56.330375Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  120.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  null,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  null,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  null,
+                                                                               "oil_exponent":  null,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "voltage_convention":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-normal-c0415109143f494581036f36d96e32fc",
+                                                    "version":  1,
+                                                    "created_at":  "2026-10-08T17:47:56.359011Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "demo-registry-38f8879d9e834cd4988aa9441b631f72",
+                      "name":  "DEMONSTRATION - assumed transformer",
+                      "location":  "Demo lab",
+                      "timezone":  "Asia/Kolkata",
+                      "created_at":  "2026-10-08T07:10:49.939555Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  110.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  null,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  null,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  null,
+                                                                               "oil_exponent":  null,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "voltage_convention":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-registry-38f8879d9e834cd4988aa9441b631f72",
+                                                    "version":  2,
+                                                    "created_at":  "2026-10-08T07:10:56.172955Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "demo-registry-578b7753bdbc4416925bd4a87ab453f1",
+                      "name":  "DEMONSTRATION - assumed transformer",
+                      "location":  "Demo lab",
+                      "timezone":  "Asia/Kolkata",
+                      "created_at":  "2026-10-07T17:46:57.863526Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  110.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  null,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  null,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  null,
+                                                                               "oil_exponent":  null,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "voltage_convention":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-registry-578b7753bdbc4416925bd4a87ab453f1",
+                                                    "version":  2,
+                                                    "created_at":  "2026-10-07T17:47:04.083354Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "demo-telemetry-ab6262cb645d494594a8e6a7c38344b9",
+                      "name":  "DEMONSTRATION - synthetic telemetry",
+                      "location":  "Demo lab",
+                      "timezone":  "Asia/Kolkata",
+                      "created_at":  "2026-10-08T07:40:20.648644Z",
+                      "current_configuration":  {
+                                                    "rated_kva":  1000.0,
+                                                    "rated_voltage_v":  11000.0,
+                                                    "rated_current_a":  52.49,
+                                                    "voltage_convention":  "line_to_line",
+                                                    "measurement_side":  "primary",
+                                                    "cooling_type":  "ONAN",
+                                                    "operational_limits":  {
+                                                                               "max_load_pct":  120.0,
+                                                                               "min_voltage_pu":  0.9,
+                                                                               "max_voltage_pu":  1.1,
+                                                                               "max_top_oil_temp_c":  105.0,
+                                                                               "max_hot_spot_temp_c":  120.0
+                                                                           },
+                                                    "thermal_parameters":  {
+                                                                               "rated_top_oil_rise_c":  null,
+                                                                               "rated_hot_spot_rise_c":  null,
+                                                                               "oil_time_constant_min":  null,
+                                                                               "winding_time_constant_min":  null,
+                                                                               "loss_ratio":  null,
+                                                                               "oil_exponent":  null,
+                                                                               "winding_exponent":  null
+                                                                           },
+                                                    "parameter_provenance":  {
+                                                                                 "rated_kva":  "assumed",
+                                                                                 "rated_voltage_v":  "assumed",
+                                                                                 "rated_current_a":  "assumed",
+                                                                                 "voltage_convention":  "assumed",
+                                                                                 "measurement_side":  "assumed",
+                                                                                 "cooling_type":  "assumed",
+                                                                                 "operational_limits.max_load_pct":  "assumed",
+                                                                                 "operational_limits.min_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_voltage_pu":  "assumed",
+                                                                                 "operational_limits.max_top_oil_temp_c":  "assumed",
+                                                                                 "operational_limits.max_hot_spot_temp_c":  "assumed"
+                                                                             },
+                                                    "asset_id":  "demo-telemetry-ab6262cb645d494594a8e6a7c38344b9",
+                                                    "version":  1,
+                                                    "created_at":  "2026-10-08T07:40:20.669006Z"
+                                                }
+                  },
+                  {
+                      "asset_id":  "sample-transformer-d",
+                      "name":  "Person D sample transformer",
+                      "location":  "Demonstration only",
+                      "timezone":  "Asia/Kolkata",
+                      "created_at":  "2026-10-10T09:31:16.565974Z",
+                      "current_configuration":  null
+                  }
+              ],
+    "limit":  100,
+    "offset":  0
+}

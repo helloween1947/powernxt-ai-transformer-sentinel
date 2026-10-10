@@ -1,0 +1,4 @@
+.gitattributes -text
+*.log -text -diff
+*.json -text whitespace=cr-at-eol
+*.jsonl -text

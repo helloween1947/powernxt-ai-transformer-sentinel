@@ -25,13 +25,18 @@ export function createTelemetryClient(base, fetcher = globalThis.fetch) {
     return response.json();
   }
   return {
-    getAssetPage: (limit = 20, offset = 0, signal) => request('/api/v1/assets', { limit, offset }, signal),
+    async getAssetPage(limit = 20, offset = 0, signal) {
+      const page = await request('/api/v1/assets', { limit, offset }, signal);
+      if (!Array.isArray(page.items) || page.items.some(asset => typeof asset?.asset_id !== 'string' || typeof asset?.name !== 'string') || new Set(page.items.map(asset => asset.asset_id)).size !== page.items.length) throw new Error('Asset registry returned an unsupported page.');
+      return page;
+    },
     getAssetDetails: (assetId, signal) => request(`/api/v1/assets/${encodeURIComponent(assetId)}`, {}, signal),
     async getLatestTelemetry(assetId, source = 'device', runId = null, signal) {
       return adaptTelemetryReading(await request(`/api/v1/assets/${encodeURIComponent(assetId)}/telemetry/latest`, streamParameters(source, runId), signal));
     },
     async getTelemetryHistory(assetId, { source = 'device', runId = null, limit = 20, offset = 0, start, end, signal } = {}) {
       const page = await request(`/api/v1/assets/${encodeURIComponent(assetId)}/telemetry`, { ...streamParameters(source, runId), limit, offset, start, end }, signal);
+      if (!Array.isArray(page.items) || page.limit !== limit || page.offset !== offset || page.items.length > limit) throw new Error('Telemetry history returned an inconsistent page.');
       return { items: page.items.map(adaptTelemetryReading), limit: page.limit, offset: page.offset };
     },
     async getReadingAnalytics(readingId, signal) {

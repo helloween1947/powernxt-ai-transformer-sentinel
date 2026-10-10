@@ -16,6 +16,7 @@ from sqlalchemy.engine import make_url
 from sqlalchemy.orm import sessionmaker
 
 from backend.app.models.assets import Asset
+from backend.app.analytics.adapter import MODEL_VERSION
 from backend.app.services.analytics_worker import run_once
 
 
@@ -49,7 +50,7 @@ def verify(base_url, database_url, token_file, state_file, resume=False):
         config={'rated_kva':1000,'rated_voltage_v':11000,'rated_current_a':52.49,'voltage_convention':'line_to_line','measurement_side':'primary','cooling_type':'ONAN'}
         config['parameter_provenance']={k:'assumed' for k in config}
         checked(client.post(f'/api/v1/assets/{asset}/configurations',json=config),201)
-        control={'schema_version':'incident-control-1.0.0','expected_version':0,'idempotency_key':str(uuid4()),'source':'simulator','run_id':run,'configuration_version':1,'model_version':'stored-reading-top-oil-1.0.1','detector_version':'sustained-threshold-1.0.1','reason':'Synthetic verification; not physical calibration','policy':{'version':'d-assumed-test-v1','provenance':'assumed','max_gap_s':300,'rules':[{'name':'overload','quantity':'electrical_metrics.capacity_loading_pct','unit':'%','trigger':120,'recovery':100,'persistence_s':180,'recovery_s':120,'severity':'warning'}]}}
+        control={'schema_version':'incident-control-1.0.0','expected_version':0,'idempotency_key':str(uuid4()),'source':'simulator','run_id':run,'configuration_version':1,'model_version':MODEL_VERSION,'detector_version':'sustained-threshold-1.0.1','reason':'Synthetic verification; not physical calibration','policy':{'version':'d-assumed-test-v1','provenance':'assumed','max_gap_s':300,'rules':[{'name':'overload','quantity':'electrical_metrics.capacity_loading_pct','unit':'%','trigger':120,'recovery':100,'persistence_s':180,'recovery_s':120,'severity':'warning'}]}}
         checked(client.post(f'/api/v1/assets/{asset}/detector-handovers',json=control),201)
         def reading(seconds,load):
             packet={'schema_version':'1.0.0','asset_id':asset,'source':'simulator','run_id':run,'configuration_version':1,'message_id':str(uuid4()),'timestamp':(datetime(2026,1,1,tzinfo=timezone.utc)+timedelta(seconds=seconds)).isoformat(),'measurements':{**{f'voltage_{p}_v':11000 for p in 'ryb'},**{f'current_{p}_a':52.49*load for p in 'ryb'},'oil_temperature_c':55,'ambient_temperature_c':30}}

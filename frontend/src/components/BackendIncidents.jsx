@@ -3,15 +3,15 @@ import { createIncidentClient } from '../services/incidentApi.js';
 import { createMaintenanceClient } from '../services/maintenanceApi.js';
 import { severityColors, conditionColors, monitoringColors } from '../services/incidentAdapter.js';
 
-export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
-  const incidentClient = useMemo(() => createIncidentClient({ baseUrl: import.meta.env.VITE_API_BASE_URL }), []);
-  const maintenanceClient = useMemo(() => createMaintenanceClient({ baseUrl: import.meta.env.VITE_API_BASE_URL }), []);
+export default function BackendIncidents({ focusedContext = false, operator, onOpenMaintenanceTask, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
+  const incidentClient = useMemo(() => createIncidentClient({ baseUrl }), [baseUrl]);
+  const maintenanceClient = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
 
   const [assets, setAssets] = useState([]);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
-  const [assetId, setAssetId] = useState('');
-  const [source, setSource] = useState('device');
-  const [runId, setRunId] = useState('');
+  const [assetId, setAssetId] = useState(selectedAssetId);
+  const [source, setSource] = useState(selectedSource);
+  const [runId, setRunId] = useState(selectedRunId);
   const [conditionFilter, setConditionFilter] = useState('');
 
   const [incidents, setIncidents] = useState([]);
@@ -19,6 +19,12 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
   const [selectedIncident, setSelectedIncident] = useState(null);
   const [events, setEvents] = useState([]);
   const [evidence, setEvidence] = useState([]);
+  const [recordPages, setRecordPages] = useState({ events: { cursor: 0, next: null }, evidence: { cursor: 0, next: null } });
+  const [nextCursor, setNextCursor] = useState(null);
+  const [currentCursor, setCurrentCursor] = useState(null);
+  const [previousCursors, setPreviousCursors] = useState([]);
+  const [conflict, setConflict] = useState(false);
+  const ackIntent = useRef(null);
 
   // Maintenance task creation from incident
   const [taskModalOpen, setTaskModalOpen] = useState(false);
@@ -41,6 +47,15 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
       await action();
     } catch (failure) {
       setError(failure.message);
+      if (failure.status === 409 && selectedIncident && operator?.token) {
+        setConflict(true);
+        try {
+          const latest = await incidentClient.getIncident(selectedIncident.id, operator.token);
+          setSelectedIncident(latest);
+          setIncidents(items => items.map(item => item.id === latest.id ? latest : item));
+          setError(`Conflict (409): ${failure.message}. Latest incident loaded; review before another action.`);
+        } catch { setError('Conflict (409). Latest incident could not be loaded; actions remain blocked.'); }
+      }
     } finally {
       lock.current = false;
       setBusy(false);
@@ -55,7 +70,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
     });
   }
 
-  async function loadIncidents() {
+  async function loadIncidents(cursor = null) {
     if (!operator?.token) {
       setError('Operator authentication token is required to list incidents.');
       return;
@@ -71,6 +86,8 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
     await perform(async () => {
       setSelectedIncident(null);
+      setIncidents([]);
+      setIncidentsLoaded(false);
       setEvents([]);
       setEvidence([]);
       const page = await incidentClient.listIncidents({
@@ -78,9 +95,13 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
         source,
         runId: source === 'device' ? null : runId.trim(),
         conditionStatus: conditionFilter || null,
+        cursor,
         token: operator.token,
       });
       setIncidents(page.items);
+      setCurrentCursor(cursor);
+      setNextCursor(page.nextCursor);
+      setConflict(false);
       setIncidentsLoaded(true);
       if (!page.items.length) {
         setNotice('No incidents found for the selected stream and filter.');
@@ -90,6 +111,9 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
   async function inspectIncident(incident) {
     setSelectedIncident(incident);
+    setConflict(false);
+    setEvents([]);
+    setEvidence([]);
     await perform(async () => {
       const [eventsPage, evidencePage] = await Promise.all([
         incidentClient.getEvents(incident.id, { token: operator.token }),
@@ -97,11 +121,29 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
       ]);
       setEvents(eventsPage.items);
       setEvidence(evidencePage.items);
+      setRecordPages({ events: { cursor: 0, next: eventsPage.nextCursor }, evidence: { cursor: 0, next: evidencePage.nextCursor } });
     });
   }
 
+  function loadRecordPage(kind, cursor) {
+    return perform(async () => {
+      const load = kind === 'events' ? incidentClient.getEvents : incidentClient.getEvidence;
+      const page = await load(selectedIncident.id, { cursor, token: operator.token });
+      (kind === 'events' ? setEvents : setEvidence)(page.items);
+      setRecordPages(current => ({ ...current, [kind]: { cursor, next: page.nextCursor } }));
+    });
+  }
+
+  function recordPager(kind) {
+    const page = recordPages[kind];
+    return <div className="actions" aria-label={`Incident ${kind} pagination`}>
+      <button disabled={busy || page.cursor === 0} onClick={() => loadRecordPage(kind, Math.max(0, page.cursor - 20))}>Previous {kind} page</button>
+      <button disabled={busy || page.next == null} onClick={() => loadRecordPage(kind, page.next)}>Next {kind} page</button>
+    </div>;
+  }
+
   async function handleAcknowledge(incident) {
-    if (!operator?.token) return;
+    if (!operator?.token || conflict) return;
     const canAck = operator.role === 'operator' || operator.role === 'admin';
     if (!canAck) {
       setError('Only operator and admin roles can acknowledge incidents.');
@@ -109,7 +151,10 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
     }
 
     await perform(async () => {
-      const idempotencyKey = globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-ack`;
+      if (ackIntent.current?.id !== incident.id || ackIntent.current?.version !== incident.version) {
+        ackIntent.current = { id: incident.id, version: incident.version, key: globalThis.crypto.randomUUID() };
+      }
+      const idempotencyKey = ackIntent.current.key;
       const updated = await incidentClient.acknowledge(incident.id, {
         expectedVersion: incident.version,
         idempotencyKey,
@@ -118,15 +163,18 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
       setIncidents(current => current.map(item => item.id === updated.id ? updated : item));
       setSelectedIncident(updated);
+      ackIntent.current = null;
       setNotice(`Incident ${updated.id.slice(0, 8)}… acknowledged at version ${updated.version}.`);
 
       // Refresh events
       const eventsPage = await incidentClient.getEvents(updated.id, { token: operator.token });
       setEvents(eventsPage.items);
+      setRecordPages(current => ({ ...current, events: { cursor: 0, next: eventsPage.nextCursor } }));
     });
   }
 
   function openCreateTask(incident) {
+    if (conflict || !['operator', 'admin'].includes(operator?.role)) return;
     setTaskTitle(`Resolve incident: ${incident.category} (${incident.severity})`);
     setTaskOwner('');
     setTaskSummary(`Incident ${incident.id} on ${incident.assetId} (${incident.conditionStatus}). Severity: ${incident.severity}. Opened at: ${incident.openedAt}.`);
@@ -135,7 +183,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
   async function submitCreateTask(e) {
     e.preventDefault();
-    if (!selectedIncident || !operator?.token) return;
+    if (!selectedIncident || !operator?.token || conflict || !['operator', 'admin'].includes(operator.role)) return;
 
     await perform(async () => {
       const saved = await maintenanceClient.create({
@@ -156,14 +204,15 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel backend-workflow">
       <h2>Backend incidents</h2>
       <p>
-        Live incident investigation and operational acknowledgement. Incidents are authoritative backend records evaluated by genuine detectors and persisted with immutable audit trails.
+        Persisted incident investigation and independent acknowledgement. Simulator and replay streams are synthetic; configured detector policies and coefficients may be assumed.
       </p>
 
       {error && <p role="alert" className="error">{error}</p>}
       {notice && <p role="status" className="success">{notice}</p>}
+      {conflict && <div className="banner"><p>Incident conflict: no action was automatically retried. Inspect the refreshed incident version and evidence.</p><button onClick={() => { setConflict(false); ackIntent.current = null; }}>Review refreshed incident</button></div>}
 
       {!operator && (
         <div className="banner" style={{ background: '#fef2f2', borderColor: '#fca5a5', color: '#991b1b' }}>
@@ -173,14 +222,14 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px', margin: '15px 0' }}>
         <div>
-          <button disabled={busy} type="button" onClick={loadAssets} style={{ marginBottom: '8px' }}>
+          <button disabled={busy} type="button" onClick={loadAssets} hidden={focusedContext} style={{ marginBottom: '8px' }}>
             {assetsLoaded ? 'Refresh asset registry' : 'Load registered transformers'}
           </button>
           <label>
             Transformer
             <select
               value={assetId}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setAssetId(e.target.value);
                 setIncidentsLoaded(false);
@@ -188,6 +237,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
               }}
             >
               <option value="">Select a transformer</option>
+              {assetId && !assets.some(asset => asset.asset_id === assetId) && <option value={assetId}>{assetId}</option>}
               {assets.map(asset => (
                 <option key={asset.asset_id} value={asset.asset_id}>
                   {asset.asset_id} — {asset.name}
@@ -201,7 +251,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
           Stream source
           <select
             value={source}
-            disabled={busy}
+            disabled={busy || focusedContext}
             onChange={e => {
               setSource(e.target.value);
               if (e.target.value === 'device') setRunId('');
@@ -222,7 +272,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
               type="text"
               placeholder="Enter run ID"
               value={runId}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setRunId(e.target.value);
                 setIncidentsLoaded(false);
@@ -249,7 +299,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
       <button
         disabled={busy || !operator || !assetId || (source !== 'device' && !runId.trim())}
         type="button"
-        onClick={loadIncidents}
+        onClick={() => { setPreviousCursors([]); loadIncidents(); }}
         style={{ marginBottom: '20px' }}
       >
         {busy ? 'Loading incidents…' : 'Query stream incidents'}
@@ -258,6 +308,10 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
       {incidentsLoaded && (
         <>
           <h3>Incidents ({incidents.length})</h3>
+          <div className="actions" aria-label="Incident pagination">
+            <button disabled={busy || !previousCursors.length} onClick={() => { const cursor = previousCursors.at(-1); setPreviousCursors(items => items.slice(0, -1)); loadIncidents(cursor); }}>Previous incident page</button>
+            <button disabled={busy || !nextCursor} onClick={() => { setPreviousCursors(items => [...items, currentCursor]); loadIncidents(nextCursor); }}>Next incident page</button>
+          </div>
           {!incidents.length ? (
             <p>No incidents found matching this stream and criteria.</p>
           ) : (
@@ -350,7 +404,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
               {selectedIncident.acknowledgement.status !== 'acknowledged' ? (
                 <button
                   type="button"
-                  disabled={busy || (operator.role !== 'operator' && operator.role !== 'admin')}
+                    disabled={busy || conflict || (operator.role !== 'operator' && operator.role !== 'admin')}
                   onClick={() => handleAcknowledge(selectedIncident)}
                   style={{ background: '#0e7490', color: '#fff', borderColor: '#0e7490' }}
                 >
@@ -364,7 +418,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
 
               <button
                 type="button"
-                disabled={busy}
+                disabled={busy || conflict || !['operator', 'admin'].includes(operator.role)}
                 onClick={() => openCreateTask(selectedIncident)}
               >
                 Create maintenance task
@@ -387,6 +441,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
           </div>
 
           {/* Events Timeline */}
+          {recordPager('events')}
           <h4 style={{ marginTop: '20px', marginBottom: '8px' }}>Events Timeline ({events.length})</h4>
           {!events.length ? (
             <p style={{ fontSize: '13px', color: '#64748b' }}>No events recorded for this incident.</p>
@@ -418,6 +473,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask }) {
           )}
 
           {/* Evidence Payloads */}
+          {recordPager('evidence')}
           <h4 style={{ marginTop: '20px', marginBottom: '8px' }}>Evidence Records ({evidence.length})</h4>
           {!evidence.length ? (
             <p style={{ fontSize: '13px', color: '#64748b' }}>No evidence payloads stored.</p>

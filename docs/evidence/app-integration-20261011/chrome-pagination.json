@@ -1,0 +1,9 @@
+{
+  "scope": "Actual Chrome, persisted synthetic worker stream",
+  "checks": [
+    "stored history pagination20/5 and exact historical reading inspection/return",
+    "actual events cursor pagination beyond20 persisted records",
+    "actual evidence cursor pagination beyond20 persisted records"
+  ],
+  "status": "PASS"
+}

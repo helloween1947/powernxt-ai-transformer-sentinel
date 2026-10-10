@@ -8,15 +8,15 @@ const scenarioSeries = [
   { key: 'alternative', label: 'Reduced load forecast', color: '#0e7490', dashed: true },
 ];
 
-export default function BackendWhatIf() {
-  const whatIfClient = useMemo(() => createWhatIfClient({ baseUrl: import.meta.env.VITE_API_BASE_URL }), []);
-  const assetClient = useMemo(() => createMaintenanceClient({ baseUrl: import.meta.env.VITE_API_BASE_URL }), []);
+export default function BackendWhatIf({ focusedContext = false, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
+  const whatIfClient = useMemo(() => createWhatIfClient({ baseUrl }), [baseUrl]);
+  const assetClient = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
 
   const [assets, setAssets] = useState([]);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
-  const [assetId, setAssetId] = useState('');
-  const [source, setSource] = useState('device');
-  const [runId, setRunId] = useState('');
+  const [assetId, setAssetId] = useState(selectedAssetId);
+  const [source, setSource] = useState(selectedSource);
+  const [runId, setRunId] = useState(selectedRunId);
   const [stateRef, setStateRef] = useState('');
 
   // Scenario parameters
@@ -47,6 +47,7 @@ export default function BackendWhatIf() {
   async function runComparison(e) {
     if (e) e.preventDefault();
     if (lock.current) return;
+    setResult(null);
     if (!assetId) {
       setError('Please select a registered transformer.');
       return;
@@ -96,11 +97,12 @@ export default function BackendWhatIf() {
 
   function clearStateRef() {
     setStateRef('');
+    setResult(null);
     setNotice('State reference cleared. Next run will capture the current committed worker watermark state.');
   }
 
   return (
-    <section className="panel">
+    <section className="panel backend-workflow">
       <h2>Backend What-if scenario comparison</h2>
       <div className="banner">
         <strong>Conditional healthy-model estimates:</strong> This tool computes deterministic top-oil temperature forecasts using the Model 1.0.2 / 1.0.1 thermal differential equations under constant-load assumptions. Assumed coefficients remain labeled uncalibrated. This does not simulate faults or cooling restoration interventions.
@@ -131,14 +133,14 @@ export default function BackendWhatIf() {
       <form onSubmit={runComparison}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px' }}>
           <div>
-            <button disabled={busy} type="button" onClick={loadAssets} style={{ marginBottom: '8px' }}>
+            <button disabled={busy} type="button" onClick={loadAssets} hidden={focusedContext} style={{ marginBottom: '8px' }}>
               {assetsLoaded ? 'Refresh asset registry' : 'Load registered transformers'}
             </button>
             <label>
               Transformer
               <select
                 value={assetId}
-                disabled={busy}
+                disabled={busy || focusedContext}
                 onChange={e => {
                   setAssetId(e.target.value);
                   setResult(null);
@@ -146,6 +148,7 @@ export default function BackendWhatIf() {
                 }}
               >
                 <option value="">Select a transformer</option>
+                {assetId && !assets.some(asset => asset.asset_id === assetId) && <option value={assetId}>{assetId}</option>}
                 {assets.map(asset => (
                   <option key={asset.asset_id} value={asset.asset_id}>
                     {asset.asset_id} — {asset.name}
@@ -159,7 +162,7 @@ export default function BackendWhatIf() {
             Stream source
             <select
               value={source}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setSource(e.target.value);
                 if (e.target.value === 'device') setRunId('');
@@ -180,7 +183,7 @@ export default function BackendWhatIf() {
                 type="text"
                 placeholder="Enter run ID"
                 value={runId}
-                disabled={busy}
+                disabled={busy || focusedContext}
                 onChange={e => {
                   setRunId(e.target.value);
                   setResult(null);
@@ -198,7 +201,7 @@ export default function BackendWhatIf() {
                 placeholder="Omit to use latest worker watermark state"
                 value={stateRef}
                 disabled={busy}
-                onChange={e => setStateRef(e.target.value)}
+                onChange={e => { setStateRef(e.target.value); setResult(null); }}
               />
             </label>
             {stateRef && (
@@ -225,7 +228,7 @@ export default function BackendWhatIf() {
               step={60}
               value={durationS}
               disabled={busy}
-              onChange={e => setDurationS(e.target.value)}
+              onChange={e => { setDurationS(e.target.value); setResult(null); }}
             />
           </label>
 
@@ -238,7 +241,7 @@ export default function BackendWhatIf() {
               step={0.5}
               value={ambientC}
               disabled={busy}
-              onChange={e => setAmbientC(e.target.value)}
+              onChange={e => { setAmbientC(e.target.value); setResult(null); }}
             />
           </label>
 
@@ -251,7 +254,7 @@ export default function BackendWhatIf() {
               step={0.05}
               value={baselineLoadPu}
               disabled={busy}
-              onChange={e => setBaselineLoadPu(e.target.value)}
+              onChange={e => { setBaselineLoadPu(e.target.value); setResult(null); }}
             />
           </label>
 
@@ -264,7 +267,7 @@ export default function BackendWhatIf() {
               step={0.05}
               value={reducedLoadPu}
               disabled={busy}
-              onChange={e => setReducedLoadPu(e.target.value)}
+              onChange={e => { setReducedLoadPu(e.target.value); setResult(null); }}
             />
           </label>
         </div>

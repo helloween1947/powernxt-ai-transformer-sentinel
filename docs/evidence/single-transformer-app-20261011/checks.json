@@ -1,0 +1,112 @@
+{
+  "timestamp": "2026-10-10T20:58:40.187783+00:00",
+  "commands": [
+    {
+      "name": "contract-database",
+      "command": [
+        "docker",
+        "compose",
+        "--env-file",
+        "data/generated/single-transformer/private.env",
+        "-f",
+        "integration/compose.single-transformer.yaml",
+        "exec",
+        "-T",
+        "db",
+        "createdb",
+        "-U",
+        "sentinel",
+        "single_transformer_contract_test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "backend-contract-tests",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "analytics/contracts",
+        "-q",
+        "--tb=short"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend-tests",
+      "command": [
+        "npm.cmd",
+        "test",
+        "--prefix",
+        "frontend"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend-lint",
+      "command": [
+        "npm.cmd",
+        "run",
+        "lint",
+        "--prefix",
+        "frontend"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "npm.cmd",
+        "run",
+        "build",
+        "--prefix",
+        "frontend"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sample-mapper-tests",
+      "command": [
+        "node",
+        "--test",
+        "integration/frontend/maintenanceAdapter.test.mjs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "final-docker-build",
+      "command": [
+        "docker",
+        "compose",
+        "--env-file",
+        "data/generated/single-transformer/private.env",
+        "-f",
+        "integration/compose.single-transformer.yaml",
+        "build",
+        "backend",
+        "frontend"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frontend-refresh",
+      "command": [
+        "docker",
+        "compose",
+        "--env-file",
+        "data/generated/single-transformer/private.env",
+        "-f",
+        "integration/compose.single-transformer.yaml",
+        "up",
+        "-d",
+        "--no-build",
+        "--no-deps",
+        "--wait",
+        "frontend"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "windows_execution": true
+}

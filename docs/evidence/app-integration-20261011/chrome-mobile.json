@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "scope": "Actual anonymous Chrome390x844; read-only persisted sample tasks to fleet navigation",
+  "checks": [
+    "previous view fully detached before screenshot",
+    "drawer closed",
+    "no horizontal overflow including authentication form"
+  ]
+}
