@@ -6,6 +6,22 @@ import { loadStreamSnapshot } from '../src/services/storedStream.js';
 
 const sample = JSON.parse(readFileSync(new URL('../../data/sample/analytics-worker-result.json', import.meta.url)));
 const fields = ['model_id', 'model_version', 'parameter_version'];
+
+test('labelled 1.0.1/1.0.2 fixtures preserve provenance and independent metrics when arithmetic is unavailable', () => {
+  for (const version of ['stored-reading-top-oil-1.0.1','stored-reading-top-oil-1.0.2']) {
+    const wire=structuredClone(sample);
+    wire.result.model_version=wire.result.payload.metadata.model_version=version;
+    const path='electrical_metrics.capacity_loading_pct';
+    wire.result.payload.electrical_metrics.capacity_loading_pct=null;
+    wire.result.payload.execution_status.availability[path]={status:'unavailable',reasons:['electrical_arithmetic_unavailable']};
+    const adapted=adaptReadingAnalytics(wire);
+    assert.equal(adaptLatestAnalytics(latest(wire)).result.model_version,version);
+    const gap=adapted.metrics.find(m=>m.path===path);
+    assert.equal(gap.value,null);assert.ok(gap.reasons.includes('electrical_arithmetic_unavailable'));
+    assert.ok(Number.isFinite(adapted.metrics.find(m=>m.path==='electrical_metrics.apparent_power_kva').value));
+    assert.equal(adapted.result.parameter_version,wire.result.payload.metadata.parameter_version);
+  }
+});
 function latest(reading) {
   return {schema_version:'1.0.0', asset_id:reading.asset_id, source:reading.source,
     run_id:reading.run_id, latest_telemetry_reading_id:reading.reading_id,
