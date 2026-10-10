@@ -62,6 +62,12 @@ def main():
                     hours=args.hours
                 )
                 db.flush()
+                # Commit inside the protected file lifecycle. Session.begin's
+                # implicit commit happens after this try block, and a deferred
+                # constraint/connection failure there would leave a credential
+                # file that was never activated. Never report issuance before
+                # the database has committed.
+                db.commit()
             except Exception:
                 os.unlink(args.token_file)
                 raise

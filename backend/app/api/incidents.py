@@ -284,7 +284,12 @@ def handover(
     return result
 
 
-@router.post("/assets/{asset_id}/model-handovers", response_model=ControlResponse)
+@router.post(
+    "/assets/{asset_id}/model-handovers",
+    response_model=ControlResponse,
+    status_code=201,
+    responses={200: {"model": ControlResponse, "description": "Identical retry: original handover receipt"}},
+)
 def model_handover(
     asset_id: str,
     payload: ModelHandover,
