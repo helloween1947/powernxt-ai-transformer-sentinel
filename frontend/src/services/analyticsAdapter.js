@@ -9,14 +9,13 @@ const fields = [
   ['thermal_assessment.thermal_residual_c', 'Observed minus predicted oil temperature', 'thermal_residual', 'C'],
 ];
 
-function assertResultProvenance(result) {
+function validateProvenance(result) {
   if (!result) return;
   const metadata = result.payload?.metadata;
-  for (const field of ['model_id', 'model_version', 'parameter_version']) {
-    if (typeof result[field] !== 'string' || !result[field].trim() || metadata?.[field] !== result[field]) {
-      throw new Error('Stored analytics payload model or parameter identity does not match the result.');
-    }
+  for (const key of ['model_id', 'model_version', 'parameter_version']) {
+    if (typeof result[key] !== 'string' || !result[key].trim() || metadata?.[key] !== result[key]) throw new Error('Stored analytics model or parameter provenance does not match its payload.');
   }
+  if (metadata.result_schema_version !== result.schema_version) throw new Error('Stored result schema provenance does not match its payload.');
 }
 
 export function adaptReadingAnalytics(envelope) {
@@ -28,8 +27,8 @@ export function adaptReadingAnalytics(envelope) {
   if (result && result.reading_id !== envelope.reading_id) {
     throw new Error('Stored analytics references a different reading.');
   }
-  assertResultProvenance(result);
   const payload = result?.payload;
+  validateProvenance(result);
   const metadata = payload?.metadata;
   if (metadata && (
     metadata.reading_identity?.reading_id !== envelope.reading_id ||
@@ -69,7 +68,11 @@ export function adaptLatestAnalytics(envelope) {
   if (envelope.result && (envelope.result.schema_version !== 'stored-reading-result-1.1.0' || envelope.result.reading_id !== envelope.latest_completed_reading_id)) {
     throw new Error('Latest completed analytics has unsupported version or reading identity.');
   }
-  assertResultProvenance(envelope.result);
+  validateProvenance(envelope.result);
+  if (envelope.result) {
+    const metadata = envelope.result.payload.metadata;
+    if (metadata.stream?.asset_id !== envelope.asset_id || metadata.stream?.source !== envelope.source || (metadata.stream?.run_id ?? null) !== (envelope.run_id ?? null) || metadata.reading_identity?.reading_id !== envelope.latest_completed_reading_id || Date.parse(metadata.measurement_time) !== Date.parse(envelope.latest_completed_measurement_time)) throw new Error('Latest analytics metadata does not match its stream or measurement time.');
+  }
   return { ...envelope,
     lagging: envelope.latest_telemetry_reading_id !== envelope.latest_completed_reading_id,
   };

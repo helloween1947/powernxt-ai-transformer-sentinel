@@ -32,7 +32,7 @@ async function api(route, method = 'GET', body) {
     await page.getByLabel('Maintenance asset').selectOption(assetId);
     await page.getByRole('button', { name: 'Load / refresh backend tasks' }).click();
     await page.getByLabel('task pagination').getByText('20 item(s)').waitFor();
-    await page.getByLabel('Sample task action', { exact: true }).fill('Sample creation after first task page fills');
+    await page.getByLabel('Task action', { exact: true }).fill('Sample creation after first task page fills');
     await page.getByRole('button', { name: 'Create backend task', exact: true }).click();
     await page.getByRole('heading', { name: 'Sample creation after first task page fills', exact: true }).waitFor();
     await page.getByText('Recently created task', { exact: false }).waitFor();

@@ -1,3 +1,10 @@
+export function usableMeasurement(reading, name) {
+  const value = reading?.measurements?.[name];
+  const flags = reading?.qualityFlags?.[name] ?? [];
+  if (!Number.isFinite(value) || reading?.measurementQuality?.[name] === 'bad' || flags.some(flag => ['outside_sanity_range', 'negative_magnitude', 'above_10x_rating', 'bad'].includes(flag))) return null;
+  return value;
+}
+
 export function adaptTelemetryReading(reading) {
   if (!reading) {
     return null;
@@ -5,6 +12,12 @@ export function adaptTelemetryReading(reading) {
 
   const telemetry = reading.normalized_telemetry ?? {};
   const measurements = telemetry.measurements ?? {};
+  if (!['device', 'simulator', 'file_replay'].includes(reading.source) || (reading.source === 'device' && reading.run_id != null) || (reading.source !== 'device' && !reading.run_id)) throw new Error('Stored telemetry has invalid source/run binding.');
+  if (telemetry.schema_version !== '1.0.0') throw new Error('Unsupported telemetry schema version.');
+  if (telemetry.asset_id !== reading.asset_id || telemetry.source !== reading.source || (telemetry.run_id ?? null) !== (reading.run_id ?? null) || telemetry.configuration_version !== reading.configuration_version || telemetry.message_id !== reading.message_id || Date.parse(telemetry.timestamp) !== Date.parse(reading.measurement_time)) {
+    throw new Error('Normalized telemetry identity differs from its stored envelope.');
+  }
+  if (!Number.isFinite(Date.parse(reading.measurement_time)) || !Number.isFinite(Date.parse(reading.arrival_time))) throw new Error('Telemetry timestamps are invalid.');
 
   return {
     readingId: reading.id,

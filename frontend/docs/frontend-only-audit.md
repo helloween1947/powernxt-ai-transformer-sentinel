@@ -1,0 +1,9 @@
+# Frontend-only iteration audit · 10 October 2026
+
+Read the consolidated prompt including its final design override. New changes are restricted to frontend; existing outside-frontend files from earlier work are preserved. Hashes of 144 outside-frontend files were captured before implementation for comparison after QA. Local branch/HEAD remain feature/personb-detector-orchestration / d86b210. Remote refs were refreshed in the preceding iteration; branch inspection confirms those feature contracts were not merged into this workspace. No remote Git mutation, branch adoption, database or backend change is part of this iteration.
+
+Baseline: 51 Node tests pass, lint passes, production build passes. Current backend source includes asset/configuration, telemetry and health routers, plus /openapi.json. It has no analytics, incident, What-if or maintenance HTTP router. Existing frontend canonical analytics/task clients will remain preserved but will be enabled only if the actual connected runtime advertises their established route families. A missing runtime contract leaves planned UI with no proposed API call.
+
+Required delta: navy/steel-blue tokens, compact collapsible navigation, prominent versioned condition prototype with coverage gates, glass/shared-element bubbles and motion pause, finer procedural geometry, synchronized metric/history selection, timestamped evidence rail, sensor inventory, dedicated grouped future-capability interfaces, separate latency semantics, comprehensive new policy/runtime/interaction QA and two screenshot critique passes. No authoritative Health Index exists; no new scientific model or protection thresholds will be invented.
+
+Final scope comparison: all 144 monitored outside-frontend files match their baseline SHA-256 hashes. Automated validation passes 67 tests, clean lint and production build. Both-theme six-size browser matrix and two visual refinement passes are recorded in frontend/VERIFICATION.md.

@@ -102,3 +102,23 @@ test('network, missing origin, API validation and missing endpoints remain visib
   const missing = createMaintenanceClient({ baseUrl: 'http://backend.example', fetchImpl: async () => new Response(JSON.stringify({ detail: 'Not Found' }), { status: 404 }) });
   await assert.rejects(missing.tasks(), error => error.status === 404);
 });
+
+
+test('cancelling the client aborts both transport and an in-flight response body', async () => {
+  let signal;
+  let bodyStarted;
+  const started = new Promise(resolve => { bodyStarted = resolve; });
+  const client = createMaintenanceClient({ baseUrl: 'http://backend.example', fetchImpl: async (_url, options) => {
+    signal = options.signal;
+    return { status: 200, ok: true, json: () => new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+      bodyStarted();
+    }) };
+  } });
+  const request = client.tasks();
+  const rejected = assert.rejects(request, /unreadable response/);
+  await started;
+  client.cancelAll();
+  assert.equal(signal.aborted, true);
+  await rejected;
+});

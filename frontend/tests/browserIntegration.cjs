@@ -66,7 +66,7 @@ async function main() {
     let sequence = 0;
     async function createTask(owner = '') {
       const title = `Sample C browser inspection ${Date.now()}-${sequence++}`;
-      await page.getByLabel('Sample task action', { exact: true }).fill(title);
+      await page.getByLabel('Task action', { exact: true }).fill(title);
       await page.getByLabel('Initial assigned person', { exact: true }).fill(owner);
       await page.getByRole('button', { name: 'Create backend task', exact: true }).click();
       await page.getByRole('heading', { name: title, exact: true }).waitFor();

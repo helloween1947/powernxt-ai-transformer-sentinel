@@ -1,111 +1,57 @@
+@import "tailwindcss";
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+  --background: #f5f7fa; --surface: #ffffff; --surface-soft: #eef2f6; --surface-hover: #e9eff6;
+  --text: #17212f; --muted: #526378; --subtle: #65758a; --border: #d8e0e9;
+  --accent: #315f91; --accent-solid: #315f91; --accent-soft: #e8f0fa; --accent-text: #244f82;
+  --sidebar: #111c2d; --sidebar-muted: #acbcd0; --nav-selected: #243e60;
+  --warning: #835506; --warning-bg: #fff5df; --critical: #a83136; --critical-bg: #fff0f0;
+  --normal: #256a45; --normal-bg: #edf8f0; --sample: #6448a0; --sample-bg: #f2edff;
+  --focus: #315f91; --chart-measured: #315f91; --chart-estimated: #926321; --chart-third: #7159a5;
+  --leader: #a1b3c8; --scene-grid: #e4eaf1; --shadow: 0 8px 28px #203d6712;
+  --glass: rgba(255,255,255,.89); --glass-edge: rgba(255,255,255,.95);
+  --model-body: #647d97; --model-fin: #526e89; --model-metal: #b5c3d1; --model-selected: #578bbd;
+  --radius-control: 10px; --radius-panel: 16px; --radius-glass: 20px;
+  --motion-micro: 200ms; --motion-spatial: 360ms; --motion-ease: cubic-bezier(.22,1,.36,1);
+  color: var(--text); background: var(--background); color-scheme: light;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme='dark'] {
+  --background: #0d1420; --surface: #121c2a; --surface-soft: #182638; --surface-hover: #203249;
+  --text: #eaf1fa; --muted: #afbed0; --subtle: #8ea1b8; --border: #32455e;
+  --accent: #6fa8ff; --accent-solid: #315f91; --accent-soft: #203956; --accent-text: #a6cbff;
+  --sidebar: #0a111d; --sidebar-muted: #acbcd0; --nav-selected: #203956;
+  --warning: #f1c982; --warning-bg: #302a1e; --critical: #ffabb0; --critical-bg: #38232c;
+  --normal: #9bd3ae; --normal-bg: #1d302a; --sample: #c4b4f8; --sample-bg: #2c2642;
+  --focus: #6fa8ff; --chart-measured: #86b7ff; --chart-estimated: #e0b777; --chart-third: #bea7ee;
+  --leader: #627e9f; --scene-grid: #213047; --shadow: 0 8px 28px #0004;
+  --glass: rgba(24,39,59,.94); --glass-edge: rgba(177,205,242,.2);
+  --model-body: #718ba6; --model-fin: #607e9d; --model-metal: #b5c3d1; --model-selected: #6499cf;
+  color-scheme: dark;
 }
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--text); background: var(--background); font-size: 13px; line-height: 1.5; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+button, a, input, select, textarea, summary { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { color: var(--text); }
+h1 { font-size: 26px; line-height: 1.3; font-weight: 650; letter-spacing: -.7px; }
+h2 { font-size: 14px; font-weight: 620; letter-spacing: -.15px; }
+h3 { font-size: 14px; font-weight: 600; }
+strong { font-weight: 600; }
+button, input, select, textarea, main, section, aside { min-width: 0; }
+input, select, textarea { color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 9px 11px; max-width: 100%; }
+input, textarea { width: 100%; }
+input[type='range'] { padding: 12px 0; accent-color: var(--accent); }
+select { cursor: pointer; }
+textarea { min-height: 75px; resize: vertical; }
+label { display: grid; gap: 6px; font-size: 12px; font-weight: 550; }
+form { display: grid; gap: 15px; }
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; overflow-wrap: anywhere; }
+code { background: var(--surface-soft); border-radius: 3px; padding: 2px 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; top: -100px; left: 20px; z-index: 100; color: var(--text); background: var(--surface); padding: 10px; border-radius: 6px; }
+.skip-link:focus { top: 10px; }
