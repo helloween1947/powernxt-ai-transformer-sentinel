@@ -1,5 +1,9 @@
 # PowerNXT Transformer Sentinel — Team Final Technical Handoff
 
+> Historical handoff. Use the fresh [backend audit](backend-complete-audit.md)
+> and its B/C/D review scopes for the current candidate. Phase percentages and
+> attributed approvals below are not independently verified combined-source approval.
+
 **Date:** 2026-10-10
 **Coordinator:** Person A (Backend Lead & Integration Coordinator)
 **Repository:** `powernxt-ai-transformer-sentinel` (GitHub: `helloween1947/powernxt-ai-transformer-sentinel`)

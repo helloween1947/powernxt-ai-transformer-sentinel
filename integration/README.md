@@ -2,6 +2,12 @@
 
 **Owner**: Person D (Integration, QA & DevOps Engineer)
 
+For combined backend acceptance, use `python -m integration.run_backend_completion`;
+see [isolated Windows startup/recovery](../backend/docs/backend-completion-operations.md).
+This uniquely scoped coordinator replaces the old hard-coded phase3 candidate
+verifier. It captures clean builds, exact exits, full suites, successful live
+workflows and real backup restoration without targeting development.
+
 ## Scope & Responsibilities
 - Automated end-to-end integration test suites across backend, analytics, and frontend.
 - Maintenance workflow tracking and lifecycle state transitions.

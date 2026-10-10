@@ -223,15 +223,32 @@ print('Preserved old implementation computed isolated fixture')
         docker('exec','-T','backend','python','-',input=script)
         old_forecast=checked(client.post(path+'/what-if',json=scenario(historic_run)))
         assert old_forecast['model']['model_version']=='stored-reading-top-oil-1.0.1'
+        pending=checked(client.post('/api/v1/telemetry',json=packet(60,run_id=historic_run)),201)
+        old_claim=json.loads(docker('exec','-T','backend','python','-c',"from backend.app.analytics import adapter; from backend.app.analytics.person_b.historical_v101 import worker as old; from backend.app.db.session import SessionLocal; from backend.app.services.analytics_worker import claim_next; import json; adapter.MODEL_VERSION=old.MODEL_VERSION; c=claim_next(SessionLocal,lease_seconds=2); assert c; print(json.dumps({'job_id':c.job_id,'token':str(c.token)}))"))
         model_control={'schema_version':'model-control-1.0.0','expected_version':0,'idempotency_key':str(uuid4()),'source':'simulator','run_id':historic_run,'configuration_version':1,'model_version':adapter.MODEL_VERSION,'reason':'Explicit isolated old-model adoption'}
         checked(client.post(path+'/model-handovers',json=model_control),401)
+        busy=checked(client.post(path+'/model-handovers',json=model_control,headers=auth),409)
+        assert busy['code']=='stream_busy'
+        time.sleep(2.1)
         checked(client.post(path+'/model-handovers',json=model_control,headers=auth),201)
+        fence_script=f"""from uuid import UUID
+from backend.app.db.session import SessionLocal
+from backend.app.services.analytics_worker import Claim,StaleClaim,process_claim
+try:
+    process_claim(SessionLocal,Claim({old_claim['job_id']},UUID('{old_claim['token']}')))
+except StaleClaim:
+    print('PASS: actual Docker stale claim rejected')
+else:
+    raise AssertionError('Stale claim was accepted')
+"""
+        docker('exec','-T','backend','python','-',input=fence_script)
         docker('start','worker')
-        new_reading,new_result=submit(60,run_id=historic_run)
+        new_result=await_result(pending['id'])
         assert new_result['result']['model_version']==adapter.MODEL_VERSION
+        assert new_result['attempts']==2
         assert new_result['result']['payload']['thermal_assessment']['predicted_top_oil_temperature_c'] is None
         assert checked(client.post(path+'/what-if',json=scenario(historic_run,state_ref=old_forecast['state']['state_ref'])))==old_forecast
-        result['checks']['historical_adoption']='PASS: genuine .1 Docker-computed snapshot; authenticated .2 handover, cold start, exact .1 replay'
+        result['checks']['historical_adoption']='PASS: genuine .1 Docker-computed snapshot; active lease rejects handover, expired old claim fenced in Docker, recovery attempts2, authenticated .2 handover/cold start, exact .1 replay'
         before=snapshot();docker('restart','backend')
         for attempt in range(60):
             try:

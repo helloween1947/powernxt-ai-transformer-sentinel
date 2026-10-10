@@ -85,6 +85,20 @@ def main():
             run('live-completion',[sys.executable,'-m','integration.verify_backend_completion','--base-url',base,'--output',str(directory/'live-completion.json')])
         run('backup-restore',[sys.executable,'-m','integration.verify_backend_restore','--output',str(directory/'backup-restore.json')])
         run('images',compose+['images','--format','json'])
+        image_info=[]
+        for service in ('backend','worker'):
+            tag=project+'-'+service+':completion'
+            raw=json.loads(subprocess.check_output(['docker','image','inspect',tag],text=True))[0]
+            image_info.append(dict(service=service,tag=tag,id=raw['Id'],created=raw['Created']))
+        report['images']=image_info
+        source_script="import json,hashlib; from pathlib import Path; print(json.dumps({str(p):hashlib.sha256(p.read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest() for root in ['backend/app','backend/migrations'] for p in Path(root).rglob('*.py')},sort_keys=True))"
+        source=run('runtime-source-hashes',compose+['exec','-T','backend','python','-c',source_script])
+        import hashlib
+        actual=json.loads(source.stdout)
+        expected={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest() for root in ('backend/app','backend/migrations') for p in (ROOT/root).rglob('*.py')}
+        assert actual==expected, 'Built runtime/source mismatch'
+        report['runtime_source_hashes']=actual
+        report['runtime_source_matches']=True
         report['status']='PASS' if all(c['exit_code']==0 for c in report['commands']) else 'FAIL'
     except Exception as exc:
         report['status']='FAIL'

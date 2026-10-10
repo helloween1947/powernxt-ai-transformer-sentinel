@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-10-11T00:15:24.889954+05:30",
+  "project": "analytics_worker_test_6fe8ae75aed4",
+  "api": "http://127.0.0.1:50634",
+  "checks": {
+    "validation_rollback": "PASS: boolean/string/nonfinite physical input, UTC underflow, unknown asset/config; no persisted changes",
+    "what_if": "PASS: successful initialized capture, exact replay, units/limit outcomes/difference; zero worker-table mutation (snapshot insert is intentional)",
+    "concurrent_ingestion": "PASS: 1x201+5x200, one ID, changed-content409, separate-source result, chronological pagination/latest",
+    "worker_incident_tasks_concurrency": "PASS: worker-backed open/update/recovery; independent acknowledgement, task completion and recovery; concurrent ingestion/replay/ack/assignment",
+    "outbox": "PASS: host dispatcher against Docker PostgreSQL, local HTTP receiver, lost receipt/redelivery stable ID, all receipts committed",
+    "historical_adoption": "PASS: genuine .1 Docker-computed snapshot; active lease rejects handover, expired old claim fenced in Docker, recovery attempts2, authenticated .2 handover/cold start, exact .1 replay",
+    "restart_preservation": "PASS: exact full core table rows, original config, terminal task and immutable forecast",
+    "credential_lifecycle": "PASS: container CLI issue, invalid/missing401, successful trusted operations, revoked401; expired/role cases in full PostgreSQL suite"
+  },
+  "identifiers": {
+    "asset": "completion-8a7603ecd69f45799733ab6c16f1073f",
+    "source": "simulator",
+    "run": "synthetic-86aa9ec34ad54915aa34169446bf989e",
+    "configuration": 1,
+    "incident": "7f918ea0-ede8-42ab-ad98-6212113e2197",
+    "readings": [
+      18,
+      19
+    ],
+    "task": "ae3e2570-5402-4f68-a774-40656f0f0f42",
+    "state_ref": "b81fded7-7961-45ec-be70-a890b93066a3"
+  },
+  "outbox_receipts": [
+    {
+      "event_id": "ad7880c2-b8f2-4521-944f-555832604d52",
+      "event_type": "incident.opened"
+    },
+    {
+      "event_id": "ad7880c2-b8f2-4521-944f-555832604d52",
+      "event_type": "incident.opened"
+    },
+    {
+      "event_id": "00c7eac2-dd61-4d54-afc6-41686782bb7a",
+      "event_type": "incident.updated"
+    },
+    {
+      "event_id": "8fcd3e89-931a-44a1-9922-55bf9ec25678",
+      "event_type": "incident.acknowledged"
+    },
+    {
+      "event_id": "4baf5b9c-00e0-45b0-aa8e-b878992727c3",
+      "event_type": "incident.updated"
+    },
+    {
+      "event_id": "3c5da60f-9b6b-4b10-b167-f7e2b6f71b17",
+      "event_type": "incident.updated"
+    },
+    {
+      "event_id": "d9638e77-7d60-465a-968f-40abfdb564d4",
+      "event_type": "incident.recovered"
+    }
+  ],
+  "status": "PASS"
+}

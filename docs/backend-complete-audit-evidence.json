@@ -1,0 +1,643 @@
+{
+  "schema_version": "backend-completion-evidence-1.0.0",
+  "recorded_at": "2026-10-11T00:19:31.152514+05:30",
+  "status": "PASS within explicit matrix scope",
+  "branch": "feature/backend-completion-20261011",
+  "tested_runtime_commit": "cca081acce84cc1e8f93c5698074943f97b8cb63",
+  "publication_commit_note": "Reported by draft PR exact head. Later edits are verifier/evidence/documentation only; application/migration/Dockerfile remain identical to tested runtime.",
+  "base_main": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+  "reuse_base": "84eba6c9642636f1896d3f0d5ab08241be83e2bf",
+  "combined_code_ancestor": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+  "windows": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+    "docker": "29.8.2",
+    "compose": "5.5.1"
+  },
+  "execution": {
+    "timestamp": "2026-10-11T00:05:47.331714+05:30",
+    "project": "analytics_worker_test_6fe8ae75aed4",
+    "api_port": 50634,
+    "db_port": 50635,
+    "commands": [
+      {
+        "label": "clean-build",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "build",
+          "--pull",
+          "--no-cache",
+          "backend",
+          "worker"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "database-start",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "up",
+          "-d",
+          "db"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "fresh-upgrade",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "run",
+          "--rm",
+          "backend",
+          "alembic",
+          "-c",
+          "backend/alembic.ini",
+          "upgrade",
+          "head"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "backend-start",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "up",
+          "-d",
+          "--no-build",
+          "backend"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "alembic-heads",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "exec",
+          "-T",
+          "backend",
+          "alembic",
+          "-c",
+          "backend/alembic.ini",
+          "heads"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "alembic-check",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "exec",
+          "-T",
+          "backend",
+          "alembic",
+          "-c",
+          "backend/alembic.ini",
+          "check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "durable-worker",
+        "command": [
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+          "-m",
+          "integration.verify_analytics_worker",
+          "--base-url",
+          "http://127.0.0.1:50634"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "backend-contract-tests",
+        "command": [
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+          "-m",
+          "pytest",
+          "backend/tests",
+          "analytics/contracts",
+          "-q"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "docker-python312-contract-tests",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "run",
+          "--rm",
+          "--no-deps",
+          "-v",
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011:/audit:ro",
+          "-w",
+          "/audit",
+          "backend",
+          "sh",
+          "-c",
+          "pip install -r backend/requirements-dev.txt -r analytics/contracts/requirements-test.txt && python -m pytest backend/tests analytics/contracts -q -p no:cacheprovider"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "populated-upgrade",
+        "command": [
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+          "-c",
+          "import os; from integration.rehearse_populated_migration import run_rehearsal; run_rehearsal(os.environ['TEST_DATABASE_URL'],r'C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\populated-migration.json')"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "live-completion",
+        "command": [
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+          "-m",
+          "integration.verify_backend_completion",
+          "--base-url",
+          "http://127.0.0.1:50634",
+          "--output",
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\live-completion.json"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "backup-restore",
+        "command": [
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+          "-m",
+          "integration.verify_backend_restore",
+          "--output",
+          "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\backup-restore.json"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "images",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "images",
+          "--format",
+          "json"
+        ],
+        "exit_code": 0
+      },
+      {
+        "label": "isolated-stop",
+        "command": [
+          "docker",
+          "compose",
+          "--profile",
+          "analytics",
+          "stop",
+          "worker",
+          "backend",
+          "db"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "windows_execution": true,
+    "source_commit": "cca081acce84cc1e8f93c5698074943f97b8cb63",
+    "status": "PASS",
+    "isolated_stack_stopped": true,
+    "volume_retained": true,
+    "parent_environment_unchanged": true
+  },
+  "sealed_runtime": {
+    "timestamp": "2026-10-11T00:16:49.776818+05:30",
+    "tested_runtime_commit": "cca081acce84cc1e8f93c5698074943f97b8cb63",
+    "images": [
+      {
+        "service": "backend",
+        "tag": "analytics_worker_test_6fe8ae75aed4-backend:completion",
+        "id": "sha256:cd906cfd9373c5363cddbdf5e8650df03b6f39d149f228a4f77ee09ad9562cfa",
+        "created": "2026-10-10T18:36:15.838946113Z",
+        "python_runtime_matches_tested_commit": true
+      },
+      {
+        "service": "worker",
+        "tag": "analytics_worker_test_6fe8ae75aed4-worker:completion",
+        "id": "sha256:0033567c1048314738f884af4b183608c2222c014838eb9a6eb1b6610e40c4eb",
+        "created": "2026-10-10T18:36:15.838946113Z",
+        "python_runtime_matches_tested_commit": true
+      }
+    ],
+    "commands": [
+      {
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "analytics_worker_test_6fe8ae75aed4-backend-source-proof",
+          "--entrypoint",
+          "python",
+          "analytics_worker_test_6fe8ae75aed4-backend:completion",
+          "-c",
+          "import json,hashlib; from pathlib import Path; print(json.dumps({str(p):hashlib.sha256(p.read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest() for root in ['backend/app','backend/migrations'] for p in Path(root).rglob('*.py')},sort_keys=True))"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--name",
+          "analytics_worker_test_6fe8ae75aed4-worker-source-proof",
+          "--entrypoint",
+          "python",
+          "analytics_worker_test_6fe8ae75aed4-worker:completion",
+          "-c",
+          "import json,hashlib; from pathlib import Path; print(json.dumps({str(p):hashlib.sha256(p.read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest() for root in ['backend/app','backend/migrations'] for p in Path(root).rglob('*.py')},sort_keys=True))"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "runtime_source_hashes": {
+      "backend/app/__init__.py": "918c5533cf57645e6df909e6aed4519e0f5b1e2a46d849fdf268a116b329f0d1",
+      "backend/app/analytics/__init__.py": "a119293a89dd95c477ba28791e33ec488e5f3d1b82a3c4ed1954abd8b361ee38",
+      "backend/app/analytics/adapter.py": "a985b4201b329cd5712ad9bc1bd0cfeb5d6a5e6deb61e6a1410e0e1e403a6640",
+      "backend/app/analytics/person_b/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+      "backend/app/analytics/person_b/core.py": "f56c2603a010cf0f157cf546280b7f79be9326e3b6c2574537de572221dc6546",
+      "backend/app/analytics/person_b/historical_v101/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+      "backend/app/analytics/person_b/historical_v101/core.py": "dcfd530f8edd936ade9d3424aac47e5e82c89891a9af19d68a451e9fcebfbd2e",
+      "backend/app/analytics/person_b/historical_v101/normalization.py": "4d1952c282ab54c1d9551017fae53916be4b98c3cf93e4b841b6d30f22442956",
+      "backend/app/analytics/person_b/historical_v101/scenario_core.py": "4775cab3da0b2bb924440f24ee7023201d9479c5aa06697347945c239903f9d1",
+      "backend/app/analytics/person_b/historical_v101/scenario_validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+      "backend/app/analytics/person_b/historical_v101/scenarios.py": "a3941bfff31837564cc17a9385870b445b1e26527f0bfc7e24b5a9a6ea6a557b",
+      "backend/app/analytics/person_b/historical_v101/worker.py": "84a6e7f8f618bafa0320467b4ab0837f59441dda8fb9c603df61502415924dc0",
+      "backend/app/analytics/person_b/incident_orchestration.py": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea",
+      "backend/app/analytics/person_b/normalization.py": "74809644043ba0c02fc7135fa1de664982667f95438cb35a7ce5e8acdbfbc36a",
+      "backend/app/analytics/person_b/persistence.py": "1dbbb32a577e516cd63c1877a2710cfc0247d11994e4fda5d81752799fbe15c1",
+      "backend/app/analytics/person_b/scenario_core.py": "ce3cfdc2ad0d16658a9b74bd964f5f55512c520b44891914a3a2a59af98b91ec",
+      "backend/app/analytics/person_b/scenario_validation.py": "32792d8c4e6c4976cf3828d9c28d6f7f459f0c28ed6b2f3cb48a02e65b1e7e45",
+      "backend/app/analytics/person_b/scenarios.py": "ffd978afc774ec8a049db824844aa2bce0e92e450372c93f6588e24c04e4b598",
+      "backend/app/analytics/person_b/validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+      "backend/app/analytics/person_b/worker.py": "be0ab1106d2f062c2ff5303e49792f8914bfad1fbea71f61cffe273d4b3a20b7",
+      "backend/app/api/__init__.py": "48e37a853643568cec225220ee6e02ea5cbaa289655d3ab917b8f250dca4901f",
+      "backend/app/api/analytics.py": "6bc8b88e12e0b2926f3c803104114c50794fc6f69c1060095c22a52ab627411e",
+      "backend/app/api/assets.py": "8142965c75d0b78774896276e28408bc8abb7db61a6f4ff12b94493308320ef3",
+      "backend/app/api/health.py": "86c1247880b77c4c30e0603be5e892361411f07025d34df11def5b4cb440403a",
+      "backend/app/api/incidents.py": "3966ddc899b7875f8e1249e5c5f54a1676d7efe7b07401a3ad86c26dc44e0569",
+      "backend/app/api/maintenance.py": "6c361df6702b792d72d122d34150abf27582f756cc2103d58c57d7f93caa0ca6",
+      "backend/app/api/telemetry.py": "2a9fe9bca92d31bcb5c2610e41c0f22672d715db1e47705282e28e41d7a32035",
+      "backend/app/api/validation.py": "06f6af2b58c86d184a46d53b08b0c848462e67ff7e3612204fc51340a230bf1d",
+      "backend/app/api/what_if.py": "41785fc163d9440cc6b2c48002064d0935a00c53644459684b5fc51700afc304",
+      "backend/app/config.py": "ceab9a71db6143782edd0dc804af32ed74f1b6aa6831c352eac642704cd81374",
+      "backend/app/db/__init__.py": "a4a2c25794024dbdcf47c68626b79cfc4b4ebdfd913a349799046cc8a824117c",
+      "backend/app/db/base.py": "318edfd96b7100588a18fe0f50737def91f3818fd7192511c71d547855ca6a66",
+      "backend/app/db/session.py": "6f9494a41aa600b4a76075e628d555595c3f772ce21200dbfeb6f3d06c7f0b83",
+      "backend/app/main.py": "a488af49dc9df8bdff1c6d8215a04037698520e329575ccbe74abefce44c021b",
+      "backend/app/models/__init__.py": "e47acb5ad3baa3d96f46b911f104146b927a7b63370536d1f5e197dd0809d5d7",
+      "backend/app/models/analytics.py": "23c5fcc015ed654a7e460414d3eb053b0795943f42a8e0209c8532882386236c",
+      "backend/app/models/assets.py": "4e26529c1136e201f2385916046a35515e4e82ea960880f403b36a494e2f8716",
+      "backend/app/models/incidents.py": "d27327b8080fc3f1fd69a25b6e51d0a7092dbc956efcf7868cd678e7c6714d8d",
+      "backend/app/models/maintenance.py": "2219339ff02d3808da42134f79841d8ae5f1285c51a90729429a0599b2ead86f",
+      "backend/app/models/telemetry.py": "6dec0a9e7ee764b110fa676a4573ab15da766b5fc25efd41581b071febb6ce96",
+      "backend/app/models/what_if.py": "9215152b1bb762eebd6b57b242aaec1b608fe222dd12bee0bee94a1f6e0fecad",
+      "backend/app/operators.py": "d3b21e3b8e465de6c0845fa82469266efcb2e67abf8a1949ab7d2f8692d67da3",
+      "backend/app/schemas/__init__.py": "0c0c031559c714bf19d21730a8d1304366c31d7cfa42753c4fd5157ece6c3c45",
+      "backend/app/schemas/analytics.py": "069780dacb2ab54868051f4c4a34096b09714bb9dce004db5df852a6ef3da724",
+      "backend/app/schemas/assets.py": "98e31d77d31bfd49d3e0925782e743fc56d0dffecd486dfc9f83d167afc82b8c",
+      "backend/app/schemas/health.py": "2f630601deb470de016a8f2e4b21a307662c092389e724e3f20c149875013001",
+      "backend/app/schemas/incidents.py": "7f8981798498acd0b05b1580ed3d4fe9845d6645d4bc119ed196ed964ba0b955",
+      "backend/app/schemas/maintenance.py": "05321a2a4025969d999e4d2899e4fe604843cede257777a67151233c921dd2bd",
+      "backend/app/schemas/telemetry.py": "81342a0f9da6d03e86358d6d65e2d49e85cb5847a64f509c2bc62bbfdc3b1a8a",
+      "backend/app/schemas/what_if.py": "3325988fc98f426c97f3cbfb837ea23a8a70d8e9d8242a16da73c2da89b3854e",
+      "backend/app/services/__init__.py": "9bf980d5749e76976cc613f3eeca45f1e48e066b017dc80f11f20f64c31025d7",
+      "backend/app/services/analytics_worker.py": "f3fed3a2bb4ffa9c67bcd0e49f6e45a8cc01526e8f9e64c3dfde467203abf14a",
+      "backend/app/services/assets.py": "d71bf9ff2da4653a743bf88ea80a27841a4990535e71d0a978ba30885cef15f1",
+      "backend/app/services/incident_outbox.py": "30d803b806fbfebca10f0ef4573a0744b991e77ab54edfd25d21de64a554e7ef",
+      "backend/app/services/incidents.py": "7399135bc9a60d4c435a37bef9f937c467ac958263d67a75974f6b0f5e7e8e22",
+      "backend/app/services/maintenance.py": "48ab15a25a6eca48693a7f3e41a50bdc54cd41b1177c0c66c3d7de02abca0ae9",
+      "backend/app/services/telemetry.py": "f8902cafde9e6d2db1e2070bdaed0f712a8de16eb476695d33ac409d261a3af6",
+      "backend/app/services/what_if.py": "ada4320ff689f6d74a6176a1364710915b2ce10c1deefbab5ce4188050788253",
+      "backend/app/simulator/__init__.py": "85f28704c2779cb465e50eebd9261b733bc22348fcc75d4e5d9511b95be71d60",
+      "backend/app/simulator/__main__.py": "f398c0e2a5cb4e040100e5f953df527a0f681366c441086066c2db4567062b5c",
+      "backend/app/simulator/client.py": "a40dcf849b929c2cd8f852821523f834d937c5e19f0d583a4210ffcec76754ce",
+      "backend/app/simulator/generator.py": "b16d518d484ea4c0a9bca2af8db2c388b976d312ddb656dd8378fe55d50c6305",
+      "backend/app/workers/__init__.py": "e6908f621e97b907840b00c970157702f1347cd1adaad79b5dcfc1f4deefde13",
+      "backend/app/workers/__main__.py": "7daf4f291ad682fdc1960c4b638a7ef0c3e9f9e7726823ea4e3ca95d76b97c46",
+      "backend/migrations/env.py": "b839f75dc386785a9394e12a41abf77c58f39d6de5eae239beabc0355e877d75",
+      "backend/migrations/versions/20261007_f272b723f71b_add_transformer_asset_registry.py": "d731c142edeca2a36cd51544e4d4d1d0516244820707fe9f6eaf8dfd74452638",
+      "backend/migrations/versions/20261008_84b8976a7d0d_add_transactional_telemetry_ingestion.py": "3f40da6d0589f9b2c83456eab6f75c9dca9dbcc965d049d925adfcff2765142a",
+      "backend/migrations/versions/20261008_ce21c3b8140a_enforce_configuration_immutability.py": "e8ceeeb9edd8b145f2b5f92574f3603933f7e118d3d2441fe2e86e9cb6aa954f",
+      "backend/migrations/versions/20261008_d001_add_sample_maintenance_tasks.py": "4bc6b648340300ff62d2ebaf947915226cc26f8f1fcd807a90dfe8d120e0dde1",
+      "backend/migrations/versions/20261008_d002_add_task_workflow_history.py": "cd66b25293f0bc5e52d9682acd60b24cbb6498b2e162d6bc7810a6ef5eba5c77",
+      "backend/migrations/versions/20261009_a001_incident_registry.py": "c839299e7928721b4450fff52e245792199b1b70265d88e5a4e0d0b684057950",
+      "backend/migrations/versions/20261009_d003_merge_audit_maintenance.py": "0b8ee71efb6410f8c31f28482d839b304cc4e0aca6b7d0d7e3f918e2f72ed154",
+      "backend/migrations/versions/20261009_d004_merge_worker_maintenance.py": "f83e4e4bfcedd6906a67d59091275cda123efae4ab98e6167e424546052cc4c0",
+      "backend/migrations/versions/20261009_d730a91b4c22_add_durable_analytics_worker.py": "a11fa3edaa009582ace0b9668f2ecd075d77887f8c4f23fec381bc39b5f5c8db",
+      "backend/migrations/versions/20261010_a002_incident_outbox.py": "0c0bb37ba4d8773326c61c5aa25bf16ee74e6a8895b1d68c6b358e3e053371bc",
+      "backend/migrations/versions/20261010_d005_incident_tasks.py": "eb1ce650dbd011f8137032affa396c76c583f175079947a501e6535d8f373fd4",
+      "backend/migrations/versions/20261010_d006_combined_integration.py": "967c49e0d079269447783af6a96c900b9db9389af552de97223e7398eb133d2f",
+      "backend/migrations/versions/20261010_w001_what_if_snapshots.py": "fc7c02015c07ff8d5d73e19b60920de791d43811008e4984d29c06057205364a"
+    },
+    "owned_containers_stopped": [
+      {
+        "name": "analytics_worker_test_6fe8ae75aed4-worker-1",
+        "running": false,
+        "exit_code": 0
+      },
+      {
+        "name": "analytics_worker_test_6fe8ae75aed4-backend",
+        "running": false,
+        "exit_code": 0
+      },
+      {
+        "name": "analytics_worker_test_6fe8ae75aed4-db",
+        "running": false,
+        "exit_code": 0
+      }
+    ],
+    "retained_volume": "analytics_worker_test_6fe8ae75aed4-postgres_data",
+    "development_preservation_hash": "ea18a7648a4873bac2c1db338aae6ec4f571d359f1b77acf9d66a7a3b2460cf4",
+    "development_records_images_start_times_and_python_tree_unchanged": true
+  },
+  "worker": {
+    "status": "PASS",
+    "project": "analytics_worker_test_6fe8ae75aed4",
+    "asset_id": "demo-worker-a7174bff08ca4d4ab76f07874826b187",
+    "run_id": "worker-a7174bff08ca4d4ab76f07874826b187",
+    "first_batch_completed": 6,
+    "identical_retries": 6,
+    "restart_persistence": true,
+    "recovery_attempts": 2,
+    "final_readings": 8,
+    "final_jobs": 8,
+    "final_results": 8,
+    "stream_advances": [
+      1,
+      7
+    ],
+    "analytics_model": "stored-reading-top-oil-1.0.2",
+    "image_basis": "normal repository Dockerfile --pull --no-cache on Windows",
+    "windows_execution": true
+  },
+  "live": {
+    "timestamp": "2026-10-11T00:15:24.889954+05:30",
+    "project": "analytics_worker_test_6fe8ae75aed4",
+    "api": "http://127.0.0.1:50634",
+    "checks": {
+      "validation_rollback": "PASS: boolean/string/nonfinite physical input, UTC underflow, unknown asset/config; no persisted changes",
+      "what_if": "PASS: successful initialized capture, exact replay, units/limit outcomes/difference; zero worker-table mutation (snapshot insert is intentional)",
+      "concurrent_ingestion": "PASS: 1x201+5x200, one ID, changed-content409, separate-source result, chronological pagination/latest",
+      "worker_incident_tasks_concurrency": "PASS: worker-backed open/update/recovery; independent acknowledgement, task completion and recovery; concurrent ingestion/replay/ack/assignment",
+      "outbox": "PASS: host dispatcher against Docker PostgreSQL, local HTTP receiver, lost receipt/redelivery stable ID, all receipts committed",
+      "historical_adoption": "PASS: genuine .1 Docker-computed snapshot; active lease rejects handover, expired old claim fenced in Docker, recovery attempts2, authenticated .2 handover/cold start, exact .1 replay",
+      "restart_preservation": "PASS: exact full core table rows, original config, terminal task and immutable forecast",
+      "credential_lifecycle": "PASS: container CLI issue, invalid/missing401, successful trusted operations, revoked401; expired/role cases in full PostgreSQL suite"
+    },
+    "identifiers": {
+      "asset": "completion-8a7603ecd69f45799733ab6c16f1073f",
+      "source": "simulator",
+      "run": "synthetic-86aa9ec34ad54915aa34169446bf989e",
+      "configuration": 1,
+      "incident": "7f918ea0-ede8-42ab-ad98-6212113e2197",
+      "readings": [
+        18,
+        19
+      ],
+      "task": "ae3e2570-5402-4f68-a774-40656f0f0f42",
+      "state_ref": "b81fded7-7961-45ec-be70-a890b93066a3"
+    },
+    "outbox_receipts": [
+      {
+        "event_id": "ad7880c2-b8f2-4521-944f-555832604d52",
+        "event_type": "incident.opened"
+      },
+      {
+        "event_id": "ad7880c2-b8f2-4521-944f-555832604d52",
+        "event_type": "incident.opened"
+      },
+      {
+        "event_id": "00c7eac2-dd61-4d54-afc6-41686782bb7a",
+        "event_type": "incident.updated"
+      },
+      {
+        "event_id": "8fcd3e89-931a-44a1-9922-55bf9ec25678",
+        "event_type": "incident.acknowledged"
+      },
+      {
+        "event_id": "4baf5b9c-00e0-45b0-aa8e-b878992727c3",
+        "event_type": "incident.updated"
+      },
+      {
+        "event_id": "3c5da60f-9b6b-4b10-b167-f7e2b6f71b17",
+        "event_type": "incident.updated"
+      },
+      {
+        "event_id": "d9638e77-7d60-465a-968f-40abfdb564d4",
+        "event_type": "incident.recovered"
+      }
+    ],
+    "status": "PASS"
+  },
+  "migration": {
+    "head": "d006_combined_integration",
+    "fresh_upgrade_exit": 0,
+    "alembic_check_exit": 0,
+    "unexpected_operations": false,
+    "populated_supported_combinations": 9,
+    "separate_d004_tables_preserved": 9,
+    "restore_public_tables": 19,
+    "restore_row_hash_equality": true,
+    "new_migrations_added_by_completion": false
+  },
+  "tests": {
+    "windows_backend_and_contracts": {
+      "passed": 354,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "seconds": 192.61,
+      "warnings": 393
+    },
+    "docker_python312_backend_and_contracts": {
+      "passed": 354,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "seconds": 285.61,
+      "warnings": 392
+    },
+    "frontend": {
+      "passed": 55,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "lint_exit": 0,
+      "production_build_exit": 0
+    },
+    "independent_maintenance_mapper": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0
+    },
+    "syntax_exit": 0,
+    "diff_check_exit": 0,
+    "backend_lint": "No configured backend linter; syntax and full required suites executed"
+  },
+  "model_source": {
+    "computation_commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+    "ast_definitions_equal": 30,
+    "original_source_hashes": 14,
+    "adapted_historical_hashes": 26,
+    "equations_changed": false
+  },
+  "development": {
+    "api": "http://127.0.0.1:8000",
+    "revision": "d004_worker_maintenance",
+    "python_app_migration_tree_matches_main": true,
+    "preservation_hash": "ea18a7648a4873bac2c1db338aae6ec4f571d359f1b77acf9d66a7a3b2460cf4",
+    "images_and_start_times_unchanged": true,
+    "thermal_configs_readings_results_unchanged": true,
+    "mutations_restarts_migrations": false
+  },
+  "previous_attempt": {
+    "project": "analytics_worker_test_938ffda87a5d",
+    "status": "FAIL",
+    "cause": "New verifier wrongly expected201 for identical handover retry; actual supported200 preserved. Corrected verifier; final run passed.",
+    "clean_build_exit": 0,
+    "backend_contract_tests": 351,
+    "stopped": true,
+    "volume_retained": true,
+    "evidence": "data/generated/backend-completion-20261010-235749"
+  },
+  "reviews": {
+    "PR32": {
+      "state": "APPROVED",
+      "reviewer": "hramith06",
+      "exact_source": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+      "scope": "That earlier backend source only; expressly excludes combined Docker candidate"
+    },
+    "PR24": [],
+    "PR29": [],
+    "PR33": [],
+    "new_combined_source": "Independent B/C/D review pending; historical attributed reports do not establish approval"
+  },
+  "limitations": [
+    "Synthetic assumed coefficients; no field calibration, accuracy guarantee or residual fault labels",
+    "Local trusted-role contract; no production SSO, ingestion authentication or tenant policy newly implemented",
+    "Generic event/WebSocket transport, health/confidence and cooling interventions remain outside agreed scope",
+    "Outbox dispatcher executed on Windows host against Docker PostgreSQL and a local receiver; analytics executed in actual Docker worker",
+    "Preserved old model fixture computed by preserved implementation inside backend Docker container, not an old deployed image",
+    "Affected frontend tests/lint/build passed; no new genuine browser E2E claimed",
+    "Exact-head hosted checks and independent combined-source review remain gates; no merge/deployment performed"
+  ],
+  "retained_local_evidence": [
+    "data/generated/backend-completion-20261010-235749",
+    "data/generated/backend-completion-20261011-000547"
+  ],
+  "published_artifacts": {
+    "docs/evidence/backend-completion-20261011/alembic-check.log": {
+      "sha256": "2fa026bb3829866c87ea27bb302874a1717380ea61a9421fcbb1794d61e1dab2",
+      "bytes": 1750
+    },
+    "docs/evidence/backend-completion-20261011/alembic-heads.log": {
+      "sha256": "3de27c62cf61bcc1ec3a4e7f4e3287db85b98ba58e3d93ed56189902ddb99b76",
+      "bytes": 34
+    },
+    "docs/evidence/backend-completion-20261011/backend-contract-tests.log": {
+      "sha256": "6859dab71f8635d8d7643a7e91aaf96b54b642c8bf29ca8cdd5c1371b7b2b5f3",
+      "bytes": 2466
+    },
+    "docs/evidence/backend-completion-20261011/backup-restore.json": {
+      "sha256": "5a2c40f8ef06e35a676f14775022510124e526b46e38af677afdf6e3f6053c9d",
+      "bytes": 2971
+    },
+    "docs/evidence/backend-completion-20261011/clean-build.log": {
+      "sha256": "ca28f1e4a246c9295ecbc4aeb1288a068e1914404228b696f1d7e86070787bf8",
+      "bytes": 27569
+    },
+    "docs/evidence/backend-completion-20261011/docker-python312-contract-tests.log": {
+      "sha256": "9c2593b97461fedab24da5affe55b585b20ff45aefec9cadd418bd522caf96ed",
+      "bytes": 11443
+    },
+    "docs/evidence/backend-completion-20261011/durable-worker.log": {
+      "sha256": "d2f116f0c838ddd50c3088818d766dd7ebbc6b51c57d5c1de52af918da5aa5dd",
+      "bytes": 589
+    },
+    "docs/evidence/backend-completion-20261011/execution.json": {
+      "sha256": "7309529e2e4112a9d8c028c2629052ba17f8aa678e109a1592db1a4fd943120d",
+      "bytes": 5648
+    },
+    "docs/evidence/backend-completion-20261011/fresh-upgrade.log": {
+      "sha256": "49096cf653976c0d6ed6f965ddb048d3a17116d944da35465551110c7f0a335b",
+      "bytes": 2566
+    },
+    "docs/evidence/backend-completion-20261011/frontend-build.log": {
+      "sha256": "8696c5ca078cba02fc2a3abb902676123aac4eaf60b90b68ee276ab0b1c4d535",
+      "bytes": 782
+    },
+    "docs/evidence/backend-completion-20261011/frontend-lint.log": {
+      "sha256": "7483b9466dcd46ce5fef494e3ef9a06ac2fe303eb61d5518a6fc8309e08e99e0",
+      "bytes": 80
+    },
+    "docs/evidence/backend-completion-20261011/frontend-tests.log": {
+      "sha256": "ed1c3419949dc7986eca42eb3793b4a2a6e21a682fd5cca84aef1ee51b7074d2",
+      "bytes": 10474
+    },
+    "docs/evidence/backend-completion-20261011/independent-maintenance-mapper.log": {
+      "sha256": "014af5747bd2d38b68cc65cc8fc2334d8a6f992b5477aed51cd4af4b7356c03e",
+      "bytes": 656
+    },
+    "docs/evidence/backend-completion-20261011/live-completion.json": {
+      "sha256": "a07066cb0578ea275edde08c1f1f7c874d5b5dee3bdeb014153605026e00c39c",
+      "bytes": 2702
+    },
+    "docs/evidence/backend-completion-20261011/live-completion.log": {
+      "sha256": "a07066cb0578ea275edde08c1f1f7c874d5b5dee3bdeb014153605026e00c39c",
+      "bytes": 2702
+    },
+    "docs/evidence/backend-completion-20261011/model-source.json": {
+      "sha256": "3fabd4248167455503615f9e3051edeba304c7282dafb673b0dcc102f53d2eb9",
+      "bytes": 4624
+    },
+    "docs/evidence/backend-completion-20261011/populated-migration.json": {
+      "sha256": "432e94b6c5dc7463cc6ef7d9e21ac3b65a518c04b992689aa7cfcd21bd0d77fd",
+      "bytes": 23872
+    },
+    "docs/evidence/backend-completion-20261011/pr-metadata.json": {
+      "sha256": "0d602f596bdc1fe589d11e96bd116b7a356101309fcc87d9f040611319d9110f",
+      "bytes": 1701
+    },
+    "docs/evidence/backend-completion-20261011/resolved-compose.json": {
+      "sha256": "2debf87a4b3e95aa1f70fdb6804caae6a9b0ecefa9e7587c87d389489ba7e3cf",
+      "bytes": 3444
+    },
+    "docs/evidence/backend-completion-20261011/runtime-source-comparison.json": {
+      "sha256": "7b9f33cbef073ed7795f6fcd30722a2e1e88e52beab1162db8300e33c21fadbf",
+      "bytes": 2553
+    },
+    "docs/evidence/backend-completion-20261011/sealed-runtime.json": {
+      "sha256": "b0d5332ca174730dd50bcd584a4f5459ec1e489e07e6b2c1ee091c15264f585a",
+      "bytes": 11878
+    }
+  }
+}

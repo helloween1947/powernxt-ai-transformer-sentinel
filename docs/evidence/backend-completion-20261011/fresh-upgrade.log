@@ -1,0 +1,20 @@
+ Container analytics_worker_test_6fe8ae75aed4-db Running 
+ Container analytics_worker_test_6fe8ae75aed4-db Waiting 
+ Container analytics_worker_test_6fe8ae75aed4-db Healthy 
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Creating 
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Created 
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> f272b723f71b, Add transformer asset registry
+INFO  [alembic.runtime.migration] Running upgrade f272b723f71b -> 84b8976a7d0d, Add transactional telemetry ingestion
+INFO  [alembic.runtime.migration] Running upgrade 84b8976a7d0d -> ce21c3b8140a, Enforce the existing append-only configuration contract in PostgreSQL.
+INFO  [alembic.runtime.migration] Running upgrade 84b8976a7d0d -> d001_maintenance, Add Person D's sample maintenance task milestone.
+INFO  [alembic.runtime.migration] Running upgrade d001_maintenance -> d002_task_workflow, Extend D001 tasks without replacing existing task identities or alert snapshots.
+INFO  [alembic.runtime.migration] Running upgrade ce21c3b8140a, d002_task_workflow -> d003_audit_maintenance, Join immutable configurations and maintenance without rewriting either branch.
+INFO  [alembic.runtime.migration] Running upgrade ce21c3b8140a -> d730a91b4c22, add durable analytics worker
+INFO  [alembic.runtime.migration] Running upgrade d730a91b4c22, d003_audit_maintenance -> d004_worker_maintenance, Join the now-merged analytics worker with D's audit/maintenance join.
+INFO  [alembic.runtime.migration] Running upgrade d004_worker_maintenance -> w001_what_if_snapshots, Add immutable what-if snapshots; leave worker/results/configuration data intact.
+INFO  [alembic.runtime.migration] Running upgrade d004_worker_maintenance -> a001_incident_registry, Add canonical incident registry and trusted identity; preserve sample tasks.
+INFO  [alembic.runtime.migration] Running upgrade a001_incident_registry -> d005_incident_tasks, Link genuine tasks without rewriting sample records or registry history.
+INFO  [alembic.runtime.migration] Running upgrade a001_incident_registry -> a002_incident_outbox, Add incident delivery checkpoints without rewriting existing event history.
+INFO  [alembic.runtime.migration] Running upgrade a002_incident_outbox, d005_incident_tasks, w001_what_if_snapshots -> d006_combined_integration, Join reviewed branch migrations; preserve all applied revisions and records.

@@ -1,5 +1,10 @@
 # Phase 6 Final Acceptance Verification & Status Matrix
 
+> Historical phase report. Its percentage/completeness and production-readiness
+> wording is not current acceptance evidence. Use the scoped fresh
+> [backend completion audit](backend-complete-audit.md); reviews and deployment
+> remain separate gates.
+
 **Date:** 2026-10-10
 **Coordinator:** Person A (Backend Lead & Integration Coordinator)
 **Repository:** `powernxt-ai-transformer-sentinel` (GitHub: `helloween1947/powernxt-ai-transformer-sentinel`)
