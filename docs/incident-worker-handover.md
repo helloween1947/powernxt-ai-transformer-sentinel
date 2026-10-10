@@ -20,7 +20,7 @@ after reacquiring the fence, flush the real analytics result and execute the
 bounded one-to-six-rule pure planner in that final transaction. This binds exact
 result IDs without a speculative reservation. The planner performs no database,
 network or publication I/O. Persist result/twin state/detector context/header/
-mapping/evidence/event journal/job completion together, then recheck the lease
+mapping/evidence/event journal/delivery checkpoint/job completion together, then recheck the lease
 deadline before commit. Lost leases/failed writes roll back everything.
 
 One stream's control changes share the worker's stream lock. An unexpired active
@@ -28,7 +28,12 @@ lease returns stream_busy rather than changing its binding mid-computation.
 Expired outstanding tokens are cleared by handover and fail the existing fence.
 Incident row locks serialize detector version updates with acknowledgements.
 Database uniqueness protects mappings/evidence/event versions/operation receipts.
-No post-commit publisher or automatic task creation is claimed.
+The separate `incident_outbox` dispatcher loads only committed events and invokes
+a supplied transport after closing its snapshot transaction. Per-incident version
+ordering, lease tokens, attempt counts and delivery receipts are durable. Delivery
+is at least once: a crash/expired lease after sending but before receipt can repeat
+an event. Consumers must deduplicate `event_id`; they must not use publication time
+as incident order. No queue/WebSocket transport or automatic task creation is wired.
 
 Policies are explicit immutable snapshots, including version, provenance,
 max_gap_s and all named rules. Their complete finite JSON content is SHA256-bound.
@@ -71,7 +76,9 @@ Backfill/diagnostic replay/live-state restoration is outside this control API.
 
 ## D's concrete dependency surface
 
-- Migration `a001_incident_registry` extends D004; intended single head. Apply
+- Migration `a001_incident_registry` extends D004; `a002_incident_outbox` extends
+  A001 and is now the intended single head. A002 backfills a pending checkpoint
+  for every existing journal event without changing any existing record. Apply
   this before any D task FK migration; do not rewrite prior revisions or fake a
   no-op join to supply tables. Empty-only registry downgrade refuses populated
   identity/incident/control tables rather than deleting audit evidence.
@@ -99,12 +106,13 @@ Backfill/diagnostic replay/live-state restoration is outside this control API.
 ## Implemented versus remaining
 
 Implemented: canonical PostgreSQL registry/mapping, immutable evidence, durable
-per-incident event journal, authenticated read/ack/admin handover APIs, explicit
+per-incident event journal and fenced post-commit outbox dispatch interface,
+authenticated read/ack/admin handover APIs, explicit
 version/conflict/idempotency contracts, fenced detector state/barriers and
 sample-preserving additive migration. Tests include actual persisted episodes.
 
 Remaining: D's task FK/genuine API union and trusted identity integration; C's UI;
-shared deployment; post-commit queue/WebSocket publisher; external SSO/tenant
+shared deployment; queue/WebSocket transport configuration; external SSO/tenant
 authorization; field calibration/physical fault validation; separate model1.0.2
 adoption and any replay/restoration workflow. B/D should review this PR's control
 and identity choices before the registry becomes their deployed dependency.

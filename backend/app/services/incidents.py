@@ -20,6 +20,7 @@ from backend.app.models.incidents import (
     DetectorControl,
     DetectorEpoch,
     Incident,
+    IncidentDelivery,
     IncidentEvent,
     IncidentEvidence,
     IncidentOperation,
@@ -82,9 +83,10 @@ def serialize(incident):
 
 def event(db, incident, kind, now, *, evidence_id=None, actor_id=None, details=None):
     snapshot = serialize(incident).model_dump(mode="json")
+    event_id = uuid4()
     db.add(
         IncidentEvent(
-            event_id=uuid4(),
+            event_id=event_id,
             incident_id=incident.id,
             incident_version=incident.version,
             event_type="incident." + kind,
@@ -98,6 +100,8 @@ def event(db, incident, kind, now, *, evidence_id=None, actor_id=None, details=N
             },
         )
     )
+    db.flush()  # Parent event and delivery become visible only with this transaction.
+    db.add(IncidentDelivery(event_id=event_id))
 
 
 def retry(db, scope, payload, actor):
@@ -358,6 +362,18 @@ def persist_plan(db, reading, result, now, *, state_policy="forward_only"):
     )
     for command in plan["mutations"]:
         mapping = command["mapping_key"]
+        evidence = command["evidence"]
+        if (
+            mapping["asset_id"] != reading.asset_id
+            or mapping["detector_epoch"] != str(epoch.id)
+            or command["stream"] != meta["stream"]
+            or evidence["result_id"] != result.id
+            or evidence["reading_id"] != reading.id
+            or evidence["message_id"] != str(reading.message_id)
+        ):
+            raise IncidentPlanningError(
+                "incident_invalid_input_or_state", "Contradictory command binding"
+            )
         incident = db.scalar(
             select(Incident)
             .where(

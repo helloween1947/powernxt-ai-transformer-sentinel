@@ -3,7 +3,7 @@
 import json
 import math
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from uuid import UUID, uuid4
 
 from sqlalchemy import and_, exists, func, or_, select
@@ -11,6 +11,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import aliased
 
 from backend.app.analytics import adapter
+from backend.app.analytics.person_b.incident_orchestration import IncidentPlanningError
 from backend.app.models import AssetConfiguration
 from backend.app.models.analytics import (
     AnalyticsResult,
@@ -18,8 +19,7 @@ from backend.app.models.analytics import (
     AnalyticsStream,
 )
 from backend.app.models.telemetry import ProcessingJob, TelemetryReading
-from backend.app.services.incidents import persist_plan, mark_continuity_break
-from backend.app.analytics.person_b.incident_orchestration import IncidentPlanningError
+from backend.app.services.incidents import mark_continuity_break, persist_plan
 
 NONTERMINAL = ("pending", "retry", "processing")
 
@@ -214,6 +214,21 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
         or output["metadata"]["parameter_version"] != key[6]
     ):
         raise ComputationError("model_binding_mismatch")
+    meta = output["metadata"]
+    if (
+        meta["stream"]
+        != {
+            "asset_id": reading.asset_id,
+            "source": reading.source,
+            "run_id": reading.run_key or None,
+        }
+        or meta["reading_identity"]
+        != {"reading_id": reading.id, "message_id": str(reading.message_id)}
+        or meta["configuration_version"] != reading.configuration_version
+        or datetime.fromisoformat(meta["measurement_time"].replace("Z", "+00:00"))
+        != reading.measurement_time
+    ):
+        raise ComputationError("reading_binding_mismatch")
     with factory.begin() as db:
         job, reading, head, now = fenced(db, claim)
         authorized_until = min(job.lease_until, head.lease_until)
