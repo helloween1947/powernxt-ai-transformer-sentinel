@@ -7,8 +7,9 @@ The commands below assume an **already owned isolated PostgreSQL service** at127
 From repository root in PowerShell:
 
 ```powershell
-python -m venv .venv-review
-$qaPython = (Resolve-Path '.venv-review\Scripts\python.exe').Path
+if (Test-Path '.venv') { throw 'Use a new clean review checkout; preserve the existing environment' }
+python -m venv .venv
+$qaPython = (Resolve-Path '.venv\Scripts\python.exe').Path
 & $qaPython -m pip install -r backend/requirements-dev.txt -r analytics/contracts/requirements-test.txt
 $qaDatabase = 'persond_review_' + [guid]::NewGuid().ToString('N') + '_test'
 createdb -h 127.0.0.1 -p 55432 -U sentinel $qaDatabase
@@ -26,7 +27,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Isolated migration failed' }
 In a second terminal, set the same owned `DATABASE_URL` and run the normal worker:
 
 ```powershell
-& .venv-review\Scripts\python.exe -m backend.app.workers
+& .venv\Scripts\python.exe -m backend.app.workers
 ```
 
 Use another terminal for the frontend:
@@ -45,7 +46,7 @@ Visit `http://127.0.0.1:15882`. Connection settings must match that API origin. 
 For a private review credential, provision an owned account against the isolated database, writing a **new** private file outside Git:
 
 ```powershell
-& .venv-review\Scripts\python.exe -m backend.app.operators issue --name d-app-admin --role admin --token-file C:\PRIVATE_REVIEW_DIRECTORY\admin.txt
+& .venv\Scripts\python.exe -m backend.app.operators issue --name d-app-admin --role admin --token-file C:\PRIVATE_REVIEW_DIRECTORY\admin.txt
 ```
 
 Create/protect that private directory first. Never paste token values into commands, logs, screenshots or repository files. Enter the credential only in the password input. Roles are `reader`, `operator`, `admin`; server identity is authoritative. These expiring local credentials do not establish production SSO. Revoke owned review accounts when done.

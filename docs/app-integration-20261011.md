@@ -6,7 +6,7 @@ The integrated application passed independent native PostgreSQL, automated and a
 
 | Source | Full SHA | Observed state |
 | --- | --- | --- |
-| Tested application | `64c32cfc97ec9cb2539fa7b3eb9171dbb324572a` | D integration source; backend/migrations/analytics identical to the backend runtime below |
+| Tested application | `2b140d70a2660830a7e7002a31f41621e2f5686d` | Final responsive integration source; backend/migrations/analytics identical to the backend runtime below |
 | Backend runtime | `52053168475aac45a112bc122b1fa8fe87cfd775` | Includes registry, Model1.0.2, D005/D006, outbox, What-if and prior compatibility fixes |
 | Latest A branch / draft PR34 | `fae21510c83e2595708078df39f6468b70cfb2a0` | Adds three reports only; no runtime difference from `5205316` |
 | C authoritative frontend | `4b5709d9857350d405dc0de21c7af3b8d1f09a5e` | Only this frontend commit adopted, with conflicts resolved, as `2baf48768740709364667a9814cfa568a68ea7d5` |
@@ -16,7 +16,7 @@ C's branch also contains unrelated B computational ancestry. Merging the entire 
 
 PR26 is merged into main (`cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda`). PR27 is merged into the registry branch (`2e934c85098453db7342ea6ade570759ef4b9161`) and is an ancestor of this backend. Their CI/docs fixes were inherited, not applied again. PR34 is draft, targets main and had no reviews at inspection. PR29/32/33 remain open despite their implementation being incorporated into A's candidate. Do not merge their overlapping patches again without inspecting net diffs.
 
-The draft D PR should initially target `feature/backend-completion-20261011`, as explicitly permitted by this integration request, so its review contains the frontend integration and D verification only. Once A's exact prerequisite history reaches main, retarget D to main, inspect the resulting net diff, and obtain exact-head green CI and teammate approval. Do not treat a stacked PR as independently mergeable to main today. A and C should review the frontend adoption together rather than also merging the whole C branch.
+Draft [PR36](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/36) targets `feature/backend-completion-20261011`, as explicitly permitted by this integration request, so its review contains the frontend integration and D verification only. Once A's exact prerequisite history reaches main, retarget D to main, inspect the resulting net diff, and obtain exact-head green CI and teammate approval. Do not treat a stacked PR as independently mergeable to main today. A and C should review the frontend adoption together rather than also merging the whole C branch.
 
 Automatic approval review rejected merging A's documentation-only advancement into D, citing the restriction on merging A-owned work. That merge was not performed. This does not block the integration: the latest backend runtime is byte-for-byte identical, and the reports remain on A's branch. This report records independent observations; it does **not** endorse the incorrect audited SHA, `assigned` status, blanket deployment acceptance or attributed D sign-off in A's new `persond-qa-acceptance-final.md`. A should correct that report before PR34 is merged. No GitHub review was submitted by this task.
 
@@ -27,6 +27,7 @@ Automatic approval review rejected merging A's documentation-only advancement in
 - Local prototype bearer credentials are checked through `/api/v1/operators/me`; credentials are scoped to the API origin, kept in session storage, and cleared on expiry/revocation. Reader mutation controls are disabled. This is not production SSO.
 - Selected stream context survives refresh. Incident and task conflicts require explicit review, retain drafts where applicable and do not automatically overwrite a newer version. Acknowledgement retries retain their idempotency key after transport failures. Incident list/events/evidence, maintenance/history and reading pagination use actual backend contracts.
 - Previous forecasts clear when inputs/state change. Fatal pending analytics refresh clears stale derived estimates while retaining usable telemetry. Sample illustrations, simulator inputs, assumed coefficients and local identity are explicitly labelled.
+- Final visual review found anonymous authentication form overflow on narrow screens. The form now wraps within the workspace; a settled anonymous390px Chrome check passes. Screenshots wait for the previous navigation view to detach rather than recording overlapping transition frames.
 - The live incident verifier uses the runtime's supported `MODEL_VERSION` instead of hard-coded historical1.0.1 for newly selected streams. Historical dispatch remains covered by the backend/contract suite.
 
 No backend API, computational model, database migration, shared contract or development environment file was changed. No acknowledgement is inferred from task completion, and no task status implies incident recovery.
@@ -50,7 +51,7 @@ Raw logs, exact commands/exit codes and SHA256 file hashes are in [the evidence 
 | Actual Google Chrome154.0.8037.98 | Full ten workflow groups on committed application source, plus four auth/error checks and historical/event/evidence pagination: exit0 |
 | `docker info` | **Exit1**: Linux engine pipe unavailable. No Docker image build/runtime or shared deployment claimed |
 
-The full backend/contract suite ran during integration against the unchanged backend tree at5205316. It was not rerun merely to change the enclosing commit hash: `git diff 5205316 -- backend analytics .github` is empty. Final frontend tests/build and the repeated full Chrome workflow use exactly the application code in64c32cf. Subsequent publication commits add only verification scripts/docs/evidence. Hosted PR CI is recorded separately on its published head; it does not replace these browser executions.
+The full backend/contract suite ran during integration against the unchanged backend tree at5205316. It was not rerun merely to change the enclosing commit hash: `git diff 5205316 -- backend analytics .github` is empty. Final frontend tests/build and the repeated full Chrome workflow use exactly the application code in2b140d7, including the responsive authentication correction. The earlier64c32cf run is retained as historical local evidence. Subsequent publication commits add only verification docs/evidence. Hosted PR CI is recorded separately in PR36 on its published head; it does not replace these browser executions. The earlier6c820c8 CI run passed both jobs and is not counted as CI for a later head.
 
 Chrome used an owned fresh profile and the production preview at15882 with the real API at15881. The ten groups covered registered assets/readings/analytics/history; worker-created incident evidence; task creation from incident; assignment, start and required completion notes; required cancellation reason; task409 with retained draft/blocked saving/explicit review; incident409 refresh; reader permissions; sample task/history pagination; What-if capture/reuse and stale clearing; refresh/session restoration; actual offline error while the owned backend was stopped; restart persistence; and mobile navigation without horizontal overflow. Additional Chrome execution verified invalid credentials, actual404 unknown snapshot, expiry and revoked-token401. A separate read-only run traversed25 readings and more than20 incident events/evidence records, including historical inspection and return to latest. The workflow uses genuine persisted incident/task identities produced from **synthetic representative telemetry and assumed detector rules**, not field incidents or physical validation.
 
@@ -70,14 +71,14 @@ Before/after the final actual backend restart, **all19 database tables** had ide
 
 | Table | Before | After |
 | --- | ---: | ---: |
-| assets / asset_configurations | 6 / 9 | 6 / 9 |
-| telemetry_readings / telemetry_processing_jobs / analytics_results | 44 / 44 / 44 | 44 / 44 / 44 |
-| analytics_streams / analytics_states | 6 / 9 | 6 / 9 |
-| incidents / incident_events / incident_evidence | 9 / 70 / 63 | 9 / 70 / 63 |
-| maintenance_tasks / maintenance_task_history | 71 / 156 | 71 / 156 |
-| what_if_snapshots | 5 | 5 |
-| detector_controls / detector_epochs / incident_deliveries | 5 / 5 / 70 | 5 / 5 / 70 |
-| incident_operations / incident_operators / alembic_version | 12 / 3 / 1 | 12 / 3 / 1 |
+| assets / asset_configurations | 7 / 10 | 7 / 10 |
+| telemetry_readings / telemetry_processing_jobs / analytics_results | 47 / 47 / 47 | 47 / 47 / 47 |
+| analytics_streams / analytics_states | 7 / 10 | 7 / 10 |
+| incidents / incident_events / incident_evidence | 11 / 76 / 67 | 11 / 76 / 67 |
+| maintenance_tasks / maintenance_task_history | 94 / 206 | 94 / 206 |
+| what_if_snapshots | 6 | 6 |
+| detector_controls / detector_epochs / incident_deliveries | 6 / 6 / 76 | 6 / 6 / 76 |
+| incident_operations / incident_operators / alembic_version | 15 / 3 / 1 | 15 / 3 / 1 |
 
 These are **synthetic QA database** comparisons. No development backup was read/restored, no development migration or restart was performed, and no claim is made about preservation of all development/production records. Credential expiry/revocation tests deliberately changed only owned QA operators outside the restart comparison.
 
@@ -96,4 +97,4 @@ For any later authorized deployment, A must first back up and inventory the actu
 
 ## Ready-to-send handover (not sent)
 
-Person D's combined app candidate retains C's rebuilt workspace and connects it to the implemented backend incident, What-if and maintenance contracts. Backend354, frontend99 and sample mapper3 tests pass; lint/build, migrations and populated preservation pass. Actual Chrome completed incident-linked tasks, independent acknowledgement, owner/status/required notes, conflicts, pagination, expiry/revocation/error handling, refresh and real backend restart. All19 isolated table hashes/counts match across restart. Source64c32cf uses backend5205316 (identical runtime to A's currentfae2151) and C frontend4b5709d. The draft is stacked on A's backend; review that dependency, then retarget only after it reaches main. C: review the frontend adoption and UX. A: review backend/migration prerequisites and correct the blanket D acceptance attribution in your new report. Docker/shared deployment, production SSO/physical validation and the new recovered/interrupted investigation policy remain unresolved. No teammate branch, main or development database was modified, and nothing was merged/deployed.
+Person D's combined app candidate in draftPR36 retains C's rebuilt workspace and connects it to the implemented backend incident, What-if and maintenance contracts. Backend354, frontend99 and sample mapper3 tests pass; lint/build, migrations and populated preservation pass. Actual Chrome completed incident-linked tasks, independent acknowledgement, owner/status/required notes, conflicts, pagination, expiry/revocation/error handling, refresh and real backend restart. All19 isolated table hashes/counts match across restart. Source2b140d7 uses backend5205316 (identical runtime to A's currentfae2151) and C frontend4b5709d. The draft is stacked on A's backend; review that dependency, then retarget only after it reaches main. C: review the frontend adoption and UX. A: review backend/migration prerequisites and correct the blanket D acceptance attribution in your new report. Docker/shared deployment, production SSO/physical validation and the new recovered/interrupted investigation policy remain unresolved. No teammate branch, main or development database was modified, and nothing was merged/deployed.

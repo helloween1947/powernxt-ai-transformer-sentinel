@@ -7,7 +7,7 @@
     "sha256": "27a872a391981ce149a91fa6d47ea25f073d0cd6e1fc8d04be10bc4a536ee4fd"
   },
   "analytics_results": {
-    "count": 44,
+    "count": 47,
     "columns": [
       "id",
       "reading_id",
@@ -19,10 +19,10 @@
       "payload",
       "created_at"
     ],
-    "sha256": "536cc853227ee402ada63300a7786a7b8b9b550407c301ca2a677ee33b3ce4bd"
+    "sha256": "435f794efe68fc852c3b7d528f9b029b560d0d27a764d434d6277cf251f64f0e"
   },
   "analytics_states": {
-    "count": 9,
+    "count": 10,
     "columns": [
       "asset_id",
       "source",
@@ -35,10 +35,10 @@
       "advances",
       "updated_at"
     ],
-    "sha256": "59f07dfd9fe5a04a7cae7802c934069be4c6bd2bc3f3625331fabc1d5da72e64"
+    "sha256": "ff043db28d547e6887a217b8c0c8c84cb4b83935668a7c22b6ede98fb6df8176"
   },
   "analytics_streams": {
-    "count": 6,
+    "count": 7,
     "columns": [
       "asset_id",
       "source",
@@ -51,10 +51,10 @@
       "lease_until",
       "advances"
     ],
-    "sha256": "50c424523262ee57dfd643bdf243b3d273a5f63e49523b14b6bcbbd24ed1f253"
+    "sha256": "b510f50c9e48344549b90b33e79ff2c55a74ad261062ad259cef1eed4f5bad59"
   },
   "asset_configurations": {
-    "count": 9,
+    "count": 10,
     "columns": [
       "id",
       "asset_id",
@@ -70,10 +70,10 @@
       "thermal_parameters",
       "parameter_provenance"
     ],
-    "sha256": "ba8720c56dda6376d567d76c4ffdb521bc0af21ba4ea8800828e196a05ef62b5"
+    "sha256": "882ee7c7d755934b92662ab5513ebf3422972dca72ed517de76f913f1f01b6f2"
   },
   "assets": {
-    "count": 6,
+    "count": 7,
     "columns": [
       "asset_id",
       "name",
@@ -81,10 +81,10 @@
       "timezone",
       "created_at"
     ],
-    "sha256": "b1834b8dbd05fa1f721067f6174323aa6bce89cc801136896fd5f7b47772e4fc"
+    "sha256": "3cb3732602229301df6aca3bb5b38adb1cf6a857ec916d10f61801be3f87844d"
   },
   "incident_deliveries": {
-    "count": 70,
+    "count": 76,
     "columns": [
       "event_id",
       "claim_token",
@@ -92,10 +92,10 @@
       "attempts",
       "delivered_at"
     ],
-    "sha256": "018ddd0b3ffeec8726e4fbe73d2c30561f8d0a3f21ff030a16616e260da41dd4"
+    "sha256": "e66ee814d245646de3bf50803765484bc63500ca5f4be0703034ab1f705092a7"
   },
   "incident_detector_controls": {
-    "count": 5,
+    "count": 6,
     "columns": [
       "asset_id",
       "source",
@@ -104,10 +104,10 @@
       "version",
       "continuity_break"
     ],
-    "sha256": "c3c3fdf8d079d930aeb84cce686743e7b0a06c9c492ddaddb5052b240f9be7d7"
+    "sha256": "fae6128372610770e98b450ff28543797a21105608a595d91a837da0e3ffa5ef"
   },
   "incident_detector_epochs": {
-    "count": 5,
+    "count": 6,
     "columns": [
       "id",
       "asset_id",
@@ -126,10 +126,10 @@
       "boundary_time",
       "created_at"
     ],
-    "sha256": "ad6f71b1f15ac2a09a424b98aba816b2ecad0c9caf70642413bcfc2be5525b4d"
+    "sha256": "b391eaf18ba4ed5464ec6ccd7792241c4da22b04e02bb71646ff8d16f48d4463"
   },
   "incident_events": {
-    "count": 70,
+    "count": 76,
     "columns": [
       "event_id",
       "incident_id",
@@ -140,10 +140,10 @@
       "payload",
       "recorded_at"
     ],
-    "sha256": "d8f604ca2b34f838535af86009b8842c5988ab334b909843d16c386146cfd27d"
+    "sha256": "4f1b6f1f30186ee9a4cc6e593144b719d75fed400dbd1a95fc74f1496e28401e"
   },
   "incident_evidence": {
-    "count": 63,
+    "count": 67,
     "columns": [
       "id",
       "incident_id",
@@ -155,10 +155,10 @@
       "payload",
       "recorded_at"
     ],
-    "sha256": "6ac99d277acf7f423c1d53fa846d6e4895044658d720a9d11b92791d9f08c97b"
+    "sha256": "70b17e27460f98d7a2de47e475335013575b26eae697b7f52c1cc8e1c6d14b0b"
   },
   "incident_operations": {
-    "count": 12,
+    "count": 15,
     "columns": [
       "scope",
       "key",
@@ -167,7 +167,7 @@
       "response",
       "created_at"
     ],
-    "sha256": "3ea6b92e43819a269e46987bb755ea386f9b86d1f0d676f3a3601c685961491f"
+    "sha256": "39689d1f87dbee8f17abbe4b3936bfba67d92953ca3d22bde0e3d8e9d6c49c0e"
   },
   "incident_operators": {
     "count": 3,
@@ -179,10 +179,10 @@
       "active",
       "expires_at"
     ],
-    "sha256": "3752781c111f2db137276495ea6c0c78d2b6122a1c17f931ae994d06b35ebdf2"
+    "sha256": "c0a4a97a7837622170cfd5afbe165807c534c0b8a4c13ecccae54e846de706df"
   },
   "incidents": {
-    "count": 9,
+    "count": 11,
     "columns": [
       "id",
       "asset_id",
@@ -202,10 +202,10 @@
       "acknowledged_at",
       "actor_id"
     ],
-    "sha256": "1a8e4b6713d077c7a6fe42e9efec38c9cb62e0e58adaa896daa700f2d2bba402"
+    "sha256": "baafb7272fc19cde8393ca5006503fd023f02925a215b6240e20642b07b5732f"
   },
   "maintenance_task_history": {
-    "count": 156,
+    "count": 206,
     "columns": [
       "id",
       "task_id",
@@ -222,10 +222,10 @@
       "created_at",
       "actor_id"
     ],
-    "sha256": "9c0e71ad8ac9624128471291dbd41b29f169b4211d1ebf0c05a6b2162656d663"
+    "sha256": "3be66d0844371059245ad1dbaa2184dcc2c23320d3e8a86431b54c37afe58d79"
   },
   "maintenance_tasks": {
-    "count": 71,
+    "count": 94,
     "columns": [
       "id",
       "asset_id",
@@ -244,10 +244,10 @@
       "created_by_id",
       "creation_request"
     ],
-    "sha256": "831b0240eaf682fe22f1a508b0b2cacd1352d8b0a8dbe72eda0b0fa33825e7fc"
+    "sha256": "76ff960f2c3c3e7abf0a8863fcba2b60984a49fe2381a716c9820ffdbfa1184e"
   },
   "telemetry_processing_jobs": {
-    "count": 44,
+    "count": 47,
     "columns": [
       "id",
       "reading_id",
@@ -261,10 +261,10 @@
       "last_error",
       "completed_at"
     ],
-    "sha256": "6ddc2bf396d2b90001fe772ce866285e297913794aa61ede9a5d8c2785968656"
+    "sha256": "186d27a23123e1f49edf7f612f40eb9f0a26ed5697188e17b4d1e9412c343f1d"
   },
   "telemetry_readings": {
-    "count": 44,
+    "count": 47,
     "columns": [
       "id",
       "asset_id",
@@ -281,10 +281,10 @@
       "quality_flags",
       "out_of_order"
     ],
-    "sha256": "a24348fe5234ef7c5ab37dd555898481d52c5f543d526ed1c1c4971fe10ea3bb"
+    "sha256": "ff469014644a65b85635e533f249fd5495912b1295bb4ce574439e1dacbeef4a"
   },
   "what_if_snapshots": {
-    "count": 5,
+    "count": 6,
     "columns": [
       "id",
       "result_id",
@@ -299,6 +299,6 @@
       "state",
       "captured_at"
     ],
-    "sha256": "a08676a57833022e418dfe26a3ae3d968135abd7bc51fa5215bc42404f968e49"
+    "sha256": "a4d0f509729909ef8b2f9c1f0ac1c1c3aee99f4c9bef7d875b7a1734961590fb"
   }
 }

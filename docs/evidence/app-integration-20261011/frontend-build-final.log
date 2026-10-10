@@ -10,7 +10,7 @@ computing gzip size...
 dist/index.html                                        0.93 kB │ gzip:   0.53 kB
 dist/assets/future-capability-contracts-ByR-NjYh.md    6.91 kB
 dist/assets/index-DOvkl1k6.css                        71.99 kB │ gzip:  14.58 kB
-dist/assets/index-DGZC_G0M.js                        611.96 kB │ gzip: 190.32 kB
-dist/assets/TransformerScene-XZCVEdd5.js             937.17 kB │ gzip: 249.16 kB
+dist/assets/index-u0HuB3RA.js                        612.00 kB │ gzip: 190.34 kB
+dist/assets/TransformerScene-BQTuacxy.js             937.17 kB │ gzip: 249.16 kB
 
-✓ built in 442ms
+✓ built in 458ms
