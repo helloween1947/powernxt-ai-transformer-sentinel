@@ -9,6 +9,16 @@ const fields = [
   ['thermal_assessment.thermal_residual_c', 'Observed minus predicted oil temperature', 'thermal_residual', 'C'],
 ];
 
+function assertResultProvenance(result) {
+  if (!result) return;
+  const metadata = result.payload?.metadata;
+  for (const field of ['model_id', 'model_version', 'parameter_version']) {
+    if (typeof result[field] !== 'string' || !result[field].trim() || metadata?.[field] !== result[field]) {
+      throw new Error('Stored analytics payload model or parameter identity does not match the result.');
+    }
+  }
+}
+
 export function adaptReadingAnalytics(envelope) {
   if (envelope.schema_version !== '1.0.0') throw new Error('Unsupported analytics API version.');
   const result = envelope.result;
@@ -18,6 +28,7 @@ export function adaptReadingAnalytics(envelope) {
   if (result && result.reading_id !== envelope.reading_id) {
     throw new Error('Stored analytics references a different reading.');
   }
+  assertResultProvenance(result);
   const payload = result?.payload;
   const metadata = payload?.metadata;
   if (metadata && (
@@ -58,6 +69,7 @@ export function adaptLatestAnalytics(envelope) {
   if (envelope.result && (envelope.result.schema_version !== 'stored-reading-result-1.1.0' || envelope.result.reading_id !== envelope.latest_completed_reading_id)) {
     throw new Error('Latest completed analytics has unsupported version or reading identity.');
   }
+  assertResultProvenance(envelope.result);
   return { ...envelope,
     lagging: envelope.latest_telemetry_reading_id !== envelope.latest_completed_reading_id,
   };

@@ -1,5 +1,47 @@
 # Current PR16 validation
 
+## Local C review of correctness audit F2 — 10 October 2026
+
+Publication validation: main cbdd7c4 contains no equivalent correction. The
+independent guard passed 38 declared tests, lint/build and fresh actual Chrome
+against supported current-main API code on a copied D004 database, temporary
+ports3001/8001. Real six-reading results, unavailable metrics, CORS, stream
+isolation, cancellation and offline recovery passed. Separately labelled
+contradictory-response fixtures for per-reading/latest-completed endpoints
+produced visible errors with telemetry retained; real responses recovered.
+Evidence: local ignored integration-work/f2-review-results/. This supersedes
+the earlier no-browser/uncommitted review status below. No A service, deployment
+or original database was modified; publication is for review, not deployment.
+
+Reviewed the supplied team handoff, audit report and structured evidence against
+fetched main `f52f56515c38fce55451fd499be81ef2508e6677`. The external audit
+worktree/source patch is not present on this laptop; its supplied hashes are
+not enough to review the exact patch. This is an independent scoped correction
+on local `codex/personc-analytics-provenance-guard`, not a copy of that patch.
+
+The reported defect reproduces: 35 baseline declared tests pass, but three
+new provenance regression groups fail before correction. Both per-reading and
+latest-completed adapters now require payload metadata model_id, model_version
+and parameter_version to equal the outer stored-result fields. Missing identity
+fails visibly; valid matching model versions are not pinned to 1.0.1. Pending
+and null results remain supported. No stored result/state is relabelled.
+
+After correction, **38 declared tests, lint and production build pass**;
+diff checks pass. The regression tests cover contradictory references, missing
+identity, matching future references and absent results. This is fixture/unit
+validation; no new live browser/API validation or deployment was performed.
+Local port8000 was not reachable during this review; it was not restarted.
+External audit Docker runtime hashes, maintenance404 and readings20–25 belong
+to the reported other-laptop setup and are not new local observations here.
+
+Changes remain uncommitted/undeployed pending review. Environment files,
+Date.now()), backend code, database records and earlier handover branches are
+preserved. No push, PR mutation, migration, service restart or teammate message.
+This fixes the scoped identity mismatch, not exhaustive payload-schema
+validation. What-if/Restore cooling and fixture acknowledgements stay
+illustrative. Genuine UI awaits reviewed API/migration integration; phone work
+remains deferred. Earlier evidence below retains its original scope/date.
+
 **PR19 reconciliation:** main `7f5aad7` already contains merged PR16.
 See [new Linux verification](../docs/pr19-main-reconciliation.md) for the resolved merge and its
 limits. Windows/browser results below remain historical evidence for their

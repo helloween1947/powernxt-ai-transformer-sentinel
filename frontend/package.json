@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test tests/telemetryAdapter.test.js tests/maintenance.test.js tests/analytics.test.js tests/storedStream.test.js"
+    "test": "node --test tests/telemetryAdapter.test.js tests/maintenance.test.js tests/analytics.test.js tests/storedStream.test.js tests/analyticsAudit.test.js"
   },
   "dependencies": {
     "react": "^19.2.8",
