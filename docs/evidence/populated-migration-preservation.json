@@ -1,22 +1,558 @@
 {
   "migration_start": "d004_worker_maintenance",
+  "final_head": "d006_combined_integration",
+  "schema": "rehearsal_aa196f830fbc45f6b5bac8020cba436d",
+  "preservation_status": "PASS",
+  "tables_verified_count": 9,
+  "d004_table_inventory": {
+    "assets": {
+      "columns_count": 5,
+      "row_count": 1,
+      "table_hash": "1b31a9b7be6149e0be3f0a8157a864919b808a4058d5514af601c1319f25a1d3"
+    },
+    "asset_configurations": {
+      "columns_count": 13,
+      "row_count": 1,
+      "table_hash": "c7961d8cd419ecea41dcec03886b8b2d626a5ac7918024e832a555c65d435c38"
+    },
+    "telemetry_readings": {
+      "columns_count": 14,
+      "row_count": 1,
+      "table_hash": "d7b82a8c71fd3a7c2d68f36f2a7514634a8b0eb700d8f43ad82697af22a5c135"
+    },
+    "telemetry_processing_jobs": {
+      "columns_count": 11,
+      "row_count": 1,
+      "table_hash": "190bf9c055a6c17e27df1a5298935f377cd8c053d531d38fe36fe414abc7cf85"
+    },
+    "analytics_results": {
+      "columns_count": 9,
+      "row_count": 1,
+      "table_hash": "5f7bd1661977339e6729355963ca05ab75f87fe9efa1a8ff788bb2eb8fd72187"
+    },
+    "analytics_streams": {
+      "columns_count": 10,
+      "row_count": 1,
+      "table_hash": "2eefc204e1eab1c08d2328d69acad18a96ac6f93a2ad239006a025015ab35179"
+    },
+    "analytics_states": {
+      "columns_count": 10,
+      "row_count": 1,
+      "table_hash": "5bafe8e5a70985236f749e0ddd3fabb002d58869d599704621b05dbf0ffb67b8"
+    },
+    "maintenance_tasks": {
+      "columns_count": 12,
+      "row_count": 1,
+      "table_hash": "c77b8fe1be7dd56fde58d17d1e38d6169dfec1b015ec0f52015a4a0701ed35ca"
+    },
+    "maintenance_task_history": {
+      "columns_count": 13,
+      "row_count": 1,
+      "table_hash": "e18d578c1afc3493c03b5371ae3093fd74d5f80f01285b7d4251fed0be745d91"
+    }
+  },
+  "d006_additive_tables_count": 9,
+  "d006_additive_tables": {
+    "incident_operators": {
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "name",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "role",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "token_hash",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "active",
+          "data_type": "boolean",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "expires_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_detector_epochs": {
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "asset_id",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "source",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "run_key",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "configuration_version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "model_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "parameter_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "detector_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "policy",
+          "data_type": "json",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "policy_fingerprint",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "context",
+          "data_type": "json",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "previous_twin_state",
+          "data_type": "json",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "actor_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "reason",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "boundary_time",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_detector_controls": {
+      "columns": [
+        {
+          "column_name": "asset_id",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "source",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "run_key",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "epoch_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "continuity_break",
+          "data_type": "boolean",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incidents": {
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "asset_id",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "measurement_source",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "run_key",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "detector_epoch",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "detector_episode_key",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "category",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "severity",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "condition_status",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "monitoring_status",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "opened_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "recovered_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "last_evaluated_measurement_time",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "last_evidence_status",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "acknowledged_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "actor_id",
+          "data_type": "uuid",
+          "is_nullable": "YES"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_evidence": {
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "bigint",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "incident_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "incident_version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "result_id",
+          "data_type": "bigint",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "reading_id",
+          "data_type": "bigint",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "detector_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "policy_fingerprint",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "payload",
+          "data_type": "json",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "recorded_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_events": {
+      "columns": [
+        {
+          "column_name": "event_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "incident_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "incident_version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "event_type",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "evidence_id",
+          "data_type": "bigint",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "actor_id",
+          "data_type": "uuid",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "payload",
+          "data_type": "json",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "recorded_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_operations": {
+      "columns": [
+        {
+          "column_name": "scope",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "key",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "actor_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "fingerprint",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "response",
+          "data_type": "json",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    },
+    "incident_deliveries": {
+      "columns": [
+        {
+          "column_name": "event_id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "claim_token",
+          "data_type": "uuid",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "lease_until",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "attempts",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "delivered_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES"
+        }
+      ],
+      "row_count": 0
+    },
+    "what_if_snapshots": {
+      "columns": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "result_id",
+          "data_type": "bigint",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "asset_id",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "source",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "run_key",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "configuration_version",
+          "data_type": "integer",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "model_id",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "model_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "parameter_version",
+          "data_type": "character varying",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "measurement_time",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "state",
+          "data_type": "json",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "captured_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ],
+      "row_count": 0
+    }
+  },
+  "preservation_checks": [
+    "assets: all 1 pre-existing rows preserved identically",
+    "asset_configurations: all 1 pre-existing rows preserved identically",
+    "telemetry_readings: all 1 pre-existing rows preserved identically",
+    "telemetry_processing_jobs: all 1 pre-existing rows preserved identically",
+    "analytics_results: all 1 pre-existing rows preserved identically",
+    "analytics_streams: all 1 pre-existing rows preserved identically",
+    "analytics_states: all 1 pre-existing rows preserved identically",
+    "maintenance_tasks: all 1 pre-existing rows preserved identically",
+    "maintenance_task_history: all 1 pre-existing rows preserved identically",
+    "Sample maintenance tasks remain unlinked (incident_id is null)"
+  ],
   "original_records": {
     "assets": [
       {
-        "name": "Historical migration fixture",
-        "asset_id": "d-review-existing",
-        "location": "Isolated synthetic test",
+        "name": "Historical D004 Fixture",
+        "asset_id": "d004-preservation-fixture",
+        "location": "Substation Rehearsal",
         "timezone": "UTC",
-        "created_at": "2026-10-10T16:30:08.129415+00:00"
+        "created_at": "2026-10-10T17:02:23.364338+00:00"
       }
     ],
     "asset_configurations": [
       {
         "id": 1,
         "version": 1,
-        "asset_id": "d-review-existing",
+        "asset_id": "d004-preservation-fixture",
         "rated_kva": 1000,
-        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
         "cooling_type": "ONAN",
         "rated_current_a": 52.49,
         "rated_voltage_v": 11000,
@@ -32,58 +568,105 @@
         "id": 1,
         "source": "device",
         "run_key": "",
-        "asset_id": "d-review-existing",
-        "message_id": "73d086ee-71eb-41ec-ae0d-f46a5998bab1",
-        "arrival_time": "2026-10-10T16:30:08.129415+00:00",
+        "asset_id": "d004-preservation-fixture",
+        "message_id": "41849b41-fdf5-44a6-a16d-5432cd545696",
+        "arrival_time": "2026-10-10T17:02:23.364338+00:00",
         "out_of_order": false,
         "quality_flags": [],
         "schema_version": "1.0.0",
-        "measurement_time": "2026-10-10T16:30:08.129415+00:00",
+        "measurement_time": "2026-01-01T00:00:00+00:00",
         "original_payload": {},
-        "payload_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "payload_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "normalized_telemetry": {},
         "configuration_version": 1
+      }
+    ],
+    "telemetry_processing_jobs": [
+      {
+        "id": 1,
+        "status": "completed",
+        "attempts": 1,
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "last_error": null,
+        "reading_id": 1,
+        "claim_token": null,
+        "lease_until": null,
+        "available_at": "2026-10-10T17:02:23.364338+00:00",
+        "completed_at": "2026-01-01T00:00:02+00:00",
+        "state_policy": "forward_only"
       }
     ],
     "analytics_results": [
       {
         "id": 1,
-        "status": "unavailable",
-        "payload": {},
-        "model_id": "historical-migration-fixture",
-        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "status": "completed",
+        "payload": {
+          "top_oil_c": 55.4
+        },
+        "model_id": "stored-reading-top-oil-1.0.1",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
         "reading_id": 1,
-        "model_version": "original-fixture-version",
-        "schema_version": "fixture",
+        "model_version": "1.0.1",
+        "schema_version": "result-1.0.0",
         "parameter_version": "assumed"
+      }
+    ],
+    "analytics_streams": [
+      {
+        "source": "device",
+        "run_key": "",
+        "advances": 1,
+        "asset_id": "d004-preservation-fixture",
+        "lease_until": "2026-01-01T00:00:00+00:00",
+        "active_token": null,
+        "active_job_id": null,
+        "last_identity": null,
+        "watermark_time": "2026-01-01T00:00:00+00:00",
+        "watermark_reading_id": 1
+      }
+    ],
+    "analytics_states": [
+      {
+        "state": {
+          "temperature": 55.4
+        },
+        "source": "device",
+        "run_key": "",
+        "advances": 1,
+        "asset_id": "d004-preservation-fixture",
+        "model_id": "stored-reading-top-oil-1.0.1",
+        "updated_at": "2026-10-10T17:02:23.364338+00:00",
+        "model_version": "1.0.1",
+        "parameter_version": "assumed",
+        "configuration_version": 1
       }
     ],
     "maintenance_tasks": [
       {
-        "id": "071bd27b-5df3-47ee-b5b3-fd581a29da86",
-        "notes": "Historical notes",
-        "owner": "Demo label",
-        "action": "Preserve sample",
+        "id": "bdb8990f-fa29-4cfa-a64b-fc2b53e39502",
+        "notes": "Initial notes",
+        "owner": "Technician A",
+        "action": "Inspect transformer",
         "status": "open",
-        "version": 2,
-        "alert_id": "sample-existing-review",
-        "asset_id": "d-review-existing",
-        "created_at": "2026-10-10T16:30:08.129415+00:00",
-        "updated_at": "2026-10-10T16:30:08.129415+00:00",
+        "version": 1,
+        "alert_id": "sample-d004",
+        "asset_id": "d004-preservation-fixture",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "updated_at": "2026-10-10T17:02:23.364338+00:00",
         "alert_source": "sample",
-        "alert_summary": "Synthetic migration fixture"
+        "alert_summary": "Historical sample alert"
       }
     ],
     "maintenance_task_history": [
       {
         "id": 1,
-        "actor": "Demo label",
-        "notes": "Historical notes",
-        "task_id": "071bd27b-5df3-47ee-b5b3-fd581a29da86",
-        "version": 2,
-        "new_owner": "Demo label",
-        "created_at": "2026-10-10T16:30:08.129415+00:00",
-        "event_type": "updated",
+        "actor": "Technician A",
+        "notes": "Initial notes",
+        "task_id": "bdb8990f-fa29-4cfa-a64b-fc2b53e39502",
+        "version": 1,
+        "new_owner": "Technician A",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "event_type": "created",
         "new_status": "open",
         "previous_notes": null,
         "previous_owner": null,
@@ -92,9 +675,148 @@
       }
     ]
   },
-  "final_head": "d006_combined_integration",
-  "checks": [
-    "historical fields unchanged",
-    "additive fields null"
-  ]
+  "upgraded_records": {
+    "assets": [
+      {
+        "name": "Historical D004 Fixture",
+        "asset_id": "d004-preservation-fixture",
+        "location": "Substation Rehearsal",
+        "timezone": "UTC",
+        "created_at": "2026-10-10T17:02:23.364338+00:00"
+      }
+    ],
+    "asset_configurations": [
+      {
+        "id": 1,
+        "version": 1,
+        "asset_id": "d004-preservation-fixture",
+        "rated_kva": 1000,
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "cooling_type": "ONAN",
+        "rated_current_a": 52.49,
+        "rated_voltage_v": 11000,
+        "measurement_side": "primary",
+        "operational_limits": {},
+        "thermal_parameters": {},
+        "voltage_convention": "line_to_line",
+        "parameter_provenance": {}
+      }
+    ],
+    "telemetry_readings": [
+      {
+        "id": 1,
+        "source": "device",
+        "run_key": "",
+        "asset_id": "d004-preservation-fixture",
+        "message_id": "41849b41-fdf5-44a6-a16d-5432cd545696",
+        "arrival_time": "2026-10-10T17:02:23.364338+00:00",
+        "out_of_order": false,
+        "quality_flags": [],
+        "schema_version": "1.0.0",
+        "measurement_time": "2026-01-01T00:00:00+00:00",
+        "original_payload": {},
+        "payload_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_telemetry": {},
+        "configuration_version": 1
+      }
+    ],
+    "telemetry_processing_jobs": [
+      {
+        "id": 1,
+        "status": "completed",
+        "attempts": 1,
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "last_error": null,
+        "reading_id": 1,
+        "claim_token": null,
+        "lease_until": null,
+        "available_at": "2026-10-10T17:02:23.364338+00:00",
+        "completed_at": "2026-01-01T00:00:02+00:00",
+        "state_policy": "forward_only"
+      }
+    ],
+    "analytics_results": [
+      {
+        "id": 1,
+        "status": "completed",
+        "payload": {
+          "top_oil_c": 55.4
+        },
+        "model_id": "stored-reading-top-oil-1.0.1",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "reading_id": 1,
+        "model_version": "1.0.1",
+        "schema_version": "result-1.0.0",
+        "parameter_version": "assumed"
+      }
+    ],
+    "analytics_streams": [
+      {
+        "source": "device",
+        "run_key": "",
+        "advances": 1,
+        "asset_id": "d004-preservation-fixture",
+        "lease_until": "2026-01-01T00:00:00+00:00",
+        "active_token": null,
+        "active_job_id": null,
+        "last_identity": null,
+        "watermark_time": "2026-01-01T00:00:00+00:00",
+        "watermark_reading_id": 1
+      }
+    ],
+    "analytics_states": [
+      {
+        "state": {
+          "temperature": 55.4
+        },
+        "source": "device",
+        "run_key": "",
+        "advances": 1,
+        "asset_id": "d004-preservation-fixture",
+        "model_id": "stored-reading-top-oil-1.0.1",
+        "updated_at": "2026-10-10T17:02:23.364338+00:00",
+        "model_version": "1.0.1",
+        "parameter_version": "assumed",
+        "configuration_version": 1
+      }
+    ],
+    "maintenance_tasks": [
+      {
+        "id": "bdb8990f-fa29-4cfa-a64b-fc2b53e39502",
+        "notes": "Initial notes",
+        "owner": "Technician A",
+        "action": "Inspect transformer",
+        "status": "open",
+        "version": 1,
+        "alert_id": "sample-d004",
+        "asset_id": "d004-preservation-fixture",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "updated_at": "2026-10-10T17:02:23.364338+00:00",
+        "incident_id": null,
+        "alert_source": "sample",
+        "alert_summary": "Historical sample alert",
+        "created_by_id": null,
+        "creation_request": null,
+        "incident_evidence_id": null
+      }
+    ],
+    "maintenance_task_history": [
+      {
+        "id": 1,
+        "actor": "Technician A",
+        "notes": "Initial notes",
+        "task_id": "bdb8990f-fa29-4cfa-a64b-fc2b53e39502",
+        "version": 1,
+        "actor_id": null,
+        "new_owner": "Technician A",
+        "created_at": "2026-10-10T17:02:23.364338+00:00",
+        "event_type": "created",
+        "new_status": "open",
+        "previous_notes": null,
+        "previous_owner": null,
+        "identity_source": "demo_header",
+        "previous_status": null
+      }
+    ]
+  }
 }

@@ -178,7 +178,7 @@ Person A has combined your PR #33 (clearing retained analytics after failed pend
 4. Note: Do not touch the running demonstration frontend on port 3000.
 
 #### Required Action
-Please convert PR #33 from Draft to Ready for Review and submit your formal approval:
+PR #33 was authored by Person C and is already published and marked Ready for Review on GitHub. Please execute browser verification against the isolated candidate API (`http://127.0.0.1:8801`) keeping `VITE_DATA_MODE="demo"` (so illustrative mock screens remain stable while Backend readings queries the live API), and provide browser evidence. Note that formal GitHub review approval on PR #33 is owned by Person A and Person D, as authors cannot review their own pull requests.
 URL: https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/33
 ```
 
@@ -206,8 +206,8 @@ Person A has integrated your alignment integration (PR #29), backend PR #32 (inc
 3. Verify that zero extra merge migrations were generated and historical migrations remain immutable.
 
 #### Required Action
-Please convert PR #29 from Draft to Ready for Review, and submit your formal approval on backend PR #32:
-URL: https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/32
+Person D has already converted PR #29 to Ready for Review and submitted formal APPROVED review `5479811412` on PR #32. Please review Person C's PR #33 and complete verification of the unified integration candidate:
+URL: https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/33
 URL: https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/29
 ```
 
@@ -219,10 +219,11 @@ Before Phase 3 can proceed to protected branch merges or deployment, the followi
 
 1. **Formal Review Submissions on GitHub:**
    - **PR #32 (`feature/persona-model-102-adoption`):** Person D submitted formal APPROVED review `5479811412` on commit `508c7b1`. Person B technical review complete and approved (`docs/personb-phase3-model-review.md`). Formal submission on GitHub remains pending for Person B.
-   - **PR #29 (`feature/persond-alignment-integration`):** Transitioned to Ready for Review by Person D (`codex/persond-phase3-verification`).
-   - **PR #33 (`codex/personc-model-102-compatibility`):** Requires transition from draft and formal approval from Person C and Person A.
+   - **PR #29 (`feature/persond-alignment-integration`):** Transitioned to Ready for Review by Person D (`draft=False`). Awaiting formal review from Person A.
+   - **PR #33 (`codex/personc-model-102-compatibility`):** Transitioned to Ready for Review by Person C (`draft=False`). Awaiting independent review approval from Person A and Person D.
    - **Unified Candidate:** Pinned at `311c10a45f9b5fb5dbef695e2195b58436c0bbdd` / `5ea415aedecf90850209f1358eb4b2091a6bad63`; awaiting unblocked review verification from Person C and Person D.
 2. **Strict No-Merge Constraint:**
    - No branches have been merged into protected branches (`main`, `feature/persona-incident-registry`).
 3. **Strict Development Stack Preservation:**
    - Development services on port 5433, port 8000, and port 3000 remain running undisturbed on schema revision `d004_worker_maintenance`.
+

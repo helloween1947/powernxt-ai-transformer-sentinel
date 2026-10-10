@@ -30,7 +30,7 @@
       "branch": "feature/persond-alignment-integration",
       "head_sha": "3b92b197423a0c4da94bd9c1569e528180fabb24",
       "target_branch": "feature/persona-incident-registry",
-      "draft": true,
+      "draft": false,
       "submitted_reviews_count": 0,
       "ci_status": "4/4 passing",
       "description": "Person D alignment CI integration, isolated preservation runner, and 344-test evidence"
@@ -41,7 +41,15 @@
       "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
       "target_branch": "feature/persona-incident-registry",
       "draft": true,
-      "submitted_reviews_count": 0,
+      "submitted_reviews_count": 1,
+      "submitted_reviews": [
+        {
+          "reviewer": "hramith06",
+          "state": "APPROVED",
+          "review_id": "5479811412",
+          "commit_id": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782"
+        }
+      ],
       "ci_status": "4/4 passing",
       "description": "Model 1.0.2 adoption, admin handover routes, historical 1.0.1 forecast dispatch, and PR30 reading ID query fix"
     },
@@ -50,7 +58,7 @@
       "branch": "codex/personc-model-102-compatibility",
       "head_sha": "4dc7351221357f8ecd2b48d2075c3e7590825b25",
       "target_branch": "main",
-      "draft": true,
+      "draft": false,
       "submitted_reviews_count": 0,
       "ci_status": "2/2 passing",
       "description": "Person C frontend Model 1.0.2 compatibility and clearing retained analytics after failed pending refresh"
@@ -126,10 +134,10 @@
     "npm_build": "PASS (dist built in 671ms)"
   },
   "outstanding_phase2_gates": [
-    "Formal GitHub review submissions from Person B on PR #32",
-    "Formal GitHub review submissions from Person D on PR #32",
-    "Formal GitHub review submissions from Person C and Person A on PR #33",
-    "PR #29, PR #32, and PR #33 transition from Draft to Ready for Review on GitHub",
+    "Formal GitHub review submission from Person B on PR #32 (approved locally in docs/personb-phase3-model-review.md)",
+    "Formal GitHub review submission from Person A on PR #29",
+    "Formal GitHub review submissions from Person A and Person D on PR #33",
+    "Transition of PR #32 from Draft to Ready for Review on GitHub",
     "Protected branch merges (into main and feature/persona-incident-registry) remain blocked until formal reviews are recorded"
   ]
 }

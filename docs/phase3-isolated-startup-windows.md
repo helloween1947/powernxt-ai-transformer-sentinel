@@ -192,9 +192,11 @@ cd frontend
 # Install exact locked dependencies
 npm ci
 
-# Launch test Vite server on non-standard port 3001 pointing to isolated API (port 8801)
+# Launch test Vite server on non-standard port 3001 pointing to isolated API (port 8801).
+# Note: Keep VITE_DATA_MODE=demo so illustrative demo screens remain stable, while the dedicated
+# "Backend readings" and "Backend maintenance" screens query the live isolated API at VITE_API_BASE_URL.
 $env:VITE_API_BASE_URL = "http://127.0.0.1:8801"
-$env:VITE_DATA_MODE = "live"
+$env:VITE_DATA_MODE = "demo"
 npx vite --host localhost --port 3001 --strictPort
 ```
 
