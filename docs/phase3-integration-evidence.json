@@ -1,0 +1,381 @@
+{
+  "schema_version": "persond-phase3-independent-evidence-1.0.0",
+  "recorded_utc": "2026-10-10T16:18:40.925191+00:00",
+  "verdict": "blocked",
+  "requested_candidate": {
+    "ref": "feature/persona-phase3-combined-integration",
+    "sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+    "expected_head": "d006_combined_integration",
+    "source_accessible": false,
+    "verified_source_sha": null
+  },
+  "commands": [
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\fetch.log",
+      "command": "git fetch origin --prune",
+      "exit_code": 0
+    },
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\candidate-object.log",
+      "command": "git cat-file -t 311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+      "exit_code": 128
+    },
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\candidate-branch.log",
+      "command": "git ls-remote origin refs/heads/feature/persona-phase3-combined-integration",
+      "exit_code": 0
+    },
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\candidate-fetch.log",
+      "command": "git fetch origin 311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+      "exit_code": 128
+    },
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\docker.log",
+      "command": "docker version",
+      "exit_code": 1
+    },
+    {
+      "log": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4\\refs.log",
+      "command": "git rev-parse origin/main origin/feature/persona-model-102-adoption origin/feature/persond-alignment-integration origin/codex/personc-model-102-compatibility",
+      "exit_code": 0
+    }
+  ],
+  "raw_log_sha256": {
+    "candidate-branch.log": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "candidate-fetch.log": "c42fd6708d04139c5b35782f15d072daf84805faec200a546c2ec4e8ef735044",
+    "candidate-object.log": "149bdeb683fd8ec69cf35e0c0400f0e71d9c6bc372396be89e20e5a75ee55a8d",
+    "docker.log": "a1383522524a6e835a06d610a947c1a223c70c3d67fa3ffab94367414d7335c6",
+    "fetch.log": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "refs.log": "bfa755a4ba50cce366c76f137d54efd1df27ca20e2c7a98f3bfd46c4507cfa75"
+  },
+  "github_observation": {
+    "recorded": "2026-10-10T21:45:45.6389135+05:30",
+    "identity": "hramith06",
+    "pulls": [
+      {
+        "number": 29,
+        "state": "open",
+        "draft": false,
+        "merged": false,
+        "head": "3b92b197423a0c4da94bd9c1569e528180fabb24",
+        "base": "2e934c85098453db7342ea6ade570759ef4b9161",
+        "head_ref": "feature/persond-alignment-integration",
+        "base_ref": "feature/persona-incident-registry"
+      },
+      {
+        "number": 32,
+        "state": "open",
+        "draft": true,
+        "merged": false,
+        "head": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+        "base": "2e934c85098453db7342ea6ade570759ef4b9161",
+        "head_ref": "feature/persona-model-102-adoption",
+        "base_ref": "feature/persona-incident-registry"
+      },
+      {
+        "number": 33,
+        "state": "open",
+        "draft": true,
+        "merged": false,
+        "head": "4dc7351221357f8ecd2b48d2075c3e7590825b25",
+        "base": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+        "head_ref": "codex/personc-model-102-compatibility",
+        "base_ref": "main"
+      }
+    ],
+    "review": {
+      "id": 5479811412,
+      "state": "APPROVED",
+      "commit_id": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+      "html_url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/32#pullrequestreview-5479811412",
+      "body": "Person D independently reviewed backend source at exact SHA 508c7b1f8d6d76f7e74e47262bfb446a05bbe782. Fresh Phase 2 execution passed 351 backend/contract tests in Asia/Calcutta and 351 in UTC, plus four independent strict-JSON, accepted-HTTP-input and record-preservation probes. PR30's blocked receipt attempts==0, no mutation and independent-stream progress assertions remain intact. Fresh Alembic upgrade/consistency and populated supported-parent checks passed with sole D006. Old configurations/results/states/captures retain exact content; historical dispatch, actual selected capture version, cold start, incident/ack/task independence, gaps and fencing passed. Exact-head hosted checks are green. This approval covers this backend source only. It does not certify the requested Phase 3 candidate 311c10a45f9b5fb5dbef695e2195b58436c0bbdd: its branch/object and A's raw Phase 2 Docker evidence are not available to D, and D's Docker engine is unavailable. Combined Phase 3 Docker/runtime/preservation, C's genuine authenticated UI E2E and rollout gates remain unresolved. No development migration or deployment is authorized by this review.",
+      "user": "hramith06"
+    },
+    "checks": [
+      {
+        "name": "Backend Test Suite (Python 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+        "html_url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/38058009689/job/114230333520"
+      },
+      {
+        "name": "Frontend tests, lint and build",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+        "html_url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/38058009689/job/114230333420"
+      },
+      {
+        "name": "Backend Test Suite (Python 3.12)",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+        "html_url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/38053943201/job/114218477742"
+      },
+      {
+        "name": "Frontend tests, lint and build",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+        "html_url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/actions/runs/38053943201/job/114218477625"
+      }
+    ]
+  },
+  "actual_prerequisite_git_blob_sha256": {
+    "508c7b1f8d6d76f7e74e47262bfb446a05bbe782": {
+      "compose.yaml": "7bdafa8e811d6f8e5e4fb1548b070bcda46821fef3113c2cea1483eda6583bd3",
+      "backend/Dockerfile": "b7859ab364a3e30a3120014072bc7733e8751df9008f224ee5b3f78c736c6ce6",
+      ".dockerignore": "ddb5ed6ee30e58eb5d540b67264f2e6ce4d89e262fbf5bc5a27383892a1e2d38",
+      "backend/.dockerignore": "0b5ad47af8830cfb37fd1fd983288614adb123de1090c97df2a692ecbb37401a"
+    },
+    "3b92b197423a0c4da94bd9c1569e528180fabb24": {
+      "integration/compose.persond-review.yaml": "1aadf3e23519df4623168d2c3a1da9683c16c6446fd3607a51a01ce51c12ddfa",
+      "integration/verify-persond-docker.ps1": "a2ca3b3bc7fbfc824adf8cdc33829f9686145f2c42f12ef008edbe94fd73f823",
+      "integration/verify_combined_records.py": "b1522e0f164d66b7f5a228428be4abbda78bfb14c3e025f2ca373168beecb7c0",
+      "integration/verify_incident_maintenance.py": "a5f51fee496a2f2b41cd735108c7bf7621d6cba6fc9d6c391ece4b3172e2ef31"
+    }
+  },
+  "docker": {
+    "client_version": "29.7.2",
+    "engine_available": false,
+    "build_context_verified_for_candidate": false,
+    "backend_image_id": null,
+    "worker_image_id": null,
+    "container_image_ids": null,
+    "project": null,
+    "volume": null,
+    "build_exit_code": null,
+    "runtime_exit_code": null
+  },
+  "migration": {
+    "candidate_heads": null,
+    "fresh_upgrade_exit_code": null,
+    "consistency_exit_code": null,
+    "historical_migrations_immutable": null,
+    "extra_merge_revisions": null,
+    "development_start_revision_verified": null,
+    "supported_rehearsal_starts": [
+      "d004_worker_maintenance",
+      "a001_incident_registry",
+      "a002_incident_outbox",
+      "d005_incident_tasks",
+      "w001_what_if_snapshots",
+      [
+        "a002_incident_outbox",
+        "d005_incident_tasks"
+      ],
+      [
+        "a002_incident_outbox",
+        "w001_what_if_snapshots"
+      ],
+      [
+        "d005_incident_tasks",
+        "w001_what_if_snapshots"
+      ],
+      [
+        "a002_incident_outbox",
+        "d005_incident_tasks",
+        "w001_what_if_snapshots"
+      ]
+    ]
+  },
+  "phase3_execution": {
+    "fresh_tests_executed": 0,
+    "integration_exit_codes": null,
+    "raw_phase2_docker_evidence_available": false,
+    "browser_executed": false,
+    "genuine_authenticated_ui_e2e_claimed": false
+  },
+  "preservation": {
+    "asset_configurations": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "telemetry_readings": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "telemetry_processing_jobs": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "analytics_results": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "analytics_states": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "analytics_streams": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "maintenance_tasks": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "maintenance_task_history": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incidents": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_evidence": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_events": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_operations": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_detector_controls": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_detector_epochs": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "incident_deliveries": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    },
+    "what_if_snapshots": {
+      "present_in_starting_schema": null,
+      "before_count": null,
+      "after_count": null,
+      "before_hash": null,
+      "retained_hash": null,
+      "field_preservation_verified": false
+    }
+  },
+  "static_prerequisite_findings": [
+    {
+      "owner": "D/A",
+      "finding": "Published record verifier omits jobs, stream/state rows, controls/epochs and incident delivery checkpoints; sample-only seed cannot prove preservation for absent/unseeded categories. Candidate correction status unknown."
+    },
+    {
+      "owner": "D/A",
+      "finding": "Worker running/restart assertion is not interrupted lease recovery/final-fence evidence."
+    },
+    {
+      "owner": "D/A",
+      "finding": "Published incident verifier requests a new1.0.1 detector handover; PR32 rejects this with409 unsupported_model_version. Inspect candidate for existing correction before applying a fix."
+    },
+    {
+      "owner": "A",
+      "finding": "Raw A Phase2 Docker manifests/logs and exact before/after records not supplied."
+    }
+  ],
+  "completed_authorized_actions": {
+    "identity": "hramith06",
+    "pr29_ready": true,
+    "pr29_head": "3b92b197423a0c4da94bd9c1569e528180fabb24",
+    "pr32_approval": {
+      "id": 5479811412,
+      "state": "APPROVED",
+      "commit_id": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+      "url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/32#pullrequestreview-5479811412",
+      "scope": "Previously independently verified Phase2 native backend source only; excludes unavailable Phase3/Docker certification and deployment authorization"
+    },
+    "unified_candidate_review_submitted": false
+  },
+  "historical_results_not_reexecuted": {
+    "phase2_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+    "database_timezones": {
+      "Asia/Calcutta": 351,
+      "UTC": 351
+    },
+    "additional_independent_probes": 4,
+    "report_path": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase2-0b724f1e2cc14b87aeaa9225e99d2cc2\\persond-phase2-independent-verification-20261010.md"
+  },
+  "environment": {
+    "development_contacted": false,
+    "development_migrated": false,
+    "development_restored": false,
+    "development_restarted": false,
+    "owned_services_started": false,
+    "services_stopped": [],
+    "volumes_deleted": false,
+    "process_credentials_only": true,
+    "existing_work_preserved": true,
+    "evidence_directory": "C:\\Users\\hrami\\OneDrive\\Documents\\ChatGPT\\final powernext\\powernxt-ai-transformer-sentinel\\.venv\\persond-phase3-bd9b6dd225484f00b6c7bc98431ba3e4"
+  },
+  "limitations": [
+    "Exact requested source unavailable",
+    "Docker engine unavailable",
+    "Raw A Docker evidence unavailable",
+    "No inference about all development data",
+    "No new browser execution or unimplemented genuine UI coverage",
+    "No merge or deployment"
+  ]
+}
