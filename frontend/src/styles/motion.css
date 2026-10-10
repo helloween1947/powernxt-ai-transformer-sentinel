@@ -1,0 +1,54 @@
+/* State changes share one easing curve. Geometry and data remain exact. */
+:where(body, .topbar, .card, .asset-context, .twin-card, .component-panel,
+  .summary-strip, .condition-rating, .historical-banner, .scene-filter,
+  .capability-evidence, .detail-location, .factor-row) {
+  transition: background-color var(--motion-spatial) var(--motion-ease),
+    border-color var(--motion-micro) var(--motion-ease), color var(--motion-micro) var(--motion-ease);
+}
+:where(button, a, summary, input, select, textarea), .ui-button,
+.bubble-glass, .metric-row, .sidebar nav button {
+  transition: color var(--motion-micro) var(--motion-ease),
+    background-color var(--motion-micro) var(--motion-ease),
+    border-color var(--motion-micro) var(--motion-ease),
+    box-shadow var(--motion-micro) var(--motion-ease);
+}
+:where(h1, h2, h3, strong, small, .availability, .chart-legend, .panel-section-label) {
+  transition: color var(--motion-micro) var(--motion-ease);
+}
+.panel-metric, .detail-value, .summary-strip, .metric-row, .measurement-bubble {
+  font-variant-numeric: tabular-nums;
+}
+.main-content { position: relative; }
+.page-content, .tab-content { min-width: 0; }
+.scene-filter button { position: relative; isolation: isolate; }
+.scene-filter button[aria-pressed='true'] { background: transparent; }
+.selection-surface { position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--surface-hover); pointer-events: none; }
+.control-label { display: inline-flex; align-items: center; gap: 5px; }
+.scene-filter button, .scene-filter button[aria-pressed='true'],
+.view-tabs button, .view-tabs button[aria-selected='true'] { font-weight: 500; }
+.view-tabs button[aria-selected='true']:after { content: none; }
+.tab-indicator { position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--accent); pointer-events: none; }
+
+/* Fixed callout slots: one opacity entrance, no competing layout/float layers. */
+.measurement-bubble { animation: bubble-reveal 160ms var(--motion-ease); perspective: none; }
+.measurement-bubble:hover .bubble-glass { border-color: var(--accent); }
+.bubble-glass { transform: none; }
+.inspection-content { position: relative; }
+.dialog-position { pointer-events: none !important; }
+.dialog-position .dialog-content { animation: none; backdrop-filter: none; }
+@keyframes bubble-reveal { from { opacity: .65; } to { opacity: 1; } }
+.dialog-overlay[data-state='open'] { animation: surface-fade-in 220ms var(--motion-ease); }
+.dialog-overlay[data-state='closed'], .dialog-position[data-state='closed'] {
+  animation: surface-fade-out 160ms ease-in forwards; pointer-events: none !important;
+}
+.dialog-position[data-state='closed'] .dialog-content { pointer-events: none !important; }
+@keyframes surface-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes surface-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@media(prefers-reduced-motion:no-preference) {
+  .app-shell { transition: grid-template-columns var(--motion-spatial) var(--motion-ease); }
+  .sidebar nav button>span, .brand>span:last-child { animation: surface-fade-in 200ms var(--motion-ease); }
+  .capability-record { animation: surface-fade-in 220ms var(--motion-ease); }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createMaintenanceClient } from '../services/maintenanceApi.js';
 import { allowedStatuses, isTerminal, statusLabels } from '../services/maintenanceAdapter.js';
 
@@ -20,7 +20,7 @@ function Pager({ page, busy, onPage, label }) {
   );
 }
 
-function TaskEditor({ task, client, actor, token, onHistory, onRefresh }) {
+function TaskEditor({ task, client, actor, token, canWrite = true, onHistory, onRefresh }) {
   const [saved, setSaved] = useState(task);
   const [draft, setDraft] = useState(() => draftFor(task));
   const [busy, setBusy] = useState(false);
@@ -28,7 +28,7 @@ function TaskEditor({ task, client, actor, token, onHistory, onRefresh }) {
   const [notice, setNotice] = useState('');
   const [conflict, setConflict] = useState(null);
   const lock = useRef(false);
-  const readOnly = isTerminal(saved.status);
+  const readOnly = isTerminal(saved.status) || !canWrite;
   const isAnalytics = saved.incidentId != null || saved.alert?.source === 'analytics';
 
   async function retrieveConflict() {
@@ -117,7 +117,7 @@ function TaskEditor({ task, client, actor, token, onHistory, onRefresh }) {
           )}
         </div>
       )}
-      {readOnly && <p>This completed/cancelled task is read-only.</p>}
+      {readOnly && <p>{isTerminal(saved.status) ? 'This completed/cancelled task is read-only.' : 'Reader role: this task is read-only.'}</p>}
       <form onSubmit={save}>
         <label>
           Assigned person
@@ -165,12 +165,12 @@ function TaskEditor({ task, client, actor, token, onHistory, onRefresh }) {
   );
 }
 
-export default function BackendMaintenance({ operator, initialTaskId = null }) {
-  const client = useMemo(() => createMaintenanceClient({ baseUrl: import.meta.env.VITE_API_BASE_URL }), []);
+export default function BackendMaintenance({ operator, initialTaskId = null, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '' }) {
+  const client = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
   const [mode, setMode] = useState(() => initialTaskId ? 'analytics' : 'sample');
   const [assets, setAssets] = useState(emptyPage);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
-  const [assetId, setAssetId] = useState('');
+  const [assetId, setAssetId] = useState(selectedAssetId);
   const [page, setPage] = useState(emptyPage);
   const [tasksLoaded, setTasksLoaded] = useState(false);
   const [createdTask, setCreatedTask] = useState(null);
@@ -194,6 +194,15 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
   const [history, setHistory] = useState(null);
   const [epoch, setEpoch] = useState(0);
   const lock = useRef(false);
+  useEffect(() => {
+    let cancelled = false;
+    if (initialTaskId && operator?.token) client.task(initialTaskId, operator.token).then(task => {
+      if (!cancelled) setCreatedTask(task);
+    }).catch(error => {
+      if (!cancelled) setError(`Linked task could not be loaded: ${error.message}`);
+    });
+    return () => { cancelled = true; client.cancelAll(); };
+  }, [client, initialTaskId, operator?.token]);
 
   async function perform(action) {
     if (lock.current) return;
@@ -290,13 +299,13 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
   }
 
   return (
-    <section className="panel">
+    <section className="panel backend-workflow">
       <h2>Backend maintenance</h2>
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
         <button
           type="button"
-          onClick={() => { setMode('sample'); setTasksLoaded(false); setPage(emptyPage()); setError(''); setNotice(''); }}
+          onClick={() => { setMode('sample'); setTasksLoaded(false); setPage(emptyPage()); setCreatedTask(null); setHistory(null); setError(''); setNotice(''); }}
           style={{
             background: mode === 'sample' ? '#102b3c' : '#fff',
             color: mode === 'sample' ? '#fff' : '#153c50',
@@ -307,7 +316,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
         </button>
         <button
           type="button"
-          onClick={() => { setMode('analytics'); setTasksLoaded(false); setPage(emptyPage()); setError(''); setNotice(''); }}
+          onClick={() => { setMode('analytics'); setTasksLoaded(false); setPage(emptyPage()); setCreatedTask(null); setHistory(null); setError(''); setNotice(''); }}
           style={{
             background: mode === 'analytics' ? '#0e7490' : '#fff',
             color: mode === 'analytics' ? '#fff' : '#153c50',
@@ -419,7 +428,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
             <label>Task action<input required maxLength={1000} value={analyticsTitle} disabled={busy} onChange={event => setAnalyticsTitle(event.target.value)} /></label>
             <label>Incident summary<textarea required maxLength={500} value={analyticsSummary} disabled={busy} onChange={event => setAnalyticsSummary(event.target.value)} /></label>
             <label>Initial assigned person<input maxLength={100} value={analyticsOwner} disabled={busy} onChange={event => setAnalyticsOwner(event.target.value)} /></label>
-            <button disabled={busy || !operator || !assetId || !analyticsIncidentId.trim() || !analyticsTitle.trim()} type="submit">
+            <button disabled={busy || !['operator', 'admin'].includes(operator?.role) || !assetId || !analyticsIncidentId.trim() || !analyticsTitle.trim()} type="submit">
               Create genuine incident task
             </button>
           </form>
@@ -436,6 +445,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
             client={client}
             actor={actor}
             token={operator?.token}
+            canWrite={createdTask.alert?.source !== 'analytics' || ['operator', 'admin'].includes(operator?.role)}
             onRefresh={refreshed}
             onHistory={viewHistory}
           />
@@ -451,6 +461,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null }) {
           client={client}
           actor={actor}
           token={operator?.token}
+          canWrite={task.alert?.source !== 'analytics' || ['operator', 'admin'].includes(operator?.role)}
           onRefresh={refreshed}
           onHistory={viewHistory}
         />

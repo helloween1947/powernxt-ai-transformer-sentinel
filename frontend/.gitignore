@@ -27,3 +27,7 @@ dist-ssr
 /LOCAL-INTEGRATION.md
 /scripts/start-local-demo.ps1
 /tests/browser-results/
+
+# Frontend helpers are source, not Python lib output.
+!src/lib/
+!src/lib/**

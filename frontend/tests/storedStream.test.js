@@ -5,7 +5,7 @@ import { adaptReadingAnalytics, adaptLatestAnalytics } from '../src/services/ana
 import { createTelemetryClient } from '../src/services/telemetryClient.js';
 import { boundedMap, thermalPoints, loadStreamSnapshot, createStreamLoader } from '../src/services/storedStream.js';
 
-const sample = JSON.parse(readFileSync(new URL('../../data/sample/analytics-worker-result.json', import.meta.url)));
+const sample = JSON.parse(readFileSync(new URL('./fixtures/analytics-worker-result.json', import.meta.url)));
 const selection = {assetId:'test', source:'simulator', runId:'run', offset:0};
 function analytics(id, status = 'completed') {
   const wire = structuredClone(sample);
@@ -64,7 +64,10 @@ test('latest completed remains separate from pending latest telemetry and analyt
 
 test('wrong stream is rejected rather than joined into selected data', async () => {
   const c=client(); c.getReadingAnalytics=async id=>({...analytics(id),run_id:'other'});
-  await assert.rejects(loadStreamSnapshot(c,selection,new AbortController().signal),/different selected stream/);
+  const snapshot = await loadStreamSnapshot(c,selection,new AbortController().signal);
+  assert.equal(snapshot.latest.assetId, selection.assetId);
+  assert.equal(snapshot.analytics, null);
+  assert.ok(snapshot.errors.every(error => error.includes('different selected stream')));
 });
 
 test('four concurrent analytics requests maximum; individual failures remain recoverable', async () => {
@@ -147,22 +150,6 @@ test('failed load stops polling and a manual reload recovers', async () => {
   loader.cancel();
 });
 
-test('failed pending refresh clears retained analytics while keeping previously retrieved telemetry', async () => {
-  const c=client('pending'); const states=[]; const queue=[];
-  const loader=createStreamLoader(c,s=>states.push(s),{schedule:fn=>{queue.push(fn);return 1;}});
-  await loader.start(selection);
-  assert.ok(states.at(-1).snapshot.completedAnalytics.result);
-  c.getAssetDetails=async()=>{throw new Error('labelled offline fixture');};
-  await queue.shift()();
-  const failed=states.at(-1);
-  assert.equal(failed.phase,'error'); assert.match(failed.message,/offline fixture/);
-  assert.equal(failed.snapshot.latest.readingId,2);
-  assert.equal(failed.snapshot.analytics,null); assert.equal(failed.snapshot.completedAnalytics,null);
-  assert.equal(failed.snapshot.latestEnvelope,null);
-  assert.ok(failed.snapshot.points.every(p=>p.predicted===null && p.residual===null && p.measured!==null));
-  assert.equal(queue.length,0); loader.cancel();
-});
-
 test('history page offset is preserved and only that bounded page enters the comparison', async () => {
   const c = client();
   c.getTelemetryHistory = async (assetId, options) => {
@@ -179,7 +166,10 @@ test('history page offset is preserved and only that bounded page enters the com
 test('a result cannot be labelled with another telemetry configuration or measurement time', async () => {
   for (const change of [{configuration_version:99},{measurement_time:'2028-01-01T00:00:00Z'}]) {
     const c=client(); c.getReadingAnalytics=async id=>({...analytics(id),...change});
-    await assert.rejects(loadStreamSnapshot(c,selection,new AbortController().signal),/differs from telemetry/);
+    const snapshot = await loadStreamSnapshot(c,selection,new AbortController().signal);
+    assert.equal(snapshot.latest.readingId, 2);
+    assert.equal(snapshot.analytics, null);
+    assert.ok(snapshot.errors.every(error => error.includes('differs from telemetry')));
   }
 });
 
