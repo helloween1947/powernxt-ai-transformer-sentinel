@@ -39,14 +39,14 @@ export default function OperatorAuthBar({ operator, onLogin, onLogout, busy = fa
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', alignItems: 'center', maxWidth: 'none', margin: 0 }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center', maxWidth: '100%', minWidth: 0, margin: 0 }}>
             <input
               type="password"
               placeholder="Enter Bearer Token"
               value={tokenInput}
               disabled={busy}
               onChange={e => setTokenInput(e.target.value)}
-              style={{ width: '280px', padding: '8px 12px' }}
+              style={{ width: '280px', maxWidth: '100%', padding: '8px 12px' }}
               aria-label="Operator Bearer Token"
             />
             <button disabled={busy || !tokenInput.trim()} type="submit" style={{ whiteSpace: 'nowrap' }}>

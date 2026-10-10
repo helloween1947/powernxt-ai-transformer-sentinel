@@ -184,6 +184,7 @@ async function api(route, method = 'GET', body, token = operator) {
     await button('Open navigation').click();
     await p.getByRole('dialog').getByRole('button', { name: 'Fleet overview', exact: true }).click();
     assert.equal(await p.getByRole('dialog').isVisible(), false);
+    await until(() => p.getByRole('heading', { name: 'Backend maintenance', exact: true }).count().then(n => n === 0), 'Previous view did not exit');
     assert.equal(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2), false);
     await p.screenshot({ path: path.join(dir, 'chrome-mobile.png'), fullPage: true });
     result.checks.push('mobile navigation drawer and no horizontal overflow');
