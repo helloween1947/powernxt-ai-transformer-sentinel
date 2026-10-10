@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 
-HEAD = "d004_worker_maintenance"
+HEAD = "w001_what_if_snapshots"
 
 
 def rows(connection, table):

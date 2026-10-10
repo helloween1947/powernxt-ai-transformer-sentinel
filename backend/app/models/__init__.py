@@ -8,6 +8,7 @@ from backend.app.models.analytics import (
 from backend.app.models.assets import Asset, AssetConfiguration
 from backend.app.models.maintenance import MaintenanceTask, MaintenanceTaskHistory
 from backend.app.models.telemetry import ProcessingJob, TelemetryReading
+from backend.app.models.what_if import WhatIfSnapshot
 
 __all__ = [
     "AnalyticsResult",
@@ -19,4 +20,5 @@ __all__ = [
     "MaintenanceTaskHistory",
     "ProcessingJob",
     "TelemetryReading",
+    "WhatIfSnapshot",
 ]
