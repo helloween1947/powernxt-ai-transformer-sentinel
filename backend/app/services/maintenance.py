@@ -1,4 +1,4 @@
-"""Sample task persistence using A's asset lock and transaction conventions."""
+"""Sample and incident task persistence with independent optimistic workflow."""
 
 from uuid import uuid4
 from datetime import datetime, timezone
@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from backend.app.models.maintenance import MaintenanceTask, MaintenanceTaskHistory
-from backend.app.schemas.maintenance import SampleAlert, TaskCreate, TaskResponse, TaskUpdate, TaskHistoryResponse
+from backend.app.schemas.maintenance import SampleAlert, IncidentAlert, TaskCreate, TaskResponse, TaskUpdate, TaskHistoryResponse
 from backend.app.services.assets import require_asset
 
 
@@ -35,12 +35,20 @@ ALLOWED_TRANSITIONS = {
 }
 
 
-def response_for(task: MaintenanceTask) -> TaskResponse:
+def response_for(task: MaintenanceTask, db: Session | None = None) -> TaskResponse:
+    if task.incident_id is not None:
+        from backend.app.services.incidents import get_incident
+        incident = get_incident(db, task.incident_id)
+        alert = IncidentAlert(source="analytics", incident_id=incident.id, asset_id=task.asset_id,
+                              summary=task.alert_summary, measurement_source=incident.measurement_source,
+                              run_id=incident.run_key or None, evidence_id=task.incident_evidence_id)
+    else:
+        alert = SampleAlert(source=task.alert_source, alert_id=task.alert_id,
+                            asset_id=task.asset_id, summary=task.alert_summary)
     return TaskResponse(
         id=task.id,
         asset_id=task.asset_id,
-        alert=SampleAlert(source=task.alert_source, alert_id=task.alert_id,
-                          asset_id=task.asset_id, summary=task.alert_summary),
+        alert=alert,
         action=task.action, status=task.status, created_at=task.created_at,
         owner=task.owner, notes=task.notes, version=task.version, updated_at=task.updated_at,
     )
@@ -61,7 +69,7 @@ def create_task(db: Session, payload: TaskCreate) -> tuple[TaskResponse, bool]:
         # original D001 requests valid after assignment or subsequent updates.
         if "owner" in payload.model_fields_set and task.owner != payload.owner:
             raise TaskConflict
-        result = response_for(task)
+        result = response_for(task, db)
         db.commit()
         return result, False
     task = MaintenanceTask(
@@ -78,7 +86,7 @@ def create_task(db: Session, payload: TaskCreate) -> tuple[TaskResponse, bool]:
         created_at=task.created_at,
     ))
     db.flush()
-    result = response_for(task)
+    result = response_for(task, db)
     db.commit()
     return result, True
 
@@ -87,17 +95,17 @@ def get_task(db: Session, task_id: str) -> TaskResponse:
     task = db.get(MaintenanceTask, task_id)
     if task is None:
         raise TaskNotFound
-    return response_for(task)
+    return response_for(task, db)
 
 
-def list_tasks(db: Session, asset_id: str | None, limit: int, offset: int):
-    statement = select(MaintenanceTask)
+def list_tasks(db: Session, asset_id: str | None, limit: int, offset: int, source="sample"):
+    statement = select(MaintenanceTask).where(MaintenanceTask.alert_source == source)
     if asset_id is not None:
         require_asset(db, asset_id)
         statement = statement.where(MaintenanceTask.asset_id == asset_id)
     rows = db.scalars(statement.order_by(MaintenanceTask.created_at, MaintenanceTask.id)
                       .limit(limit).offset(offset))
-    return [response_for(row) for row in rows]
+    return [response_for(row, db) for row in rows]
 
 
 def require_task(db: Session, task_id: str, *, lock=False) -> MaintenanceTask:
@@ -110,7 +118,7 @@ def require_task(db: Session, task_id: str, *, lock=False) -> MaintenanceTask:
     return task
 
 
-def update_task(db: Session, task_id: str, payload: TaskUpdate, actor: str) -> TaskResponse:
+def update_task(db: Session, task_id: str, payload: TaskUpdate, actor: str, actor_id=None) -> TaskResponse:
     task = require_task(db, task_id, lock=True)
     if task.version != payload.expected_version:
         raise TaskUpdateConflict("Task changed; retrieve its latest version before updating")
@@ -131,14 +139,14 @@ def update_task(db: Session, task_id: str, payload: TaskUpdate, actor: str) -> T
         task_id=task.id, version=task.version + 1, event_type="updated",
         previous_status=task.status, new_status=status, previous_owner=task.owner,
         new_owner=owner, previous_notes=task.notes, notes=notes,
-        actor=actor, identity_source="demo_header", created_at=now,
+        actor=actor, actor_id=actor_id, identity_source="authenticated_operator" if actor_id else "demo_header", created_at=now,
     )
     task.status, task.owner, task.notes = status, owner, notes
     task.version += 1
     task.updated_at = now
     db.add(history)
     db.flush()
-    result = response_for(task)
+    result = response_for(task, db)
     # Task and history are committed together. A failed insert rolls back both.
     db.commit()
     return result
@@ -150,3 +158,40 @@ def task_history(db: Session, task_id: str, limit: int, offset: int):
         .where(MaintenanceTaskHistory.task_id == task_id)
         .order_by(MaintenanceTaskHistory.version).limit(limit).offset(offset))
     return [TaskHistoryResponse.model_validate(row) for row in rows]
+
+
+def create_incident_task(db, payload, actor):
+    from backend.app.models.incidents import IncidentEvidence
+    from backend.app.services.incidents import get_incident, IncidentError
+    incident = get_incident(db, payload.alert.incident_id, lock=True)
+    if incident.asset_id != payload.alert.asset_id:
+        raise IncidentError(422, "incident_asset_mismatch", "Incident belongs to another asset")
+    task = db.scalar(select(MaintenanceTask).where(MaintenanceTask.incident_id == incident.id))
+    request = payload.model_dump(mode="json")
+    if task is not None:
+        if task.creation_request != request:
+            raise TaskConflict
+        result = response_for(task, db)
+        db.commit()
+        return result, False
+    if incident.condition_status != "active" or incident.monitoring_status != "monitoring":
+        raise IncidentError(409, "incident_creation_policy_required", "New tasks for recovered/interrupted incidents await A/D policy review")
+    evidence = db.scalar(select(IncidentEvidence).where(IncidentEvidence.incident_id == incident.id)
+                         .order_by(IncidentEvidence.incident_version).limit(1))
+    if evidence is None:
+        raise IncidentError(409, "incident_evidence_required", "Persisted incident evidence required")
+    task = MaintenanceTask(id=str(uuid4()), asset_id=incident.asset_id, alert_source="analytics",
+                           alert_id=str(incident.id), alert_summary=f"{incident.category} ({incident.severity})",
+                           incident_id=incident.id, incident_evidence_id=evidence.id,
+                           created_by_id=actor.id, creation_request=request,
+                           action=payload.action, status="open", owner=payload.owner, notes="", version=1)
+    db.add(task)
+    db.flush()
+    db.add(MaintenanceTaskHistory(task_id=task.id, version=1, event_type="created",
+        previous_status=None, new_status="open", previous_owner=None, new_owner=task.owner,
+        previous_notes=None, notes="", actor=str(actor.id), actor_id=actor.id,
+        identity_source="authenticated_operator", created_at=task.created_at))
+    db.flush()
+    result = response_for(task, db)
+    db.commit()
+    return result, True
