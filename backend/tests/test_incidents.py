@@ -748,7 +748,7 @@ def test_handover_bad_policy_configuration_unknown_asset_and_conflicting_retry(
             asset_id,
             actors["admin"],
             version=1,
-            model_version="stored-reading-top-oil-1.0.2",
+            model_version="stored-reading-top-oil-unknown",
         )[0].status_code
         == 422
     )
@@ -850,4 +850,6 @@ def test_registry_upgrade_preserves_completed_cancelled_sample_history(
             for old, new in zip(saved, after[table]):
                 assert all(new[key] == value for key, value in old.items())
                 # D005 adds nullable linkage/audit columns, never backfills samples.
-                assert all(value is None for key, value in new.items() if key not in old)
+                assert all(
+                    value is None for key, value in new.items() if key not in old
+                )

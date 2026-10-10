@@ -18,6 +18,7 @@ from backend.app.models.analytics import (
     AnalyticsState,
     AnalyticsStream,
 )
+from backend.app.models.incidents import DetectorControl, DetectorEpoch
 from backend.app.models.telemetry import ProcessingJob, TelemetryReading
 from backend.app.services.incidents import mark_continuity_break, persist_plan
 
@@ -44,6 +45,19 @@ def stream_key(reading):
 
 def db_time(db):
     return db.scalar(select(func.clock_timestamp()))
+
+
+def model_handover_required(db, head):
+    """Do not silently bootstrap a previously used model namespace."""
+    if head.last_identity is not None:
+        namespace = json.loads(head.last_identity)
+        if namespace[:2] != [adapter.MODEL_ID, adapter.MODEL_VERSION]:
+            return True
+    control = db.get(DetectorControl, (head.asset_id, head.source, head.run_key))
+    if control is not None:
+        epoch = db.get(DetectorEpoch, control.epoch_id)
+        return epoch.model_version != adapter.MODEL_VERSION
+    return False
 
 
 def claim_next(factory, *, lease_seconds=60, max_attempts=3):
@@ -107,6 +121,10 @@ def claim_next(factory, *, lease_seconds=60, max_attempts=3):
                 .with_for_update(skip_locked=True)
             )
             if head is None or (head.active_token and head.lease_until > now):
+                continue
+            if model_handover_required(db, head):
+                # Pending jobs and attempt counts remain untouched until an admin
+                # records the boundary; independent streams can still progress.
                 continue
             if job.attempts >= max_attempts:
                 job.status, job.last_error, job.completed_at = (
@@ -183,6 +201,10 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
     # Read snapshot under the same fencing checks; release DB locks during compute.
     with factory.begin() as db:
         job, reading, head, _ = fenced(db, claim)
+        if model_handover_required(db, head):
+            raise IncidentPlanningError(
+                "incident_handover_required", "Recorded model handover required"
+            )
         config = db.scalar(
             select(AssetConfiguration).where(
                 AssetConfiguration.asset_id == reading.asset_id,

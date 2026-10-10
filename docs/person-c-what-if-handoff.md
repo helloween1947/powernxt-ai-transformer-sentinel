@@ -1,5 +1,7 @@
 # Person C — initial backend What-if handoff
 
+Model adoption follow-up: [A’s version dispatch and handover contract](person-a-model-102-adoption.md) supports immutable 1.0.1 and 1.0.2 states. Earlier verification below remains tied to its original tested source; see the separate adoption evidence for fresh checks.
+
 A's branch `feature/persona-what-if-api` starts at main
 f52f56515c38fce55451fd499be81ef2508e6677. Reviewed B scenario source:
 f668a21dcf88605d7fcff4996282185bc796740c. No teammate branch, development

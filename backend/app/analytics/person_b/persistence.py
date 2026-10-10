@@ -6,7 +6,8 @@ from copy import deepcopy
 import hashlib
 import json
 
-from .core import _timestamp, finite
+from .core import _timestamp
+from .core import finite
 from .validation import mapping, strict_json, identity as validate_identity
 
 DETECTOR_VERSION = "sustained-threshold-1.0.1"

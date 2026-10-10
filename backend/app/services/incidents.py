@@ -173,6 +173,12 @@ def handover(db, asset_id, payload, actor, now):
     receipt, fingerprint = retry(db, scope, payload, actor)
     if receipt:
         return receipt.response, False
+    if payload.model_version != adapter.MODEL_VERSION:
+        raise IncidentError(
+            409,
+            "unsupported_model_version",
+            "New handovers require the current worker model; historical identical retries remain supported",
+        )
     control = db.get(DetectorControl, key)
     current = control.version if control else 0
     if payload.expected_version != current:
@@ -208,6 +214,11 @@ def handover(db, asset_id, payload, actor, now):
                 "advances": saved.advances,
                 "updated_at": saved.updated_at.isoformat(),
             }
+    policy = (
+        payload.policy.model_dump(mode="json")
+        if payload.policy is not None
+        else {"schema_version": "model-only-control-1.0.0"}
+    )
     epoch = DetectorEpoch(
         id=uuid4(),
         asset_id=key[0],
@@ -217,8 +228,8 @@ def handover(db, asset_id, payload, actor, now):
         model_version=payload.model_version,
         parameter_version=parameter,
         detector_version=payload.detector_version,
-        policy=payload.policy.model_dump(mode="json"),
-        policy_fingerprint=digest(payload.policy.model_dump(mode="json")),
+        policy=policy,
+        policy_fingerprint=digest(policy),
         context=None,
         previous_twin_state=previous_twin_state,
         actor_id=actor.id,
@@ -352,6 +363,9 @@ def persist_plan(db, reading, result, now, *, state_policy="forward_only"):
         raise IncidentPlanningError(
             "incident_invalid_input_or_state", "Authoritative result binding mismatch"
         )
+    if epoch.policy == {"schema_version": "model-only-control-1.0.0"}:
+        # Recorded cold start for an unmonitored stream; no synthetic thresholds.
+        return
     plan = evaluate_incident_candidates(
         result.payload,
         epoch.policy,
