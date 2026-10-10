@@ -1,0 +1,42 @@
+# Standalone isolated project. Never combine this with the development compose file.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: ${PERSOND_TEST_PASSWORD:?Set a process-local test password}
+      POSTGRES_DB: ${PERSOND_TEST_DATABASE:?Set a new database ending in _test}
+    ports:
+      - "127.0.0.1:${PERSOND_DB_PORT:-15447}:5432"
+    volumes:
+      - review_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U sentinel -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:${PERSOND_TEST_PASSWORD}@db:5432/${PERSOND_TEST_DATABASE}
+      CORS_ORIGINS: '["http://127.0.0.1:5173","http://localhost:5173"]'
+    ports:
+      - "127.0.0.1:${PERSOND_API_PORT:-15448}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+  worker:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    command: [python, -m, backend.app.workers]
+    stop_grace_period: 70s
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:${PERSOND_TEST_PASSWORD}@db:5432/${PERSOND_TEST_DATABASE}
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  review_data:
