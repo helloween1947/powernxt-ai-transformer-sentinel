@@ -31,6 +31,16 @@ export function createRequest({ assetId, alertId, summary, title, owner = '', sa
   };
 }
 
+export function createAnalyticsRequest({ assetId, incidentId, title, owner = '' }) {
+  const asset = text(assetId, 'Registered asset', 100);
+  const incident = text(incidentId, 'Incident ID', 100);
+  return {
+    alert: { source: 'analytics', incident_id: incident, asset_id: asset },
+    action: text(title, 'Task action', 1000),
+    owner: text(owner, 'Assigned person', 100, false) || null,
+  };
+}
+
 export function adaptTask(task) {
   if (!statusLabels[task.status] || !Number.isInteger(task.version) || task.version < 1) {
     throw new Error('Backend returned an unsupported task status or version.');
@@ -38,7 +48,8 @@ export function adaptTask(task) {
   return {
     id: task.id, assetId: task.asset_id, title: task.action, owner: task.owner ?? '',
     status: task.status, notes: task.notes ?? '', version: task.version,
-    alert: task.alert, createdAt: task.created_at, updatedAt: task.updated_at,
+    alert: task.alert, incidentId: task.incident_id ?? null,
+    createdAt: task.created_at, updatedAt: task.updated_at,
   };
 }
 
