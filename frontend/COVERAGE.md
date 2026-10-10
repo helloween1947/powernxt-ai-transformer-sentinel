@@ -1,5 +1,53 @@
 # Current PR16 validation
 
+## Phase1 provenance guard completion — 10 October 2026
+
+Current main `cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda` still contains no
+equivalent guard. PR28 remains draft on main; its reviews, issue comments and
+inline comments are empty, so no concrete A/B/D review finding is outstanding.
+The existing independently implemented guard is unchanged: both adapters require
+nonempty string model_id/model_version/parameter_version and exact payload metadata
+equality; matching future values are accepted without pinning model1.0.1.
+
+The declared suite now passes **41 tests** (35 existing plus6 provenance groups).
+Additional regressions cover missing/blank/non-string outer identities, absent
+metadata containers and removal of rejected/stale analytics while usable telemetry
+remains. Lint and production build pass. No error-presentation change was needed.
+
+Fresh installed Chrome validation used an isolated preview at localhost3002→
+127.0.0.1:8002, with current-main backend code and an already-migrated retained
+D004 database copy. **No migration ran; all database records remained identical.**
+Only GET requests were made. The actual six-reading C stream was asset
+`demo-normal-76a8f79580bc4e95a490396989282be8`, simulator run
+`thermal-9947eba4bdf34071ad87356461b812ab`, readings7–12/configuration2.
+Complete real browser API bodies and screenshots confirm both endpoint identities,
+chronological reading-ID joins, exact numeric values/residual sign, units and null
+bootstrap. This is not verification of A's distinct asset/run/readings20–25;
+the Phase0 discrepancy on A's laptop remains unresolved without its response files.
+
+Separately labelled browser fixtures exercise contradictory, missing-metadata and
+blank-outer identity on each endpoint, starting from populated valid views. Rejected
+per-reading metrics clear; valid telemetry remains. Rejected latest-completed identity
+removes its prior model/result presentation while independently valid per-reading
+data stays usable. Matching future-version and pending/null fixtures are accepted;
+restoring actual API responses recovers normal rendering. These injections do not
+establish backend defects. No fixture response is filed as a real API body.
+
+Reproduction: run `npm test`, `npm run lint`, `npm run build` in frontend. Optional
+`node tests/provenanceBrowser.cjs` requires external Playwright/installed Chrome,
+FRONTEND_ORIGIN, BACKEND_URL, DEMO_ASSET_ID, DEMO_RUN_ID and BROWSER_ARTIFACT_DIR
+pointing to a supported isolated preview and an existing six-reading thermal stream.
+The runner writes GET response evidence outside Git and explicitly separates real
+and fixture checks. Fresh local evidence: `integration-work/phase1-20261010-175650/`
+(provenance-browser.json, real-api-*.json, valid/fixture screenshots, preview identity
+and equal before/after record digests). Temporary preview processes were stopped.
+
+Scope remains guard, regressions, test declaration and dated documentation only.
+Environment files, Date.now()), existing evidence and separate unfinished UI work
+are preserved. No What-if/incident/model/backend/migration code is added. Review
+requires teammate approval and green checks on the updated exact PR head; earlier
+green d80a321 checks do not certify a later commit. No merge/deployment/messages.
+
 ## Local C review of correctness audit F2 — 10 October 2026
 
 Publication validation: main cbdd7c4 contains no equivalent correction. The
