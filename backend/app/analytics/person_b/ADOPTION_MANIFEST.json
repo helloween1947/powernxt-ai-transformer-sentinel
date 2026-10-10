@@ -1,0 +1,157 @@
+{
+  "schema_version": "persona-adoption-provenance-1.0.0",
+  "source_manifest": {
+    "schema_version": "person-b-adoption-manifest-1.0.0",
+    "computation_source_commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+    "model_id": "powernxt-electrical-top-oil",
+    "model_version": "stored-reading-top-oil-1.0.2",
+    "state_schema_version": "stored-reading-state-1.0.0",
+    "result_schema_version": "stored-reading-result-1.1.0",
+    "detector_version": "sustained-threshold-1.0.1",
+    "forecast_version": "healthy-top-oil-scenarios-1.0.1",
+    "current_reviewed_heads": {
+      "main": "cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda",
+      "persona_incident_registry": "2e934c85098453db7342ea6ade570759ef4b9161",
+      "persona_detector_handoff_review": "cf2eb252a5e405d4991e82b86db13c49822977fb",
+      "persona_what_if_api": "20ccaddcecd55695b79d257a02f25a68ec691462",
+      "personb_detector_orchestration_before_alignment_commit": "f668a21dcf88605d7fcff4996282185bc796740c"
+    },
+    "source_files": [
+      {
+        "path": "analytics/worker.py",
+        "sha256": "a5e2c3d1e8916941ac619fb0b61740a8ad4da5a0a5aaa99801af452e52e223d9"
+      },
+      {
+        "path": "analytics/normalization.py",
+        "sha256": "2dffac316ea00b41caebe6e16a4175319128313a0b7dabc721a9b8363b93595e"
+      },
+      {
+        "path": "analytics/validation.py",
+        "sha256": "3fa213a186c87e6c78ef49be0cf3ba130a6a7620b78af82111cdda1efd964501"
+      },
+      {
+        "path": "analytics/transformer_twin/model.py",
+        "sha256": "2436c8636ddaaa8846f5d2b93e8cb89d6b5040012410ec1923b8650e2d17b06a"
+      },
+      {
+        "path": "analytics/transformer_twin/engine.py",
+        "sha256": "20d4ef3b5258546247de8db9bc0dd395002587f0e838001b5f95cda6cd07dd6b"
+      },
+      {
+        "path": "analytics/transformer_twin/__init__.py",
+        "sha256": "0c91e8f4f6c1f9349e0eb6b2af7ff785bc273168f46a955920de3aabb19424b8"
+      },
+      {
+        "path": "analytics/persistence.py",
+        "sha256": "e6e2698ba77c495975beb771e69706dbb4cdc530c1a3702edf56b5932b48dc32"
+      },
+      {
+        "path": "analytics/incident_orchestration.py",
+        "sha256": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea"
+      },
+      {
+        "path": "analytics/scenarios.py",
+        "sha256": "40d0b0d7aa4335f322e832ec087f15e047a7648f041b0cf987b088ac3e0302cd"
+      },
+      {
+        "path": "analytics/schemas/worker-input.schema.json",
+        "sha256": "4ecb2e2b1d5dff3afae59cde0047e7a19af565cbee6306775ce499336e21c4c9"
+      },
+      {
+        "path": "analytics/schemas/normalized-input.schema.json",
+        "sha256": "4b83aa0ccefc08816f2eb775535be75f07fdd240e9cfb331e6b72a13d7e985ca"
+      },
+      {
+        "path": "analytics/schemas/worker-output.schema.json",
+        "sha256": "b418ea0c5cff3b601dca3e8337372918ce1b63076b65ec5baf52b3b4d1c4492f"
+      },
+      {
+        "path": "analytics/examples/worker-test-examples.json",
+        "sha256": "45a52c617c65e3628fdb9a0df6cee46b5b3ddce7a8f6b31846f59378ceb02fda"
+      },
+      {
+        "path": "analytics/contracts/incident-proposal.schema.json",
+        "sha256": "45d6d27f25d6df5ca0660213e41a487f21971b84da21ebf2733debbd79c10cb8"
+      }
+    ],
+    "scope": "Exact source references, not a deployment manifest or automatic backend copy. A reconciles adapted imports/core extraction and all provenance together; PR24 includes PR17 lineage."
+  },
+  "historical_base_commit": "2e934c85098453db7342ea6ade570759ef4b9161",
+  "adaptations": "Imports only for full B modules; pure core AST extraction; current scenario aliases use worker._thermal_core/validation. Historical package copied without edits. No legacy live-engine or heuristic computations.",
+  "function_class_ast_equal_to_source": {
+    "worker": [
+      "compute_analytics",
+      "_positive_integer",
+      "_utc",
+      "_parameter_version",
+      "_validate_config",
+      "_thermal_core",
+      "_reading",
+      "_imbalance",
+      "_scaled_product",
+      "_rule",
+      "process_stored_reading"
+    ],
+    "normalization": [
+      "_normalize"
+    ],
+    "validation": [
+      "mapping",
+      "strict_json",
+      "identity",
+      "worker_state"
+    ],
+    "persistence": [
+      "_digest",
+      "_policy",
+      "evaluate_persistent_rules"
+    ],
+    "incident_orchestration": [
+      "IncidentPlanningError",
+      "_epoch",
+      "_evaluate",
+      "evaluate_incident_candidates"
+    ],
+    "scenarios": [
+      "forecast_from_worker_state",
+      "compare_worker_scenarios"
+    ],
+    "core": [
+      "finite",
+      "AssetConfig",
+      "ThermalState",
+      "_advance",
+      "_timestamp"
+    ]
+  },
+  "adapted_sha256": {
+    "backend/app/analytics/person_b/INCIDENT_SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/WHAT_IF_SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+    "backend/app/analytics/person_b/core.py": "f56c2603a010cf0f157cf546280b7f79be9326e3b6c2574537de572221dc6546",
+    "backend/app/analytics/person_b/incident_orchestration.py": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea",
+    "backend/app/analytics/person_b/normalization.py": "74809644043ba0c02fc7135fa1de664982667f95438cb35a7ce5e8acdbfbc36a",
+    "backend/app/analytics/person_b/normalized-input.schema.json": "4b83aa0ccefc08816f2eb775535be75f07fdd240e9cfb331e6b72a13d7e985ca",
+    "backend/app/analytics/person_b/persistence.py": "1dbbb32a577e516cd63c1877a2710cfc0247d11994e4fda5d81752799fbe15c1",
+    "backend/app/analytics/person_b/scenario_core.py": "ce3cfdc2ad0d16658a9b74bd964f5f55512c520b44891914a3a2a59af98b91ec",
+    "backend/app/analytics/person_b/scenario_validation.py": "32792d8c4e6c4976cf3828d9c28d6f7f459f0c28ed6b2f3cb48a02e65b1e7e45",
+    "backend/app/analytics/person_b/scenarios.py": "ffd978afc774ec8a049db824844aa2bce0e92e450372c93f6588e24c04e4b598",
+    "backend/app/analytics/person_b/validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+    "backend/app/analytics/person_b/worker-input.schema.json": "4ecb2e2b1d5dff3afae59cde0047e7a19af565cbee6306775ce499336e21c4c9",
+    "backend/app/analytics/person_b/worker-output.schema.json": "b418ea0c5cff3b601dca3e8337372918ce1b63076b65ec5baf52b3b4d1c4492f",
+    "backend/app/analytics/person_b/worker-test-examples.json": "45a52c617c65e3628fdb9a0df6cee46b5b3ddce7a8f6b31846f59378ceb02fda",
+    "backend/app/analytics/person_b/worker.py": "be0ab1106d2f062c2ff5303e49792f8914bfad1fbea71f61cffe273d4b3a20b7"
+  },
+  "historical_sha256": {
+    "backend/app/analytics/person_b/historical_v101/SOURCE.json": "c1bc95bc6451401d0d46a73c03455e08c725874f295d412533a8962fe0380cc8",
+    "backend/app/analytics/person_b/historical_v101/WHAT_IF_SOURCE.json": "2c689070b9ad72056896577c9b672f65554235fa4bd3e7134f7343ec4b237d1e",
+    "backend/app/analytics/person_b/historical_v101/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+    "backend/app/analytics/person_b/historical_v101/core.py": "dcfd530f8edd936ade9d3424aac47e5e82c89891a9af19d68a451e9fcebfbd2e",
+    "backend/app/analytics/person_b/historical_v101/normalization.py": "4d1952c282ab54c1d9551017fae53916be4b98c3cf93e4b841b6d30f22442956",
+    "backend/app/analytics/person_b/historical_v101/scenario_core.py": "4775cab3da0b2bb924440f24ee7023201d9479c5aa06697347945c239903f9d1",
+    "backend/app/analytics/person_b/historical_v101/scenario_validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+    "backend/app/analytics/person_b/historical_v101/scenarios.py": "a3941bfff31837564cc17a9385870b445b1e26527f0bfc7e24b5a9a6ea6a557b",
+    "backend/app/analytics/person_b/historical_v101/worker.py": "84a6e7f8f618bafa0320467b4ab0837f59441dda8fb9c603df61502415924dc0"
+  }
+}

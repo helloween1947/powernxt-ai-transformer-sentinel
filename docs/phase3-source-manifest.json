@@ -1,0 +1,143 @@
+{
+  "phase": "Phase 3 Combined Integration Candidate",
+  "generated_at": "2026-10-10T16:05:00Z",
+  "role": "Person A (Backend Lead and Integration Coordinator)",
+  "candidate": {
+    "branch": "feature/persona-phase3-combined-integration",
+    "worktree_path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\phase3-integration",
+    "combined_merge_head_sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+    "tested_source_sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+    "runtime_source_changed_after_testing": false,
+    "clean_merge": true,
+    "conflict_count": 0,
+    "evidence_index_path": "docs/phase3-evidence-index.md",
+    "startup_guide_path": "docs/phase3-isolated-startup-windows.md",
+    "evidence_checksums_path": "docs/evidence/evidence-checksums.sha256"
+  },
+  "incorporated_branches": {
+    "main": {
+      "ref": "origin/main",
+      "head_sha": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+      "description": "Main branch incorporating merged PR #28 (provenance guard)"
+    },
+    "feature/persona-incident-registry": {
+      "ref": "origin/feature/persona-incident-registry",
+      "head_sha": "2e934c85098453db7342ea6ade570759ef4b9161",
+      "description": "Canonical incident registry, outbox checkpoints (a001, a002), tasks (d005), what-if snapshots (w001), joined at d006_combined_integration"
+    },
+    "pr29": {
+      "number": 29,
+      "branch": "feature/persond-alignment-integration",
+      "head_sha": "3b92b197423a0c4da94bd9c1569e528180fabb24",
+      "target_branch": "feature/persona-incident-registry",
+      "draft": false,
+      "submitted_reviews_count": 0,
+      "ci_status": "4/4 passing",
+      "description": "Person D alignment CI integration, isolated preservation runner, and 344-test evidence"
+    },
+    "pr32": {
+      "number": 32,
+      "branch": "feature/persona-model-102-adoption",
+      "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+      "target_branch": "feature/persona-incident-registry",
+      "draft": true,
+      "submitted_reviews_count": 1,
+      "submitted_reviews": [
+        {
+          "reviewer": "hramith06",
+          "state": "APPROVED",
+          "review_id": "5479811412",
+          "commit_id": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782"
+        }
+      ],
+      "ci_status": "4/4 passing",
+      "description": "Model 1.0.2 adoption, admin handover routes, historical 1.0.1 forecast dispatch, and PR30 reading ID query fix"
+    },
+    "pr33": {
+      "number": 33,
+      "branch": "codex/personc-model-102-compatibility",
+      "head_sha": "4dc7351221357f8ecd2b48d2075c3e7590825b25",
+      "target_branch": "main",
+      "draft": false,
+      "submitted_reviews_count": 0,
+      "ci_status": "2/2 passing",
+      "description": "Person C frontend Model 1.0.2 compatibility and clearing retained analytics after failed pending refresh"
+    }
+  },
+  "migration_graph": {
+    "heads": [
+      "d006_combined_integration"
+    ],
+    "is_single_head": true,
+    "down_revisions": [
+      "a002_incident_outbox",
+      "d005_incident_tasks",
+      "w001_what_if_snapshots"
+    ],
+    "new_migrations_added_by_candidates": 0,
+    "join_migration_needed": false,
+    "join_migration_rationale": "Single head d006_combined_integration was previously created in PR #27 and fully terminates the migration graph. Neither PR #29, PR #32, nor PR #33 added new migrations; creating an extraneous join migration would violate graph immutability."
+  },
+  "isolated_runtime": {
+    "compose_file": "integration/compose.phase3-candidate.yaml",
+    "project_name": "sentinel-phase3-candidate",
+    "services": {
+      "db": {
+        "container_name": "sentinel-phase3-candidate-db",
+        "image": "postgres:16-alpine",
+        "port_mapping": "127.0.0.1:55433 -> 5432",
+        "volume": "sentinel_phase3_candidate_data",
+        "status": "Stopped (preserved)"
+      },
+      "backend": {
+        "container_name": "sentinel-phase3-candidate-backend",
+        "image_tag": "sentinel-backend:phase3-candidate-311c10a",
+        "image_id": "sha256:1d48c18b8d58bfaaa2e44e028bb7d0e7269228ced55fb4ea1f3510afa6226c18",
+        "port_mapping": "127.0.0.1:8801 -> 8000",
+        "status": "Stopped (preserved)"
+      },
+      "worker": {
+        "container_name": "sentinel-phase3-candidate-worker",
+        "image_tag": "sentinel-backend:phase3-candidate-311c10a",
+        "image_id": "sha256:1d48c18b8d58bfaaa2e44e028bb7d0e7269228ced55fb4ea1f3510afa6226c18",
+        "status": "Stopped (preserved)"
+      }
+    },
+    "health_verification": {
+      "liveness_url": "http://127.0.0.1:8801/health/live",
+      "liveness_status": 200,
+      "liveness_body": {
+        "status": "live",
+        "service": "backend-api"
+      },
+      "readiness_url": "http://127.0.0.1:8801/health/ready",
+      "readiness_status": 200,
+      "readiness_body": {
+        "status": "ready",
+        "database": "connected"
+      }
+    },
+    "model_verification": {
+      "worker_model_version": "stored-reading-top-oil-1.0.2",
+      "what_if_models_allowlist": [
+        "stored-reading-top-oil-1.0.2",
+        "stored-reading-top-oil-1.0.1"
+      ],
+      "boundary_numerics": "PASS (1e308 and 5e-324 strictly serialized without NaN/Inf)",
+      "unauthenticated_handover_barrier": "PASS (HTTP 401 Unauthorized enforced)"
+    }
+  },
+  "frontend_verification": {
+    "npm_ci": "PASS (143 packages, 0 vulnerabilities)",
+    "npm_test": "PASS (43 passing, 0 failing)",
+    "npm_lint": "PASS (eslint clean)",
+    "npm_build": "PASS (dist built in 671ms)"
+  },
+  "outstanding_phase2_gates": [
+    "Formal GitHub review submission from Person B on PR #32 (approved locally in docs/personb-phase3-model-review.md)",
+    "Formal GitHub review submission from Person A on PR #29",
+    "Formal GitHub review submissions from Person A and Person D on PR #33",
+    "Transition of PR #32 from Draft to Ready for Review on GitHub",
+    "Protected branch merges (into main and feature/persona-incident-registry) remain blocked until formal reviews are recorded"
+  ]
+}

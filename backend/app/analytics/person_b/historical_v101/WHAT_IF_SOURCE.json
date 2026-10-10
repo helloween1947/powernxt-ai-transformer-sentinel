@@ -1,0 +1,10 @@
+{
+  "author": "Person B",
+  "commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+  "source_sha256": {
+    "analytics/scenarios.py": "40d0b0d7aa4335f322e832ec087f15e047a7648f041b0cf987b088ac3e0302cd",
+    "analytics/validation.py": "3fa213a186c87e6c78ef49be0cf3ba130a6a7620b78af82111cdda1efd964501",
+    "analytics/worker.py": "a5e2c3d1e8916941ac619fb0b61740a8ad4da5a0a5aaa99801af452e52e223d9"
+  },
+  "adaptations": "Imports use existing vendored core and model1.0.1 constants; exact _thermal_core function extracted; no worker/model upgrade or formula changes"
+}

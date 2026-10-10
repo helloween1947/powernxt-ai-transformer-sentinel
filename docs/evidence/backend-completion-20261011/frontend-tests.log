@@ -1,0 +1,67 @@
+
+> frontend@0.0.0 test
+> node --test tests/telemetryAdapter.test.js tests/maintenance.test.js tests/analytics.test.js tests/storedStream.test.js tests/analyticsAudit.test.js tests/incidentAdapter.test.js tests/maintenanceAnalytics.test.js tests/whatIfAdapter.test.js
+
+✔ stored sample maps units, separate UTC clocks and exact provenance without converting it to live evidence (0.9636ms)
+✔ pending, retry and failed jobs never invent metrics (0.2959ms)
+✔ availability gates finite values, preserves genuine zero and bootstrap reasons (0.4549ms)
+✔ unsupported wire versions fail visibly (0.3055ms)
+✔ unavailable stored result retains available electrical evidence without inventing thermal metrics (0.2234ms)
+✔ mismatched result identity fails visibly (0.1085ms)
+✔ B metadata units drive display; unsupported or missing units cannot become Celsius chart values (0.301ms)
+✔ null confidence and not-assessed health stay unavailable; coverage counts are not percentages (0.1176ms)
+✔ model metadata must match envelope configuration, UTC measurement time and stream (0.4495ms)
+✔ labelled 1.0.1/1.0.2 fixtures preserve provenance and independent metrics when arithmetic is unavailable (1.1752ms)
+✔ per-reading results reject conflicting payload model and parameter references (0.7294ms)
+✔ both adapters reject absent, blank or non-string outer identities even when metadata agrees (1.5961ms)
+✔ both adapters fail closed when a non-null result has no provenance container (0.2808ms)
+✔ rejected reading/latest identities replace stale analytics while retaining usable telemetry (2.3832ms)
+✔ latest-completed results reject conflicting payload model and parameter references (0.2788ms)
+✔ matching provenance and absent results remain usable; missing result identity fails closed (0.7727ms)
+✔ adaptIncident correctly maps wire incident to UI representation (0.7236ms)
+✔ adaptIncident rejects mismatched schema version (0.4018ms)
+✔ validateAcknowledgement enforces version > 0 and UUIDv4 format (0.3382ms)
+✔ adaptEvent and adaptEvidence map items cleanly (0.4153ms)
+✔ incidentClient calls endpoints with auth token and handles errors (16.2881ms)
+✔ sample creation maps title and owner; real alert provenance is rejected (2.0314ms)
+✔ response preserves task identity, saved version, exact API status and timestamps (0.1628ms)
+✔ assignment, start and completion use each returned version; completion needs notes (0.2449ms)
+✔ cancellation requires a reason; illegal transitions and terminal edits are blocked (0.2064ms)
+✔ actor identity and pagination reject invalid requests before HTTP (0.2227ms)
+✔ client uses the shared API origin, encodes filters, maps pages and sends PATCH headers only on PATCH (17.2376ms)
+✔ 409 is surfaced without retrying or altering the operator draft (0.4501ms)
+✔ network, missing origin, API validation and missing endpoints remain visible failures (0.7739ms)
+✔ createAnalyticsRequest packages incident alert correctly (0.5514ms)
+✔ adaptTask preserves incidentId for genuine tasks (0.9123ms)
+✔ maintenance client queries analytics source with Authorization bearer token (15.9836ms)
+✔ maintenance client updates analytics task with Bearer token without X-Demo-Actor (0.6957ms)
+✔ chart joins by reading ID, sorts UTC measurement time, preserves bootstrap gap and signed zero/residual (1.9503ms)
+✔ latest completed remains separate from pending latest telemetry and analytics IDs are deduplicated (1.4956ms)
+✔ wrong stream is rejected rather than joined into selected data (0.9051ms)
+✔ four concurrent analytics requests maximum; individual failures remain recoverable (6.7916ms)
+✔ HTTP client consistently encodes stream filters and page controls; cancellation and failures propagate (1.2749ms)
+✔ empty known stream and partial analytics failure do not fabricate results (0.3493ms)
+✔ changing streams aborts and invalidates late responses even when a request ignores cancellation (0.6084ms)
+✔ polling is bounded, stops on completion, and cancels scheduled work on unmount (1.2271ms)
+✔ failed load stops polling and a manual reload recovers (0.3552ms)
+✔ failed pending refresh clears retained analytics while keeping previously retrieved telemetry (0.5905ms)
+✔ history page offset is preserved and only that bounded page enters the comparison (0.3329ms)
+✔ a result cannot be labelled with another telemetry configuration or measurement time (0.4573ms)
+✔ unsupported thermal units stay gaps through the complete chart join (0.1596ms)
+✔ preserves asset, stream, timestamps and configuration (0.6022ms)
+✔ uses normalized readings rather than the original payload (0.3452ms)
+✔ preserves every missing channel as null (0.2263ms)
+✔ preserves quality information and pending status (0.4301ms)
+✔ preserves a genuine zero reading (0.1361ms)
+✔ handles absent readings and unknown processing status (0.1198ms)
+✔ validateWhatIfRequest validates bounds, equal ambient, and load ordering (1.2146ms)
+✔ adaptWhatIf converts points to trend chart format and retains crossing information (1.6309ms)
+✔ whatIfClient handles 409 state_unavailable with code and reasons (15.2215ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 305.73

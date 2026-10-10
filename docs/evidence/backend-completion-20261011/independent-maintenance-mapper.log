@@ -1,0 +1,11 @@
+✔ C create fields map to an explicitly sample request (1.1746ms)
+✔ API response maps status, notes, assignment, timestamps and version (0.2299ms)
+✔ C updates carry the retrieved version and canonical statuses (0.1837ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77.8919

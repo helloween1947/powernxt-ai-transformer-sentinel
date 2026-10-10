@@ -1,0 +1,212 @@
+{
+  "timestamp": "2026-10-11T00:05:47.331714+05:30",
+  "project": "analytics_worker_test_6fe8ae75aed4",
+  "api_port": 50634,
+  "db_port": 50635,
+  "commands": [
+    {
+      "label": "clean-build",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "build",
+        "--pull",
+        "--no-cache",
+        "backend",
+        "worker"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "database-start",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "up",
+        "-d",
+        "db"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "fresh-upgrade",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "run",
+        "--rm",
+        "backend",
+        "alembic",
+        "-c",
+        "backend/alembic.ini",
+        "upgrade",
+        "head"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "backend-start",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "up",
+        "-d",
+        "--no-build",
+        "backend"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "alembic-heads",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "exec",
+        "-T",
+        "backend",
+        "alembic",
+        "-c",
+        "backend/alembic.ini",
+        "heads"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "alembic-check",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "exec",
+        "-T",
+        "backend",
+        "alembic",
+        "-c",
+        "backend/alembic.ini",
+        "check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "durable-worker",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-m",
+        "integration.verify_analytics_worker",
+        "--base-url",
+        "http://127.0.0.1:50634"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "backend-contract-tests",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "analytics/contracts",
+        "-q"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "docker-python312-contract-tests",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "run",
+        "--rm",
+        "--no-deps",
+        "-v",
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011:/audit:ro",
+        "-w",
+        "/audit",
+        "backend",
+        "sh",
+        "-c",
+        "pip install -r backend/requirements-dev.txt -r analytics/contracts/requirements-test.txt && python -m pytest backend/tests analytics/contracts -q -p no:cacheprovider"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "populated-upgrade",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-c",
+        "import os; from integration.rehearse_populated_migration import run_rehearsal; run_rehearsal(os.environ['TEST_DATABASE_URL'],r'C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\populated-migration.json')"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "live-completion",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-m",
+        "integration.verify_backend_completion",
+        "--base-url",
+        "http://127.0.0.1:50634",
+        "--output",
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\live-completion.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "backup-restore",
+      "command": [
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.venv\\Scripts\\python.exe",
+        "-m",
+        "integration.verify_backend_restore",
+        "--output",
+        "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011\\data\\generated\\backend-completion-20261011-000547\\backup-restore.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "images",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "images",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "isolated-stop",
+      "command": [
+        "docker",
+        "compose",
+        "--profile",
+        "analytics",
+        "stop",
+        "worker",
+        "backend",
+        "db"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "windows_execution": true,
+  "source_commit": "cca081acce84cc1e8f93c5698074943f97b8cb63",
+  "status": "PASS",
+  "isolated_stack_stopped": true,
+  "volume_retained": true,
+  "parent_environment_unchanged": true
+}

@@ -1,0 +1,58 @@
+# Standalone isolated Phase 3 candidate stack.
+# Uses unique container names, isolated ports (55433, 8801) and volume sentinel_phase3_candidate_data.
+# Never connects to development database or development ports (5433, 8000).
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: sentinel-phase3-candidate-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinel_phase3_pw
+      POSTGRES_DB: sentinel_phase3_db
+    ports:
+      - "127.0.0.1:55433:5432"
+    volumes:
+      - phase3_candidate_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinel -d sentinel_phase3_db"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    image: sentinel-backend:phase3-candidate-311c10a
+    container_name: sentinel-phase3-candidate-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:sentinel_phase3_pw@db:5432/sentinel_phase3_db
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
+      CORS_ORIGINS: '["http://localhost:3000","http://localhost:5173","http://127.0.0.1:5173"]'
+    ports:
+      - "127.0.0.1:8801:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  worker:
+    image: sentinel-backend:phase3-candidate-311c10a
+    container_name: sentinel-phase3-candidate-worker
+    command: ["python", "-m", "backend.app.workers"]
+    restart: unless-stopped
+    stop_grace_period: 70s
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:sentinel_phase3_pw@db:5432/sentinel_phase3_db
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  phase3_candidate_data:
+    name: sentinel_phase3_candidate_data

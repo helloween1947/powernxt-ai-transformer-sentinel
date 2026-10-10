@@ -1,0 +1,50 @@
+[
+  {
+    "number": 24,
+    "url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/24",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "base": "main",
+    "base_sha": "566b4311763dd31edd1dbbd4ce7f498a10b77adf",
+    "head": "feature/personb-detector-orchestration",
+    "head_sha": "d86b210a5ee3a0a62b926b134d1119abeb3ff1fd",
+    "updated_at": "2026-10-10T10:03:48Z"
+  },
+  {
+    "number": 29,
+    "url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/29",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "base": "feature/persona-incident-registry",
+    "base_sha": "2e934c85098453db7342ea6ade570759ef4b9161",
+    "head": "feature/persond-alignment-integration",
+    "head_sha": "3b92b197423a0c4da94bd9c1569e528180fabb24",
+    "updated_at": "2026-10-10T16:14:11Z"
+  },
+  {
+    "number": 32,
+    "url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/32",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "base": "feature/persona-incident-registry",
+    "base_sha": "2e934c85098453db7342ea6ade570759ef4b9161",
+    "head": "feature/persona-model-102-adoption",
+    "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+    "updated_at": "2026-10-10T16:14:12Z"
+  },
+  {
+    "number": 33,
+    "url": "https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/33",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "base": "main",
+    "base_sha": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+    "head": "codex/personc-model-102-compatibility",
+    "head_sha": "4dc7351221357f8ecd2b48d2075c3e7590825b25",
+    "updated_at": "2026-10-10T16:17:33Z"
+  }
+]

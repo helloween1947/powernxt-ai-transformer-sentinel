@@ -366,22 +366,33 @@ def test_configuration_transitions_cold_start_and_preserve_watermark(configured)
         assert db.scalar(select(func.count()).select_from(AnalyticsState)) == 2
 
 
-def test_model_transition_is_explicit_namespace_reset(configured, monkeypatch):
+def test_model_transition_requires_recorded_handover(configured, monkeypatch):
     client, factory, _, _ = configured
     submit(configured)
     assert run_once(factory)
+    before = totals(factory)
     monkeypatch.setattr(adapter, "MODEL_VERSION", "test-next-model")
     monkeypatch.setattr(model, "MODEL_VERSION", "test-next-model")
     _, next_reading = submit(configured, 60)
-    assert run_once(factory)
-    result = client.get(f"/api/v1/telemetry/{next_reading['id']}/analytics").json()[
-        "result"
-    ]
-    assert result["model_version"] == "test-next-model"
-    assert result["payload"]["thermal_assessment"]["initial_condition"] is not None
+    assert not run_once(factory)
+    assert (
+        client.get(f"/api/v1/telemetry/{next_reading['id']}/analytics").json()["status"]
+        == "pending"
+    )
     with factory() as db:
-        assert db.scalar(select(func.count()).select_from(AnalyticsState)) == 2
-        assert db.scalar(select(AnalyticsStream)).advances == 2
+        assert (
+            db.scalar(select(func.count()).select_from(AnalyticsState))
+            == before["analytics_states"]
+        )
+        assert db.scalar(select(AnalyticsStream)).advances == 1
+        assert (
+            db.scalar(
+                select(ProcessingJob).where(
+                    ProcessingJob.reading_id == next_reading["id"]
+                )
+            ).attempts
+            == 0
+        )
 
 
 @pytest.mark.parametrize(

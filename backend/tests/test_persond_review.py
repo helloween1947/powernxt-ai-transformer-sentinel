@@ -75,7 +75,8 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
     cfg = Config("backend/alembic.ini")
     with factory.kw["bind"].begin() as connection:
         cfg.attributes["connection"] = connection
-        command.downgrade(cfg, start)
+        if start != "d730a91b4c22":
+            command.downgrade(cfg, start)
     assert (
         client.post(
             f"/api/v1/assets/{asset['asset_id']}/configurations", json=configuration
@@ -95,32 +96,23 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
         assert run_once(
             factory
         )  # Stores genuine electrical evidence with unsupported thermal reasons.
+        with factory.kw["bind"].begin() as connection:
+            cfg.attributes["connection"] = connection
+            command.downgrade(cfg, start)
     else:
-        # D003 does not yet have worker tables/columns: populate maintenance first.
-        task = client.post(
-            "/api/v1/maintenance/tasks",
-            json={
-                "alert": {
-                    "source": "sample",
-                    "alert_id": "sample-preserve",
-                    "asset_id": asset["asset_id"],
-                    "summary": "Labelled review example",
-                },
-                "action": "Inspect",
-            },
-        )
-        assert task.status_code == 201
-        update = client.patch(
-            "/api/v1/maintenance/tasks/" + task.json()["id"],
-            json={
-                "expected_version": 1,
-                "owner": "Demo",
-                "status": "in_progress",
-                "notes": "Review persistence",
-            },
-            headers={"X-Demo-Actor": "Demo"},
-        )
-        assert update.status_code == 200
+        # Seed the historical schema directly: current ORM needs D005 columns.
+        # This checks preservation rather than running new code on an old schema.
+        with factory.kw["bind"].begin() as connection:
+            tid = str(uuid4())
+            connection.execute(text("""INSERT INTO maintenance_tasks
+                (id,asset_id,alert_source,alert_id,alert_summary,action,status,owner,notes,version)
+                VALUES (:id,:asset,'sample','sample-preserve','Labelled review example',
+                        'Inspect','in_progress','Demo','Review persistence',2)"""),
+                {"id":tid,"asset":asset['asset_id']})
+            connection.execute(text("""INSERT INTO maintenance_task_history
+                (task_id,version,event_type,new_status,new_owner,notes,actor,identity_source)
+                VALUES (:id,2,'updated','in_progress','Demo','Review persistence','Demo','demo_header')"""),
+                {"id":tid})
     with factory.kw["bind"].begin() as connection:
         cfg.attributes["connection"] = connection
         names = [
@@ -145,7 +137,7 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
         command.upgrade(cfg, "head")
         assert connection.execute(
             text("SELECT version_num FROM alembic_version")
-        ).scalars().all() == ["d004_worker_maintenance"]
+        ).scalars().all() == ["d006_combined_integration"]
         for name, saved in before.items():
             after = (
                 connection.execute(

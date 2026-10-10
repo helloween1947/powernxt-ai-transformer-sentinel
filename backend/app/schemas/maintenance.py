@@ -1,4 +1,4 @@
-"""Provisional sample-alert contract; genuine detector alerts are not accepted yet."""
+"""Sample and authenticated incident references retain separate provenance."""
 
 from typing import Annotated, Literal
 from uuid import UUID
@@ -18,8 +18,21 @@ class SampleAlert(StrictSchema):
     summary: str = Field(min_length=1, max_length=500)
 
 
+class IncidentReference(StrictSchema):
+    source: Literal["analytics"]
+    incident_id: UUID
+    asset_id: str = Field(min_length=1, max_length=100)
+
+
+class IncidentAlert(IncidentReference):
+    summary: str
+    measurement_source: Literal["device", "simulator", "file_replay"]
+    run_id: str | None
+    evidence_id: int
+
+
 class TaskCreate(StrictSchema):
-    alert: SampleAlert
+    alert: Annotated[SampleAlert | IncidentReference, Field(discriminator="source")]
     action: str = Field(min_length=1, max_length=1000)
     owner: OperatorName | None = None
 
@@ -47,7 +60,7 @@ class TaskUpdate(StrictSchema):
 class TaskResponse(StrictSchema):
     id: UUID
     asset_id: str
-    alert: SampleAlert
+    alert: Annotated[SampleAlert | IncidentAlert, Field(discriminator="source")]
     action: str
     status: TaskStatus
     created_at: UTCDateTime
@@ -75,7 +88,8 @@ class TaskHistoryResponse(StrictSchema):
     previous_notes: str | None
     notes: str
     actor: str | None
-    identity_source: Literal["demo_header", "unattributed_creation", "legacy_import"]
+    actor_id: UUID | None = None
+    identity_source: Literal["demo_header", "unattributed_creation", "legacy_import", "authenticated_operator"]
     created_at: UTCDateTime
 
 

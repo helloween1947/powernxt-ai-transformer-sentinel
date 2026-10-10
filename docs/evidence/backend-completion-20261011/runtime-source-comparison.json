@@ -1,0 +1,58 @@
+{
+  "744c76538235e7d04da250fcfdcf4f7a8d6e9218": {
+    "runtime_file_count": 50,
+    "source_file_count": 50,
+    "runtime_only": [],
+    "source_only": [],
+    "changed": [],
+    "exact_python_tree_match": true
+  },
+  "cca081acce84cc1e8f93c5698074943f97b8cb63": {
+    "runtime_file_count": 50,
+    "source_file_count": 78,
+    "runtime_only": [],
+    "source_only": [
+      "backend/app/analytics/person_b/historical_v101/__init__.py",
+      "backend/app/analytics/person_b/historical_v101/core.py",
+      "backend/app/analytics/person_b/historical_v101/normalization.py",
+      "backend/app/analytics/person_b/historical_v101/scenario_core.py",
+      "backend/app/analytics/person_b/historical_v101/scenario_validation.py",
+      "backend/app/analytics/person_b/historical_v101/scenarios.py",
+      "backend/app/analytics/person_b/historical_v101/worker.py",
+      "backend/app/analytics/person_b/incident_orchestration.py",
+      "backend/app/analytics/person_b/persistence.py",
+      "backend/app/analytics/person_b/scenario_core.py",
+      "backend/app/analytics/person_b/scenario_validation.py",
+      "backend/app/analytics/person_b/scenarios.py",
+      "backend/app/analytics/person_b/validation.py",
+      "backend/app/api/incidents.py",
+      "backend/app/api/what_if.py",
+      "backend/app/models/incidents.py",
+      "backend/app/models/what_if.py",
+      "backend/app/operators.py",
+      "backend/app/schemas/incidents.py",
+      "backend/app/schemas/what_if.py",
+      "backend/app/services/incident_outbox.py",
+      "backend/app/services/incidents.py",
+      "backend/app/services/what_if.py",
+      "backend/migrations/versions/20261009_a001_incident_registry.py",
+      "backend/migrations/versions/20261010_a002_incident_outbox.py",
+      "backend/migrations/versions/20261010_d005_incident_tasks.py",
+      "backend/migrations/versions/20261010_d006_combined_integration.py",
+      "backend/migrations/versions/20261010_w001_what_if_snapshots.py"
+    ],
+    "changed": [
+      "backend/app/analytics/person_b/core.py",
+      "backend/app/analytics/person_b/normalization.py",
+      "backend/app/analytics/person_b/worker.py",
+      "backend/app/api/__init__.py",
+      "backend/app/api/maintenance.py",
+      "backend/app/models/__init__.py",
+      "backend/app/models/maintenance.py",
+      "backend/app/schemas/maintenance.py",
+      "backend/app/services/analytics_worker.py",
+      "backend/app/services/maintenance.py"
+    ],
+    "exact_python_tree_match": false
+  }
+}

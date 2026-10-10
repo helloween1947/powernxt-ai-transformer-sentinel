@@ -1,0 +1,126 @@
+{
+  "name": "analytics_worker_test_6fe8ae75aed4",
+  "networks": {
+    "default": {
+      "name": "analytics_worker_test_6fe8ae75aed4_default",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "backend": {
+      "build": {
+        "context": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011",
+        "dockerfile": "backend/Dockerfile"
+      },
+      "command": null,
+      "container_name": "analytics_worker_test_6fe8ae75aed4-backend",
+      "depends_on": {
+        "db": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "CORS_ORIGINS": "[\"http://localhost:3000\",\"http://localhost:5173\",\"http://127.0.0.1:5173\"]",
+        "DATABASE_URL": "<redacted>",
+        "ENVIRONMENT": "test",
+        "LOG_LEVEL": "INFO",
+        "TEST_DATABASE_URL": "<redacted>"
+      },
+      "image": "analytics_worker_test_6fe8ae75aed4-backend:completion",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 8000,
+          "published": "50634",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped"
+    },
+    "db": {
+      "command": null,
+      "container_name": "analytics_worker_test_6fe8ae75aed4-db",
+      "entrypoint": null,
+      "environment": {
+        "POSTGRES_DB": "worker_integration_test",
+        "POSTGRES_PASSWORD": "<redacted>",
+        "POSTGRES_USER": "sentinel"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U sentinel -d worker_integration_test"
+        ],
+        "timeout": "5s",
+        "interval": "5s",
+        "retries": 5,
+        "start_period": "5s"
+      },
+      "image": "postgres:16-alpine",
+      "networks": {
+        "default": null
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 5432,
+          "published": "50635",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "unless-stopped",
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "postgres_data",
+          "target": "/var/lib/postgresql/data",
+          "volume": {}
+        }
+      ]
+    },
+    "worker": {
+      "profiles": [
+        "analytics"
+      ],
+      "build": {
+        "context": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\backend-completion-20261011",
+        "dockerfile": "backend/Dockerfile"
+      },
+      "command": [
+        "python",
+        "-m",
+        "backend.app.workers"
+      ],
+      "depends_on": {
+        "db": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "DATABASE_URL": "<redacted>",
+        "ENVIRONMENT": "test",
+        "LOG_LEVEL": "INFO"
+      },
+      "image": "analytics_worker_test_6fe8ae75aed4-worker:completion",
+      "networks": {
+        "default": null
+      },
+      "restart": "unless-stopped",
+      "stop_grace_period": "1m10s"
+    }
+  },
+  "volumes": {
+    "postgres_data": {
+      "name": "analytics_worker_test_6fe8ae75aed4-postgres_data"
+    }
+  }
+}

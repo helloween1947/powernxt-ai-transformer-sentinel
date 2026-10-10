@@ -1,0 +1,83 @@
+Exit Code: 0
+--- STDOUT ---
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-8.4.2, pluggy-1.6.0 -- C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.worktrees\phase3-integration
+configfile: pytest.ini
+plugins: anyio-4.15.1, asyncio-0.26.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 53 items
+
+backend/tests/test_model_adoption.py::test_unmonitored_handover_fences_old_claim_preserves_old_forecast_and_bootstraps PASSED [  1%]
+backend/tests/test_model_adoption.py::test_existing_stream_blocks_without_mutating_jobs_and_other_stream_progresses PASSED [  3%]
+backend/tests/test_model_adoption.py::test_monitored_handover_preserves_ack_tasks_evidence_and_interrupts_active_identity PASSED [  5%]
+backend/tests/test_model_adoption.py::test_adopted_extreme_arithmetic_preserves_finite_metrics[1e+308] PASSED [  7%]
+backend/tests/test_model_adoption.py::test_adopted_extreme_arithmetic_preserves_finite_metrics[5e-324] PASSED [  9%]
+backend/tests/test_model_adoption.py::test_historical_arithmetic_error_never_substitutes_current_computation PASSED [ 11%]
+backend/tests/test_model_adoption.py::test_unknown_result_schema_cannot_capture_a_forecast PASSED [ 13%]
+backend/tests/test_what_if.py::test_identical_initial_state_zero_time_and_no_worker_writes PASSED [ 15%]
+backend/tests/test_what_if.py::test_supported_boundaries_and_bounded_sampling[5e-324-0--50] PASSED [ 16%]
+backend/tests/test_what_if.py::test_supported_boundaries_and_bounded_sampling[1e-06-0--50] PASSED [ 18%]
+backend/tests/test_what_if.py::test_supported_boundaries_and_bounded_sampling[60-10-80] PASSED [ 20%]
+backend/tests/test_what_if.py::test_supported_boundaries_and_bounded_sampling[86400-0-80] PASSED [ 22%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[duration_s-True] PASSED [ 24%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[duration_s-0] PASSED [ 26%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[duration_s-86401] PASSED [ 28%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[duration_s-60] PASSED [ 30%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[thermal_load_pu-False] PASSED [ 32%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[thermal_load_pu--1] PASSED [ 33%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[thermal_load_pu-10.01] PASSED [ 35%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[ambient_temperature_c-True] PASSED [ 37%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[ambient_temperature_c--50.1] PASSED [ 39%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[ambient_temperature_c-80.1] PASSED [ 41%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[cooling_factor-1] PASSED [ 43%]
+backend/tests/test_what_if.py::test_reject_invalid_segment_inputs[worker_state-value11] PASSED [ 45%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit0] PASSED [ 47%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit1] PASSED [ 49%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit2] PASSED [ 50%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit3] PASSED [ 52%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit4] PASSED [ 54%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit5] PASSED [ 56%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit6] PASSED [ 58%]
+backend/tests/test_what_if.py::test_exact_schema_and_comparison_constraints[edit7] PASSED [ 60%]
+backend/tests/test_what_if.py::test_nonfinite_json_rejected[NaN] PASSED  [ 62%]
+backend/tests/test_what_if.py::test_nonfinite_json_rejected[Infinity] PASSED [ 64%]
+backend/tests/test_what_if.py::test_nonfinite_json_rejected[1e999] PASSED [ 66%]
+backend/tests/test_what_if.py::test_missing_state_asset_and_reference PASSED [ 67%]
+backend/tests/test_what_if.py::test_limit_unavailable_is_not_no_crossing PASSED [ 69%]
+backend/tests/test_what_if.py::test_initial_equality_exceedance_and_no_crossing[55] PASSED [ 71%]
+backend/tests/test_what_if.py::test_initial_equality_exceedance_and_no_crossing[54] PASSED [ 73%]
+backend/tests/test_what_if.py::test_initial_equality_exceedance_and_no_crossing[1000] PASSED [ 75%]
+backend/tests/test_what_if.py::test_calculated_crossing_between_points_and_at_final_endpoint PASSED [ 77%]
+backend/tests/test_what_if.py::test_snapshot_stays_fixed_across_cache_config_and_late_results PASSED [ 79%]
+backend/tests/test_what_if.py::test_latest_invalid_does_not_fall_back_to_prior_snapshot PASSED [ 81%]
+backend/tests/test_what_if.py::test_missing_parameters_rejected PASSED   [ 83%]
+backend/tests/test_what_if.py::test_capture_requires_exact_cache_result_identity PASSED [ 84%]
+backend/tests/test_what_if.py::test_concurrent_capture_is_one_immutable_reference PASSED [ 86%]
+backend/tests/test_what_if.py::test_arithmetic_failure_rolls_back_capture PASSED [ 88%]
+backend/tests/test_what_if.py::test_snapshot_does_not_reconstruct_mutable_result_payload PASSED [ 90%]
+backend/tests/test_what_if.py::test_snapshot_insert_guard_rejects_contradictory_origin PASSED [ 92%]
+backend/tests/test_what_if.py::test_upgrade_preserves_existing_worker_data_and_matches_metadata PASSED [ 94%]
+backend/tests/test_what_if.py::test_computation_bounds_can_fail_arithmetic_without_fabricated_forecast PASSED [ 96%]
+backend/tests/test_what_if.py::test_unsupported_model_namespace_and_bad_parameter_binding PASSED [ 98%]
+backend/tests/test_what_if.py::test_uninitialized_state_and_database_failure_have_explicit_errors PASSED [100%]
+
+============================== warnings summary ===============================
+..\..\.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+backend/tests/test_model_adoption.py::test_unmonitored_handover_fences_old_claim_preserves_old_forecast_and_bootstraps
+  C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.venv\Lib\site-packages\pytest_asyncio\plugin.py:1216: DeprecationWarning: 'asyncio.get_event_loop_policy' is deprecated and slated for removal in Python 3.16
+    return asyncio.get_event_loop_policy()
+
+backend/tests/test_model_adoption.py: 5 warnings
+backend/tests/test_what_if.py: 50 warnings
+  C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.venv\Lib\site-packages\alembic\config.py:604: DeprecationWarning: No path_separator found in configuration; falling back to legacy splitting on spaces, commas, and colons for prepend_sys_path.  Consider adding path_separator=os to Alembic config.
+    util.warn_deprecated(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================== 53 passed, 57 warnings in 28.93s =======================
+
+--- STDERR ---

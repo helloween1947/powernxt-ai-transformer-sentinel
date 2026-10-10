@@ -1,10 +1,13 @@
-"""Extracted pure physical primitives from Person B; no prototype endpoints."""
+"""Exact extracted physical primitives; no legacy orchestration or heuristics."""
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 import math
 
 def finite(value):
-    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    try:
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+    except OverflowError:
+        return False
 
 @dataclass(frozen=True)
 class AssetConfig:
@@ -53,6 +56,8 @@ class ThermalState:
     def __post_init__(self):
         if not finite(self.predicted_oil_temp_c) or not finite(self.ambient_temp_c):
             raise ValueError("Thermal state temperatures must be finite")
+        if type(self.valid) is not bool or (self.reason is not None and not isinstance(self.reason, str)):
+            raise ValueError("Thermal validity must be boolean and reason null or a string")
 
 def _advance(state, load, ambient, duration, cooling=1.0):
     config = state.config
@@ -62,6 +67,8 @@ def _advance(state, load, ambient, duration, cooling=1.0):
         raise ValueError("Invalid load or ambient")
     if not finite(cooling) or not 0.2 <= cooling <= 2:
         raise ValueError("cooling_factor must be in [0.2, 2]")
+    if duration == 0:
+        return ThermalState(state.predicted_oil_temp_c, ambient, config)
     target = ambient + config.rated_oil_rise_c * ((1 + config.loss_ratio * load ** 2) / (1 + config.loss_ratio)) ** config.oil_exponent / cooling
     temperature = target + (state.predicted_oil_temp_c - target) * math.exp(-duration / (config.time_constant_s / cooling))
     return ThermalState(temperature, ambient, config)
@@ -72,4 +79,7 @@ def _timestamp(value):
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
         raise ValueError("timestamp requires timezone")
-    return parsed.astimezone(timezone.utc)
+    try:
+        return parsed.astimezone(timezone.utc)
+    except (OverflowError, ValueError):
+        raise ValueError("timestamp cannot be represented in UTC") from None

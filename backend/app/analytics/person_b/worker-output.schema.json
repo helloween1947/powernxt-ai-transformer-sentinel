@@ -546,7 +546,7 @@
               "type": "number"
             },
             "model_version": {
-              "const": "stored-reading-top-oil-1.0.1"
+              "const": "stored-reading-top-oil-1.0.2"
             },
             "parameter_version": {
               "type": "string"
@@ -650,7 +650,7 @@
           "type": "string"
         },
         "model_version": {
-          "const": "stored-reading-top-oil-1.0.1"
+          "const": "stored-reading-top-oil-1.0.2"
         },
         "parameter_version": {
           "type": "string"

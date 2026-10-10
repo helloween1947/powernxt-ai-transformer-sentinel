@@ -3,7 +3,7 @@
 import json
 import math
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from uuid import UUID, uuid4
 
 from sqlalchemy import and_, exists, func, or_, select
@@ -11,13 +11,16 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import aliased
 
 from backend.app.analytics import adapter
+from backend.app.analytics.person_b.incident_orchestration import IncidentPlanningError
 from backend.app.models import AssetConfiguration
 from backend.app.models.analytics import (
     AnalyticsResult,
     AnalyticsState,
     AnalyticsStream,
 )
+from backend.app.models.incidents import DetectorControl, DetectorEpoch
 from backend.app.models.telemetry import ProcessingJob, TelemetryReading
+from backend.app.services.incidents import mark_continuity_break, persist_plan
 
 NONTERMINAL = ("pending", "retry", "processing")
 
@@ -42,6 +45,19 @@ def stream_key(reading):
 
 def db_time(db):
     return db.scalar(select(func.clock_timestamp()))
+
+
+def model_handover_required(db, head):
+    """Do not silently bootstrap a previously used model namespace."""
+    if head.last_identity is not None:
+        namespace = json.loads(head.last_identity)
+        if namespace[:2] != [adapter.MODEL_ID, adapter.MODEL_VERSION]:
+            return True
+    control = db.get(DetectorControl, (head.asset_id, head.source, head.run_key))
+    if control is not None:
+        epoch = db.get(DetectorEpoch, control.epoch_id)
+        return epoch.model_version != adapter.MODEL_VERSION
+    return False
 
 
 def claim_next(factory, *, lease_seconds=60, max_attempts=3):
@@ -106,6 +122,10 @@ def claim_next(factory, *, lease_seconds=60, max_attempts=3):
             )
             if head is None or (head.active_token and head.lease_until > now):
                 continue
+            if model_handover_required(db, head):
+                # Pending jobs and attempt counts remain untouched until an admin
+                # records the boundary; independent streams can still progress.
+                continue
             if job.attempts >= max_attempts:
                 job.status, job.last_error, job.completed_at = (
                     "failed",
@@ -113,6 +133,7 @@ def claim_next(factory, *, lease_seconds=60, max_attempts=3):
                     now,
                 )
                 job.claim_token = job.lease_until = None
+                mark_continuity_break(db, reading, state_policy=job.state_policy)
                 if head.active_job_id == job.id:
                     head.active_token = head.active_job_id = head.lease_until = None
                 continue
@@ -180,6 +201,10 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
     # Read snapshot under the same fencing checks; release DB locks during compute.
     with factory.begin() as db:
         job, reading, head, _ = fenced(db, claim)
+        if model_handover_required(db, head):
+            raise IncidentPlanningError(
+                "incident_handover_required", "Recorded model handover required"
+            )
         config = db.scalar(
             select(AssetConfiguration).where(
                 AssetConfiguration.asset_id == reading.asset_id,
@@ -211,6 +236,21 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
         or output["metadata"]["parameter_version"] != key[6]
     ):
         raise ComputationError("model_binding_mismatch")
+    meta = output["metadata"]
+    if (
+        meta["stream"]
+        != {
+            "asset_id": reading.asset_id,
+            "source": reading.source,
+            "run_id": reading.run_key or None,
+        }
+        or meta["reading_identity"]
+        != {"reading_id": reading.id, "message_id": str(reading.message_id)}
+        or meta["configuration_version"] != reading.configuration_version
+        or datetime.fromisoformat(meta["measurement_time"].replace("Z", "+00:00"))
+        != reading.measurement_time
+    ):
+        raise ComputationError("reading_binding_mismatch")
     with factory.begin() as db:
         job, reading, head, now = fenced(db, claim)
         authorized_until = min(job.lease_until, head.lease_until)
@@ -230,17 +270,18 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
             if output["execution_status"]["outcome"] == "insufficient_input_or_state"
             else "completed"
         )
-        db.add(
-            AnalyticsResult(
-                reading_id=reading.id,
-                model_id=key[3],
-                model_version=key[4],
-                parameter_version=key[6],
-                schema_version=output["metadata"]["result_schema_version"],
-                status=status,
-                payload=output,
-            )
+        result = AnalyticsResult(
+            reading_id=reading.id,
+            model_id=key[3],
+            model_version=key[4],
+            parameter_version=key[6],
+            schema_version=output["metadata"]["result_schema_version"],
+            status=status,
+            payload=output,
         )
+        db.add(result)
+        db.flush()  # Detector evidence binds to this real result ID, never a placeholder.
+        persist_plan(db, reading, result, now, state_policy=policy)
         if advancing:
             state = db.get(AnalyticsState, key)
             if state is None:
@@ -289,16 +330,20 @@ def process_claim(factory, claim, *, compute=None, before_commit=None):
 
 def record_failure(factory, claim, error, *, max_attempts=3, retry_seconds=1):
     with factory.begin() as db:
-        job, _, head, now = fenced(db, claim)
+        job, reading, head, now = fenced(db, claim)
         # Persist bounded machine codes, never exception text/payload/credentials.
         job.last_error = (
-            "invalid_computation_input"
+            error.code
+            if isinstance(error, IncidentPlanningError)
+            else "invalid_computation_input"
             if isinstance(error, ValueError)
             else "thermal_computation_error"
             if isinstance(error, ComputationError)
             else "worker_computation_error"
         )
         job.status = "failed" if job.attempts >= max_attempts else "retry"
+        if job.status == "failed":
+            mark_continuity_break(db, reading, state_policy=job.state_policy)
         job.available_at = now + timedelta(
             seconds=min(300, retry_seconds * 2 ** (job.attempts - 1))
         )

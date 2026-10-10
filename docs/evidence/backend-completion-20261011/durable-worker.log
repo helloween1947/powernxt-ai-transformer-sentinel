@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "project": "analytics_worker_test_6fe8ae75aed4",
+  "asset_id": "demo-worker-a7174bff08ca4d4ab76f07874826b187",
+  "run_id": "worker-a7174bff08ca4d4ab76f07874826b187",
+  "first_batch_completed": 6,
+  "identical_retries": 6,
+  "restart_persistence": true,
+  "recovery_attempts": 2,
+  "final_readings": 8,
+  "final_jobs": 8,
+  "final_results": 8,
+  "stream_advances": [
+    1,
+    7
+  ],
+  "analytics_model": "stored-reading-top-oil-1.0.2",
+  "image_basis": "normal repository Dockerfile --pull --no-cache on Windows",
+  "windows_execution": true
+}

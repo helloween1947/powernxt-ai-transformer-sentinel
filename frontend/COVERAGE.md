@@ -1,5 +1,95 @@
 # Current PR16 validation
 
+## Phase2 Model 1.0.2 compatibility — 10 October 2026
+
+Frontend base: `744c76538235e7d04da250fcfdcf4f7a8d6e9218` (merged PR28).
+Exact backend candidate: `508c7b1f8d6d76f7e74e47262bfb446a05bbe782`, PR32,
+`feature/persona-model-102-adoption`, stacked on the incident registry branch.
+This is candidate compatibility evidence, not deployment or model adoption.
+The reviewed provenance guard is unchanged and accepts matching identities across
+1.0.1 and 1.0.2 without a model-version pin.
+
+Fresh Windows installed Chrome used frontend localhost:3003 and candidate API
+127.0.0.1:8003. A's localhost is not reachable from this laptop; no A runtime claim
+is made. A separate C-owned database was restored from the already-D006 C test
+database. No Alembic migration, model/detector handover or existing service restart
+ran. New synthetic streams were ingested through actual HTTP and processed with
+the candidate's worker only in this new copy. Its 360 retained historical 1.0.1
+results have the same before/after digest. Existing demonstrations and source
+database received no writes from this verification.
+
+Actual browser/API cases (source simulator, exact IDs in local streams.json):
+
+| Case | Stored readings | Verified behavior |
+| --- | --- | --- |
+| Historical 1.0.1 | 281–282 | Both endpoint identities match; provenance retained; bootstrap nulls and subsequent eligible values render exactly |
+| New 1.0.2 normal | 362–367 | Both endpoint identities match; cold-start prediction/residual unavailable; next five eligible values render by chronological reading-ID joins |
+| New 1.0.2 tiny rating | 368–369 | Capacity loading null with electrical_arithmetic_unavailable; apparent power 1000.0688157821942 kVA and usable telemetry remain visible |
+| New 1.0.2 extreme current | 370–371 | HTTP ingestion quality screening makes currents unusable; server reasons remain visible, voltage evidence remains usable; terminal unavailable jobs yield null latest-completed result |
+
+The extreme-current HTTP case is distinct from A/B's direct-core arithmetic
+example. The browser must display actual availability reasons rather than infer
+that every unavailable metric is an arithmetic failure. Synthetic extreme inputs
+are numeric robustness checks, not physical asset specifications.
+
+Separately labelled browser fixtures cover contradictory parameter identity on
+both endpoints, unsupported stored-result schema and a pending poll followed by
+a fatal 503. The fatal-refresh regression required a six-line loader correction:
+remove retained analytics/latest-result presentation and predictions/residuals,
+keep previously retrieved telemetry and its retrieval timestamp, stop polling and
+show the error. Returning to supported responses recovers normally. Fixture
+injections do not establish backend defects; captured actual-network files contain
+only real responses.
+
+Final frontend checks: **43 tests pass**, lint passes and production build passes.
+Optional `node tests/modelCompatibilityBrowser.cjs` requires external Playwright,
+installed Chrome, FRONTEND_ORIGIN, BROWSER_ARTIFACT_DIR and MODEL_STREAMS_FILE
+containing `{streams:{name:{asset,run,readings,modelVersion}}}`. The script performs
+GET-only browser API checks and labels intercepted responses separately.
+Evidence retained outside Git at
+`integration-work/model-compatibility-20261010-194405/browser-verified/`:
+model-browser.json, actual-network-*.json and actual/fixture screenshots.
+Parent directory contains exact candidate setup, OpenAPI, real stored responses,
+stream IDs and historical preservation digest. Earlier harness failures are
+retained separately; final verification passed after synchronizing registry
+pagination and honoring the server's actual terminal-unavailable contract.
+
+### What-if historical dispatch: required future UI behavior
+
+Inspected candidate code and actual OpenAPI; no What-if POST was run in this
+phase. Keep the current screen visibly illustrative. The public request remains
+what-if-request-1.0.0: source/run, optional opaque UUID4 state_ref, baseline and
+reduced_load segments. Never send model selection, coefficients or worker state.
+The server dispatches an explicit historical reference to its immutable 1.0.1
+implementation and a new reference to 1.0.2. Do not relabel or recompute history,
+fall back to another model, or silently replace an explicit reference with latest.
+
+Success stays what-if-response-1.0.0: state/configuration/model references, units,
+parameter provenance, assumptions, sampling bounds, two estimated curves and
+final_temperature_difference_c (reduced minus baseline). Display elapsed seconds,
+initial/final/peak values and distinguish crossing, no_crossing_within_horizon and
+unavailable. Use conditional healthy-model wording; no fault or maintenance claim.
+
+Errors are nested `detail:{schema_version:what-if-error-1.0.0,code,message,reasons}`:
+409 state_unavailable after handover means no new forward state yet; retain inputs
+and let the operator explicitly select a supported reference or retry later.
+409 incompatible_state_identity rejects unknown versions or contradictory binding;
+show it and clear prior scenario results. Other 409 eligibility/parameter errors
+remain unavailable, not zero-valued successes. 422 computation_unavailable reports
+arithmetic failure; 422 invalid_request requires input correction; 404 identifies
+missing asset/reference; 503 database_unavailable allows a manual retry. Preserve
+inputs, distinguish these cases and reject unknown response schema versions.
+Bounds remain duration (0,86400] s, load [0,10] pu, ambient [-50,80] C, equal
+durations/ambient, reduced load <= baseline and at most 97 points per scenario.
+
+Compatibility verdict: both stored-result versions work with the scoped frontend
+correction. No blocking stored-analytics interface discrepancy was found. Human
+review/CI of C's correction and A/D backend dependency signoff remain required.
+Fresh A-hosted runtime verification is unavailable without a reachable API and
+exact stored stream IDs. No adoption, migration, merge, deployment, phone work or
+teammate messages occurred; private local credentials and raw evidence stay out
+of Git. Environment files, Date.now()) and unrelated UI work remain preserved.
+
 ## Phase1 provenance guard completion — 10 October 2026
 
 Current main `cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda` still contains no

@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "source_database": "worker_integration_test",
+  "restored_database": "worker_completion_restore_test",
+  "all_public_tables_exact": true,
+  "tables": {
+    "alembic_version": {
+      "count": 1,
+      "sha256": "ddf330247755ab73919e2e541fda3771bb77659e7175ca3ab53ad1e0bd0c65b1"
+    },
+    "analytics_results": {
+      "count": 26,
+      "sha256": "8ce8856cee78d1d4bb87842ea1592b6f62698a57c19f7ace0324b427298eda1c"
+    },
+    "analytics_states": {
+      "count": 10,
+      "sha256": "e2e2011b655aadee60ae1113bf8c89f4f2b6947a16ef1ef7ebb9597c2da7e082"
+    },
+    "analytics_streams": {
+      "count": 8,
+      "sha256": "cb06b2bf63745f6c9244f582841c73bd7eb0a4839a1ed61b29ef94d40d1a3cb7"
+    },
+    "asset_configurations": {
+      "count": 3,
+      "sha256": "97d4f94a1815f872dbcff0d072530cf74bd0110fb9f846346cb11a772e1087d1"
+    },
+    "assets": {
+      "count": 3,
+      "sha256": "507c70f05cd081c7c55040e62e9878ac6962fa81c7e996ee9e446271018cd09f"
+    },
+    "incident_deliveries": {
+      "count": 12,
+      "sha256": "b1d6b3a4a92fcd8ad0d166dbc82cfddae6cd543d14f01b89ebbb33e54ac98cc1"
+    },
+    "incident_detector_controls": {
+      "count": 4,
+      "sha256": "39f82eefb2d44055ba20e13e9f249c5c247e17013918fe62a19b1a55218b15a5"
+    },
+    "incident_detector_epochs": {
+      "count": 4,
+      "sha256": "69b018e638ca851a5c44ebbf7b42e221b4c881856bffe8cf8e822a71b9a979e3"
+    },
+    "incident_events": {
+      "count": 12,
+      "sha256": "e5a95755ad2975fd8ad98d10d0559c72093f6dc522085674d6443b836c63a919"
+    },
+    "incident_evidence": {
+      "count": 10,
+      "sha256": "5b6393849add340b2cd1944e9cd047039fac83264d3811f128feaff932a9b0d3"
+    },
+    "incident_operations": {
+      "count": 6,
+      "sha256": "b77bb3522db48592bc3c8d44739fa344b2ee4664d7c35d764dd186317fef990f"
+    },
+    "incident_operators": {
+      "count": 2,
+      "sha256": "c50bedab99a3382e1fbf0b8c8ba3e50b10e9c98373911eac86191c6bfd900843"
+    },
+    "incidents": {
+      "count": 2,
+      "sha256": "1bebe99ab89f05492ceb1c1c5627c75057640826b09460bcf1da54bcb4cce0cc"
+    },
+    "maintenance_task_history": {
+      "count": 8,
+      "sha256": "0cde1519c3e5d06997b89331d64eb6cb41cb54ba4268c1e88f0e8bf853152ffa"
+    },
+    "maintenance_tasks": {
+      "count": 2,
+      "sha256": "4dcb64fd22d93e8ba328c7dd57f6f9529a1ae001e06d6e8352ce13fa11055ade"
+    },
+    "telemetry_processing_jobs": {
+      "count": 26,
+      "sha256": "b6e1ed94c41fc5a2bae3b4a6233c98dec935a288632a8bd0c21097dc3bb87eb7"
+    },
+    "telemetry_readings": {
+      "count": 26,
+      "sha256": "b8cba1b20124534d8b5bff96efebac27da97fa4150cd4b3e032e19b7cf27a2f7"
+    },
+    "what_if_snapshots": {
+      "count": 4,
+      "sha256": "545ab5289f678e35bf4f603c4560cefa81cd7dad1f3752ac09fd06879fbecca7"
+    }
+  },
+  "dump_location": "isolated db container /tmp/completion-preservation.dump",
+  "credentials_or_urls_saved": false
+}

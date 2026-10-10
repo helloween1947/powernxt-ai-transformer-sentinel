@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 
-HEAD = "d004_worker_maintenance"
+HEAD = "d006_combined_integration"
 
 
 def rows(connection, table):
@@ -21,7 +21,7 @@ def rows(connection, table):
 
 @pytest.mark.parametrize("start", ["fresh", "84b8976a7d0d", "ce21c3b8140a",
                                   "d001_maintenance", "d002_task_workflow", "both_heads",
-                                  "d003_audit_maintenance", "d730a91b4c22"])
+                                  "d003_audit_maintenance", "d730a91b4c22", "d004_worker_maintenance"])
 def test_combined_migration_paths_preserve_records(start):
     url = os.environ.get("TEST_DATABASE_URL", "")
     parsed = make_url(url)
@@ -55,7 +55,7 @@ def test_combined_migration_paths_preserve_records(start):
                 connection.execute(text("""INSERT INTO telemetry_processing_jobs
                     (reading_id,status,state_policy) SELECT id,'pending','forward_only' FROM telemetry_readings"""))
                 tables = ["assets", "asset_configurations", "telemetry_readings", "telemetry_processing_jobs"]
-                if start in {"d001_maintenance", "d002_task_workflow", "both_heads", "d003_audit_maintenance"}:
+                if start in {"d001_maintenance", "d002_task_workflow", "both_heads", "d003_audit_maintenance", "d004_worker_maintenance"}:
                     connection.execute(text("""INSERT INTO maintenance_tasks
                         (id,asset_id,alert_source,alert_id,alert_summary,action,status)
                         VALUES (:id,'migration-asset','sample','sample-existing','Old sample','Inspect','open')"""),

@@ -1,0 +1,203 @@
+{
+  "phase": "Phase 3 Combined Integration Candidate Technical Completion",
+  "completion_timestamp": "2026-10-10T17:10:00Z",
+  "coordinator": {
+    "role": "Person A (Backend Lead and Integration Coordinator)",
+    "repository": "helloween1947/powernxt-ai-transformer-sentinel",
+    "local_path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel",
+    "worktree_path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\phase3-integration"
+  },
+  "candidate": {
+    "branch": "feature/persona-phase3-combined-integration",
+    "pure_code_merge_head_sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+    "runtime_code_diff_vs_published": 0,
+    "merge_conflicts": 0,
+    "verdict": "PASS (awaiting formal reviews/CI)"
+  },
+  "lineage": {
+    "main": {
+      "ref": "origin/main",
+      "head_sha": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+      "incorporates": "PR #28 (provenance guard and frontend audit tests)"
+    },
+    "feature/persona-incident-registry": {
+      "ref": "origin/feature/persona-incident-registry",
+      "head_sha": "2e934c85098453db7342ea6ade570759ef4b9161",
+      "incorporates": "Canonical incident registry (a001, a002, d005, w001, joined at d006)"
+    },
+    "pr29": {
+      "number": 29,
+      "title": "Person D: finalize source review, isolated Docker runner and A/C handover",
+      "author": "hramith06 (Person D)",
+      "branch": "feature/persond-alignment-integration",
+      "head_sha": "3b92b197423a0c4da94bd9c1569e528180fabb24",
+      "target_branch": "feature/persona-incident-registry",
+      "is_draft": false,
+      "ci_status": "4/4 passing",
+      "submitted_reviews_count": 0
+    },
+    "pr32": {
+      "number": 32,
+      "title": "Adopt reviewed model 1.0.2 with recorded handover and historical What-if dispatch",
+      "author": "helloween1947 (Person A)",
+      "branch": "feature/persona-model-102-adoption",
+      "head_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782",
+      "target_branch": "feature/persona-incident-registry",
+      "is_draft": true,
+      "ci_status": "4/4 passing",
+      "submitted_reviews_count": 1,
+      "formal_reviews": [
+        {
+          "reviewer": "hramith06 (Person D)",
+          "state": "APPROVED",
+          "review_id": "5479811412",
+          "commit_sha": "508c7b1f8d6d76f7e74e47262bfb446a05bbe782"
+        }
+      ]
+    },
+    "pr33": {
+      "number": 33,
+      "title": "Clear stale analytics on failed pending refresh; verify model 1.0.2 compatibility",
+      "author": "akash-patil18 (Person C)",
+      "branch": "codex/personc-model-102-compatibility",
+      "head_sha": "4dc7351221357f8ecd2b48d2075c3e7590825b25",
+      "target_branch": "main",
+      "is_draft": false,
+      "ci_status": "2/2 passing",
+      "submitted_reviews_count": 0
+    }
+  },
+  "docker_build": {
+    "image_tag": "sentinel-backend:phase3-candidate-311c10a",
+    "image_id": "sha256:40db9cd6503f2fbf2f5ef78cb901ac868931cb145b734d8fdd6d6ffec6168971",
+    "build_command": "docker compose -p sentinel-phase3-candidate -f integration/compose.phase3-candidate.yaml build --no-cache",
+    "build_status": "PASS (Exit 0)",
+    "log_file": "docs/evidence/docker-build.log"
+  },
+  "migration_rehearsal": {
+    "start_revision": "d004_worker_maintenance",
+    "terminal_head": "d006_combined_integration",
+    "is_single_head": true,
+    "down_revisions": [
+      "a002_incident_outbox",
+      "d005_incident_tasks",
+      "w001_what_if_snapshots"
+    ],
+    "new_migrations_added_by_candidates": 0,
+    "alembic_check_status": "PASS (No new upgrade operations detected)",
+    "tables_verified_count": 18,
+    "d004_seeded_tables": [
+      "assets",
+      "asset_configurations",
+      "telemetry_readings",
+      "telemetry_processing_jobs",
+      "analytics_results",
+      "analytics_streams",
+      "analytics_states",
+      "maintenance_tasks",
+      "maintenance_task_history"
+    ],
+    "field_parity_percentage": 100.0,
+    "additive_fields_null_check": "PASS",
+    "sample_tasks_unlinked_check": "PASS",
+    "preservation_evidence_file": "docs/evidence/populated-migration-preservation.json"
+  },
+  "test_suites": {
+    "backend_and_contracts": {
+      "framework": "pytest 8.4.2",
+      "collected": 351,
+      "passed": 351,
+      "failed": 0,
+      "duration_seconds": 186.46,
+      "modules": {
+        "analytics_contracts": 9,
+        "test_analytics_worker": 36,
+        "test_assets": 10,
+        "test_audit_regressions": 4,
+        "test_combined_integration": 10,
+        "test_health": 5,
+        "test_incident_handoff": 9,
+        "test_incident_maintenance": 13,
+        "test_incidents": 22,
+        "test_maintenance": 23,
+        "test_maintenance_migration_integration": 9,
+        "test_maintenance_workflow": 24,
+        "test_model_adoption": 7,
+        "test_persond_review": 12,
+        "test_simulator": 16,
+        "test_telemetry": 51,
+        "test_what_if": 46
+      }
+    },
+    "frontend": {
+      "framework": "node --test + vitest/eslint/vite",
+      "npm_ci_status": "PASS (143 packages, 0 vulnerabilities)",
+      "npm_test_collected": 43,
+      "npm_test_passed": 43,
+      "npm_test_failed": 0,
+      "npm_lint_status": "PASS (0 errors, 0 warnings)",
+      "npm_build_status": "PASS (client dist built cleanly in 156ms)"
+    }
+  },
+  "live_docker_integration": {
+    "project": "sentinel-phase3-candidate",
+    "ports": {
+      "db": "127.0.0.1:55433",
+      "api": "127.0.0.1:8801"
+    },
+    "health_live": "PASS (200 OK)",
+    "health_ready": "PASS (200 OK, database: connected)",
+    "duplicate_ingestion": "PASS (Strictly 1 reading recorded for duplicate message_id)",
+    "authentication_barrier": "PASS (401 Unauthorized enforced for anonymous handover & analytics tasks)",
+    "model_102_adoption": "PASS (Stale 1.0.1 handover rejected with 409 unsupported_model_version; Model 1.0.2 accepted with 201)",
+    "what_if_immutability": "PASS (Zero database mutations on jobs, states, or results; state_unavailable 409 when uncomputed)",
+    "container_restart_persistence": "PASS (100% record match across backend container restart)",
+    "operator_credential_cleanup": "PASS (Private test admin token revoked and removed)",
+    "evidence_file": "docs/evidence/live-candidate-verification.json"
+  },
+  "teammate_reconciliation": {
+    "person_b": {
+      "role": "Twin & Analytics Lead",
+      "status": "APPROVED",
+      "evidence_document": "docs/personb-phase3-model-review.md",
+      "findings": [
+        "100% AST parity across all 29 routines in core.py, normalization.py, validation.py, persistence.py, scenarios.py, incident_orchestration.py, worker.py",
+        "Extreme finite boundary tests (1e308 and 5e-324) pass with strict JSON serialization",
+        "Measurement-time Euler evolution and cadence thresholds verified",
+        "Historical Model 1.0.1 preservation verified without retrospective relabelling",
+        "What-if dispatch allowlist confirmed supporting both 1.0.2 and 1.0.1"
+      ]
+    },
+    "person_c": {
+      "role": "Frontend Lead",
+      "pr_number": 33,
+      "status": "PASS (technical verification complete; awaiting formal PR review from Person A & D)",
+      "mode_rule": "VITE_DATA_MODE='demo' preserves stable mock screens while Backend readings and maintenance query isolated live API",
+      "review_ownership": "PR #33 authored by Person C; independent review owned by Person A and Person D"
+    },
+    "person_d": {
+      "role": "Data Platform & Migration Lead",
+      "pr_number": 29,
+      "pr32_review_id": "5479811412 (APPROVED)",
+      "blockers_resolved": [
+        "Missing tables in verify_combined_records resolved: 18 tables verified with exact row hashes from D004 to D006",
+        "Worker lease fencing and claim recovery verified across 36 tests and live container",
+        "Static incompatibility in verify_incident_maintenance resolved with Model 1.0.2 adoption (201) and stale 1.0.1 rejection (409)",
+        "Runner evidence labels updated for Model 1.0.2 adoption"
+      ]
+    }
+  },
+  "development_stack_preservation": {
+    "sentinel_postgres_port_5433": "PRESERVED (Up 35 hours, schema d004_worker_maintenance intact)",
+    "sentinel_backend_port_8000": "PRESERVED (Up 8 hours intact)",
+    "sentinel_worker_container": "PRESERVED (Up 8 hours intact)",
+    "demo_frontend_port_3000": "PRESERVED (Running in background intact)"
+  },
+  "outstanding_formal_gates": [
+    "Formal GitHub review submission from Person B on PR #32",
+    "Formal GitHub review submission from Person A on PR #29",
+    "Formal GitHub review submissions from Person A and Person D on PR #33",
+    "Transition of PR #32 from Draft to Ready for Review on GitHub",
+    "Protected branch merges into main and feature/persona-incident-registry remain blocked until all formal approvals are recorded"
+  ]
+}

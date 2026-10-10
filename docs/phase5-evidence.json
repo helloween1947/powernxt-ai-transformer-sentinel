@@ -1,0 +1,174 @@
+{
+  "phase": "Phase 5 Preparation, Rehearsal & Development Upgrade Plan",
+  "branch": "feature/phase4-full-implementation",
+  "candidate_sha": "42db6aa99e19d5cf15a31a982998a4d462aa62f7",
+  "base_ref": "feature/persona-phase3-combined-integration (a0689417efd0b674b93198eb537d940cb3547285)",
+  "target_branch": "main (744c76538235e7d04da250fcfdcf4f7a8d6e9218)",
+  "timestamp": "2026-10-10T17:58:00Z",
+  "coordinator": "Person A (Backend Lead & Integration Coordinator)",
+  "conclusion": "Phase 5 preparation and rehearsal PASS; awaiting execution approval",
+  "environment": {
+    "os": "Windows 11 Enterprise (amd64)",
+    "python": "Python 3.14.3",
+    "node": "v22.14.0",
+    "docker": "Docker Engine 27.x",
+    "database": "PostgreSQL 16.8 (Alpine)"
+  },
+  "readiness_verification": {
+    "github_prs": {
+      "pr_32": {
+        "title": "Adopt reviewed model 1.0.2 with recorded handover and historical What-if dispatch",
+        "head": "feature/persona-model-102-adoption (508c7b1f)",
+        "base": "feature/persona-incident-registry",
+        "state": "open (Draft: True)",
+        "reviews": ["hramith06: APPROVED"],
+        "ci": "PASS (Backend Test Suite: success, Frontend tests: success)"
+      },
+      "pr_33": {
+        "title": "Clear stale analytics on failed pending refresh; verify model 1.0.2 compatibility",
+        "head": "codex/personc-model-102-compatibility (4dc73512)",
+        "base": "main",
+        "state": "open (Draft: False)",
+        "reviews": [],
+        "ci": "PASS (Backend Test Suite: success, Frontend tests: success)"
+      },
+      "pr_29": {
+        "title": "Person D: finalize source review, isolated Docker runner and A/C handover",
+        "head": "feature/persond-alignment-integration (3b92b197)",
+        "base": "feature/persona-incident-registry",
+        "state": "open (Draft: False)",
+        "reviews": [],
+        "ci": "PASS (Backend Test Suite: success, Frontend tests: success)"
+      },
+      "pr_24": {
+        "title": "Finalize Person B model alignment, detector contract and adoption handoff",
+        "head": "feature/personb-detector-orchestration (d86b210a)",
+        "base": "main",
+        "state": "open (Draft: True)",
+        "reviews": [],
+        "ci": "PASS (Backend Test Suite: success, Frontend tests: success)"
+      }
+    },
+    "outstanding_actions": [
+      "Obtain independent code review approval on PR #33 (Person C frontend compatibility)",
+      "Obtain independent code review approval on PR #29 (Person D integration runner)",
+      "Promote PR #32 from Draft and merge into feature/persona-incident-registry following formal authorization",
+      "Merge feature/persona-incident-registry into main following formal authorization",
+      "Obtain explicit authorization from repository owner to execute local development upgrade"
+    ]
+  },
+  "development_system_inventory": {
+    "containers": {
+      "sentinel-postgres": {
+        "id": "ec88f1bf7dbd057c0413c639fb00336e7b1da1fe96b1888bca9bebd8a6871035",
+        "image": "postgres:16-alpine",
+        "image_id": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+        "port": 5433,
+        "volume": "sentinel_postgres_data",
+        "status": "Up 35+ hours"
+      },
+      "sentinel-backend": {
+        "id": "174353c623b4702cea694272fbb21fa202a83f9b6690c5e49049cfa23f7bff1d",
+        "image": "powernxt-ai-transformer-sentinel-backend",
+        "image_id": "sha256:bd760496e6b626bd7e44c55a5f6628da39fc5dd9fa032b2e5844df13e8fc61cd",
+        "port": 8000,
+        "status": "Up 8+ hours"
+      },
+      "powernxt-ai-transformer-sentinel-worker-1": {
+        "id": "69baaa9216470e6e7a2473436d90477816dd633cc3e191731b8b382fe0283e33",
+        "image": "powernxt-ai-transformer-sentinel-worker",
+        "image_id": "sha256:f7065cf9c7d31808e0db114d9358d714e26098bd881c7ffa252dce044fe395e0",
+        "status": "Up 8+ hours"
+      }
+    },
+    "frontend": {
+      "port": 3000,
+      "mode": "demo",
+      "pid": 43464,
+      "git_head": "744c76538235e7d04da250fcfdcf4f7a8d6e9218"
+    },
+    "database": {
+      "name": "sentinel_db",
+      "migration_revision": "d004_worker_maintenance",
+      "table_count": 10,
+      "record_counts": {
+        "alembic_version": 1,
+        "analytics_results": 25,
+        "analytics_states": 5,
+        "analytics_streams": 5,
+        "asset_configurations": 9,
+        "assets": 7,
+        "maintenance_task_history": 7,
+        "maintenance_tasks": 3,
+        "telemetry_processing_jobs": 25,
+        "telemetry_readings": 25
+      },
+      "active_leases": 0,
+      "pending_jobs": 0,
+      "model_namespace": "stored-reading-top-oil-1.0.1"
+    }
+  },
+  "recovery_materials": {
+    "backup_custom": {
+      "path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-backups\\phase5\\sentinel_db_dev_d004.dump",
+      "bytes": 49544,
+      "sha256": "B6BCCAF1DF95F56D7509721C056A8A52751F31A1DAEDEA7E9114891F4C0F13B5",
+      "format": "PostgreSQL custom format (-Fc)",
+      "command": "docker exec sentinel-postgres pg_dump -U sentinel -d sentinel_db -Fc -f /tmp/sentinel_db_dev_d004.dump"
+    },
+    "backup_sql": {
+      "path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-backups\\phase5\\sentinel_db_dev_d004.sql",
+      "bytes": 309108,
+      "sha256": "EC56BA195C9F06AAF78D2C7727EED1CAB45E3C43F870C19EA6FBEA523A56320D",
+      "format": "Plain SQL (-Fp)",
+      "command": "docker exec sentinel-postgres pg_dump -U sentinel -d sentinel_db -Fp -f /tmp/sentinel_db_dev_d004.sql"
+    },
+    "restore_verification": {
+      "container": "sentinel_phase5_restore_verify",
+      "status": "PASS",
+      "table_count_verified": 10,
+      "row_parity": "100%",
+      "historical_demo_verified": true
+    }
+  },
+  "upgrade_rehearsal": {
+    "compose_file": "integration/compose.phase5-rehearsal.yaml",
+    "ports": {
+      "db": 55435,
+      "backend": 8802
+    },
+    "image_built": "sentinel-backend:phase5-candidate-42db6aa",
+    "migration_path": "d004_worker_maintenance -> w001 -> a001 -> d005 -> a002 -> d006_combined_integration",
+    "migration_exit_code": 0,
+    "alembic_check_result": "No new upgrade operations detected.",
+    "tables_post_migration": 19,
+    "historical_preservation": {
+      "model_101_results": 25,
+      "sample_tasks": 3,
+      "historical_assets": 7
+    },
+    "model_102_handover_rehearsal": {
+      "epoch_id": "98aafef2-1d50-49f9-8d6b-4963d8ea8b8f",
+      "stale_101_handover_rejection": "PASS (HTTP 409 unsupported_model_version)",
+      "model_102_telemetry_processed": "PASS",
+      "incident_opened": "d8adc2b4-4348-406e-8c99-53e5ca015040 (Status: active, Version: 1)",
+      "incident_acknowledged": "PASS (Version: 2)",
+      "genuine_task_created": "PASS (830e231d-fb7c-463a-91c5-358ad41ff2ec, alert_source: analytics)",
+      "task_lifecycle_advanced": "PASS (Version: 2, status: in_progress)",
+      "what_if_model_102": "PASS (Baseline: 78.43 C, Reduced: 72.40 C, Delta: -6.03 C)"
+    },
+    "historical_what_if_replay": {
+      "asset_id": "demo-normal-85203b1018bc498c8b90873f383cc740",
+      "dispatched_model": "stored-reading-top-oil-1.0.1",
+      "baseline_temp": 50.73,
+      "reduced_temp": 46.67,
+      "delta": -4.06,
+      "database_immutability": "PASS (0 worker state writes)"
+    },
+    "worker_recovery_restart": {
+      "command": "docker restart sentinel-phase5-rehearsal-worker",
+      "exit_code": 0,
+      "state_persistence": "PASS"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "incident-control-1.0.0",
+  "expected_version": 0,
+  "idempotency_key": "50000000-0000-4000-8000-000000000001",
+  "source": "simulator",
+  "run_id": "explicit-demo-run",
+  "configuration_version": 1,
+  "model_version": "stored-reading-top-oil-1.0.1",
+  "detector_version": "sustained-threshold-1.0.1",
+  "reason": "Explicit assumed demonstration policy; not calibrated",
+  "policy": {
+    "version": "assumed-capacity-demo-v1",
+    "provenance": "assumed",
+    "max_gap_s": 300,
+    "rules": [
+      {
+        "name": "capacity_overload",
+        "quantity": "electrical_metrics.capacity_loading_pct",
+        "unit": "%",
+        "trigger": 120,
+        "recovery": 100,
+        "persistence_s": 180,
+        "recovery_s": 120,
+        "severity": "warning"
+      }
+    ]
+  }
+}
