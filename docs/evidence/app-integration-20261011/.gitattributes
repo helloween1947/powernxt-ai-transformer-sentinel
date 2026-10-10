@@ -1,0 +1,2 @@
+# Keep recorded evidence byte-identical across LF/CRLF hosts for SHA256 checks.
+* -text
