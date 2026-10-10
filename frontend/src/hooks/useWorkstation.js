@@ -5,7 +5,8 @@ import { sampleAssets, sampleSnapshot } from '../data/workstationSample.js';
 
 export function useAssets(mode, baseUrl, offset, refresh) {
   const [state, setState] = useState({ phase: 'loading', items: [] });
-  const key = `${baseUrl}:${offset}:${refresh}`;
+  const assetScope = `${baseUrl}:${offset}`;
+  const key = `${assetScope}:${refresh}`;
   useEffect(() => {
     if (mode !== 'live') return;
     const controller = new AbortController();
@@ -13,20 +14,21 @@ export function useAssets(mode, baseUrl, offset, refresh) {
     async function load() {
       try {
         const page = await client.getAssetPage(20, offset, controller.signal);
-        if (!controller.signal.aborted) setState({ ...page, phase: 'ready', key });
+        if (!controller.signal.aborted) setState({ ...page, phase: 'ready', key, assetScope });
       } catch (error) {
         if (!controller.signal.aborted) setState({ phase: 'error', items: [], message: error.message, key });
       }
     }
     load();
     return () => controller.abort();
-  }, [mode, baseUrl, offset, key]);
-  return mode === 'sample' ? { phase: 'ready', items: sampleAssets, offset: 0 } : state.key === key ? state : { phase: 'loading', items: [] };
+  }, [mode, baseUrl, offset, key, assetScope]);
+  return mode === 'sample' ? { phase: 'ready', items: sampleAssets, offset: 0 } : state.key === key ? state : state.assetScope === assetScope ? { ...state, phase: 'loading' } : { phase: 'loading', items: [] };
 }
 
 export function useWorkstation({ mode, baseUrl, assetId, source, runId, range, offset, condition, refresh, analyticsEnabled = false }) {
   const [state, setState] = useState({ phase: 'idle' });
-  const key = JSON.stringify({ mode, baseUrl, assetId, source, runId, range, offset, refresh, analyticsEnabled });
+  const scope = JSON.stringify({ mode, baseUrl, assetId, source, runId, range, offset, analyticsEnabled });
+  const key = `${scope}:${refresh}`;
   const cacheScope = JSON.stringify({ baseUrl, assetId, source, runId });
   const client = useMemo(() => {
     const canonical = createTelemetryClient(baseUrl);
@@ -49,10 +51,10 @@ export function useWorkstation({ mode, baseUrl, assetId, source, runId, range, o
     let stopped = false;
     const loader = createStreamLoader(client, next => {
       if (stopped) return;
-      setState({ ...next, key });
+      setState(previous => ({ ...next, snapshot: next.snapshot ?? (previous.scope === scope ? previous.snapshot : undefined), key, scope }));
       if (next.phase === 'ready' && !next.polling && !next.exhausted && !next.snapshot.errors.length) {
         clearTimeout(timer);
-        timer = setTimeout(reload, 30000);
+        timer = setTimeout(reload, source === 'simulator' ? 2000 : 30000);
       }
     });
     function reload() {
@@ -62,10 +64,10 @@ export function useWorkstation({ mode, baseUrl, assetId, source, runId, range, o
     }
     reload();
     return () => { stopped = true; clearTimeout(timer); loader.cancel(); };
-  }, [mode, assetId, source, runId, offset, range, client, key]);
+  }, [mode, assetId, source, runId, offset, range, client, key, scope]);
   const sample = useMemo(() => mode === 'sample' ? sampleSnapshot(assetId, condition, range) : null, [mode, assetId, condition, range]);
   if (sample) return { phase: 'ready', snapshot: sample };
   if (!assetId) return { phase: 'idle' };
   if (source !== 'device' && !runId.trim()) return { phase: 'idle', message: 'Enter the run ID for this simulator or replay stream.' };
-  return state.key === key ? state : { phase: 'loading' };
+  return state.key === key ? state : state.scope === scope ? { ...state, phase: 'loading' } : { phase: 'loading' };
 }

@@ -1,3 +1,7 @@
+## Replacement backend integration · 11 October 2026
+
+A new independent backend is available in [backend_next](../backend_next/README.md), serving localhost:8001. Connected mode now supports transformer registration/configuration, live synthetic feeds, saved run selection, CSV/XLSX column mapping, dataset import and whole-dataset configured-condition findings through the Data inputs panel. Existing browser connection preferences may need updating to port 8001. Backend setup, units, upload limits, method and current validation are documented there. The earlier frontend-only verification below records the 10 October rebuild and is not a statement that this newer backend work was frontend-only.
+
 # PowerNXT · Transformer Sentinel
 
 React/Vite operator workstation rebuilt around an interactive distribution transformer. Navy/steel-blue light and dark themes, a collapsible rail, glass measurement callouts, a prominent unvalidated Condition Rating, synchronized record inspection, exact-value chart tables and accessible detail sheets are implemented. The Workspace view uses built-in fixed history. Display labels are concise; canonical mode, record identities and export provenance remain intact.

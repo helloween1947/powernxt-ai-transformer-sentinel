@@ -9,7 +9,7 @@ export const CONDITION_POLICY = Object.freeze({
   warningRatio: 0.9, minimumFactors: 2, minimumCoverage: 50, staleAfterMs: 120000,
   scores: Object.freeze({ normal: 100, warning: 70, critical: 25 }),
 });
-const sources = new Set(['nameplate', 'measured', 'assumed', 'simulated']);
+const sources = new Set(['nameplate', 'measured', 'assumed', 'simulated', 'operator_configured']);
 const sameIdentity = (a, b) => a && b && a.assetId === b.assetId && a.source === b.source && (a.runId ?? null) === (b.runId ?? null) && a.configurationVersion === b.configurationVersion && a.readingId === b.readingId && Date.parse(a.measurementTime) === Date.parse(b.measurementTime);
 export function classifyFactor(value, limit, relation = 'maximum') {
   if (!Number.isFinite(value) || !Number.isFinite(limit) || limit <= 0 || !['maximum', 'minimum'].includes(relation)) return null;
@@ -60,6 +60,7 @@ export function conditionRating(snapshot, mode, now = Date.now()) {
   const analytics = snapshot?.analytics;
   const result = analytics?.result;
   const loading = analytics?.metrics?.find(metric => metric.path === 'electrical_metrics.capacity_loading_pct');
+  const currentImbalance = analytics?.metrics?.find(metric => metric.path === 'electrical_metrics.current_magnitude_imbalance_pct');
   const analyticsBound = sample || (analytics?.status === 'completed' && result && analytics.reading_id === reading?.readingId && analytics.asset_id === reading?.assetId && analytics.source === reading?.source && (analytics.run_id ?? null) === (reading?.runId ?? null) && analytics.configuration_version === reading?.configurationVersion && Date.parse(analytics.measurement_time) === Date.parse(reading?.measurementTime));
   const base = { identity, ruleVerified: configBound, quality: 'good', relation: 'maximum' };
   const provenance = name => sample ? 'assumed' : config?.parameter_provenance?.[`operational_limits.${name}`];
@@ -67,8 +68,8 @@ export function conditionRating(snapshot, mode, now = Date.now()) {
   const factors = [
     { ...base, id: 'loading', label: 'Capacity loading', valueSource: sample ? 'SAMPLE / SIMULATED' : 'Completed stored analytics', value: analyticsBound && loading?.unit === '%' ? loading.value : null, unit: loading?.unit, limit: config?.operational_limits?.max_load_pct, limitProvenance: provenance('max_load_pct'), quality: allCurrentGood ? 'good' : 'unusable', reason: !analyticsBound ? 'No compatible completed capacity-loading result for this reading.' : undefined },
     { ...base, id: 'thermal', label: 'Measured oil temperature', valueSource: sample ? 'SAMPLE / SIMULATED' : 'Normalized measured channel', value: usableMeasurement(reading, 'oil_temperature_c'), unit: '°C', quality: reading?.measurementQuality?.oil_temperature_c, limit: config?.operational_limits?.max_top_oil_temp_c, limitProvenance: provenance('max_top_oil_temp_c') },
-    { id: 'electrical', label: 'Electrical imbalance', unit: '%', reason: 'No approved imbalance threshold is supplied by this configuration contract.' },
-    { id: 'oil', label: 'Oil level', unit: '%', reason: 'No configured minimum oil-level rule is supplied by this configuration contract.' },
+    { ...base, id: 'electrical', label: 'Current magnitude imbalance', unit: '%', value: analyticsBound && currentImbalance?.unit === '%' ? currentImbalance.value : null, limit: config?.operational_limits?.max_current_imbalance_pct, limitProvenance: provenance('max_current_imbalance_pct'), quality: ['current_r_a', 'current_y_a', 'current_b_a'].every(name => reading?.measurementQuality?.[name] === 'good' && usableMeasurement(reading, name) != null) ? 'good' : 'unusable', reason: config?.operational_limits?.max_current_imbalance_pct == null ? 'No configured current-imbalance threshold is supplied.' : undefined },
+    { ...base, id: 'oil', label: 'Oil level', unit: '%', relation: 'minimum', value: usableMeasurement(reading, 'oil_level_pct'), quality: reading?.measurementQuality?.oil_level_pct, limit: config?.operational_limits?.min_oil_level_pct, limitProvenance: provenance('min_oil_level_pct'), reason: config?.operational_limits?.min_oil_level_pct == null ? 'No configured minimum oil-level rule is supplied.' : undefined },
   ];
   if (mode === 'live' && (reading?.assetId?.startsWith('SAMPLE-') || analytics?.status === 'sample')) factors.forEach(factor => { factor.reason = 'Sample evidence is excluded from backend rating.'; });
   return computeConditionRating({ factors, identity, mode, now });

@@ -27,3 +27,7 @@ dist-ssr
 /LOCAL-INTEGRATION.md
 /scripts/start-local-demo.ps1
 /tests/browser-results/
+
+# These application modules must not be excluded by the root Python lib/ rule.
+!src/lib/
+!src/lib/**

@@ -6,6 +6,7 @@ export function inspectRuntimeContract(spec) {
   return {
     analytics: methods(spec.paths, '/api/v1/telemetry/{reading_id}/analytics', ['get']) && methods(spec.paths, '/api/v1/assets/{asset_id}/analytics/latest', ['get']),
     sampleMaintenance: methods(spec.paths, '/api/v1/maintenance/tasks', ['get', 'post']) && methods(spec.paths, '/api/v1/maintenance/tasks/{task_id}', ['get', 'patch']) && methods(spec.paths, '/api/v1/maintenance/tasks/{task_id}/history', ['get']),
+    dataInputs: methods(spec.paths, '/api/v1/simulator/runs', ['post']) && methods(spec.paths, '/api/v1/assets/{asset_id}/datasets', ['post']) && methods(spec.paths, '/api/v1/assets/{asset_id}/datasets/preview', ['post']),
     version: spec.info?.version ?? 'Unspecified',
   };
 }
