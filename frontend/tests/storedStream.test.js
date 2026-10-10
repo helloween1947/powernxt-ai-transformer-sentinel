@@ -147,6 +147,22 @@ test('failed load stops polling and a manual reload recovers', async () => {
   loader.cancel();
 });
 
+test('failed pending refresh clears retained analytics while keeping previously retrieved telemetry', async () => {
+  const c=client('pending'); const states=[]; const queue=[];
+  const loader=createStreamLoader(c,s=>states.push(s),{schedule:fn=>{queue.push(fn);return 1;}});
+  await loader.start(selection);
+  assert.ok(states.at(-1).snapshot.completedAnalytics.result);
+  c.getAssetDetails=async()=>{throw new Error('labelled offline fixture');};
+  await queue.shift()();
+  const failed=states.at(-1);
+  assert.equal(failed.phase,'error'); assert.match(failed.message,/offline fixture/);
+  assert.equal(failed.snapshot.latest.readingId,2);
+  assert.equal(failed.snapshot.analytics,null); assert.equal(failed.snapshot.completedAnalytics,null);
+  assert.equal(failed.snapshot.latestEnvelope,null);
+  assert.ok(failed.snapshot.points.every(p=>p.predicted===null && p.residual===null && p.measured!==null));
+  assert.equal(queue.length,0); loader.cancel();
+});
+
 test('history page offset is preserved and only that bounded page enters the comparison', async () => {
   const c = client();
   c.getTelemetryHistory = async (assetId, options) => {
