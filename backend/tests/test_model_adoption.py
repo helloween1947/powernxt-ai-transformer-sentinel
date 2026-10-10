@@ -170,7 +170,7 @@ def test_existing_stream_blocks_without_mutating_jobs_and_other_stream_progresse
     with legacy_runtime(monkeypatch):
         submit(configured)
         assert run_once(factory)
-    submit(configured, 60)
+    _, waiting = submit(configured, 60)
     before = rows(factory)
     assert not run_once(factory)
     assert rows(factory) == before
@@ -180,8 +180,9 @@ def test_existing_stream_blocks_without_mutating_jobs_and_other_stream_progresse
         assert (
             db.scalar(
                 text(
-                    "SELECT attempts FROM telemetry_processing_jobs WHERE reading_id=(SELECT id FROM telemetry_readings WHERE run_key='worker-test' AND measurement_time>'2026-01-01')"
-                )
+                    "SELECT attempts FROM telemetry_processing_jobs WHERE reading_id=:reading_id"
+                ),
+                {"reading_id": waiting["id"]},
             )
             == 0
         )
