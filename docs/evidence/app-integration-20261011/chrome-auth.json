@@ -1,0 +1,10 @@
+{
+  "scope": "Actual Chrome; isolated API responses and owned credentials only",
+  "checks": [
+    "invalid credential rejected by actual operators/me API",
+    "actual404 snapshot error visible; prior forecast absent",
+    "actual server expiry timestamp clears local session and requires reauthentication",
+    "actual revoked-credential401 clears session and disables incident query"
+  ],
+  "status": "PASS"
+}

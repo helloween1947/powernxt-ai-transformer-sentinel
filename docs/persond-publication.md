@@ -148,3 +148,14 @@ revision for ce21c3b8140a and d002_task_workflow. B: confirm the persistent aler
 identity/provenance contract before genuine-alert integration. Backend tests
 passed (D 125; latest main+D+B 227); frontend lint/build and mapper/client tests
 passed. Docker deployment is still blocked by the missing engine pipe.
+
+## 11 October 2026 combined application follow-up
+
+The earlier publication notes above are historical. Current integrated source,
+backend/frontend ancestry, genuine persisted incident/task Chrome execution,
+migration/record comparisons, startup commands and review ownership are in
+[the dated combined application report](app-integration-20261011.md),
+[evidence manifest](app-integration-evidence-20261011.json) and
+[isolated startup guide](app-review-startup.md). The new D draft is stacked on
+A's unmerged backend candidate; no main merge, development migration or Docker
+deployment is implied. C's rebuilt workspace remains the frontend authority.

@@ -1,0 +1,222 @@
+{
+  "date": "2026-10-11",
+  "tested_source": "64c32cfc97ec9cb2539fa7b3eb9171dbb324572a",
+  "backend_runtime": "52053168475aac45a112bc122b1fa8fe87cfd775",
+  "latest_backend_branch": "fae21510c83e2595708078df39f6468b70cfb2a0",
+  "frontend_source": "4b5709d9857350d405dc0de21c7af3b8d1f09a5e",
+  "frontend_cherry_pick": "2baf48768740709364667a9814cfa568a68ea7d5",
+  "main": "744c76538235e7d04da250fcfdcf4f7a8d6e9218",
+  "python": "3.13.14",
+  "node": "24.19.0",
+  "postgres": "18",
+  "chrome": "154.0.8037.98",
+  "scope": "Owned native PostgreSQL and actual Chrome; synthetic representative records only",
+  "migration_head": "d006_combined_integration",
+  "table_preservation_count": 19,
+  "backend_tests": 354,
+  "frontend_tests": 99,
+  "sample_mapper_tests": 3,
+  "docker": "UNRESOLVED: Docker engine unavailable; docker info exit 1",
+  "runtime_data": "persond_review_165cad2ccf7e4dd595eb8b6ecfeda69c_test",
+  "credentials": "Private files excluded; owned credentials revoked at cleanup",
+  "commands": [
+    {
+      "command": "python -m pytest backend/tests analytics/contracts -q --tb=short",
+      "exit": 0
+    },
+    {
+      "command": "npm test",
+      "exit": 0
+    },
+    {
+      "command": "npm run lint",
+      "exit": 0
+    },
+    {
+      "command": "npm run build",
+      "exit": 0
+    },
+    {
+      "command": "node --test integration/frontend/maintenanceAdapter.test.mjs",
+      "exit": 0
+    },
+    {
+      "command": "python -m alembic -c backend/alembic.ini upgrade head; heads; current; check",
+      "exit": 0
+    },
+    {
+      "command": "integration.rehearse_populated_migration.run_rehearsal(owned_database_url, output)",
+      "exit": 0
+    },
+    {
+      "command": "python -m integration.verify_incident_maintenance --base-url http://127.0.0.1:15881 --database-url OWNED_DATABASE_URL --token-file PRIVATE_FILE --state-file STATE_FILE [--resume]",
+      "exit": 0
+    },
+    {
+      "command": "python -m integration.verify_what_if --base-url http://127.0.0.1:15881 --database-url OWNED_DATABASE_URL --output OUTPUT_FILE",
+      "exit": 0
+    },
+    {
+      "command": "python -m integration.extend_app_review --base http://127.0.0.1:15881 --evidence PRIVATE_EVIDENCE_DIRECTORY",
+      "exit": 0
+    },
+    {
+      "command": "node integration/verify_app_browser.cjs (REVIEW_RESTART=1)",
+      "exit": 0
+    },
+    {
+      "command": "node integration/verify_app_auth_browser.cjs",
+      "exit": 0
+    },
+    {
+      "command": "node integration/verify_app_pagination_browser.cjs",
+      "exit": 0
+    },
+    {
+      "command": "docker info",
+      "exit": 1
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/evidence/app-integration-20261011/backend-tests.log",
+      "bytes": 2163,
+      "sha256": "e3fe94a590261b6e9d3010bbe416abfe8f78cb314fcb975e17134d99f3febc5b"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-auth.json",
+      "bytes": 413,
+      "sha256": "ad47591b70e248aa7e5ab46b63b1dcb97b9b957f7940811c28e37357ab0f32c8"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-auth.log",
+      "bytes": 44,
+      "sha256": "6b0122a14ffe23103ed7b8d7f3af31c873e4057069797cc79257e7455b71ff3c"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-maintenance.png",
+      "bytes": 195616,
+      "sha256": "5d7248e71c4e61a4a46e048130f2b0264c357c0b9272f1ec839fd4b6f6f48a17"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-mobile.png",
+      "bytes": 266526,
+      "sha256": "50e0a99daac69d49435aca44381e50bb1d97555603a935d0d5b32a00fdac842b"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-pagination.json",
+      "bytes": 322,
+      "sha256": "55fc5132d432013f5769008dba74d6e4c53357546073393dd5694ea2ade438fb"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome-pagination.log",
+      "bytes": 57,
+      "sha256": "fcf1c5d74d0b543662259999887867b21f1e1263c2fede90801f9ba20b227854"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome.json",
+      "bytes": 14613,
+      "sha256": "f2443b54a1d36fa3ab86f46852b771b6b4f959dbc2794d10c2422f4542cf4c8c"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/chrome.log",
+      "bytes": 40,
+      "sha256": "5e3f0685e24506fd8619755dbf5706ae7af0d8a1aa6190e52418c0744759cecf"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/docker-info.log",
+      "bytes": 2481,
+      "sha256": "45ab710daa04b09ca5ecc6c57f0a5c7718b20d370b7192c5c8a5501329d10176"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/frontend-build-final.log",
+      "bytes": 616,
+      "sha256": "53f2b66a1621cc8aeae9135c672954bc0009edfb36cf35e2df42cef6fb85623c"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/frontend-lint-final.log",
+      "bytes": 39,
+      "sha256": "98cdc628d09a5242698fda93e945f0e0efa0645207f11c522f5bffab308bd486"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/frontend-test-final.log",
+      "bytes": 9716,
+      "sha256": "e33e3f6e3265cf67ca8cde890242b4a39a502eafbcf97211ae56de52dc85a334"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/incident-integration.log",
+      "bytes": 108,
+      "sha256": "4e88adf9533eb1ed1606585d6aafdd75dfd8f4426483b15caf527f48ea290195"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/incident-restart.log",
+      "bytes": 67,
+      "sha256": "baf0139869ec5668d68cb68eb395e1d4cf899c8ec3a7f9f674e62c60f9d4b1a5"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/migration-final.log",
+      "bytes": 1784,
+      "sha256": "8b79f025000444604cb877b975e934aff1427a8f768ec868043cc0f7b8c67d45"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/migration.log",
+      "bytes": 4187,
+      "sha256": "97ca073ae60cf5bd5e4f6fc1aa614826dc336dcf2ff110146a09d17d84987c8d"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/normal-worker-final.log",
+      "bytes": 93,
+      "sha256": "86a7e83f118122324d8c3c806f0e8c214e2e52d867e4d7fe782f79d04621a208"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/normal-worker.json",
+      "bytes": 431,
+      "sha256": "754eac60e9ca7edf91490c67dc4797ca0970a64d5c659297baf97cac5e160d26"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/populated-d004.json",
+      "bytes": 23872,
+      "sha256": "117e26c42bd8c8e014548eee1af897f8bbab497f7dc79b6182abf9fa91cafcae"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/populated-d004.log",
+      "bytes": 4215,
+      "sha256": "4770fc98aee85b940a72f559402b1fccb5aa43fe0fcb2ad2db3f7d0364c47887"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/restart-after.json",
+      "bytes": 7030,
+      "sha256": "aa7929592c5797585b0c9e808727cbfc5c5f4a7d28d593f1d42eeb7f13a9d53d"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/restart-before.json",
+      "bytes": 7030,
+      "sha256": "aa7929592c5797585b0c9e808727cbfc5c5f4a7d28d593f1d42eeb7f13a9d53d"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/sample-mapper.log",
+      "bytes": 348,
+      "sha256": "700853d8917d964e3ae86eac038837d26cacb828eeaedfcf5fd8209b40d65b40"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/snapshot-after.log",
+      "bytes": 65,
+      "sha256": "29325523b88204c56e863767a259c0db5766782a2c632254a2f33c8bf37b8399"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/snapshot-before.log",
+      "bytes": 65,
+      "sha256": "29325523b88204c56e863767a259c0db5766782a2c632254a2f33c8bf37b8399"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/whatif.log",
+      "bytes": 56,
+      "sha256": "7971e1041e142e4fd10107473d813aa554a8506e7cc814b929fe99f83f0bf16b"
+    },
+    {
+      "path": "docs/evidence/app-integration-20261011/cleanup.log",
+      "bytes": 168,
+      "sha256": "f1bcb30189a8001f9d72236ddaf5889e198e4976eb9e9904356972b1c58c43c2"
+    }
+  ]
+}

@@ -1,0 +1,424 @@
+{
+  "executed_utc": "2026-10-10T19:53:44.049Z",
+  "scope": "Actual installed Google Chrome; persisted worker incidents from labelled synthetic stream",
+  "checks": [
+    "registered fleet, selected asset, persisted measurements and current-model analytics, timestamped history",
+    "incident evidence, UI-linked task creation, owner assignment, start, completion notes validation, independent acknowledgement/task lifecycle",
+    "stale task409 refresh, retained draft, blocked overwrite, explicit review, cancellation notes, history",
+    "retained sample tasks, task and history pagination",
+    "actual What-if API, snapshot reuse, stale forecast cleared on input change",
+    "incident409 explicit refresh/review and reader mutation controls disabled",
+    "Chrome refresh persisted completed/cancelled tasks and server-verified session",
+    "actual stopped-backend offline error visible",
+    "actual backend restart persistence in Chrome",
+    "mobile navigation drawer and no horizontal overflow"
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/openapi.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets?limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00/telemetry?source=device&limit=20&offset=0&start=2026-10-09T19%3A53%3A44.728Z&end=2026-10-10T19%3A53%3A44.728Z",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00/analytics/latest?source=device",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry/latest?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305&limit=20&offset=0&start=2026-10-09T19%3A53%3A45.127Z&end=2026-10-10T19%3A53%3A45.127Z",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/analytics/latest?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/42/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/43/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/44/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-9aaab9c272c9/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-96d350c96754/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-9c9b828ef92d/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/what-if-test-9a7fa96b70774662b453c865b4b0d3ab/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents?asset_id=d-ui-5ee26d2b2c90&source=simulator&limit=20&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/f250c7e8-212c-4b50-9aac-5dbc4a1e95ca",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/f250c7e8-212c-4b50-9aac-5dbc4a1e95ca",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/f250c7e8-212c-4b50-9aac-5dbc4a1e95ca",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/f250c7e8-212c-4b50-9aac-5dbc4a1e95ca",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents?asset_id=d-ui-5ee26d2b2c90&source=simulator&limit=20&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/acknowledgements",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents?asset_id=d-ui-5ee26d2b2c90&source=simulator&limit=20&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/ce4d9fe2-80f4-499d-8655-e0d385755fe3/history?limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks?limit=20&offset=0&source=sample&asset_id=d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks?limit=20&offset=20&source=sample&asset_id=d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks?limit=20&offset=0&source=sample&asset_id=d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/a7486506-8c37-4c99-bbfe-bffb9aabde3f/history?limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks/a7486506-8c37-4c99-bbfe-bffb9aabde3f/history?limit=20&offset=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/what-if",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/what-if",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents?asset_id=d-ui-5ee26d2b2c90&source=simulator&limit=20&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898/acknowledgements",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/afe787e6-9b65-4aa3-b90d-7f507493a898",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents?asset_id=d-ui-5ee26d2b2c90&source=simulator&limit=20&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/incidents/1935993a-4289-4e97-8b2a-689682d413df/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/openapi.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets?limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry/latest?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/analytics/latest?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry?source=simulator&run_id=synthetic-ui-518626dc4fb74619aa3baff33519f305&limit=20&offset=0&start=2026-10-09T19%3A53%3A51.399Z&end=2026-10-10T19%3A53%3A51.399Z",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/44/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/43/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/telemetry/42/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks?limit=20&offset=0&source=analytics&asset_id=d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/maintenance/tasks?limit=20&offset=0&source=analytics&asset_id=d-ui-5ee26d2b2c90",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-genuine-test-af161637a8344d8c8354ceef8f4fcf00/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-9c9b828ef92d/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/what-if-test-9a7fa96b70774662b453c865b4b0d3ab/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-96d350c96754/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-9aaab9c272c9/telemetry/latest?source=device",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:15881/api/v1/assets/d-ui-5ee26d2b2c90/telemetry/latest?source=device",
+      "status": 404
+    }
+  ],
+  "pageErrors": [],
+  "browser": "154.0.8037.98",
+  "completed_task_id": "f250c7e8-212c-4b50-9aac-5dbc4a1e95ca",
+  "cancelled_task_id": "ce4d9fe2-80f4-499d-8655-e0d385755fe3",
+  "state_ref": "cda7ee92-300c-47f7-a24b-f5e713620907",
+  "status": "PASS"
+}
