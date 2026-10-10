@@ -50,7 +50,10 @@ def test_timestamp_overflow_is_validation_error(registry, timestamp):
     )
 
 
-def test_environment_example_loads():
+def test_environment_example_loads(monkeypatch):
+    # Test the declared example rather than ambient runtime/test database overrides.
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    monkeypatch.delenv("CORS_ORIGINS", raising=False)
     settings = Settings(_env_file=".env.example")
     assert ":5433/" in settings.DATABASE_URL
     assert "http://localhost:5173" in settings.CORS_ORIGINS
