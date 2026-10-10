@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "timestamp": "2026-10-10T21:01:11.207Z",
+  "project": "powernxt_single_71a55838",
+  "asset_id": "powernxt-single-transformer",
+  "qa_run": "single-worker-qa-15070dae",
+  "first_batch": 6,
+  "identical_retries": 6,
+  "qa_final_counts": {
+    "readings": 8,
+    "jobs": 8,
+    "results": 8
+  },
+  "database_counts": {
+    "readings": 21,
+    "jobs": 21,
+    "results": 21,
+    "assets": 1
+  },
+  "recovery_attempts": 2,
+  "stream_advances": [
+    1,
+    7
+  ],
+  "worker_restart_persistence": true,
+  "demo_records_unchanged": true,
+  "windows_execution": true
+}

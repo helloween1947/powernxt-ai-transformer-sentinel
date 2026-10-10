@@ -1,0 +1,40 @@
+{
+  "rated_kva": 1000.0,
+  "rated_voltage_v": 11000.0,
+  "rated_current_a": 52.49,
+  "voltage_convention": "line_to_line",
+  "measurement_side": "primary",
+  "cooling_type": "ONAN",
+  "operational_limits": {
+    "max_load_pct": null,
+    "min_voltage_pu": null,
+    "max_voltage_pu": null,
+    "max_top_oil_temp_c": 105.0,
+    "max_hot_spot_temp_c": null
+  },
+  "thermal_parameters": {
+    "rated_top_oil_rise_c": 40.0,
+    "rated_hot_spot_rise_c": null,
+    "oil_time_constant_min": 180.0,
+    "winding_time_constant_min": null,
+    "loss_ratio": 5.0,
+    "oil_exponent": 0.8,
+    "winding_exponent": null
+  },
+  "parameter_provenance": {
+    "rated_kva": "assumed",
+    "rated_voltage_v": "assumed",
+    "rated_current_a": "assumed",
+    "voltage_convention": "assumed",
+    "measurement_side": "assumed",
+    "cooling_type": "assumed",
+    "thermal_parameters.rated_top_oil_rise_c": "assumed",
+    "thermal_parameters.oil_time_constant_min": "assumed",
+    "thermal_parameters.loss_ratio": "assumed",
+    "thermal_parameters.oil_exponent": "assumed",
+    "operational_limits.max_top_oil_temp_c": "assumed"
+  },
+  "asset_id": "powernxt-single-transformer",
+  "version": 1,
+  "created_at": "2026-10-10T20:57:12.042968Z"
+}

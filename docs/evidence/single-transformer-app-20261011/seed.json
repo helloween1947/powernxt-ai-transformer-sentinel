@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "asset_id": "powernxt-single-transformer",
+  "source": "simulator",
+  "run_id": "single-transformer-demo-v1",
+  "configuration_version": 1,
+  "model_version": "stored-reading-top-oil-1.0.2",
+  "reading_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "incident_ids": [
+    "8ea3e30b-625f-451e-84ad-d43bc506ce97",
+    "ba7e0a7b-e530-4302-ac71-5625dd3df85e"
+  ],
+  "synthetic": true,
+  "assumed_coefficients": true
+}

@@ -1,0 +1,329 @@
+{
+  "tables": {
+    "alembic_version": {
+      "count": 1,
+      "sha256": "27a872a391981ce149a91fa6d47ea25f073d0cd6e1fc8d04be10bc4a536ee4fd",
+      "columns": [
+        "version_num"
+      ]
+    },
+    "analytics_results": {
+      "count": 19,
+      "sha256": "c2bdb95b0ae8440cd31e23aed3b0f98e77a15a372b2351b29e658e3b56e4a13f",
+      "columns": [
+        "id",
+        "reading_id",
+        "model_id",
+        "model_version",
+        "parameter_version",
+        "schema_version",
+        "status",
+        "payload",
+        "created_at"
+      ]
+    },
+    "analytics_states": {
+      "count": 3,
+      "sha256": "f4ed8f2117bffbc0ede6007af1e3e2e132a925933d36bfd481f7f06de31b105e",
+      "columns": [
+        "asset_id",
+        "source",
+        "run_key",
+        "model_id",
+        "model_version",
+        "configuration_version",
+        "parameter_version",
+        "state",
+        "advances",
+        "updated_at"
+      ]
+    },
+    "analytics_streams": {
+      "count": 3,
+      "sha256": "ba108ebc747c515eeabbc8396c879e97e093a7f4321464ea59f7c882d6011832",
+      "columns": [
+        "asset_id",
+        "source",
+        "run_key",
+        "watermark_time",
+        "watermark_reading_id",
+        "last_identity",
+        "active_token",
+        "active_job_id",
+        "lease_until",
+        "advances"
+      ]
+    },
+    "asset_configurations": {
+      "count": 1,
+      "sha256": "ee7291c65ee8f5298e4b4abdcb35e8a38368d8e9937a7f56b94d8ce48cd8d91a",
+      "columns": [
+        "id",
+        "asset_id",
+        "version",
+        "created_at",
+        "rated_kva",
+        "rated_voltage_v",
+        "rated_current_a",
+        "voltage_convention",
+        "measurement_side",
+        "cooling_type",
+        "operational_limits",
+        "thermal_parameters",
+        "parameter_provenance"
+      ]
+    },
+    "assets": {
+      "count": 1,
+      "sha256": "b01736e3a978e4a8ae3f6dbb21d09e4ff5e2a2a7d7d02698d4693f866200d89d",
+      "columns": [
+        "asset_id",
+        "name",
+        "location",
+        "timezone",
+        "created_at"
+      ]
+    },
+    "incident_deliveries": {
+      "count": 6,
+      "sha256": "f27c5b21531ec8f622bec5fdc47b3a39f9e1e34c353ea171deac039fd659a284",
+      "columns": [
+        "event_id",
+        "claim_token",
+        "lease_until",
+        "attempts",
+        "delivered_at"
+      ]
+    },
+    "incident_detector_controls": {
+      "count": 1,
+      "sha256": "e57ef1367ba72bc1471f24f63076c38ead027293b7b49c0018f63df989b1cc50",
+      "columns": [
+        "asset_id",
+        "source",
+        "run_key",
+        "epoch_id",
+        "version",
+        "continuity_break"
+      ]
+    },
+    "incident_detector_epochs": {
+      "count": 1,
+      "sha256": "29160662b90225124f18454b97b3e6399749def02b0bcff0622ceb542ee9e47d",
+      "columns": [
+        "id",
+        "asset_id",
+        "source",
+        "run_key",
+        "configuration_version",
+        "model_version",
+        "parameter_version",
+        "detector_version",
+        "policy",
+        "policy_fingerprint",
+        "context",
+        "previous_twin_state",
+        "actor_id",
+        "reason",
+        "boundary_time",
+        "created_at"
+      ]
+    },
+    "incident_events": {
+      "count": 6,
+      "sha256": "d407a0619c8f5c2daa50478d1264e9eeb5e7b7b38c158b8cfdcbad5c6879e18e",
+      "columns": [
+        "event_id",
+        "incident_id",
+        "incident_version",
+        "event_type",
+        "evidence_id",
+        "actor_id",
+        "payload",
+        "recorded_at"
+      ]
+    },
+    "incident_evidence": {
+      "count": 6,
+      "sha256": "567743f3b4ac2b98770a22fe434d26b1510d58686c4c52ce25fa9c201fd4a810",
+      "columns": [
+        "id",
+        "incident_id",
+        "incident_version",
+        "result_id",
+        "reading_id",
+        "detector_version",
+        "policy_fingerprint",
+        "payload",
+        "recorded_at"
+      ]
+    },
+    "incident_operations": {
+      "count": 1,
+      "sha256": "1675421496f48f2ecfd88cde629924b13ac293321a92357cccd5325d4177fe54",
+      "columns": [
+        "scope",
+        "key",
+        "actor_id",
+        "fingerprint",
+        "response",
+        "created_at"
+      ]
+    },
+    "incident_operators": {
+      "count": 3,
+      "sha256": "e08c02c8f5f67a57c6af23b7bd49aa2834f936b92c2ef90a0dbfeadc468b3cd1",
+      "columns": [
+        "id",
+        "name",
+        "role",
+        "token_hash",
+        "active",
+        "expires_at"
+      ]
+    },
+    "incidents": {
+      "count": 2,
+      "sha256": "e456e9b8cb3fd78684f63a838761bbc4b87d87e2cd19e86bca5a0e0c46a09725",
+      "columns": [
+        "id",
+        "asset_id",
+        "measurement_source",
+        "run_key",
+        "detector_epoch",
+        "detector_episode_key",
+        "category",
+        "severity",
+        "version",
+        "condition_status",
+        "monitoring_status",
+        "opened_at",
+        "recovered_at",
+        "last_evaluated_measurement_time",
+        "last_evidence_status",
+        "acknowledged_at",
+        "actor_id"
+      ]
+    },
+    "maintenance_task_history": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "columns": [
+        "id",
+        "task_id",
+        "version",
+        "event_type",
+        "previous_status",
+        "new_status",
+        "previous_owner",
+        "new_owner",
+        "previous_notes",
+        "notes",
+        "actor",
+        "identity_source",
+        "created_at",
+        "actor_id"
+      ]
+    },
+    "maintenance_tasks": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "columns": [
+        "id",
+        "asset_id",
+        "alert_source",
+        "alert_id",
+        "alert_summary",
+        "action",
+        "status",
+        "created_at",
+        "owner",
+        "notes",
+        "version",
+        "updated_at",
+        "incident_id",
+        "incident_evidence_id",
+        "created_by_id",
+        "creation_request"
+      ]
+    },
+    "telemetry_processing_jobs": {
+      "count": 19,
+      "sha256": "c89f93a76eb70cd39f3278a90802c198dad298b72f9a41cc30bd31d79f24c035",
+      "columns": [
+        "id",
+        "reading_id",
+        "created_at",
+        "status",
+        "state_policy",
+        "attempts",
+        "claim_token",
+        "lease_until",
+        "available_at",
+        "last_error",
+        "completed_at"
+      ]
+    },
+    "telemetry_readings": {
+      "count": 19,
+      "sha256": "dd546890c8cd0a178589bc350cf2a2ac997d40c71e79c78a3ac78dfd881de68e",
+      "columns": [
+        "id",
+        "asset_id",
+        "configuration_version",
+        "schema_version",
+        "message_id",
+        "source",
+        "run_key",
+        "measurement_time",
+        "arrival_time",
+        "original_payload",
+        "payload_fingerprint",
+        "normalized_telemetry",
+        "quality_flags",
+        "out_of_order"
+      ]
+    },
+    "what_if_snapshots": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "columns": [
+        "id",
+        "result_id",
+        "asset_id",
+        "source",
+        "run_key",
+        "configuration_version",
+        "model_id",
+        "model_version",
+        "parameter_version",
+        "measurement_time",
+        "state",
+        "captured_at"
+      ]
+    }
+  },
+  "streams": [
+    {
+      "asset_id": "powernxt-single-transformer",
+      "source": "simulator",
+      "run_key": "single-transformer-demo-v1",
+      "advances": 6,
+      "watermark_reading_id": 6
+    },
+    {
+      "asset_id": "powernxt-single-transformer",
+      "source": "simulator",
+      "run_key": "single-worker-qa-15070dae",
+      "advances": 6,
+      "watermark_reading_id": 19
+    },
+    {
+      "asset_id": "powernxt-single-transformer",
+      "source": "simulator",
+      "run_key": "single-worker-qa-e03919c7",
+      "advances": 7,
+      "watermark_reading_id": 13
+    }
+  ]
+}

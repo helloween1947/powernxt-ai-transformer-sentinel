@@ -1,0 +1,152 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.29kB done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 885B 0.0s done
+#2 DONE 0.0s
+
+#3 [frontend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 645B done
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/nginx:alpine
+#4 ...
+
+#5 [backend] resolve image config for docker-image://docker.io/docker/dockerfile:1
+#5 DONE 1.4s
+
+#4 [frontend internal] load metadata for docker.io/library/nginx:alpine
+#4 DONE 1.4s
+
+#6 [frontend internal] load metadata for docker.io/library/node:24-alpine
+#6 DONE 1.4s
+
+#7 [backend] docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#7 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#7 CACHED
+
+#8 [frontend internal] load .dockerignore
+#8 transferring context: 293B done
+#8 DONE 0.0s
+
+#9 [frontend stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
+#9 resolve docker.io/library/nginx:alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2 0.0s done
+#9 DONE 0.0s
+
+#10 [frontend build 1/6] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#10 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.0s done
+#10 DONE 0.0s
+
+#11 [backend internal] load metadata for docker.io/library/python:3.12-slim
+#11 ...
+
+#12 [frontend internal] load build context
+#12 transferring context: 817.08kB 0.1s done
+#12 DONE 0.1s
+
+#13 [frontend build 2/6] WORKDIR /app
+#13 CACHED
+
+#14 [frontend build 3/6] COPY frontend/package.json frontend/package-lock.json ./
+#14 CACHED
+
+#15 [frontend build 4/6] RUN npm ci
+#15 CACHED
+
+#16 [frontend build 5/6] COPY frontend/ ./
+#16 DONE 0.0s
+
+#17 [frontend build 6/6] RUN npm run build
+#17 0.274 
+#17 0.274 > frontend@0.0.0 build
+#17 0.274 > vite build
+#17 0.274 
+#17 0.560 vite v8.3.3 building client environment for production...
+#17 0.573 transforming...
+#17 0.823 ✓ 2975 modules transformed.
+#17 ...
+
+#11 [backend internal] load metadata for docker.io/library/python:3.12-slim
+#11 DONE 1.0s
+
+#8 [backend internal] load .dockerignore
+#8 transferring context: 293B done
+#8 DONE 0.0s
+
+#18 [backend 1/7] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#18 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 0.0s done
+#18 DONE 0.0s
+
+#19 [backend internal] load build context
+#19 transferring context: 729.51kB 0.1s done
+#19 DONE 0.1s
+
+#20 [backend 4/7] COPY backend/requirements.txt /workspace/backend/requirements.txt
+#20 CACHED
+
+#21 [backend 6/7] COPY backend /workspace/backend
+#21 CACHED
+
+#22 [backend 2/7] WORKDIR /workspace
+#22 CACHED
+
+#23 [backend 3/7] RUN apt-get update && apt-get install -y --no-install-recommends     curl     && rm -rf /var/lib/apt/lists/*
+#23 CACHED
+
+#24 [backend 5/7] RUN pip install --no-cache-dir --upgrade pip &&     pip install --no-cache-dir -r /workspace/backend/requirements.txt
+#24 CACHED
+
+#25 [backend 7/7] COPY pytest.ini /workspace/pytest.ini
+#25 CACHED
+
+#17 [frontend build 6/6] RUN npm run build
+#17 0.947 rendering chunks...
+#17 1.098 computing gzip size...
+#17 1.108 dist/index.html                                        0.93 kB │ gzip:   0.53 kB
+#17 1.108 dist/assets/future-capability-contracts-ByR-NjYh.md    6.91 kB
+#17 1.108 dist/assets/index-DOvkl1k6.css                        71.99 kB │ gzip:  14.58 kB
+#17 1.108 dist/assets/index-CeGZYn6j.js                        609.77 kB │ gzip: 189.89 kB
+#17 1.108 dist/assets/TransformerScene-CRPHmH7e.js             937.17 kB │ gzip: 249.16 kB
+#17 1.108 
+#17 1.119 ✓ built in 557ms
+#17 DONE 1.2s
+
+#26 [backend] exporting to image
+#26 exporting layers done
+#26 exporting manifest sha256:3af71ab42223c09fea5e783aedd7ad9c1ce80c3d525de3e8fa33e5de4bba7d8a done
+#26 exporting config sha256:26a52fd0165fd817bd2ad85780463ebc48a66843bf38692d20b1074de1375383 done
+#26 exporting attestation manifest sha256:ec63ff6520b2a3564096adf0ea99b9168019355fe402bf4a97125e4586093053 0.0s done
+#26 exporting manifest list sha256:c3d75fef94dd573b5cb85a8f415f94ad20cc9836a40d6c4ca84f3529a79d2562 done
+#26 naming to docker.io/library/powernxt_single_71a55838-backend:single done
+#26 unpacking to docker.io/library/powernxt_single_71a55838-backend:single done
+#26 DONE 0.1s
+
+#27 [backend] resolving provenance for metadata file
+#27 DONE 0.0s
+
+#9 [frontend stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
+#9 CACHED
+
+#28 [frontend stage-1 2/3] COPY --from=build /app/dist /usr/share/nginx/html
+#28 DONE 0.0s
+
+#29 [frontend stage-1 3/3] COPY integration/single-transformer.nginx.conf /etc/nginx/conf.d/default.conf
+#29 DONE 0.0s
+
+#30 [frontend] exporting to image
+#30 exporting layers 0.1s done
+#30 exporting manifest sha256:b7ef27f0e38d9d255942b8985c37694686d9ce0e4e35a7a008639c40cdc34fea done
+#30 exporting config sha256:e2fc6a4f2472d7079709333400cf344ca12a3ef5e835c0b670c3bf03fd8c562d done
+#30 exporting attestation manifest sha256:e1cbc05ff548d03ae6c5b7f57ae3485b4efaffc0fe69bff4d1f631e901f287ec done
+#30 exporting manifest list sha256:80658bb3bb487a9061f31b62bed6b420f6c0bf94f2a8a03800a31e1845605e0a done
+#30 naming to docker.io/library/powernxt_single_71a55838-frontend:latest done
+#30 unpacking to docker.io/library/powernxt_single_71a55838-frontend:latest 0.0s done
+#30 DONE 0.2s
+
+#31 [frontend] resolving provenance for metadata file
+#31 DONE 0.0s
+ Image powernxt_single_71a55838-backend:single Building 
+ Image powernxt_single_71a55838-frontend Building 
+ Image powernxt_single_71a55838-backend:single Built 
+ Image powernxt_single_71a55838-frontend Built 

@@ -1,0 +1,261 @@
+{
+  "timestamp": "2026-10-10T21:03:58.108Z",
+  "project": "powernxt_single_71a55838",
+  "ui": "http://127.0.0.1:18300",
+  "api": "http://127.0.0.1:18301",
+  "asset_id": "powernxt-single-transformer",
+  "source": "simulator",
+  "run_id": "single-transformer-demo-v1",
+  "configuration": 1,
+  "checks": [
+    "All genuine monitoring screens use the fixed asset, actual electrical/thermal values, stream/config/model provenance, six joined records and bootstrap chart gap",
+    "Actual incident-linked creation, assignment/start/completion and cancellation validation; condition, acknowledgement and task status remain independent",
+    "Actual backend What-if captures/reuses eligible immutable state, clears stale forecasts, and preserves all reading/job/result/worker-state/configuration hashes"
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/openapi.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets?limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A03%3A58.666Z",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A03%3A58.772Z",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/4/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/2/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/1/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/3/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/5/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/telemetry/6/analytics",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/acknowledgements",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/8ea3e30b-625f-451e-84ad-d43bc506ce97/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/98d2a1d6-ded3-4136-8310-8f9c49fe2438",
+      "status": 200
+    },
+    {
+      "method": "PATCH",
+      "url": "http://127.0.0.1:18301/api/v1/maintenance/tasks/98d2a1d6-ded3-4136-8310-8f9c49fe2438",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/what-if",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/operators/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents?asset_id=powernxt-single-transformer&source=simulator&limit=20&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/evidence?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/incidents/ba7e0a7b-e530-4302-ac71-5625dd3df85e/events?cursor=0&limit=20",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/operators/me",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry/latest?source=simulator&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/analytics/latest?source=simulator&run_id=single-transformer-demo-v1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:18301/api/v1/assets/powernxt-single-transformer/telemetry?source=simulator&run_id=single-transformer-demo-v1&limit=20&offset=0&end=2026-10-10T21%3A04%3A28.843Z",
+      "status": 200
+    }
+  ],
+  "page_errors": [],
+  "actual_api": true,
+  "fixture_responses": false,
+  "browser_version": "154.0.8037.99",
+  "completed_task_id": "3cfe7d9a-0a1e-4df1-8832-e615bff12c23",
+  "cancelled_task_id": "98d2a1d6-ded3-4136-8310-8f9c49fe2438",
+  "state_ref": "dcf4682c-e534-4066-819a-ca906921a425",
+  "status": "FAIL",
+  "failure": "Real invalid-token error absent"
+}
