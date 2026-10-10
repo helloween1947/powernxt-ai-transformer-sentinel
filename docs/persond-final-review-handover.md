@@ -30,7 +30,7 @@ Historical ancestry confirmed in the combined candidate (absent from main):
 | Concurrency coverage | `631dc103b685fe42ab30b39c0f09652f8ba900bc` |
 
 The follow-up targets A's current registry branch and contains only D's verification
-runner and handover plus the file-free main merge. It must not repeat the large
+runner, handover and configuration-test isolation plus the file-free main merge. It must not repeat the large
 registry/outbox/What-if diff already merged there. Main adoption of that source is
 A's separate reviewed PR. Retarget only after required histories reach main,
 rechecking the graph, net diff and exact-head checks. Teammate branches are untouched.
@@ -38,7 +38,9 @@ rechecking the graph, net diff and exact-head checks. Teammate branches are unto
 ## Migration graph and source review gate
 
 ```text
-older audit/maintenance revisions -> D003 -> worker migration -> D004
+84b8976a7d0d -> ce21c3b8140a -> d730a91b4c22 -------\
+84b8976a7d0d -> D001 -> D002 --\                    +-> D004
+ce21c3b8140a -----------------+-> D003 -------------/
  D004 -> A001 -> A002 ----\
                D005 -----+-> D006 (no DDL)
  D004 -> W001 -----------/
@@ -59,6 +61,41 @@ B model1.0.2/full PR24 adoption remains a separate A/B decision; this candidate
 retains model1.0.1 namespaces and does not relabel old state/results.
 
 ## Isolated Docker runner and current verification
+
+Coherent full local source: `77339f2c27c7152858ca0cc1e176747360bbf6c4`.
+`python -m pytest backend/tests analytics/contracts -q --tb=short` passed
+**344 tests**, 387 deprecation warnings, in 146.74s on Python3.13/PostgreSQL18.
+This single run includes fresh upgrades, populated supported parent combinations,
+metadata checks and concurrency invariants; it does not combine earlier counts.
+The initial run at `b7b1a74986a8759444a6cda736ad30c0120b0b78` had343 passing and
+one failing example-configuration test because process DATABASE_URL overrode the
+example file. Commit77339f2 isolates DATABASE_URL/CORS_ORIGINS for that test only;
+runtime precedence and application behavior are unchanged. The full suite was rerun.
+
+Native live verification at b7b1a74 also passed both HTTP verifiers, a populated
+D004 upgrade preserving old sample/history/analytics fields, sole D006/metadata
+consistency, and exact snapshots of sample/task/analytics/incident/evidence/What-if
+records after API restart. The private temporary admin was revoked and the isolated
+API stopped afterward. Database `persond_review_31fc8d2a00b44f6ea6393d33b0926aac_test`
+and ignored local evidence files `final-review-migration.json`,
+`final-review-http.json`, `final-review-what-if.json`, `final-review-retained.json`
+and `final-review-tests-coherent.log` are retained in the primary checkout's `.venv`.
+No app/migration/frontend file differs from the earlier runtime/Chrome source7f24e529;
+no new authenticated browser result is inferred. Final documentation-only publication
+head and hosted CI evidence are pinned in [draft PR29](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/29).
+
+Main cbdd7c4 and PR26 fa5f79c backend/frontend hosted checks passed; original PR27
+7b89f96 push/PR checks passed. These do not certify Docker or teammate approval.
+The final follow-up CI must be green on its exact publication head before review
+completion. Review lists for PR25/26/27 were empty.
+
+Current other-owner candidates inspected but not imported: C's provenance guard
+[PR28](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/28)
+at `d80a321e1c4f4ecebde9a333db36532bf649f1be`, and B's full adoption handoff
+[PR24](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/24)
+at `d86b210a5ee3a0a62b926b134d1119abeb3ff1fd`. Both remain draft/unmerged into main
+and their review lists were empty. C's guard is now a published candidate rather
+than only the old audit's uncommitted patch. It does not implement genuine UI.
 
 `integration/verify-persond-docker.ps1` uses the normal backend Dockerfile for both
 backend and worker, a standalone generated `persond_review_*` Compose project,
