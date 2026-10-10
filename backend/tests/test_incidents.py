@@ -844,4 +844,10 @@ def test_registry_upgrade_preserves_completed_cancelled_sample_history(
         before = records()
         command.upgrade(cfg, "head")
         command.check(cfg)
-        assert records() == before
+        after = records()
+        for table, saved in before.items():
+            assert len(after[table]) == len(saved)
+            for old, new in zip(saved, after[table]):
+                assert all(new[key] == value for key, value in old.items())
+                # D005 adds nullable linkage/audit columns, never backfills samples.
+                assert all(value is None for key, value in new.items() if key not in old)
