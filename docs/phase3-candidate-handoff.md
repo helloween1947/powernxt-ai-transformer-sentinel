@@ -3,8 +3,12 @@
 **Date:** 2026-10-10  
 **Role:** Person A (Backend Lead and Integration Coordinator)  
 **Repository:** `powernxt-ai-transformer-sentinel`  
-**Candidate Branch:** `feature/persona-phase3-combined-integration`  
-**Candidate HEAD SHA:** `311c10a45f9b5fb5dbef695e2195b58436c0bbdd`  
+**Candidate Branch:** `feature/persona-phase3-combined-integration` (Published to `origin/feature/persona-phase3-combined-integration`)  
+**Tested Source Commit SHA:** [`311c10a45f9b5fb5dbef695e2195b58436c0bbdd`](https://github.com/helloween1947/powernxt-ai-transformer-sentinel/commit/311c10a45f9b5fb5dbef695e2195b58436c0bbdd)  
+**Published Documentation & Evidence SHA:** `5ea415aedecf90850209f1358eb4b2091a6bad63`  
+**Shared Evidence Index:** [`docs/phase3-evidence-index.md`](file:///C:/Users/marka/.gemini/antigravity/scratch/powernxt-ai-transformer-sentinel/docs/phase3-evidence-index.md)  
+**Repeatable Startup Guide:** [`docs/phase3-isolated-startup-windows.md`](file:///C:/Users/marka/.gemini/antigravity/scratch/powernxt-ai-transformer-sentinel/docs/phase3-isolated-startup-windows.md)  
+**SHA-256 Checksum Manifest:** [`docs/evidence/evidence-checksums.sha256`](file:///C:/Users/marka/.gemini/antigravity/scratch/powernxt-ai-transformer-sentinel/docs/evidence/evidence-checksums.sha256)  
 **Integration Worktree:** `C:\Users\marka\.gemini\antigravity\scratch\powernxt-ai-transformer-sentinel\.worktrees\phase3-integration`  
 
 ---
@@ -214,10 +218,11 @@ URL: https://github.com/helloween1947/powernxt-ai-transformer-sentinel/pull/29
 Before Phase 3 can proceed to protected branch merges or deployment, the following governance gates must be satisfied:
 
 1. **Formal Review Submissions on GitHub:**
-   - **PR #32 (`feature/persona-model-102-adoption`):** Currently Open (Draft: `true`, 0 submitted reviews). Requires formal review submissions and approvals from Person B and Person D.
-   - **PR #33 (`codex/personc-model-102-compatibility`):** Currently Open (Draft: `true`, 0 submitted reviews). Requires formal review submission and approval from Person C and Person A.
-   - **PR #29 (`feature/persond-alignment-integration`):** Currently Open (Draft: `true`, 0 submitted reviews). Requires transition from draft and formal review approval.
+   - **PR #32 (`feature/persona-model-102-adoption`):** Person D submitted formal APPROVED review `5479811412` on commit `508c7b1`. Person B technical review complete and approved (`docs/personb-phase3-model-review.md`). Formal submission on GitHub remains pending for Person B.
+   - **PR #29 (`feature/persond-alignment-integration`):** Transitioned to Ready for Review by Person D (`codex/persond-phase3-verification`).
+   - **PR #33 (`codex/personc-model-102-compatibility`):** Requires transition from draft and formal approval from Person C and Person A.
+   - **Unified Candidate:** Pinned at `311c10a45f9b5fb5dbef695e2195b58436c0bbdd` / `5ea415aedecf90850209f1358eb4b2091a6bad63`; awaiting unblocked review verification from Person C and Person D.
 2. **Strict No-Merge Constraint:**
-   - No branches have been pushed to remote or merged into protected branches (`main`, `feature/persona-incident-registry`).
+   - No branches have been merged into protected branches (`main`, `feature/persona-incident-registry`).
 3. **Strict Development Stack Preservation:**
    - Development services on port 5433, port 8000, and port 3000 remain running undisturbed on schema revision `d004_worker_maintenance`.
