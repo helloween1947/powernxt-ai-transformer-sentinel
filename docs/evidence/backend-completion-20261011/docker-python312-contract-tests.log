@@ -104,6 +104,6 @@ backend/tests/test_what_if.py: 50 warnings
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 354 passed, 392 warnings in 285.61s (0:04:45)
- Container analytics_worker_test_6fe8ae75aed4-backend-run-1eed17a12a6e Creating 
- Container analytics_worker_test_6fe8ae75aed4-backend-run-1eed17a12a6e Created 
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-1eed17a12a6e Creating
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-1eed17a12a6e Created
 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.

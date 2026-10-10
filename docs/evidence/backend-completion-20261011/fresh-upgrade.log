@@ -1,8 +1,8 @@
- Container analytics_worker_test_6fe8ae75aed4-db Running 
- Container analytics_worker_test_6fe8ae75aed4-db Waiting 
- Container analytics_worker_test_6fe8ae75aed4-db Healthy 
- Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Creating 
- Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Created 
+ Container analytics_worker_test_6fe8ae75aed4-db Running
+ Container analytics_worker_test_6fe8ae75aed4-db Waiting
+ Container analytics_worker_test_6fe8ae75aed4-db Healthy
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Creating
+ Container analytics_worker_test_6fe8ae75aed4-backend-run-153da44f8140 Created
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade  -> f272b723f71b, Add transformer asset registry

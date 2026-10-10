@@ -93,7 +93,7 @@
 #10 6.876 debconf: falling back to frontend: Noninteractive
 #10 7.305 Fetched 4888 kB in 2s (3173 kB/s)
 #10 7.328 Selecting previously unselected package libbrotli1:amd64.
-#10 7.328 (Reading database ... 
+#10 7.328 (Reading database ...
 (Reading database ... 5%
 (Reading database ... 10%
 (Reading database ... 15%
@@ -315,7 +315,7 @@
 #12 14.05 Downloading mako-1.4.3-py3-none-any.whl (80 kB)
 #12 14.09 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
 #12 14.21 Installing collected packages: websockets, uvloop, tzdata, typing-extensions, pyyaml, python-dotenv, psycopg-binary, MarkupSafe, idna, httptools, h11, click, annotated-types, annotated-doc, uvicorn, typing-inspection, sqlalchemy, pydantic-core, psycopg, opentelemetry-api, Mako, anyio, watchfiles, starlette, pydantic, alembic, pydantic-settings, fastapi
-#12 16.39 
+#12 16.39
 #12 16.39 Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 alembic-1.20.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 click-8.5.0 fastapi-0.143.0 h11-0.16.0 httptools-0.9.0 idna-3.20 opentelemetry-api-1.45.1 psycopg-3.3.6 psycopg-binary-3.3.6 pydantic-2.14.0 pydantic-core-2.50.0 pydantic-settings-2.15.0 python-dotenv-1.2.4 pyyaml-6.0.3 sqlalchemy-2.1.4 starlette-1.7.0 typing-extensions-4.16.0 typing-inspection-0.4.4 tzdata-2026.5 uvicorn-0.54.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2
 #12 16.39 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
 #12 DONE 16.6s
@@ -356,7 +356,7 @@
 
 #18 [backend] resolving provenance for metadata file
 #18 DONE 0.0s
- Image analytics_worker_test_6fe8ae75aed4-worker:completion Building 
- Image analytics_worker_test_6fe8ae75aed4-backend:completion Building 
- Image analytics_worker_test_6fe8ae75aed4-worker:completion Built 
- Image analytics_worker_test_6fe8ae75aed4-backend:completion Built 
+ Image analytics_worker_test_6fe8ae75aed4-worker:completion Building
+ Image analytics_worker_test_6fe8ae75aed4-backend:completion Building
+ Image analytics_worker_test_6fe8ae75aed4-worker:completion Built
+ Image analytics_worker_test_6fe8ae75aed4-backend:completion Built
