@@ -49,7 +49,9 @@ class Handover(StrictSchema):
     source: Literal["device", "simulator", "file_replay"]
     run_id: str | None = Field(default=None, min_length=1, max_length=100)
     configuration_version: int = Field(gt=0, strict=True)
-    model_version: Literal["stored-reading-top-oil-1.0.1"]
+    model_version: Literal[
+        "stored-reading-top-oil-1.0.1", "stored-reading-top-oil-1.0.2"
+    ]
     detector_version: Literal["sustained-threshold-1.0.1"]
     policy: Policy
     reason: str = Field(min_length=1, max_length=1000)
@@ -59,6 +61,15 @@ class Handover(StrictSchema):
         if (self.source == "device") != (self.run_id is None):
             raise ValueError("Device requires null run; simulator/replay require run")
         return self
+
+
+class ModelHandover(Handover):
+    """Explicit namespace transition without opting into detection."""
+
+    schema_version: Literal["model-control-1.0.0"]
+    model_version: Literal["stored-reading-top-oil-1.0.2"]
+    detector_version: Literal["sustained-threshold-1.0.1"] = "sustained-threshold-1.0.1"
+    policy: None = None
 
 
 class Acknowledgement(StrictSchema):

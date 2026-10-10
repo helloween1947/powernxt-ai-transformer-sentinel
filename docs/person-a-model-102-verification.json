@@ -1,0 +1,139 @@
+{
+  "schema_version": "persona-model-adoption-verification-1.0.0",
+  "executed_utc": "2026-10-10T10:30:17.263272+00:00",
+  "branch": "feature/persona-model-102-adoption",
+  "base_registry_commit": "2e934c85098453db7342ea6ade570759ef4b9161",
+  "fetched_main_commit": "cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda",
+  "computation_source_commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+  "b_alignment_commit": "d86b210a5ee3a0a62b926b134d1119abeb3ff1fd",
+  "scope": "Linux cloud; isolated PostgreSQL 16 and real dedicated loopback API; synthetic records, not deployment, Windows, browser UI or measured calibration",
+  "checks": {
+    "combined_backend_and_merged_contracts": {
+      "passed": 351,
+      "failed": 0,
+      "log_sha256": "7bc818bf53aabe3a79ff7163f6a3073902f02f66ede7fedcf325f8b4ec138ae3",
+      "summary": "351 passed, 392 warnings in 145.41s (0:02:25)"
+    },
+    "final_schema_and_forecast_regressions": {
+      "passed": 53,
+      "failed": 0,
+      "log_sha256": "64c4339f90b272c02f3786b1e405b37f0073f215a974fc756599d16cb5f39556",
+      "summary": "53 passed, 56 warnings in 23.39s"
+    },
+    "independent_person_b_suite_at_d86b210": {
+      "passed": 192,
+      "failed": 0,
+      "log_sha256": "0304d6442c983e42f9648240bde33e017dafc73f2b68b84c3b994253d2cef122",
+      "summary": "192 passed in 1.25s"
+    },
+    "person_b_planner_against_actual_stored_backend_results": {
+      "passed": 1,
+      "failed": 0,
+      "log_sha256": "591ce0a1386e38bad0093d1bda0041e709a30240e1d0bc65fa3c3210580481d9",
+      "summary": "1 passed, 2 warnings in 1.46s"
+    },
+    "actual_what_if_http": {
+      "passed": true,
+      "result": "PASS: actual isolated what-if HTTP/worker verification",
+      "log_sha256": "27d6457952a50e010907f54c5cb7e195b8b29758dca866f9f88467f492d53511"
+    },
+    "actual_model_only_handover_http": {
+      "passed": true,
+      "result": "PASS: actual model-only handover 201, identical retry 200, conflict 409 and unauthenticated 401; credential omitted",
+      "log_sha256": "7c20802523e87c81911134544da1ceb2dd55fee7e0f16e6734ed43676aae32b7"
+    },
+    "actual_frontend_adapter_and_react_render": {
+      "passed": true,
+      "result": "PASS: actual HTTP response, immutable reference, null limit states, error codes and existing React chart rendered through reference adapter",
+      "log_sha256": "d12e843958d1d753409d4573bd6fb2b2404326e657039425db560abd51a17f40"
+    },
+    "reference_survives_isolated_api_restart": {
+      "passed": true,
+      "result": "PASS: actual HTTP response, immutable reference, null limit states, error codes and existing React chart rendered through reference adapter",
+      "log_sha256": "d12e843958d1d753409d4573bd6fb2b2404326e657039425db560abd51a17f40"
+    }
+  },
+  "commands": {
+    "backend": "TEST_DATABASE_URL=<isolated PostgreSQL database ending _test> PYTHONPATH=<installed contract dependencies>:. python -m pytest backend/tests analytics/contracts -q --tb=short",
+    "final_targeted": "TEST_DATABASE_URL=<isolated PostgreSQL database ending _test> python -m pytest backend/tests/test_model_adoption.py backend/tests/test_what_if.py -q --tb=short",
+    "independent_b": "At an exact d86b210 analytics/data export: python -m pytest analytics/tests/test_audit_regressions.py analytics/tests/test_model_alignment.py analytics/tests/test_incident_orchestration.py analytics/tests/test_worker_scenarios.py analytics/tests/test_worker.py analytics/tests/test_worker_schemas.py analytics/tests/test_worker_handoff.py analytics/tests/test_persistence.py analytics/tests/test_twin.py -q --tb=short",
+    "planner_backend": "PYTHONPATH=<A checkout>:<exact B export>:<contract dependencies> TEST_DATABASE_URL=<isolated _test database> python -m pytest <B export>/analytics/tests/test_incident_orchestration_backend.py -q --tb=short",
+    "http": "PYTHONPATH=. python integration/verify_what_if.py --base-url http://127.0.0.1:15447 --database-url <isolated _test database> --output <fresh verification JSON>",
+    "frontend_response": "node integration/verify-what-if-client.mjs http://127.0.0.1:15447 <fresh verification JSON>"
+  },
+  "migration": {
+    "new_revision_required": false,
+    "single_head": "d006_combined_integration",
+    "fresh_upgrade": "passed on new isolated database and every registry fixture",
+    "metadata_check": "No new upgrade operations detected",
+    "populated_paths": "Existing combined graph tests passed for D004, A001, A002, D005, W001 and all relevant applied-branch combinations; record-preservation assertions retained",
+    "development_database_migrated": false
+  },
+  "provenance": {
+    "manifest": "backend/app/analytics/person_b/ADOPTION_MANIFEST.json",
+    "original_source_hashes_verified": 14,
+    "full_module_function_class_ASTs_equal": 6,
+    "extracted_core_definitions_equal": 5,
+    "unchanged_historical_files_verified": 9,
+    "shared_incident_contract_sha256": "45d6d27f25d6df5ca0660213e41a487f21971b84da21ebf2733debbd79c10cb8"
+  },
+  "preservation": {
+    "development_backend_started_at": "2026-10-08T07:27:48.120634273Z",
+    "development_database_started_at": "2026-10-08T07:27:47.986857197Z",
+    "env_files_changed": false,
+    "other_worktrees_changed": false,
+    "existing_primary_worktree_edits": "Two simulator documentation modifications and three untracked audit/handoff files retained",
+    "test_container": "persona_model_102_adoption_db; retained, not removed; only this owned service and its owned API were stopped after verification"
+  },
+  "not_claimed": [
+    "Hosted CI or mergeability (GitHub API CONNECT Forbidden)",
+    "Full browser UI wiring or new Windows checks",
+    "Application migration, deployment, calibration or production model handovers"
+  ],
+  "rollout_prerequisites": [
+    "Review inherited registry/What-if/genuine-task dependencies and this adoption",
+    "Passing hosted CI and teammate approval",
+    "Provision trusted admin credentials and explicitly hand over existing streams after draining/replacing old worker fleet"
+  ],
+  "sample_evidence": "data/sample/model-102-adoption-verified.json",
+  "tested_file_sha256": {
+    "backend/app/analytics/person_b/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+    "backend/app/analytics/person_b/core.py": "f56c2603a010cf0f157cf546280b7f79be9326e3b6c2574537de572221dc6546",
+    "backend/app/analytics/person_b/historical_v101/__init__.py": "b8b6fabe5a3ed6656b3ca5637d9543759b66a790046272fe9e5707293beb4805",
+    "backend/app/analytics/person_b/historical_v101/core.py": "dcfd530f8edd936ade9d3424aac47e5e82c89891a9af19d68a451e9fcebfbd2e",
+    "backend/app/analytics/person_b/historical_v101/normalization.py": "4d1952c282ab54c1d9551017fae53916be4b98c3cf93e4b841b6d30f22442956",
+    "backend/app/analytics/person_b/historical_v101/scenario_core.py": "4775cab3da0b2bb924440f24ee7023201d9479c5aa06697347945c239903f9d1",
+    "backend/app/analytics/person_b/historical_v101/scenario_validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+    "backend/app/analytics/person_b/historical_v101/scenarios.py": "a3941bfff31837564cc17a9385870b445b1e26527f0bfc7e24b5a9a6ea6a557b",
+    "backend/app/analytics/person_b/historical_v101/worker.py": "84a6e7f8f618bafa0320467b4ab0837f59441dda8fb9c603df61502415924dc0",
+    "backend/app/analytics/person_b/incident_orchestration.py": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea",
+    "backend/app/analytics/person_b/normalization.py": "74809644043ba0c02fc7135fa1de664982667f95438cb35a7ce5e8acdbfbc36a",
+    "backend/app/analytics/person_b/persistence.py": "1dbbb32a577e516cd63c1877a2710cfc0247d11994e4fda5d81752799fbe15c1",
+    "backend/app/analytics/person_b/scenario_core.py": "ce3cfdc2ad0d16658a9b74bd964f5f55512c520b44891914a3a2a59af98b91ec",
+    "backend/app/analytics/person_b/scenario_validation.py": "32792d8c4e6c4976cf3828d9c28d6f7f459f0c28ed6b2f3cb48a02e65b1e7e45",
+    "backend/app/analytics/person_b/scenarios.py": "ffd978afc774ec8a049db824844aa2bce0e92e450372c93f6588e24c04e4b598",
+    "backend/app/analytics/person_b/validation.py": "d11dbb2650c78d1c997792705323fa6cce0f96872fb2d70b129bff197f9da879",
+    "backend/app/analytics/person_b/worker.py": "be0ab1106d2f062c2ff5303e49792f8914bfad1fbea71f61cffe273d4b3a20b7",
+    "backend/app/analytics/person_b/ADOPTION_MANIFEST.json": "a450b4d0872dccc7d60463322478a57e166656bef0f145b461046ac68554cf75",
+    "backend/app/analytics/person_b/INCIDENT_SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/WHAT_IF_SOURCE.json": "29d311d169b07dfa72e68cab13798b647db60455a6b6ef92424cffabcb8fbc88",
+    "backend/app/analytics/person_b/historical_v101/SOURCE.json": "c1bc95bc6451401d0d46a73c03455e08c725874f295d412533a8962fe0380cc8",
+    "backend/app/analytics/person_b/historical_v101/WHAT_IF_SOURCE.json": "2c689070b9ad72056896577c9b672f65554235fa4bd3e7134f7343ec4b237d1e",
+    "backend/app/analytics/person_b/normalized-input.schema.json": "4b83aa0ccefc08816f2eb775535be75f07fdd240e9cfb331e6b72a13d7e985ca",
+    "backend/app/analytics/person_b/worker-input.schema.json": "4ecb2e2b1d5dff3afae59cde0047e7a19af565cbee6306775ce499336e21c4c9",
+    "backend/app/analytics/person_b/worker-output.schema.json": "b418ea0c5cff3b601dca3e8337372918ce1b63076b65ec5baf52b3b4d1c4492f",
+    "backend/app/analytics/person_b/worker-test-examples.json": "45a52c617c65e3628fdb9a0df6cee46b5b3ddce7a8f6b31846f59378ceb02fda",
+    "backend/app/api/incidents.py": "20982bcc5d9401d5de90c6ccb0f8f1b09c7afdbfe894720e1b91c8326648cc35",
+    "backend/app/schemas/incidents.py": "7f8981798498acd0b05b1580ed3d4fe9845d6645d4bc119ed196ed964ba0b955",
+    "backend/app/services/analytics_worker.py": "f3fed3a2bb4ffa9c67bcd0e49f6e45a8cc01526e8f9e64c3dfde467203abf14a",
+    "backend/app/services/incidents.py": "7399135bc9a60d4c435a37bef9f937c467ac958263d67a75974f6b0f5e7e8e22",
+    "backend/app/services/what_if.py": "ada4320ff689f6d74a6176a1364710915b2ce10c1deefbab5ce4188050788253",
+    "backend/tests/test_model_adoption.py": "b1c10c526634719b962f2316ede5340530bdc4a647260ce4bf1ef1f87d72f144",
+    "backend/tests/test_analytics_worker.py": "026bdeefe4f96441fbd06397050a90a9b9295bb2fe12fa5727130dc8c625c78c",
+    "backend/tests/test_what_if.py": "fa8a0ba90cf5c313904c7533c1e3d9dd8ca56a10c8c2e14565c25869fa7b7610",
+    "backend/tests/test_incidents.py": "2f7700e9cf1f9a6a4c2d1f006c7d7d3b04742eb0326e88095f027b80a61cbe1b",
+    "docs/person-a-model-102-adoption.md": "62b6815199a1a6586478e3e916f3d82489df8d0858e898adb282db92667cecfd",
+    "data/sample/model-102-adoption-verified.json": "1c7cafd34fbd2959e9d22239ed6a09af70c8daff7ea3c65bc0bbb138e87e9363"
+  }
+}

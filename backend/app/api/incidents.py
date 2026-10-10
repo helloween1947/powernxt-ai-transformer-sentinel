@@ -33,6 +33,7 @@ from backend.app.schemas.incidents import (
     Handover,
     IncidentPage,
     IncidentResponse,
+    ModelHandover,
     OperatorResponse,
 )
 from backend.app.services import incidents
@@ -275,6 +276,21 @@ def handover(
     db: Database,
     response: Response,
     actor: Annotated[Operator, Depends(administrator)],
+):
+    result, created = incidents.handover(
+        db, asset_id, payload, actor, db.scalar(select(func.clock_timestamp()))
+    )
+    response.status_code = 201 if created else 200
+    return result
+
+
+@router.post("/assets/{asset_id}/model-handovers", response_model=ControlResponse)
+def model_handover(
+    asset_id: str,
+    payload: ModelHandover,
+    db: Database,
+    actor: Annotated[Operator, Depends(administrator)],
+    response: Response,
 ):
     result, created = incidents.handover(
         db, asset_id, payload, actor, db.scalar(select(func.clock_timestamp()))

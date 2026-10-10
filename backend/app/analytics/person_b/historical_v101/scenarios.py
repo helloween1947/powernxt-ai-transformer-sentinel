@@ -8,8 +8,9 @@ import json
 
 from .core import ThermalState
 from .core import _advance, finite
-from .worker import MODEL_VERSION, STATE_VERSION, _parameter_version, _validate_config, _thermal_core
-from .validation import mapping, worker_state, strict_json
+from .worker import MODEL_VERSION, STATE_VERSION, _parameter_version, _validate_config
+from .scenario_core import _thermal_core
+from .scenario_validation import mapping, worker_state, strict_json
 
 FORECAST_VERSION = "healthy-top-oil-scenarios-1.0.1"
 

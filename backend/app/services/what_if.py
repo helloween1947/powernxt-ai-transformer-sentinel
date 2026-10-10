@@ -10,12 +10,16 @@ from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 
 from backend.app.analytics import adapter
-from backend.app.analytics.person_b.scenario_validation import worker_state
-from backend.app.analytics.person_b.scenarios import (
-    FORECAST_VERSION,
-    forecast_from_worker_state,
+from backend.app.analytics.person_b import scenarios as current_scenarios
+from backend.app.analytics.person_b import worker as current_model
+from backend.app.analytics.person_b.historical_v101 import (
+    scenarios as historical_scenarios,
 )
-from backend.app.analytics.person_b.worker import STATE_VERSION, _validate_config
+from backend.app.analytics.person_b.historical_v101 import worker as historical_model
+from backend.app.analytics.person_b.historical_v101.scenario_validation import (
+    worker_state as historical_validator,
+)
+from backend.app.analytics.person_b.validation import worker_state as current_validator
 from backend.app.models import Asset, AssetConfiguration
 from backend.app.models.analytics import (
     AnalyticsResult,
@@ -24,6 +28,22 @@ from backend.app.models.analytics import (
 )
 from backend.app.models.telemetry import TelemetryReading
 from backend.app.models.what_if import WhatIfSnapshot
+
+# Server allowlist only: never client-supplied callables or a mutable version alias.
+MODELS = {
+    current_model.MODEL_VERSION: (current_model, current_scenarios, current_validator),
+    historical_model.MODEL_VERSION: (
+        historical_model,
+        historical_scenarios,
+        historical_validator,
+    ),
+}
+
+
+def implementation(model_id, model_version):
+    if model_id != adapter.MODEL_ID or model_version not in MODELS:
+        reject("incompatible_state_identity", "Stored model version is unsupported")
+    return MODELS[model_version]
 
 
 class WhatIfError(Exception):
@@ -42,7 +62,8 @@ def reject(code, message, reasons=()):
 
 def validate_state(state, reading, result, config, source, run_key):
     try:
-        worker_state(state, STATE_VERSION)
+        model, _, worker_state = implementation(result.model_id, result.model_version)
+        worker_state(state, model.STATE_VERSION)
         binding = state["binding"]
         expected = {
             "stream": {
@@ -51,8 +72,8 @@ def validate_state(state, reading, result, config, source, run_key):
                 "run_id": run_key or None,
             },
             "configuration_version": reading.configuration_version,
-            "model_version": adapter.MODEL_VERSION,
-            "parameter_version": adapter.parameter_identity(config),
+            "model_version": model.MODEL_VERSION,
+            "parameter_version": model._parameter_version(config),
         }
         metadata = result.payload["metadata"]
         if (
@@ -60,7 +81,7 @@ def validate_state(state, reading, result, config, source, run_key):
             or reading.source != source
             or reading.run_key != run_key
             or result.model_id != adapter.MODEL_ID
-            or result.model_version != adapter.MODEL_VERSION
+            or result.model_version != model.MODEL_VERSION
             or result.parameter_version != expected["parameter_version"]
             or metadata["stream"] != expected["stream"]
             or metadata["configuration_version"] != reading.configuration_version
@@ -78,13 +99,15 @@ def validate_state(state, reading, result, config, source, run_key):
                 metadata["measurement_time"].replace("Z", "+00:00")
             )
             != reading.measurement_time
+            or result.schema_version != model.RESULT_VERSION
+            or metadata["result_schema_version"] != model.RESULT_VERSION
             or result.payload["execution_status"]["state_advanced"] is not True
         ):
             reject(
                 "incompatible_state_identity",
                 "State/result/stream/configuration/model identities do not match",
             )
-        missing = _validate_config(
+        missing = model._validate_config(
             {
                 "asset_id": reading.asset_id,
                 "configuration_version": reading.configuration_version,
@@ -153,7 +176,10 @@ def resolve(db, asset_id, payload):
         # Never reconstruct or reselect state through a mutable result/cache. The
         # insertion guard established the exact result binding at capture time.
         try:
-            worker_state(state, STATE_VERSION)
+            model, _, worker_state = implementation(
+                snapshot.model_id, snapshot.model_version
+            )
+            worker_state(state, model.STATE_VERSION)
             if (
                 state["binding"]
                 != {
@@ -163,11 +189,11 @@ def resolve(db, asset_id, payload):
                         "run_id": payload.run_id,
                     },
                     "configuration_version": snapshot.configuration_version,
-                    "model_version": adapter.MODEL_VERSION,
-                    "parameter_version": adapter.parameter_identity(config),
+                    "model_version": model.MODEL_VERSION,
+                    "parameter_version": model._parameter_version(config),
                 }
                 or snapshot.model_id != adapter.MODEL_ID
-                or snapshot.model_version != adapter.MODEL_VERSION
+                or snapshot.model_version != model.MODEL_VERSION
                 or snapshot.parameter_version != state["binding"]["parameter_version"]
                 or datetime.fromisoformat(
                     state["last_measurement_time"].replace("Z", "+00:00")
@@ -178,7 +204,7 @@ def resolve(db, asset_id, payload):
                     "incompatible_state_identity",
                     "Captured state/configuration/model binding is incompatible",
                 )
-            missing = _validate_config(
+            missing = model._validate_config(
                 {
                     "asset_id": asset_id,
                     "configuration_version": snapshot.configuration_version,
@@ -216,11 +242,9 @@ def resolve(db, asset_id, payload):
         reject("state_unavailable", "No committed forward state exists for this stream")
     try:
         namespace = json.loads(head.last_identity)
-        if len(namespace) != 4 or namespace[:2] != [
-            adapter.MODEL_ID,
-            adapter.MODEL_VERSION,
-        ]:
+        if len(namespace) != 4:
             reject("incompatible_state_identity", "Current state model is unsupported")
+        implementation(namespace[0], namespace[1])
         saved = db.get(AnalyticsState, (asset_id, payload.source, run_key, *namespace))
         reading = db.get(TelemetryReading, head.watermark_reading_id)
         config = configuration(db, asset_id, namespace[2])
@@ -273,7 +297,7 @@ def resolve(db, asset_id, payload):
     return snapshot, config
 
 
-def scenario(state, config, segment):
+def scenario(state, config, segment, forecast_from_worker_state):
     profile = [
         {
             "duration_s": segment.duration_s,
@@ -334,8 +358,13 @@ def compare(db, asset_id, payload):
     snapshot, config = resolve(db, asset_id, payload)
     state = deepcopy(snapshot.state)
     try:
-        baseline = scenario(state, config, payload.baseline)
-        reduced = scenario(state, config, payload.reduced_load)
+        _, forecasts, _ = implementation(snapshot.model_id, snapshot.model_version)
+        baseline = scenario(
+            state, config, payload.baseline, forecasts.forecast_from_worker_state
+        )
+        reduced = scenario(
+            state, config, payload.reduced_load, forecasts.forecast_from_worker_state
+        )
         result = {
             "state": {
                 "state_ref": snapshot.id,
@@ -356,7 +385,7 @@ def compare(db, asset_id, payload):
             "model": {
                 "model_id": snapshot.model_id,
                 "model_version": snapshot.model_version,
-                "forecast_version": FORECAST_VERSION,
+                "forecast_version": forecasts.FORECAST_VERSION,
             },
             "units": {"temperature": "C", "elapsed_time": "s", "thermal_load": "pu"},
             "parameter_provenance": config["parameter_provenance"],

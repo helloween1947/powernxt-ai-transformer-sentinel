@@ -1,5 +1,7 @@
 # Initial backend what-if contract 1.0.0
 
+Model adoption follow-up: [A’s version dispatch and handover contract](person-a-model-102-adoption.md) supports immutable 1.0.1 and 1.0.2 states. Earlier verification below remains tied to its original tested source; see the separate adoption evidence for fresh checks.
+
 Reviewed against main f52f56515c38fce55451fd499be81ef2508e6677. This is A's
 reviewable implementation contract for C/B, not a claim of teammate approval or
 deployment. Existing main has no supported what-if endpoint. No existing shared

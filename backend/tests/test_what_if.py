@@ -98,7 +98,7 @@ def test_identical_initial_state_zero_time_and_no_worker_writes(configured):
     assert body["baseline"]["points"][-1]["elapsed_s"] == 3600
     assert body["state"]["measurement_time"] == "2026-01-01T00:00:00Z"
     assert body["configuration"]["version"] == 1
-    assert body["model"]["model_version"] == "stored-reading-top-oil-1.0.1"
+    assert body["model"]["model_version"] == "stored-reading-top-oil-1.0.2"
     assert rows(configured[1]) == before
     again = post(configured, payload)
     assert again.json() == body
@@ -391,7 +391,7 @@ def test_arithmetic_failure_rolls_back_capture(configured, monkeypatch):
     def fail(*args):
         raise ValueError("synthetic arithmetic injection; do not expose")
 
-    monkeypatch.setattr(what_if, "forecast_from_worker_state", fail)
+    monkeypatch.setattr(what_if.current_scenarios, "forecast_from_worker_state", fail)
     before = rows(configured[1])
     response = post(configured)
     assert (
@@ -479,7 +479,7 @@ def test_unsupported_model_namespace_and_bad_parameter_binding(configured):
     with configured[1].begin() as db:
         original = db.scalar(text("SELECT last_identity FROM analytics_streams"))
         namespace = json.loads(original)
-        namespace[1] = "stored-reading-top-oil-1.0.2"
+        namespace[1] = "stored-reading-top-oil-unknown"
         db.execute(
             text("UPDATE analytics_streams SET last_identity=:identity"),
             {"identity": json.dumps(namespace)},

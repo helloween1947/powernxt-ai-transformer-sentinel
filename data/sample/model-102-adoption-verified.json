@@ -1,0 +1,2067 @@
+{
+  "executed_utc": "2026-10-10T10:23:01.116937+00:00",
+  "scope": "Actual isolated HTTP/worker, synthetic inputs; no browser/deployment",
+  "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+  "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+  "examples": {
+    "success": {
+      "method": "POST",
+      "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+      "request": {
+        "schema_version": "what-if-request-1.0.0",
+        "source": "simulator",
+        "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+        "baseline": {
+          "duration_s": 86400,
+          "thermal_load_pu": 2,
+          "ambient_temperature_c": 30
+        },
+        "reduced_load": {
+          "duration_s": 86400,
+          "thermal_load_pu": 1,
+          "ambient_temperature_c": 30
+        }
+      },
+      "http_status": 200,
+      "response": {
+        "schema_version": "what-if-response-1.0.0",
+        "state": {
+          "state_ref": "219e256c-1ba8-4c80-9bc4-4c50ede43dea",
+          "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "reading_id": 7,
+          "result_id": 7,
+          "measurement_time": "2026-10-10T10:23:00.448093Z",
+          "captured_at": "2026-10-10T10:23:00.730074Z"
+        },
+        "configuration": {
+          "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+          "version": 1,
+          "created_at": "2026-10-10T10:23:00.586629Z",
+          "parameter_version": "asset-config-1:63ed8a6595705bdc19d4cb13772c51ce9f78ebefbc3ef41366d7e05e8c3170db"
+        },
+        "model": {
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "forecast_version": "healthy-top-oil-scenarios-1.0.1"
+        },
+        "units": {
+          "temperature": "C",
+          "elapsed_time": "s",
+          "thermal_load": "pu"
+        },
+        "parameter_provenance": {
+          "rated_kva": "assumed",
+          "rated_voltage_v": "assumed",
+          "rated_current_a": "assumed",
+          "voltage_convention": "assumed",
+          "measurement_side": "assumed",
+          "cooling_type": "assumed",
+          "operational_limits.max_load_pct": "assumed",
+          "operational_limits.min_voltage_pu": "assumed",
+          "operational_limits.max_voltage_pu": "assumed",
+          "operational_limits.max_top_oil_temp_c": "assumed",
+          "operational_limits.max_hot_spot_temp_c": "assumed",
+          "thermal_parameters.rated_top_oil_rise_c": "assumed",
+          "thermal_parameters.oil_time_constant_min": "assumed",
+          "thermal_parameters.loss_ratio": "assumed",
+          "thermal_parameters.oil_exponent": "assumed"
+        },
+        "assumptions": [
+          "Conditional simplified healthy-model estimate; not fault diagnosis or a physical accuracy guarantee.",
+          "Same immutable state/configuration and constant ambient in both scenarios; only load may differ.",
+          "Initial state is the healthy worker estimate or an observed bootstrap; bootstrap is not independent prediction.",
+          "Configured coefficients/provenance retained; no tuning, cooling intervention, confidence or health estimate.",
+          "Peak uses monotonic constant-segment endpoints including time zero; crossing is analytic, not sampled.",
+          "Measurement time is the state origin, not a claim that this state is fresh at request time."
+        ],
+        "sampling": {
+          "policy": "uniform_including_initial_and_final",
+          "interval_count": 96,
+          "maximum_points_per_scenario": 97
+        },
+        "configured_top_oil_limit_c": 105.0,
+        "limit_reasons": [],
+        "baseline": {
+          "inputs": {
+            "duration_s": 86400.0,
+            "thermal_load_pu": 2.0,
+            "ambient_temperature_c": 30.0
+          },
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "estimated_top_oil_temperature_c": 55.0
+            },
+            {
+              "elapsed_s": 900.0,
+              "estimated_top_oil_temperature_c": 61.71402048563512
+            },
+            {
+              "elapsed_s": 1800.0,
+              "estimated_top_oil_temperature_c": 67.89121753315055
+            },
+            {
+              "elapsed_s": 2700.0,
+              "estimated_top_oil_temperature_c": 73.5745131747819
+            },
+            {
+              "elapsed_s": 3600.0,
+              "estimated_top_oil_temperature_c": 78.80339758655197
+            },
+            {
+              "elapsed_s": 4500.0,
+              "estimated_top_oil_temperature_c": 83.61420348434336
+            },
+            {
+              "elapsed_s": 5400.0,
+              "estimated_top_oil_temperature_c": 88.04035858047216
+            },
+            {
+              "elapsed_s": 6300.0,
+              "estimated_top_oil_temperature_c": 92.11261785494855
+            },
+            {
+              "elapsed_s": 7200.0,
+              "estimated_top_oil_temperature_c": 95.85927725535304
+            },
+            {
+              "elapsed_s": 8100.0,
+              "estimated_top_oil_temperature_c": 99.30637031021362
+            },
+            {
+              "elapsed_s": 9000.0,
+              "estimated_top_oil_temperature_c": 102.47784902204563
+            },
+            {
+              "elapsed_s": 9900.0,
+              "estimated_top_oil_temperature_c": 105.39575029698247
+            },
+            {
+              "elapsed_s": 10800.0,
+              "estimated_top_oil_temperature_c": 108.0803490674279
+            },
+            {
+              "elapsed_s": 11700.0,
+              "estimated_top_oil_temperature_c": 110.55029917169696
+            },
+            {
+              "elapsed_s": 12600.0,
+              "estimated_top_oil_temperature_c": 112.82276296954284
+            },
+            {
+              "elapsed_s": 13500.0,
+              "estimated_top_oil_temperature_c": 114.91353059419826
+            },
+            {
+              "elapsed_s": 14400.0,
+              "estimated_top_oil_temperature_c": 116.83712966955031
+            },
+            {
+              "elapsed_s": 15300.0,
+              "estimated_top_oil_temperature_c": 118.60692625481408
+            },
+            {
+              "elapsed_s": 16200.0,
+              "estimated_top_oil_temperature_c": 120.23521771811608
+            },
+            {
+              "elapsed_s": 17100.0,
+              "estimated_top_oil_temperature_c": 121.73331818431568
+            },
+            {
+              "elapsed_s": 18000.0,
+              "estimated_top_oil_temperature_c": 123.1116371507962
+            },
+            {
+              "elapsed_s": 18900.0,
+              "estimated_top_oil_temperature_c": 124.37975181748428
+            },
+            {
+              "elapsed_s": 19800.0,
+              "estimated_top_oil_temperature_c": 125.54647363368016
+            },
+            {
+              "elapsed_s": 20700.0,
+              "estimated_top_oil_temperature_c": 126.61990952409737
+            },
+            {
+              "elapsed_s": 21600.0,
+              "estimated_top_oil_temperature_c": 127.60751821953838
+            },
+            {
+              "elapsed_s": 22500.0,
+              "estimated_top_oil_temperature_c": 128.5161620836182
+            },
+            {
+              "elapsed_s": 23400.0,
+              "estimated_top_oil_temperature_c": 129.3521547956521
+            },
+            {
+              "elapsed_s": 24300.0,
+              "estimated_top_oil_temperature_c": 130.12130522102967
+            },
+            {
+              "elapsed_s": 25200.0,
+              "estimated_top_oil_temperature_c": 130.8289577739081
+            },
+            {
+              "elapsed_s": 26100.0,
+              "estimated_top_oil_temperature_c": 131.48002955268205
+            },
+            {
+              "elapsed_s": 27000.0,
+              "estimated_top_oil_temperature_c": 132.07904450626583
+            },
+            {
+              "elapsed_s": 27900.0,
+              "estimated_top_oil_temperature_c": 132.63016486859001
+            },
+            {
+              "elapsed_s": 28800.0,
+              "estimated_top_oil_temperature_c": 133.13722007973487
+            },
+            {
+              "elapsed_s": 29700.0,
+              "estimated_top_oil_temperature_c": 133.60373339465738
+            },
+            {
+              "elapsed_s": 30600.0,
+              "estimated_top_oil_temperature_c": 134.03294636440205
+            },
+            {
+              "elapsed_s": 31500.0,
+              "estimated_top_oil_temperature_c": 134.42784135990212
+            },
+            {
+              "elapsed_s": 32400.0,
+              "estimated_top_oil_temperature_c": 134.791162294877
+            },
+            {
+              "elapsed_s": 33300.0,
+              "estimated_top_oil_temperature_c": 135.12543369181856
+            },
+            {
+              "elapsed_s": 34200.0,
+              "estimated_top_oil_temperature_c": 135.43297822354498
+            },
+            {
+              "elapsed_s": 35100.0,
+              "estimated_top_oil_temperature_c": 135.71593285220965
+            },
+            {
+              "elapsed_s": 36000.0,
+              "estimated_top_oil_temperature_c": 135.9762636779061
+            },
+            {
+              "elapsed_s": 36900.0,
+              "estimated_top_oil_temperature_c": 136.21577960004396
+            },
+            {
+              "elapsed_s": 37800.0,
+              "estimated_top_oil_temperature_c": 136.43614488642172
+            },
+            {
+              "elapsed_s": 38700.0,
+              "estimated_top_oil_temperature_c": 136.63889073733174
+            },
+            {
+              "elapsed_s": 39600.0,
+              "estimated_top_oil_temperature_c": 136.82542592505078
+            },
+            {
+              "elapsed_s": 40500.0,
+              "estimated_top_oil_temperature_c": 136.9970465826435
+            },
+            {
+              "elapsed_s": 41400.0,
+              "estimated_top_oil_temperature_c": 137.1549452100967
+            },
+            {
+              "elapsed_s": 42300.0,
+              "estimated_top_oil_temperature_c": 137.30021896036266
+            },
+            {
+              "elapsed_s": 43200.0,
+              "estimated_top_oil_temperature_c": 137.4338772628871
+            },
+            {
+              "elapsed_s": 44100.0,
+              "estimated_top_oil_temperature_c": 137.55684883759358
+            },
+            {
+              "elapsed_s": 45000.0,
+              "estimated_top_oil_temperature_c": 137.6699881480604
+            },
+            {
+              "elapsed_s": 45900.0,
+              "estimated_top_oil_temperature_c": 137.77408133873047
+            },
+            {
+              "elapsed_s": 46800.0,
+              "estimated_top_oil_temperature_c": 137.86985169740737
+            },
+            {
+              "elapsed_s": 47700.0,
+              "estimated_top_oil_temperature_c": 137.9579646809951
+            },
+            {
+              "elapsed_s": 48600.0,
+              "estimated_top_oil_temperature_c": 138.03903253940132
+            },
+            {
+              "elapsed_s": 49500.0,
+              "estimated_top_oil_temperature_c": 138.11361856973394
+            },
+            {
+              "elapsed_s": 50400.0,
+              "estimated_top_oil_temperature_c": 138.18224103035084
+            },
+            {
+              "elapsed_s": 51300.0,
+              "estimated_top_oil_temperature_c": 138.24537674195952
+            },
+            {
+              "elapsed_s": 52200.0,
+              "estimated_top_oil_temperature_c": 138.30346440078876
+            },
+            {
+              "elapsed_s": 53100.0,
+              "estimated_top_oil_temperature_c": 138.35690762685346
+            },
+            {
+              "elapsed_s": 54000.0,
+              "estimated_top_oil_temperature_c": 138.40607776849407
+            },
+            {
+              "elapsed_s": 54900.0,
+              "estimated_top_oil_temperature_c": 138.45131648267707
+            },
+            {
+              "elapsed_s": 55800.0,
+              "estimated_top_oil_temperature_c": 138.49293810898612
+            },
+            {
+              "elapsed_s": 56700.0,
+              "estimated_top_oil_temperature_c": 138.53123185379957
+            },
+            {
+              "elapsed_s": 57600.0,
+              "estimated_top_oil_temperature_c": 138.56646379983042
+            },
+            {
+              "elapsed_s": 58500.0,
+              "estimated_top_oil_temperature_c": 138.59887875499263
+            },
+            {
+              "elapsed_s": 59400.0,
+              "estimated_top_oil_temperature_c": 138.62870195344007
+            },
+            {
+              "elapsed_s": 60300.0,
+              "estimated_top_oil_temperature_c": 138.65614062059805
+            },
+            {
+              "elapsed_s": 61200.0,
+              "estimated_top_oil_temperature_c": 138.68138541306158
+            },
+            {
+              "elapsed_s": 62100.0,
+              "estimated_top_oil_temperature_c": 138.70461174336614
+            },
+            {
+              "elapsed_s": 63000.0,
+              "estimated_top_oil_temperature_c": 138.7259809988352
+            },
+            {
+              "elapsed_s": 63900.0,
+              "estimated_top_oil_temperature_c": 138.7456416629743
+            },
+            {
+              "elapsed_s": 64800.0,
+              "estimated_top_oil_temperature_c": 138.76373034720336
+            },
+            {
+              "elapsed_s": 65700.0,
+              "estimated_top_oil_temperature_c": 138.7803727400963
+            },
+            {
+              "elapsed_s": 66600.0,
+              "estimated_top_oil_temperature_c": 138.79568448072354
+            },
+            {
+              "elapsed_s": 67500.0,
+              "estimated_top_oil_temperature_c": 138.80977196216588
+            },
+            {
+              "elapsed_s": 68400.0,
+              "estimated_top_oil_temperature_c": 138.8227330707831
+            },
+            {
+              "elapsed_s": 69300.0,
+              "estimated_top_oil_temperature_c": 138.83465786637376
+            },
+            {
+              "elapsed_s": 70200.0,
+              "estimated_top_oil_temperature_c": 138.84562920795256
+            },
+            {
+              "elapsed_s": 71100.0,
+              "estimated_top_oil_temperature_c": 138.85572332949312
+            },
+            {
+              "elapsed_s": 72000.0,
+              "estimated_top_oil_temperature_c": 138.86501036963708
+            },
+            {
+              "elapsed_s": 72900.0,
+              "estimated_top_oil_temperature_c": 138.87355485905
+            },
+            {
+              "elapsed_s": 73800.0,
+              "estimated_top_oil_temperature_c": 138.8814161688102
+            },
+            {
+              "elapsed_s": 74700.0,
+              "estimated_top_oil_temperature_c": 138.88864892294674
+            },
+            {
+              "elapsed_s": 75600.0,
+              "estimated_top_oil_temperature_c": 138.89530337799246
+            },
+            {
+              "elapsed_s": 76500.0,
+              "estimated_top_oil_temperature_c": 138.90142577218967
+            },
+            {
+              "elapsed_s": 77400.0,
+              "estimated_top_oil_temperature_c": 138.90705864677497
+            },
+            {
+              "elapsed_s": 78300.0,
+              "estimated_top_oil_temperature_c": 138.9122411415755
+            },
+            {
+              "elapsed_s": 79200.0,
+              "estimated_top_oil_temperature_c": 138.91700926697055
+            },
+            {
+              "elapsed_s": 80100.0,
+              "estimated_top_oil_temperature_c": 138.92139615410855
+            },
+            {
+              "elapsed_s": 81000.0,
+              "estimated_top_oil_temperature_c": 138.92543228511744
+            },
+            {
+              "elapsed_s": 81900.0,
+              "estimated_top_oil_temperature_c": 138.9291457049089
+            },
+            {
+              "elapsed_s": 82800.0,
+              "estimated_top_oil_temperature_c": 138.93256221604722
+            },
+            {
+              "elapsed_s": 83700.0,
+              "estimated_top_oil_temperature_c": 138.93570555803754
+            },
+            {
+              "elapsed_s": 84600.0,
+              "estimated_top_oil_temperature_c": 138.93859757227898
+            },
+            {
+              "elapsed_s": 85500.0,
+              "estimated_top_oil_temperature_c": 138.94125835382886
+            },
+            {
+              "elapsed_s": 86400.0,
+              "estimated_top_oil_temperature_c": 138.94370639103238
+            }
+          ],
+          "final_top_oil_temperature_c": 138.94370639103238,
+          "peak_top_oil_temperature_c": 138.94370639103238,
+          "limit_crossing": {
+            "status": "crossing",
+            "time_s": 9773.448450659003,
+            "reasons": []
+          }
+        },
+        "reduced_load": {
+          "inputs": {
+            "duration_s": 86400.0,
+            "thermal_load_pu": 1.0,
+            "ambient_temperature_c": 30.0
+          },
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "estimated_top_oil_temperature_c": 55.0
+            },
+            {
+              "elapsed_s": 900.0,
+              "estimated_top_oil_temperature_c": 56.19933378056015
+            },
+            {
+              "elapsed_s": 1800.0,
+              "estimated_top_oil_temperature_c": 57.302774126640784
+            },
+            {
+              "elapsed_s": 2700.0,
+              "estimated_top_oil_temperature_c": 58.31798825392893
+            },
+            {
+              "elapsed_s": 3600.0,
+              "estimated_top_oil_temperature_c": 59.25203034139316
+            },
+            {
+              "elapsed_s": 4500.0,
+              "estimated_top_oil_temperature_c": 60.11139054699334
+            },
+            {
+              "elapsed_s": 5400.0,
+              "estimated_top_oil_temperature_c": 60.9020401043105
+            },
+            {
+              "elapsed_s": 6300.0,
+              "estimated_top_oil_temperature_c": 61.6294728134493
+            },
+            {
+              "elapsed_s": 7200.0,
+              "estimated_top_oil_temperature_c": 62.29874321451112
+            },
+            {
+              "elapsed_s": 8100.0,
+              "estimated_top_oil_temperature_c": 62.91450170888478
+            },
+            {
+              "elapsed_s": 9000.0,
+              "estimated_top_oil_temperature_c": 63.48102687239383
+            },
+            {
+              "elapsed_s": 9900.0,
+              "estimated_top_oil_temperature_c": 64.00225518482729
+            },
+            {
+              "elapsed_s": 10800.0,
+              "estimated_top_oil_temperature_c": 64.48180838242837
+            },
+            {
+              "elapsed_s": 11700.0,
+              "estimated_top_oil_temperature_c": 64.92301862339886
+            },
+            {
+              "elapsed_s": 12600.0,
+              "estimated_top_oil_temperature_c": 65.32895164128104
+            },
+            {
+              "elapsed_s": 13500.0,
+              "estimated_top_oil_temperature_c": 65.70242804709714
+            },
+            {
+              "elapsed_s": 14400.0,
+              "estimated_top_oil_temperature_c": 66.0460429282641
+            },
+            {
+              "elapsed_s": 15300.0,
+              "estimated_top_oil_temperature_c": 66.36218388046527
+            },
+            {
+              "elapsed_s": 16200.0,
+              "estimated_top_oil_temperature_c": 66.65304759777355
+            },
+            {
+              "elapsed_s": 17100.0,
+              "estimated_top_oil_temperature_c": 66.92065513630136
+            },
+            {
+              "elapsed_s": 18000.0,
+              "estimated_top_oil_temperature_c": 67.16686595743657
+            },
+            {
+              "elapsed_s": 18900.0,
+              "estimated_top_oil_temperature_c": 67.39339084824333
+            },
+            {
+              "elapsed_s": 19800.0,
+              "estimated_top_oil_temperature_c": 67.60180380880459
+            },
+            {
+              "elapsed_s": 20700.0,
+              "estimated_top_oil_temperature_c": 67.79355298910535
+            },
+            {
+              "elapsed_s": 21600.0,
+              "estimated_top_oil_temperature_c": 67.96997075145082
+            },
+            {
+              "elapsed_s": 22500.0,
+              "estimated_top_oil_temperature_c": 68.13228292833816
+            },
+            {
+              "elapsed_s": 23400.0,
+              "estimated_top_oil_temperature_c": 68.28161734010969
+            },
+            {
+              "elapsed_s": 24300.0,
+              "estimated_top_oil_temperature_c": 68.41901163157203
+            },
+            {
+              "elapsed_s": 25200.0,
+              "estimated_top_oil_temperature_c": 68.54542048203392
+            },
+            {
+              "elapsed_s": 26100.0,
+              "estimated_top_oil_temperature_c": 68.6617222388611
+            },
+            {
+              "elapsed_s": 27000.0,
+              "estimated_top_oil_temperature_c": 68.76872502064151
+            },
+            {
+              "elapsed_s": 27900.0,
+              "estimated_top_oil_temperature_c": 68.8671723323684
+            },
+            {
+              "elapsed_s": 28800.0,
+              "estimated_top_oil_temperature_c": 68.95774823165797
+            },
+            {
+              "elapsed_s": 29700.0,
+              "estimated_top_oil_temperature_c": 69.04108208189939
+            },
+            {
+              "elapsed_s": 30600.0,
+              "estimated_top_oil_temperature_c": 69.11775292536355
+            },
+            {
+              "elapsed_s": 31500.0,
+              "estimated_top_oil_temperature_c": 69.18829350665767
+            },
+            {
+              "elapsed_s": 32400.0,
+              "estimated_top_oil_temperature_c": 69.25319397448204
+            },
+            {
+              "elapsed_s": 33300.0,
+              "estimated_top_oil_temperature_c": 69.31290528741067
+            },
+            {
+              "elapsed_s": 34200.0,
+              "estimated_top_oil_temperature_c": 69.36784234736085
+            },
+            {
+              "elapsed_s": 35100.0,
+              "estimated_top_oil_temperature_c": 69.41838688252417
+            },
+            {
+              "elapsed_s": 36000.0,
+              "estimated_top_oil_temperature_c": 69.46489009979122
+            },
+            {
+              "elapsed_s": 36900.0,
+              "estimated_top_oil_temperature_c": 69.50767512510005
+            },
+            {
+              "elapsed_s": 37800.0,
+              "estimated_top_oil_temperature_c": 69.54703924866523
+            },
+            {
+              "elapsed_s": 38700.0,
+              "estimated_top_oil_temperature_c": 69.58325599068813
+            },
+            {
+              "elapsed_s": 39600.0,
+              "estimated_top_oil_temperature_c": 69.61657700190239
+            },
+            {
+              "elapsed_s": 40500.0,
+              "estimated_top_oil_temperature_c": 69.64723381215987
+            },
+            {
+              "elapsed_s": 41400.0,
+              "estimated_top_oil_temperature_c": 69.67543943920761
+            },
+            {
+              "elapsed_s": 42300.0,
+              "estimated_top_oil_temperature_c": 69.701389868834
+            },
+            {
+              "elapsed_s": 43200.0,
+              "estimated_top_oil_temperature_c": 69.72526541666899
+            },
+            {
+              "elapsed_s": 44100.0,
+              "estimated_top_oil_temperature_c": 69.74723198110078
+            },
+            {
+              "elapsed_s": 45000.0,
+              "estimated_top_oil_temperature_c": 69.76744219601485
+            },
+            {
+              "elapsed_s": 45900.0,
+              "estimated_top_oil_temperature_c": 69.78603649136501
+            },
+            {
+              "elapsed_s": 46800.0,
+              "estimated_top_oil_temperature_c": 69.80314406894588
+            },
+            {
+              "elapsed_s": 47700.0,
+              "estimated_top_oil_temperature_c": 69.818883800147
+            },
+            {
+              "elapsed_s": 48600.0,
+              "estimated_top_oil_temperature_c": 69.83336505192636
+            },
+            {
+              "elapsed_s": 49500.0,
+              "estimated_top_oil_temperature_c": 69.8466884467428
+            },
+            {
+              "elapsed_s": 50400.0,
+              "estimated_top_oil_temperature_c": 69.85894656172758
+            },
+            {
+              "elapsed_s": 51300.0,
+              "estimated_top_oil_temperature_c": 69.87022457195319
+            },
+            {
+              "elapsed_s": 52200.0,
+              "estimated_top_oil_temperature_c": 69.8806008422694
+            },
+            {
+              "elapsed_s": 53100.0,
+              "estimated_top_oil_temperature_c": 69.89014747181852
+            },
+            {
+              "elapsed_s": 54000.0,
+              "estimated_top_oil_temperature_c": 69.89893079501371
+            },
+            {
+              "elapsed_s": 54900.0,
+              "estimated_top_oil_temperature_c": 69.90701184246134
+            },
+            {
+              "elapsed_s": 55800.0,
+              "estimated_top_oil_temperature_c": 69.9144467650299
+            },
+            {
+              "elapsed_s": 56700.0,
+              "estimated_top_oil_temperature_c": 69.92128722401227
+            },
+            {
+              "elapsed_s": 57600.0,
+              "estimated_top_oil_temperature_c": 69.92758075009253
+            },
+            {
+              "elapsed_s": 58500.0,
+              "estimated_top_oil_temperature_c": 69.93337107361099
+            },
+            {
+              "elapsed_s": 59400.0,
+              "estimated_top_oil_temperature_c": 69.93869842842304
+            },
+            {
+              "elapsed_s": 60300.0,
+              "estimated_top_oil_temperature_c": 69.94359983146262
+            },
+            {
+              "elapsed_s": 61200.0,
+              "estimated_top_oil_temperature_c": 69.94810933995304
+            },
+            {
+              "elapsed_s": 62100.0,
+              "estimated_top_oil_temperature_c": 69.95225828805235
+            },
+            {
+              "elapsed_s": 63000.0,
+              "estimated_top_oil_temperature_c": 69.95607550457773
+            },
+            {
+              "elapsed_s": 63900.0,
+              "estimated_top_oil_temperature_c": 69.95958751332132
+            },
+            {
+              "elapsed_s": 64800.0,
+              "estimated_top_oil_temperature_c": 69.96281871735
+            },
+            {
+              "elapsed_s": 65700.0,
+              "estimated_top_oil_temperature_c": 69.96579156856912
+            },
+            {
+              "elapsed_s": 66600.0,
+              "estimated_top_oil_temperature_c": 69.96852672372879
+            },
+            {
+              "elapsed_s": 67500.0,
+              "estimated_top_oil_temperature_c": 69.97104318795658
+            },
+            {
+              "elapsed_s": 68400.0,
+              "estimated_top_oil_temperature_c": 69.97335844681399
+            },
+            {
+              "elapsed_s": 69300.0,
+              "estimated_top_oil_temperature_c": 69.97548858779416
+            },
+            {
+              "elapsed_s": 70200.0,
+              "estimated_top_oil_temperature_c": 69.97744841210533
+            },
+            {
+              "elapsed_s": 71100.0,
+              "estimated_top_oil_temperature_c": 69.97925153751649
+            },
+            {
+              "elapsed_s": 72000.0,
+              "estimated_top_oil_temperature_c": 69.9809104929799
+            },
+            {
+              "elapsed_s": 72900.0,
+              "estimated_top_oil_temperature_c": 69.98243680568814
+            },
+            {
+              "elapsed_s": 73800.0,
+              "estimated_top_oil_temperature_c": 69.98384108117031
+            },
+            {
+              "elapsed_s": 74700.0,
+              "estimated_top_oil_temperature_c": 69.9851330769843
+            },
+            {
+              "elapsed_s": 75600.0,
+              "estimated_top_oil_temperature_c": 69.98632177051668
+            },
+            {
+              "elapsed_s": 76500.0,
+              "estimated_top_oil_temperature_c": 69.98741542136186
+            },
+            {
+              "elapsed_s": 77400.0,
+              "estimated_top_oil_temperature_c": 69.98842162871351
+            },
+            {
+              "elapsed_s": 78300.0,
+              "estimated_top_oil_temperature_c": 69.98934738416736
+            },
+            {
+              "elapsed_s": 79200.0,
+              "estimated_top_oil_temperature_c": 69.990199120302
+            },
+            {
+              "elapsed_s": 80100.0,
+              "estimated_top_oil_temperature_c": 69.99098275537538
+            },
+            {
+              "elapsed_s": 81000.0,
+              "estimated_top_oil_temperature_c": 69.99170373444778
+            },
+            {
+              "elapsed_s": 81900.0,
+              "estimated_top_oil_temperature_c": 69.9923670672164
+            },
+            {
+              "elapsed_s": 82800.0,
+              "estimated_top_oil_temperature_c": 69.99297736282521
+            },
+            {
+              "elapsed_s": 83700.0,
+              "estimated_top_oil_temperature_c": 69.99353886189137
+            },
+            {
+              "elapsed_s": 84600.0,
+              "estimated_top_oil_temperature_c": 69.994055465971
+            },
+            {
+              "elapsed_s": 85500.0,
+              "estimated_top_oil_temperature_c": 69.99453076466905
+            },
+            {
+              "elapsed_s": 86400.0,
+              "estimated_top_oil_temperature_c": 69.99496806058146
+            }
+          ],
+          "final_top_oil_temperature_c": 69.99496806058146,
+          "peak_top_oil_temperature_c": 69.99496806058146,
+          "limit_crossing": {
+            "status": "no_crossing_within_horizon",
+            "time_s": null,
+            "reasons": []
+          }
+        },
+        "final_temperature_difference_c": -68.94873833045092
+      }
+    },
+    "explicit_reference_request": {
+      "schema_version": "what-if-request-1.0.0",
+      "source": "simulator",
+      "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+      "baseline": {
+        "duration_s": 86400,
+        "thermal_load_pu": 2,
+        "ambient_temperature_c": 30
+      },
+      "reduced_load": {
+        "duration_s": 86400,
+        "thermal_load_pu": 1,
+        "ambient_temperature_c": 30
+      },
+      "state_ref": "219e256c-1ba8-4c80-9bc4-4c50ede43dea"
+    },
+    "missing_limit": {
+      "http_status": 200,
+      "response": {
+        "schema_version": "what-if-response-1.0.0",
+        "state": {
+          "state_ref": "d0668e72-655c-40df-a556-4d736b789ba5",
+          "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "reading_id": 9,
+          "result_id": 9,
+          "measurement_time": "2026-10-10T10:25:00.448093Z",
+          "captured_at": "2026-10-10T10:23:00.898097Z"
+        },
+        "configuration": {
+          "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+          "version": 2,
+          "created_at": "2026-10-10T10:23:00.851942Z",
+          "parameter_version": "asset-config-2:906f9cd7a7d3b12a9a1fa9282b07c13b05dbb7d2aa2603cce6cd8ea0a4ab22c5"
+        },
+        "model": {
+          "model_id": "powernxt-electrical-top-oil",
+          "model_version": "stored-reading-top-oil-1.0.2",
+          "forecast_version": "healthy-top-oil-scenarios-1.0.1"
+        },
+        "units": {
+          "temperature": "C",
+          "elapsed_time": "s",
+          "thermal_load": "pu"
+        },
+        "parameter_provenance": {
+          "rated_kva": "assumed",
+          "rated_voltage_v": "assumed",
+          "rated_current_a": "assumed",
+          "voltage_convention": "assumed",
+          "measurement_side": "assumed",
+          "cooling_type": "assumed",
+          "thermal_parameters.rated_top_oil_rise_c": "assumed",
+          "thermal_parameters.oil_time_constant_min": "assumed",
+          "thermal_parameters.loss_ratio": "assumed",
+          "thermal_parameters.oil_exponent": "assumed"
+        },
+        "assumptions": [
+          "Conditional simplified healthy-model estimate; not fault diagnosis or a physical accuracy guarantee.",
+          "Same immutable state/configuration and constant ambient in both scenarios; only load may differ.",
+          "Initial state is the healthy worker estimate or an observed bootstrap; bootstrap is not independent prediction.",
+          "Configured coefficients/provenance retained; no tuning, cooling intervention, confidence or health estimate.",
+          "Peak uses monotonic constant-segment endpoints including time zero; crossing is analytic, not sampled.",
+          "Measurement time is the state origin, not a claim that this state is fresh at request time."
+        ],
+        "sampling": {
+          "policy": "uniform_including_initial_and_final",
+          "interval_count": 96,
+          "maximum_points_per_scenario": 97
+        },
+        "configured_top_oil_limit_c": null,
+        "limit_reasons": [
+          "configured_top_oil_limit_missing"
+        ],
+        "baseline": {
+          "inputs": {
+            "duration_s": 86400.0,
+            "thermal_load_pu": 2.0,
+            "ambient_temperature_c": 30.0
+          },
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "estimated_top_oil_temperature_c": 55.0
+            },
+            {
+              "elapsed_s": 900.0,
+              "estimated_top_oil_temperature_c": 61.71402048563512
+            },
+            {
+              "elapsed_s": 1800.0,
+              "estimated_top_oil_temperature_c": 67.89121753315055
+            },
+            {
+              "elapsed_s": 2700.0,
+              "estimated_top_oil_temperature_c": 73.5745131747819
+            },
+            {
+              "elapsed_s": 3600.0,
+              "estimated_top_oil_temperature_c": 78.80339758655197
+            },
+            {
+              "elapsed_s": 4500.0,
+              "estimated_top_oil_temperature_c": 83.61420348434336
+            },
+            {
+              "elapsed_s": 5400.0,
+              "estimated_top_oil_temperature_c": 88.04035858047216
+            },
+            {
+              "elapsed_s": 6300.0,
+              "estimated_top_oil_temperature_c": 92.11261785494855
+            },
+            {
+              "elapsed_s": 7200.0,
+              "estimated_top_oil_temperature_c": 95.85927725535304
+            },
+            {
+              "elapsed_s": 8100.0,
+              "estimated_top_oil_temperature_c": 99.30637031021362
+            },
+            {
+              "elapsed_s": 9000.0,
+              "estimated_top_oil_temperature_c": 102.47784902204563
+            },
+            {
+              "elapsed_s": 9900.0,
+              "estimated_top_oil_temperature_c": 105.39575029698247
+            },
+            {
+              "elapsed_s": 10800.0,
+              "estimated_top_oil_temperature_c": 108.0803490674279
+            },
+            {
+              "elapsed_s": 11700.0,
+              "estimated_top_oil_temperature_c": 110.55029917169696
+            },
+            {
+              "elapsed_s": 12600.0,
+              "estimated_top_oil_temperature_c": 112.82276296954284
+            },
+            {
+              "elapsed_s": 13500.0,
+              "estimated_top_oil_temperature_c": 114.91353059419826
+            },
+            {
+              "elapsed_s": 14400.0,
+              "estimated_top_oil_temperature_c": 116.83712966955031
+            },
+            {
+              "elapsed_s": 15300.0,
+              "estimated_top_oil_temperature_c": 118.60692625481408
+            },
+            {
+              "elapsed_s": 16200.0,
+              "estimated_top_oil_temperature_c": 120.23521771811608
+            },
+            {
+              "elapsed_s": 17100.0,
+              "estimated_top_oil_temperature_c": 121.73331818431568
+            },
+            {
+              "elapsed_s": 18000.0,
+              "estimated_top_oil_temperature_c": 123.1116371507962
+            },
+            {
+              "elapsed_s": 18900.0,
+              "estimated_top_oil_temperature_c": 124.37975181748428
+            },
+            {
+              "elapsed_s": 19800.0,
+              "estimated_top_oil_temperature_c": 125.54647363368016
+            },
+            {
+              "elapsed_s": 20700.0,
+              "estimated_top_oil_temperature_c": 126.61990952409737
+            },
+            {
+              "elapsed_s": 21600.0,
+              "estimated_top_oil_temperature_c": 127.60751821953838
+            },
+            {
+              "elapsed_s": 22500.0,
+              "estimated_top_oil_temperature_c": 128.5161620836182
+            },
+            {
+              "elapsed_s": 23400.0,
+              "estimated_top_oil_temperature_c": 129.3521547956521
+            },
+            {
+              "elapsed_s": 24300.0,
+              "estimated_top_oil_temperature_c": 130.12130522102967
+            },
+            {
+              "elapsed_s": 25200.0,
+              "estimated_top_oil_temperature_c": 130.8289577739081
+            },
+            {
+              "elapsed_s": 26100.0,
+              "estimated_top_oil_temperature_c": 131.48002955268205
+            },
+            {
+              "elapsed_s": 27000.0,
+              "estimated_top_oil_temperature_c": 132.07904450626583
+            },
+            {
+              "elapsed_s": 27900.0,
+              "estimated_top_oil_temperature_c": 132.63016486859001
+            },
+            {
+              "elapsed_s": 28800.0,
+              "estimated_top_oil_temperature_c": 133.13722007973487
+            },
+            {
+              "elapsed_s": 29700.0,
+              "estimated_top_oil_temperature_c": 133.60373339465738
+            },
+            {
+              "elapsed_s": 30600.0,
+              "estimated_top_oil_temperature_c": 134.03294636440205
+            },
+            {
+              "elapsed_s": 31500.0,
+              "estimated_top_oil_temperature_c": 134.42784135990212
+            },
+            {
+              "elapsed_s": 32400.0,
+              "estimated_top_oil_temperature_c": 134.791162294877
+            },
+            {
+              "elapsed_s": 33300.0,
+              "estimated_top_oil_temperature_c": 135.12543369181856
+            },
+            {
+              "elapsed_s": 34200.0,
+              "estimated_top_oil_temperature_c": 135.43297822354498
+            },
+            {
+              "elapsed_s": 35100.0,
+              "estimated_top_oil_temperature_c": 135.71593285220965
+            },
+            {
+              "elapsed_s": 36000.0,
+              "estimated_top_oil_temperature_c": 135.9762636779061
+            },
+            {
+              "elapsed_s": 36900.0,
+              "estimated_top_oil_temperature_c": 136.21577960004396
+            },
+            {
+              "elapsed_s": 37800.0,
+              "estimated_top_oil_temperature_c": 136.43614488642172
+            },
+            {
+              "elapsed_s": 38700.0,
+              "estimated_top_oil_temperature_c": 136.63889073733174
+            },
+            {
+              "elapsed_s": 39600.0,
+              "estimated_top_oil_temperature_c": 136.82542592505078
+            },
+            {
+              "elapsed_s": 40500.0,
+              "estimated_top_oil_temperature_c": 136.9970465826435
+            },
+            {
+              "elapsed_s": 41400.0,
+              "estimated_top_oil_temperature_c": 137.1549452100967
+            },
+            {
+              "elapsed_s": 42300.0,
+              "estimated_top_oil_temperature_c": 137.30021896036266
+            },
+            {
+              "elapsed_s": 43200.0,
+              "estimated_top_oil_temperature_c": 137.4338772628871
+            },
+            {
+              "elapsed_s": 44100.0,
+              "estimated_top_oil_temperature_c": 137.55684883759358
+            },
+            {
+              "elapsed_s": 45000.0,
+              "estimated_top_oil_temperature_c": 137.6699881480604
+            },
+            {
+              "elapsed_s": 45900.0,
+              "estimated_top_oil_temperature_c": 137.77408133873047
+            },
+            {
+              "elapsed_s": 46800.0,
+              "estimated_top_oil_temperature_c": 137.86985169740737
+            },
+            {
+              "elapsed_s": 47700.0,
+              "estimated_top_oil_temperature_c": 137.9579646809951
+            },
+            {
+              "elapsed_s": 48600.0,
+              "estimated_top_oil_temperature_c": 138.03903253940132
+            },
+            {
+              "elapsed_s": 49500.0,
+              "estimated_top_oil_temperature_c": 138.11361856973394
+            },
+            {
+              "elapsed_s": 50400.0,
+              "estimated_top_oil_temperature_c": 138.18224103035084
+            },
+            {
+              "elapsed_s": 51300.0,
+              "estimated_top_oil_temperature_c": 138.24537674195952
+            },
+            {
+              "elapsed_s": 52200.0,
+              "estimated_top_oil_temperature_c": 138.30346440078876
+            },
+            {
+              "elapsed_s": 53100.0,
+              "estimated_top_oil_temperature_c": 138.35690762685346
+            },
+            {
+              "elapsed_s": 54000.0,
+              "estimated_top_oil_temperature_c": 138.40607776849407
+            },
+            {
+              "elapsed_s": 54900.0,
+              "estimated_top_oil_temperature_c": 138.45131648267707
+            },
+            {
+              "elapsed_s": 55800.0,
+              "estimated_top_oil_temperature_c": 138.49293810898612
+            },
+            {
+              "elapsed_s": 56700.0,
+              "estimated_top_oil_temperature_c": 138.53123185379957
+            },
+            {
+              "elapsed_s": 57600.0,
+              "estimated_top_oil_temperature_c": 138.56646379983042
+            },
+            {
+              "elapsed_s": 58500.0,
+              "estimated_top_oil_temperature_c": 138.59887875499263
+            },
+            {
+              "elapsed_s": 59400.0,
+              "estimated_top_oil_temperature_c": 138.62870195344007
+            },
+            {
+              "elapsed_s": 60300.0,
+              "estimated_top_oil_temperature_c": 138.65614062059805
+            },
+            {
+              "elapsed_s": 61200.0,
+              "estimated_top_oil_temperature_c": 138.68138541306158
+            },
+            {
+              "elapsed_s": 62100.0,
+              "estimated_top_oil_temperature_c": 138.70461174336614
+            },
+            {
+              "elapsed_s": 63000.0,
+              "estimated_top_oil_temperature_c": 138.7259809988352
+            },
+            {
+              "elapsed_s": 63900.0,
+              "estimated_top_oil_temperature_c": 138.7456416629743
+            },
+            {
+              "elapsed_s": 64800.0,
+              "estimated_top_oil_temperature_c": 138.76373034720336
+            },
+            {
+              "elapsed_s": 65700.0,
+              "estimated_top_oil_temperature_c": 138.7803727400963
+            },
+            {
+              "elapsed_s": 66600.0,
+              "estimated_top_oil_temperature_c": 138.79568448072354
+            },
+            {
+              "elapsed_s": 67500.0,
+              "estimated_top_oil_temperature_c": 138.80977196216588
+            },
+            {
+              "elapsed_s": 68400.0,
+              "estimated_top_oil_temperature_c": 138.8227330707831
+            },
+            {
+              "elapsed_s": 69300.0,
+              "estimated_top_oil_temperature_c": 138.83465786637376
+            },
+            {
+              "elapsed_s": 70200.0,
+              "estimated_top_oil_temperature_c": 138.84562920795256
+            },
+            {
+              "elapsed_s": 71100.0,
+              "estimated_top_oil_temperature_c": 138.85572332949312
+            },
+            {
+              "elapsed_s": 72000.0,
+              "estimated_top_oil_temperature_c": 138.86501036963708
+            },
+            {
+              "elapsed_s": 72900.0,
+              "estimated_top_oil_temperature_c": 138.87355485905
+            },
+            {
+              "elapsed_s": 73800.0,
+              "estimated_top_oil_temperature_c": 138.8814161688102
+            },
+            {
+              "elapsed_s": 74700.0,
+              "estimated_top_oil_temperature_c": 138.88864892294674
+            },
+            {
+              "elapsed_s": 75600.0,
+              "estimated_top_oil_temperature_c": 138.89530337799246
+            },
+            {
+              "elapsed_s": 76500.0,
+              "estimated_top_oil_temperature_c": 138.90142577218967
+            },
+            {
+              "elapsed_s": 77400.0,
+              "estimated_top_oil_temperature_c": 138.90705864677497
+            },
+            {
+              "elapsed_s": 78300.0,
+              "estimated_top_oil_temperature_c": 138.9122411415755
+            },
+            {
+              "elapsed_s": 79200.0,
+              "estimated_top_oil_temperature_c": 138.91700926697055
+            },
+            {
+              "elapsed_s": 80100.0,
+              "estimated_top_oil_temperature_c": 138.92139615410855
+            },
+            {
+              "elapsed_s": 81000.0,
+              "estimated_top_oil_temperature_c": 138.92543228511744
+            },
+            {
+              "elapsed_s": 81900.0,
+              "estimated_top_oil_temperature_c": 138.9291457049089
+            },
+            {
+              "elapsed_s": 82800.0,
+              "estimated_top_oil_temperature_c": 138.93256221604722
+            },
+            {
+              "elapsed_s": 83700.0,
+              "estimated_top_oil_temperature_c": 138.93570555803754
+            },
+            {
+              "elapsed_s": 84600.0,
+              "estimated_top_oil_temperature_c": 138.93859757227898
+            },
+            {
+              "elapsed_s": 85500.0,
+              "estimated_top_oil_temperature_c": 138.94125835382886
+            },
+            {
+              "elapsed_s": 86400.0,
+              "estimated_top_oil_temperature_c": 138.94370639103238
+            }
+          ],
+          "final_top_oil_temperature_c": 138.94370639103238,
+          "peak_top_oil_temperature_c": 138.94370639103238,
+          "limit_crossing": {
+            "status": "unavailable",
+            "time_s": null,
+            "reasons": [
+              "configured_top_oil_limit_missing"
+            ]
+          }
+        },
+        "reduced_load": {
+          "inputs": {
+            "duration_s": 86400.0,
+            "thermal_load_pu": 1.0,
+            "ambient_temperature_c": 30.0
+          },
+          "points": [
+            {
+              "elapsed_s": 0.0,
+              "estimated_top_oil_temperature_c": 55.0
+            },
+            {
+              "elapsed_s": 900.0,
+              "estimated_top_oil_temperature_c": 56.19933378056015
+            },
+            {
+              "elapsed_s": 1800.0,
+              "estimated_top_oil_temperature_c": 57.302774126640784
+            },
+            {
+              "elapsed_s": 2700.0,
+              "estimated_top_oil_temperature_c": 58.31798825392893
+            },
+            {
+              "elapsed_s": 3600.0,
+              "estimated_top_oil_temperature_c": 59.25203034139316
+            },
+            {
+              "elapsed_s": 4500.0,
+              "estimated_top_oil_temperature_c": 60.11139054699334
+            },
+            {
+              "elapsed_s": 5400.0,
+              "estimated_top_oil_temperature_c": 60.9020401043105
+            },
+            {
+              "elapsed_s": 6300.0,
+              "estimated_top_oil_temperature_c": 61.6294728134493
+            },
+            {
+              "elapsed_s": 7200.0,
+              "estimated_top_oil_temperature_c": 62.29874321451112
+            },
+            {
+              "elapsed_s": 8100.0,
+              "estimated_top_oil_temperature_c": 62.91450170888478
+            },
+            {
+              "elapsed_s": 9000.0,
+              "estimated_top_oil_temperature_c": 63.48102687239383
+            },
+            {
+              "elapsed_s": 9900.0,
+              "estimated_top_oil_temperature_c": 64.00225518482729
+            },
+            {
+              "elapsed_s": 10800.0,
+              "estimated_top_oil_temperature_c": 64.48180838242837
+            },
+            {
+              "elapsed_s": 11700.0,
+              "estimated_top_oil_temperature_c": 64.92301862339886
+            },
+            {
+              "elapsed_s": 12600.0,
+              "estimated_top_oil_temperature_c": 65.32895164128104
+            },
+            {
+              "elapsed_s": 13500.0,
+              "estimated_top_oil_temperature_c": 65.70242804709714
+            },
+            {
+              "elapsed_s": 14400.0,
+              "estimated_top_oil_temperature_c": 66.0460429282641
+            },
+            {
+              "elapsed_s": 15300.0,
+              "estimated_top_oil_temperature_c": 66.36218388046527
+            },
+            {
+              "elapsed_s": 16200.0,
+              "estimated_top_oil_temperature_c": 66.65304759777355
+            },
+            {
+              "elapsed_s": 17100.0,
+              "estimated_top_oil_temperature_c": 66.92065513630136
+            },
+            {
+              "elapsed_s": 18000.0,
+              "estimated_top_oil_temperature_c": 67.16686595743657
+            },
+            {
+              "elapsed_s": 18900.0,
+              "estimated_top_oil_temperature_c": 67.39339084824333
+            },
+            {
+              "elapsed_s": 19800.0,
+              "estimated_top_oil_temperature_c": 67.60180380880459
+            },
+            {
+              "elapsed_s": 20700.0,
+              "estimated_top_oil_temperature_c": 67.79355298910535
+            },
+            {
+              "elapsed_s": 21600.0,
+              "estimated_top_oil_temperature_c": 67.96997075145082
+            },
+            {
+              "elapsed_s": 22500.0,
+              "estimated_top_oil_temperature_c": 68.13228292833816
+            },
+            {
+              "elapsed_s": 23400.0,
+              "estimated_top_oil_temperature_c": 68.28161734010969
+            },
+            {
+              "elapsed_s": 24300.0,
+              "estimated_top_oil_temperature_c": 68.41901163157203
+            },
+            {
+              "elapsed_s": 25200.0,
+              "estimated_top_oil_temperature_c": 68.54542048203392
+            },
+            {
+              "elapsed_s": 26100.0,
+              "estimated_top_oil_temperature_c": 68.6617222388611
+            },
+            {
+              "elapsed_s": 27000.0,
+              "estimated_top_oil_temperature_c": 68.76872502064151
+            },
+            {
+              "elapsed_s": 27900.0,
+              "estimated_top_oil_temperature_c": 68.8671723323684
+            },
+            {
+              "elapsed_s": 28800.0,
+              "estimated_top_oil_temperature_c": 68.95774823165797
+            },
+            {
+              "elapsed_s": 29700.0,
+              "estimated_top_oil_temperature_c": 69.04108208189939
+            },
+            {
+              "elapsed_s": 30600.0,
+              "estimated_top_oil_temperature_c": 69.11775292536355
+            },
+            {
+              "elapsed_s": 31500.0,
+              "estimated_top_oil_temperature_c": 69.18829350665767
+            },
+            {
+              "elapsed_s": 32400.0,
+              "estimated_top_oil_temperature_c": 69.25319397448204
+            },
+            {
+              "elapsed_s": 33300.0,
+              "estimated_top_oil_temperature_c": 69.31290528741067
+            },
+            {
+              "elapsed_s": 34200.0,
+              "estimated_top_oil_temperature_c": 69.36784234736085
+            },
+            {
+              "elapsed_s": 35100.0,
+              "estimated_top_oil_temperature_c": 69.41838688252417
+            },
+            {
+              "elapsed_s": 36000.0,
+              "estimated_top_oil_temperature_c": 69.46489009979122
+            },
+            {
+              "elapsed_s": 36900.0,
+              "estimated_top_oil_temperature_c": 69.50767512510005
+            },
+            {
+              "elapsed_s": 37800.0,
+              "estimated_top_oil_temperature_c": 69.54703924866523
+            },
+            {
+              "elapsed_s": 38700.0,
+              "estimated_top_oil_temperature_c": 69.58325599068813
+            },
+            {
+              "elapsed_s": 39600.0,
+              "estimated_top_oil_temperature_c": 69.61657700190239
+            },
+            {
+              "elapsed_s": 40500.0,
+              "estimated_top_oil_temperature_c": 69.64723381215987
+            },
+            {
+              "elapsed_s": 41400.0,
+              "estimated_top_oil_temperature_c": 69.67543943920761
+            },
+            {
+              "elapsed_s": 42300.0,
+              "estimated_top_oil_temperature_c": 69.701389868834
+            },
+            {
+              "elapsed_s": 43200.0,
+              "estimated_top_oil_temperature_c": 69.72526541666899
+            },
+            {
+              "elapsed_s": 44100.0,
+              "estimated_top_oil_temperature_c": 69.74723198110078
+            },
+            {
+              "elapsed_s": 45000.0,
+              "estimated_top_oil_temperature_c": 69.76744219601485
+            },
+            {
+              "elapsed_s": 45900.0,
+              "estimated_top_oil_temperature_c": 69.78603649136501
+            },
+            {
+              "elapsed_s": 46800.0,
+              "estimated_top_oil_temperature_c": 69.80314406894588
+            },
+            {
+              "elapsed_s": 47700.0,
+              "estimated_top_oil_temperature_c": 69.818883800147
+            },
+            {
+              "elapsed_s": 48600.0,
+              "estimated_top_oil_temperature_c": 69.83336505192636
+            },
+            {
+              "elapsed_s": 49500.0,
+              "estimated_top_oil_temperature_c": 69.8466884467428
+            },
+            {
+              "elapsed_s": 50400.0,
+              "estimated_top_oil_temperature_c": 69.85894656172758
+            },
+            {
+              "elapsed_s": 51300.0,
+              "estimated_top_oil_temperature_c": 69.87022457195319
+            },
+            {
+              "elapsed_s": 52200.0,
+              "estimated_top_oil_temperature_c": 69.8806008422694
+            },
+            {
+              "elapsed_s": 53100.0,
+              "estimated_top_oil_temperature_c": 69.89014747181852
+            },
+            {
+              "elapsed_s": 54000.0,
+              "estimated_top_oil_temperature_c": 69.89893079501371
+            },
+            {
+              "elapsed_s": 54900.0,
+              "estimated_top_oil_temperature_c": 69.90701184246134
+            },
+            {
+              "elapsed_s": 55800.0,
+              "estimated_top_oil_temperature_c": 69.9144467650299
+            },
+            {
+              "elapsed_s": 56700.0,
+              "estimated_top_oil_temperature_c": 69.92128722401227
+            },
+            {
+              "elapsed_s": 57600.0,
+              "estimated_top_oil_temperature_c": 69.92758075009253
+            },
+            {
+              "elapsed_s": 58500.0,
+              "estimated_top_oil_temperature_c": 69.93337107361099
+            },
+            {
+              "elapsed_s": 59400.0,
+              "estimated_top_oil_temperature_c": 69.93869842842304
+            },
+            {
+              "elapsed_s": 60300.0,
+              "estimated_top_oil_temperature_c": 69.94359983146262
+            },
+            {
+              "elapsed_s": 61200.0,
+              "estimated_top_oil_temperature_c": 69.94810933995304
+            },
+            {
+              "elapsed_s": 62100.0,
+              "estimated_top_oil_temperature_c": 69.95225828805235
+            },
+            {
+              "elapsed_s": 63000.0,
+              "estimated_top_oil_temperature_c": 69.95607550457773
+            },
+            {
+              "elapsed_s": 63900.0,
+              "estimated_top_oil_temperature_c": 69.95958751332132
+            },
+            {
+              "elapsed_s": 64800.0,
+              "estimated_top_oil_temperature_c": 69.96281871735
+            },
+            {
+              "elapsed_s": 65700.0,
+              "estimated_top_oil_temperature_c": 69.96579156856912
+            },
+            {
+              "elapsed_s": 66600.0,
+              "estimated_top_oil_temperature_c": 69.96852672372879
+            },
+            {
+              "elapsed_s": 67500.0,
+              "estimated_top_oil_temperature_c": 69.97104318795658
+            },
+            {
+              "elapsed_s": 68400.0,
+              "estimated_top_oil_temperature_c": 69.97335844681399
+            },
+            {
+              "elapsed_s": 69300.0,
+              "estimated_top_oil_temperature_c": 69.97548858779416
+            },
+            {
+              "elapsed_s": 70200.0,
+              "estimated_top_oil_temperature_c": 69.97744841210533
+            },
+            {
+              "elapsed_s": 71100.0,
+              "estimated_top_oil_temperature_c": 69.97925153751649
+            },
+            {
+              "elapsed_s": 72000.0,
+              "estimated_top_oil_temperature_c": 69.9809104929799
+            },
+            {
+              "elapsed_s": 72900.0,
+              "estimated_top_oil_temperature_c": 69.98243680568814
+            },
+            {
+              "elapsed_s": 73800.0,
+              "estimated_top_oil_temperature_c": 69.98384108117031
+            },
+            {
+              "elapsed_s": 74700.0,
+              "estimated_top_oil_temperature_c": 69.9851330769843
+            },
+            {
+              "elapsed_s": 75600.0,
+              "estimated_top_oil_temperature_c": 69.98632177051668
+            },
+            {
+              "elapsed_s": 76500.0,
+              "estimated_top_oil_temperature_c": 69.98741542136186
+            },
+            {
+              "elapsed_s": 77400.0,
+              "estimated_top_oil_temperature_c": 69.98842162871351
+            },
+            {
+              "elapsed_s": 78300.0,
+              "estimated_top_oil_temperature_c": 69.98934738416736
+            },
+            {
+              "elapsed_s": 79200.0,
+              "estimated_top_oil_temperature_c": 69.990199120302
+            },
+            {
+              "elapsed_s": 80100.0,
+              "estimated_top_oil_temperature_c": 69.99098275537538
+            },
+            {
+              "elapsed_s": 81000.0,
+              "estimated_top_oil_temperature_c": 69.99170373444778
+            },
+            {
+              "elapsed_s": 81900.0,
+              "estimated_top_oil_temperature_c": 69.9923670672164
+            },
+            {
+              "elapsed_s": 82800.0,
+              "estimated_top_oil_temperature_c": 69.99297736282521
+            },
+            {
+              "elapsed_s": 83700.0,
+              "estimated_top_oil_temperature_c": 69.99353886189137
+            },
+            {
+              "elapsed_s": 84600.0,
+              "estimated_top_oil_temperature_c": 69.994055465971
+            },
+            {
+              "elapsed_s": 85500.0,
+              "estimated_top_oil_temperature_c": 69.99453076466905
+            },
+            {
+              "elapsed_s": 86400.0,
+              "estimated_top_oil_temperature_c": 69.99496806058146
+            }
+          ],
+          "final_top_oil_temperature_c": 69.99496806058146,
+          "peak_top_oil_temperature_c": 69.99496806058146,
+          "limit_crossing": {
+            "status": "unavailable",
+            "time_s": null,
+            "reasons": [
+              "configured_top_oil_limit_missing"
+            ]
+          }
+        },
+        "final_temperature_difference_c": -68.94873833045092
+      }
+    },
+    "errors": {
+      "missing_model_parameters": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          }
+        },
+        "http_status": 409,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "missing_model_parameters",
+            "message": "Required thermal parameters unavailable",
+            "reasons": [
+              "thermal_parameters.rated_top_oil_rise_c",
+              "thermal_parameters.oil_time_constant_min",
+              "thermal_parameters.loss_ratio",
+              "thermal_parameters.oil_exponent"
+            ]
+          }
+        }
+      },
+      "asset_not_found": {
+        "path": "/api/v1/assets/what-if-unregistered-994bb035b145458495d0c65e7fa16a89/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          }
+        },
+        "http_status": 404,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "asset_not_found",
+            "message": "Asset not found",
+            "reasons": []
+          }
+        }
+      },
+      "state_not_found": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          },
+          "state_ref": "1f034b03-d2c6-4798-a02a-45768a93bba5"
+        },
+        "http_status": 404,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "state_not_found",
+            "message": "State reference not found",
+            "reasons": []
+          }
+        }
+      },
+      "invalid_request": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "baseline": {
+            "duration_s": true,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          }
+        },
+        "http_status": 422,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "invalid_request",
+            "message": "Request does not match what-if-request-1.0.0",
+            "reasons": []
+          }
+        }
+      },
+      "incompatible_state_identity": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "other-run",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          },
+          "state_ref": "219e256c-1ba8-4c80-9bc4-4c50ede43dea"
+        },
+        "http_status": 409,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "incompatible_state_identity",
+            "message": "State reference belongs to a different asset/stream",
+            "reasons": []
+          }
+        }
+      },
+      "state_unavailable": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "not-started-run",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          }
+        },
+        "http_status": 409,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "state_unavailable",
+            "message": "No committed forward state exists for this stream",
+            "reasons": []
+          }
+        }
+      },
+      "ineligible_state": {
+        "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/what-if",
+        "request": {
+          "schema_version": "what-if-request-1.0.0",
+          "source": "simulator",
+          "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+          "baseline": {
+            "duration_s": 86400,
+            "thermal_load_pu": 2,
+            "ambient_temperature_c": 30
+          },
+          "reduced_load": {
+            "duration_s": 86400,
+            "thermal_load_pu": 1,
+            "ambient_temperature_c": 30
+          }
+        },
+        "http_status": 409,
+        "response": {
+          "detail": {
+            "schema_version": "what-if-error-1.0.0",
+            "code": "ineligible_state",
+            "message": "A valid initialized thermal state is required",
+            "reasons": [
+              "measurement_gap_exceeds_300_s"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "checks": {
+    "worker_state_results_jobs_unchanged_by_forecast": true,
+    "shared_initial_state": true,
+    "analytic_crossing": true,
+    "snapshot_retained_after_advancement": true,
+    "missing_limit_is_null_unavailable": true,
+    "versioned_errors": true
+  },
+  "model_handover": {
+    "scope": "Actual dedicated test API current-model reset, not a production 1.0.1 upgrade; token omitted",
+    "method": "POST",
+    "path": "/api/v1/assets/what-if-test-b3a89d5535fa463b8596e00965ef2d5c/model-handovers",
+    "request": {
+      "schema_version": "model-control-1.0.0",
+      "expected_version": 0,
+      "idempotency_key": "8b284f4d-b33a-41a6-b6e4-45e74a4be66d",
+      "source": "simulator",
+      "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+      "configuration_version": 4,
+      "model_version": "stored-reading-top-oil-1.0.2",
+      "reason": "Synthetic isolated current-model reset verification; not a production handover"
+    },
+    "accepted": {
+      "status": 201,
+      "response": {
+        "schema_version": "incident-control-result-1.0.0",
+        "control_version": 1,
+        "detector_epoch": "61dfdc4b-4844-4b3d-9dca-f4719f74f07a",
+        "previous_epoch": null,
+        "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+        "source": "simulator",
+        "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+        "configuration_version": 4,
+        "model_version": "stored-reading-top-oil-1.0.2",
+        "detector_version": "sustained-threshold-1.0.1",
+        "parameter_version": "asset-config-4:2d4fe412407a6cd80cd8c88691fa1fe86bb4eb93a26cdb2fcf71a2362c4f2724",
+        "policy_fingerprint": "dd4e8c74b8183ef4d0bca842c87e16719dabf6964710bcd26c68b8bb2c3e42fe",
+        "actor_ref": "3508eb6c-0144-47f1-af68-d266854c2ffa",
+        "boundary_measurement_time": "2026-10-10T10:37:00.448093Z"
+      }
+    },
+    "identical_retry": {
+      "status": 200,
+      "response": {
+        "schema_version": "incident-control-result-1.0.0",
+        "control_version": 1,
+        "detector_epoch": "61dfdc4b-4844-4b3d-9dca-f4719f74f07a",
+        "previous_epoch": null,
+        "asset_id": "what-if-test-b3a89d5535fa463b8596e00965ef2d5c",
+        "source": "simulator",
+        "run_id": "what-if-0c21752c66394571957f5878a4e6985f",
+        "configuration_version": 4,
+        "model_version": "stored-reading-top-oil-1.0.2",
+        "detector_version": "sustained-threshold-1.0.1",
+        "parameter_version": "asset-config-4:2d4fe412407a6cd80cd8c88691fa1fe86bb4eb93a26cdb2fcf71a2362c4f2724",
+        "policy_fingerprint": "dd4e8c74b8183ef4d0bca842c87e16719dabf6964710bcd26c68b8bb2c3e42fe",
+        "actor_ref": "3508eb6c-0144-47f1-af68-d266854c2ffa",
+        "boundary_measurement_time": "2026-10-10T10:37:00.448093Z"
+      }
+    },
+    "unauthenticated": {
+      "status": 401,
+      "response": {
+        "schema_version": "incident-error-1.0.0",
+        "code": "unauthenticated",
+        "message": "Valid bearer credential required",
+        "current_version": null
+      }
+    },
+    "conflicting_retry": {
+      "status": 409,
+      "response": {
+        "schema_version": "incident-error-1.0.0",
+        "code": "idempotency_conflict",
+        "message": "Idempotency key reused with different request or actor",
+        "current_version": null
+      }
+    }
+  }
+}

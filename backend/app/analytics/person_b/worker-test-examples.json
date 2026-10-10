@@ -285,7 +285,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:00:00Z",
@@ -307,7 +307,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 1,
@@ -527,7 +527,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:00:00Z",
@@ -740,7 +740,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b"
           },
           "last_measurement_time": "2026-01-01T00:01:00Z",
@@ -762,7 +762,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:0b165c9683fae515973b523f6ed53f41e1113b450fd3f57ab3f69517c2dfef4b",
           "reading_identity": {
             "reading_id": 2,
@@ -1160,7 +1160,7 @@
               "run_id": "personb-numerical-test-v1"
             },
             "configuration_version": 1,
-            "model_version": "stored-reading-top-oil-1.0.1",
+            "model_version": "stored-reading-top-oil-1.0.2",
             "parameter_version": "asset-config-1:d9df8074c5e30d8ffca761d7ae542e63ca7c6141264be762c98295b575cdd5f4"
           },
           "last_measurement_time": "2026-01-01T00:02:00Z",
@@ -1182,7 +1182,7 @@
         "metadata": {
           "result_schema_version": "stored-reading-result-1.1.0",
           "model_id": "powernxt-electrical-top-oil",
-          "model_version": "stored-reading-top-oil-1.0.1",
+          "model_version": "stored-reading-top-oil-1.0.2",
           "parameter_version": "asset-config-1:d9df8074c5e30d8ffca761d7ae542e63ca7c6141264be762c98295b575cdd5f4",
           "reading_identity": {
             "reading_id": 3,

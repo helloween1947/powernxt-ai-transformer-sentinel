@@ -1,34 +1,19 @@
-"""Shared normalized-channel quality policy; no legacy score/detector dependency."""
+"""Extracted Person B channel normalization; no legacy adapter/API."""
 import math
-from .core import _timestamp
-from .core import finite
-
-CHANNELS = (
-    "voltage_r_v", "voltage_y_v", "voltage_b_v",
-    "current_r_a", "current_y_a", "current_b_a",
-    "oil_temperature_c", "ambient_temperature_c", "oil_level_pct",
-)
-THERMAL_KEYS = ("rated_top_oil_rise_c", "oil_time_constant_min", "loss_ratio", "oil_exponent")
+from .core import finite, _timestamp
+CHANNELS = ('voltage_r_v', 'voltage_y_v', 'voltage_b_v', 'current_r_a', 'current_y_a', 'current_b_a', 'oil_temperature_c', 'ambient_temperature_c', 'oil_level_pct')
+THERMAL_KEYS = ('rated_top_oil_rise_c', 'oil_time_constant_min', 'loss_ratio', 'oil_exponent')
 
 def _normalize(reading, quality_flags, config):
-    if not isinstance(reading, dict) or not isinstance(quality_flags, dict):
-        raise ValueError("Reading and quality flags must be maps")
-    if set(quality_flags) - set(CHANNELS) - {"stale", "clamped"}:
-        raise ValueError("Unknown quality flag channel")
-    for key in ("stale", "clamped"):
-        if key in quality_flags and type(quality_flags[key]) is not bool:
-            raise ValueError(f"{key} must be boolean")
     if reading.get("schema_version") != "1.0.0":
         raise ValueError("Unsupported telemetry schema")
     source, run = reading.get("source"), reading.get("run_id")
     if source not in ("device", "simulator", "file_replay"):
         raise ValueError("Unsupported telemetry source")
-    if not isinstance(reading.get("asset_id"), str) or not reading["asset_id"]:
-        raise ValueError("Asset identity must be a nonempty string")
-    if (source == "device" and run is not None) or (source != "device" and (not isinstance(run, str) or not run)):
+    if (source == "device" and run is not None) or (source != "device" and not run):
         raise ValueError("Invalid source/run_id pairing")
     stamp = _timestamp(reading["timestamp"])
-    quality = reading.get("measurement_quality", {})
+    quality = reading.get("measurement_quality") or {}
     values = reading["measurements"]
     if not isinstance(values, dict) or not isinstance(quality, dict) or not isinstance(quality_flags, dict):
         raise ValueError("Measurements and quality must be maps")
