@@ -1,5 +1,6 @@
 """Counterexamples found in the Person B source audit."""
 from dataclasses import replace
+from copy import deepcopy
 import json
 
 import pytest
@@ -61,6 +62,37 @@ def test_large_but_representable_loading_and_imbalance():
     assert output["electrical_metrics"]["phase_loading_pct"] == [100, 50, 0]
     assert output["electrical_metrics"]["current_magnitude_imbalance_pct"] == 100
     json.dumps(output, allow_nan=False)
+
+
+@pytest.mark.parametrize("case", ["balanced_huge_current", "smallest_positive_rating"])
+def test_windows_audit_boundary_preserves_computable_metrics(case):
+    """Exact F3 cases: finite output does not imply physically plausible ratings."""
+    if case == "balanced_huge_current":
+        cfg = bound_config(rated_current_a=1e308)
+        row = with_measurements(current_r_a=1e308, current_y_a=1e308, current_b_a=1e308)
+    else:
+        cfg, row = bound_config(rated_kva=5e-324), record()
+    before = deepcopy((row, cfg))
+    output = process_stored_reading(row, cfg)
+    metrics = output["electrical_metrics"]
+    assert metrics["phase_loading_pct"] == [100, 100, 100]
+    assert metrics["thermal_load_pu"] == 1
+    assert metrics["current_magnitude_imbalance_pct"] == 0
+    assert metrics["capacity_loading_pct"] is None
+    availability = output["execution_status"]["availability"]
+    for key in ("phase_loading_pct", "max_phase_loading_pct", "thermal_load_pu", "current_magnitude_imbalance_pct"):
+        assert availability[f"electrical_metrics.{key}"] == {"status": "available", "reasons": []}
+    assert availability["electrical_metrics.capacity_loading_pct"]["status"] == "unavailable"
+    reason = availability["electrical_metrics.capacity_loading_pct"]["reasons"]
+    assert "electrical_arithmetic_unavailable" in reason
+    if case == "balanced_huge_current":
+        assert metrics["apparent_power_kva"] is None
+        assert availability["electrical_metrics.apparent_power_kva"] == {
+            "status": "unavailable", "reasons": ["electrical_arithmetic_unavailable"]}
+    else:
+        assert metrics["apparent_power_kva"] == pytest.approx(1000.0688157821942)
+    json.dumps(output, allow_nan=False)
+    assert (row, cfg) == before
 
 
 def test_zero_elapsed_does_not_compute_an_unneeded_overflowing_target():
