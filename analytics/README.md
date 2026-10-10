@@ -44,3 +44,14 @@ def process_reading(
 ```
 
 *Note: This interface is marked as proposed until Person B reviews and confirms the contract.*
+
+## Person B reviewed implementation and adoption
+
+The [Person B component reference](person-b-component-reference.md) preserves the
+reviewed callable interfaces and separates them from the historical roadmap above.
+See [10 October alignment review](docs/person-b-alignment-review-20261010.md),
+[exact model1.0.2 adoption handoff](docs/model-1.0.2-adoption-handoff.md) and
+[source/hash manifest](docs/model-1.0.2-adoption-manifest.json). B recommends
+recorded cold start and version-specific historical What-if computation; A owns
+final adoption/API decisions. No model adoption, deployment or teammate approval
+is implied by these references. PR24 already includes PR17 lineage.

@@ -1,0 +1,76 @@
+{
+  "schema_version": "person-b-adoption-manifest-1.0.0",
+  "computation_source_commit": "f668a21dcf88605d7fcff4996282185bc796740c",
+  "model_id": "powernxt-electrical-top-oil",
+  "model_version": "stored-reading-top-oil-1.0.2",
+  "state_schema_version": "stored-reading-state-1.0.0",
+  "result_schema_version": "stored-reading-result-1.1.0",
+  "detector_version": "sustained-threshold-1.0.1",
+  "forecast_version": "healthy-top-oil-scenarios-1.0.1",
+  "current_reviewed_heads": {
+    "main": "cbdd7c47f8cf5aa66d0277f5fa96d69bfb01ddda",
+    "persona_incident_registry": "2e934c85098453db7342ea6ade570759ef4b9161",
+    "persona_detector_handoff_review": "cf2eb252a5e405d4991e82b86db13c49822977fb",
+    "persona_what_if_api": "20ccaddcecd55695b79d257a02f25a68ec691462",
+    "personb_detector_orchestration_before_alignment_commit": "f668a21dcf88605d7fcff4996282185bc796740c"
+  },
+  "source_files": [
+    {
+      "path": "analytics/worker.py",
+      "sha256": "a5e2c3d1e8916941ac619fb0b61740a8ad4da5a0a5aaa99801af452e52e223d9"
+    },
+    {
+      "path": "analytics/normalization.py",
+      "sha256": "2dffac316ea00b41caebe6e16a4175319128313a0b7dabc721a9b8363b93595e"
+    },
+    {
+      "path": "analytics/validation.py",
+      "sha256": "3fa213a186c87e6c78ef49be0cf3ba130a6a7620b78af82111cdda1efd964501"
+    },
+    {
+      "path": "analytics/transformer_twin/model.py",
+      "sha256": "2436c8636ddaaa8846f5d2b93e8cb89d6b5040012410ec1923b8650e2d17b06a"
+    },
+    {
+      "path": "analytics/transformer_twin/engine.py",
+      "sha256": "20d4ef3b5258546247de8db9bc0dd395002587f0e838001b5f95cda6cd07dd6b"
+    },
+    {
+      "path": "analytics/transformer_twin/__init__.py",
+      "sha256": "0c91e8f4f6c1f9349e0eb6b2af7ff785bc273168f46a955920de3aabb19424b8"
+    },
+    {
+      "path": "analytics/persistence.py",
+      "sha256": "e6e2698ba77c495975beb771e69706dbb4cdc530c1a3702edf56b5932b48dc32"
+    },
+    {
+      "path": "analytics/incident_orchestration.py",
+      "sha256": "c202d703d319cab92c1ae9cd16b8b71f804f5c9a0381790e446e4832b6420dea"
+    },
+    {
+      "path": "analytics/scenarios.py",
+      "sha256": "40d0b0d7aa4335f322e832ec087f15e047a7648f041b0cf987b088ac3e0302cd"
+    },
+    {
+      "path": "analytics/schemas/worker-input.schema.json",
+      "sha256": "4ecb2e2b1d5dff3afae59cde0047e7a19af565cbee6306775ce499336e21c4c9"
+    },
+    {
+      "path": "analytics/schemas/normalized-input.schema.json",
+      "sha256": "4b83aa0ccefc08816f2eb775535be75f07fdd240e9cfb331e6b72a13d7e985ca"
+    },
+    {
+      "path": "analytics/schemas/worker-output.schema.json",
+      "sha256": "b418ea0c5cff3b601dca3e8337372918ce1b63076b65ec5baf52b3b4d1c4492f"
+    },
+    {
+      "path": "analytics/examples/worker-test-examples.json",
+      "sha256": "45a52c617c65e3628fdb9a0df6cee46b5b3ddce7a8f6b31846f59378ceb02fda"
+    },
+    {
+      "path": "analytics/contracts/incident-proposal.schema.json",
+      "sha256": "45d6d27f25d6df5ca0660213e41a487f21971b84da21ebf2733debbd79c10cb8"
+    }
+  ],
+  "scope": "Exact source references, not a deployment manifest or automatic backend copy. A reconciles adapted imports/core extraction and all provenance together; PR24 includes PR17 lineage."
+}

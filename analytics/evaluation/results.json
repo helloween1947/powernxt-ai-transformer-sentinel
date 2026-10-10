@@ -1,0 +1,116 @@
+{
+  "scope": "Synthetic consistency checks only; no timestamped real thermal data supplied.",
+  "plant": "5 s Euler integration; same nominal thermal assumptions; 0.35 C Gaussian sensor noise; seed 42; 60 s samples; fault at 120-300 min.",
+  "limitations": "Shared model family makes this a consistency test, not independent field validation or fault-classification accuracy. Cooling fault latency includes physical heating time.",
+  "cases": [
+    {
+      "case": "normal",
+      "samples": 601,
+      "oil_residual_rmse_c": 0.3514806280480231,
+      "expected_alert": null,
+      "detected": null,
+      "latency_from_injection_s": null,
+      "normal_false_openings": 0,
+      "events": []
+    },
+    {
+      "case": "overload",
+      "samples": 601,
+      "oil_residual_rmse_c": 0.3515425304003384,
+      "expected_alert": "overload",
+      "detected": true,
+      "latency_from_injection_s": 180,
+      "normal_false_openings": null,
+      "events": [
+        {
+          "minute": 123,
+          "type": "overload",
+          "lifecycle": "opened"
+        },
+        {
+          "minute": 303,
+          "type": "overload",
+          "lifecycle": "resolved"
+        }
+      ]
+    },
+    {
+      "case": "imbalance",
+      "samples": 601,
+      "oil_residual_rmse_c": 0.35149365865897914,
+      "expected_alert": "current_imbalance",
+      "detected": true,
+      "latency_from_injection_s": 180,
+      "normal_false_openings": null,
+      "events": [
+        {
+          "minute": 123,
+          "type": "overload",
+          "lifecycle": "opened"
+        },
+        {
+          "minute": 123,
+          "type": "current_imbalance",
+          "lifecycle": "opened"
+        },
+        {
+          "minute": 303,
+          "type": "overload",
+          "lifecycle": "resolved"
+        },
+        {
+          "minute": 303,
+          "type": "current_imbalance",
+          "lifecycle": "resolved"
+        }
+      ]
+    },
+    {
+      "case": "reduced_cooling",
+      "samples": 601,
+      "oil_residual_rmse_c": 5.722601841755314,
+      "expected_alert": "unexpected_heating",
+      "detected": true,
+      "latency_from_injection_s": 7560,
+      "normal_false_openings": null,
+      "events": [
+        {
+          "minute": 246,
+          "type": "unexpected_heating",
+          "lifecycle": "opened"
+        },
+        {
+          "minute": 499,
+          "type": "unexpected_heating",
+          "lifecycle": "resolved"
+        }
+      ]
+    },
+    {
+      "case": "sensor_failure",
+      "samples": 601,
+      "oil_residual_rmse_c": 0.34224289163345134,
+      "expected_alert": "data_unavailable",
+      "detected": true,
+      "latency_from_injection_s": 180,
+      "normal_false_openings": null,
+      "events": [
+        {
+          "minute": 123,
+          "type": "data_unavailable",
+          "lifecycle": "opened"
+        },
+        {
+          "minute": 303,
+          "type": "data_unavailable",
+          "lifecycle": "resolved"
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "normal_rmse_below_0_5_c": true,
+    "normal_no_false_openings": true,
+    "all_injected_cases_detected": true
+  }
+}
