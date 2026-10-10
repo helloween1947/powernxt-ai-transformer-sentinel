@@ -2,6 +2,24 @@
 
 **Owner**: Person B (Model Engineer / Data Scientist)
 
+## Adopted runtime versus research roadmap
+
+Main's backend uses the vendored conservative model described by the
+[result contract](../docs/contracts/analytics-contract.md) and
+[worker policy](../docs/analytics-worker.md): magnitude electrical metrics and
+simplified top-oil prediction/residual, with explicit unavailable quantities.
+The adopted entry point is compute_analytics, not the historical process_reading
+proposal below. Assumed coefficients and synthetic demonstrations do not certify
+physical calibration, fault probability or IEEE standards compliance.
+
+Model1.0.2 and the full B audit/planner lineage remain separately reviewed branch
+work until A/B record adoption and state-namespace/handover policy. Incident
+contract artifacts on main do not mean incident storage or a publisher is deployed.
+See the [D alignment follow-up](../docs/persond-team-alignment-followup.md).
+
+The following broader scope and function signature are a research roadmap and
+historical proposal; they are not implemented capability claims.
+
 ## Scope & Responsibilities
 - 3-Phase electrical physical models (symmetrical components, power factor, unbalance).
 - Transformer thermal models (top-oil temperature estimation, winding hot-spot dynamics, thermal residuals).

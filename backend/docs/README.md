@@ -16,3 +16,7 @@ This directory contains technical notes, architecture design records, and intern
 The [durable worker](../../docs/analytics-worker.md) and [versioned result APIs](../../docs/contracts/analytics-contract.md) extend telemetry's persisted job status. Processing runs in a separate opt-in Compose service, not API startup.
 
 - [Canonical incidents, trusted credentials, API examples and isolated verification](incidents.md)
+[Initial What-if API contract](../../docs/what-if-api-contract.md) and
+[Person C handoff](../../docs/person-c-what-if-handoff.md): conditional top-oil
+scenario calculation from a server-owned immutable capture, with no worker/job
+advancement, cooling intervention or health/fault claims.

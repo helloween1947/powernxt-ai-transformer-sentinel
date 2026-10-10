@@ -8,6 +8,7 @@ from backend.app.api.health import router as health_router
 from backend.app.api.maintenance import router as maintenance_router
 from backend.app.api.telemetry import router as telemetry_router
 from backend.app.api.incidents import router as incidents_router
+from backend.app.api.what_if import router as what_if_router
 
 api_router = APIRouter()
 for router in (
@@ -17,6 +18,7 @@ for router in (
     analytics_router,
     maintenance_router,
     incidents_router,
+    what_if_router,
 ):
     api_router.include_router(router)
 
@@ -27,4 +29,6 @@ __all__ = [
     "health_router",
     "maintenance_router",
     "telemetry_router",
+    "what_if_router",
+    "incidents_router",
 ]

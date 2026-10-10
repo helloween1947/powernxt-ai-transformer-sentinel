@@ -148,6 +148,6 @@ def test_upgrade_sample_records_history_and_metadata(registry,asset,base):
     with engine.begin() as conn:
         config.attributes['connection']=conn
         command.downgrade(config,base); command.upgrade(config,'head'); command.check(config)
-        assert conn.scalar(text('SELECT version_num FROM alembic_version'))=='d005_incident_tasks'
+        assert conn.scalar(text('SELECT version_num FROM alembic_version'))=='d006_combined_integration'
     assert client.get(f"{ROOT}/{task['id']}").json()==task
     assert client.get(f"{ROOT}/{task['id']}/history").json()==history

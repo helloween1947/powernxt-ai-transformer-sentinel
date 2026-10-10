@@ -1,10 +1,25 @@
 # Domain Event Publication & Recovery Contract
 
-**Status**: Baseline Specification (Managed by Person A)  
+**Status**: Proposed generic specification (Managed by Person A); not implemented on main
 **Consumers**: Person C (Frontend Live Updates), Person D (Integration Pipelines)
 
 ## 1. Overview
-This contract specifies notifications and domain events emitted across WebSocket streaming channels and message queues when noteworthy operational thresholds, state transitions, or alerts occur.
+This historical specification proposes notifications across WebSocket streaming
+channels and queues. Main does not implement these transports or the global
+/api/v1/events recovery endpoint. The envelope/types below are proposals, not
+promises from a running server.
+
+A's separate registry branch implements authenticated per-incident event history;
+its newer A002 branch adds a durable delivery checkpoint/dispatcher with a supplied
+transport callback. It does not configure a shared queue/WebSocket transport.
+Consumers must use that branch's exact incident API/delivery contract after review
+and deployment, not assume this generic endpoint is an alias. Delivery is at least
+once: deduplicate stable event_id and apply incident_version monotonically per
+incident. For journal polling retain the highest observed incident-version cursor;
+measurement time alone is not a safe mutation/reconnection checkpoint.
+
+This status clarification does not change any wire schema or adopt an undeployed
+transport. A/C/D must review any future global feed separately.
 
 ## 2. Event Envelope Schema
 
@@ -28,7 +43,7 @@ This contract specifies notifications and domain events emitted across WebSocket
 
 ## 4. Reconnection & REST-Based Catch-Up Recovery
 
-When clients (such as Person C's dashboard) disconnect due to network interruption:
+Proposed future behavior, not an executable main workflow: when clients disconnect:
 1. The WebSocket client preserves the timestamp or `event_id` of the last successfully received message.
 2. Upon reconnecting, the client queries the REST catch-up recovery endpoint:
    ```http

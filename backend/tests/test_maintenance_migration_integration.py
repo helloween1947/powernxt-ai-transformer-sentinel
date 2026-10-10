@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 
-HEAD = "d005_incident_tasks"
+HEAD = "d006_combined_integration"
 
 
 def rows(connection, table):
