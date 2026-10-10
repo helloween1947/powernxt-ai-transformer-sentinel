@@ -3,7 +3,7 @@ import { createIncidentClient } from '../services/incidentApi.js';
 import { createMaintenanceClient } from '../services/maintenanceApi.js';
 import { severityColors, conditionColors, monitoringColors } from '../services/incidentAdapter.js';
 
-export default function BackendIncidents({ operator, onOpenMaintenanceTask, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
+export default function BackendIncidents({ focusedContext = false, operator, onOpenMaintenanceTask, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
   const incidentClient = useMemo(() => createIncidentClient({ baseUrl }), [baseUrl]);
   const maintenanceClient = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
 
@@ -222,14 +222,14 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask, base
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px', margin: '15px 0' }}>
         <div>
-          <button disabled={busy} type="button" onClick={loadAssets} style={{ marginBottom: '8px' }}>
+          <button disabled={busy} type="button" onClick={loadAssets} hidden={focusedContext} style={{ marginBottom: '8px' }}>
             {assetsLoaded ? 'Refresh asset registry' : 'Load registered transformers'}
           </button>
           <label>
             Transformer
             <select
               value={assetId}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setAssetId(e.target.value);
                 setIncidentsLoaded(false);
@@ -251,7 +251,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask, base
           Stream source
           <select
             value={source}
-            disabled={busy}
+            disabled={busy || focusedContext}
             onChange={e => {
               setSource(e.target.value);
               if (e.target.value === 'device') setRunId('');
@@ -272,7 +272,7 @@ export default function BackendIncidents({ operator, onOpenMaintenanceTask, base
               type="text"
               placeholder="Enter run ID"
               value={runId}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setRunId(e.target.value);
                 setIncidentsLoaded(false);

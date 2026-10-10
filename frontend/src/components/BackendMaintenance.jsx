@@ -165,9 +165,9 @@ function TaskEditor({ task, client, actor, token, canWrite = true, onHistory, on
   );
 }
 
-export default function BackendMaintenance({ operator, initialTaskId = null, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '' }) {
+export default function BackendMaintenance({ focusedContext = false, operator, initialTaskId = null, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '' }) {
   const client = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
-  const [mode, setMode] = useState(() => initialTaskId ? 'analytics' : 'sample');
+  const [mode, setMode] = useState(() => initialTaskId || focusedContext ? 'analytics' : 'sample');
   const [assets, setAssets] = useState(emptyPage);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [assetId, setAssetId] = useState(selectedAssetId);
@@ -354,7 +354,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null, bas
       {notice && <p role="status" className="success">{notice}</p>}
       {busy && <p role="status">Loading maintenance data…</p>}
 
-      <button disabled={busy} onClick={() => loadAssets()}>
+      <button disabled={busy} onClick={() => loadAssets()} hidden={focusedContext}>
         {assetsLoaded ? 'Refresh registered assets' : 'Load registered assets'}
       </button>
 
@@ -370,7 +370,7 @@ export default function BackendMaintenance({ operator, initialTaskId = null, bas
         <select
           aria-label="Maintenance asset"
           value={assetId}
-          disabled={busy}
+          disabled={busy || focusedContext}
           onChange={event => {
             setAssetId(event.target.value);
             setPage(emptyPage());

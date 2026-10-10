@@ -8,7 +8,7 @@ const scenarioSeries = [
   { key: 'alternative', label: 'Reduced load forecast', color: '#0e7490', dashed: true },
 ];
 
-export default function BackendWhatIf({ baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
+export default function BackendWhatIf({ focusedContext = false, baseUrl = import.meta.env.VITE_API_BASE_URL, selectedAssetId = '', selectedSource = 'device', selectedRunId = '' }) {
   const whatIfClient = useMemo(() => createWhatIfClient({ baseUrl }), [baseUrl]);
   const assetClient = useMemo(() => createMaintenanceClient({ baseUrl }), [baseUrl]);
 
@@ -133,14 +133,14 @@ export default function BackendWhatIf({ baseUrl = import.meta.env.VITE_API_BASE_
       <form onSubmit={runComparison}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px' }}>
           <div>
-            <button disabled={busy} type="button" onClick={loadAssets} style={{ marginBottom: '8px' }}>
+            <button disabled={busy} type="button" onClick={loadAssets} hidden={focusedContext} style={{ marginBottom: '8px' }}>
               {assetsLoaded ? 'Refresh asset registry' : 'Load registered transformers'}
             </button>
             <label>
               Transformer
               <select
                 value={assetId}
-                disabled={busy}
+                disabled={busy || focusedContext}
                 onChange={e => {
                   setAssetId(e.target.value);
                   setResult(null);
@@ -162,7 +162,7 @@ export default function BackendWhatIf({ baseUrl = import.meta.env.VITE_API_BASE_
             Stream source
             <select
               value={source}
-              disabled={busy}
+              disabled={busy || focusedContext}
               onChange={e => {
                 setSource(e.target.value);
                 if (e.target.value === 'device') setRunId('');
@@ -183,7 +183,7 @@ export default function BackendWhatIf({ baseUrl = import.meta.env.VITE_API_BASE_
                 type="text"
                 placeholder="Enter run ID"
                 value={runId}
-                disabled={busy}
+                disabled={busy || focusedContext}
                 onChange={e => {
                   setRunId(e.target.value);
                   setResult(null);

@@ -1,0 +1,67 @@
+# Standalone: never combine with compose.yaml or target development services.
+x-runtime: &runtime
+  image: ${COMPOSE_PROJECT_NAME:?Set the owned project}-backend:single
+  build:
+    context: ..
+    dockerfile: backend/Dockerfile
+  environment:
+    DATABASE_URL: postgresql+psycopg://sentinel:${SINGLE_DB_PASSWORD:?Set a private local password}@db:5432/single_transformer_app_test
+    ENVIRONMENT: test
+    CORS_ORIGINS: '["http://127.0.0.1:${SINGLE_UI_PORT:-18300}","http://localhost:${SINGLE_UI_PORT:-18300}"]'
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: ${SINGLE_DB_PASSWORD:?Set a private local password}
+      POSTGRES_DB: single_transformer_app_test
+    ports: ["127.0.0.1:${SINGLE_DB_PORT:-18302}:5432"]
+    volumes: ["application_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U sentinel -d single_transformer_app_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  migrate:
+    <<: *runtime
+    command: [alembic, -c, backend/alembic.ini, upgrade, head]
+    depends_on:
+      db: {condition: service_healthy}
+  backend:
+    <<: *runtime
+    ports: ["127.0.0.1:${SINGLE_API_PORT:-18301}:8000"]
+    volumes:
+      - .:/workspace/integration:ro
+      - ../data/generated/single-transformer:/evidence
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, http://localhost:8000/health/ready]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  worker:
+    <<: *runtime
+    command: [python, -m, backend.app.workers]
+    restart: unless-stopped
+    stop_grace_period: 70s
+    depends_on:
+      backend: {condition: service_healthy}
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE_URL: http://127.0.0.1:${SINGLE_API_PORT:-18301}
+        VITE_FOCUSED_ASSET_ID: powernxt-single-transformer
+        VITE_DEFAULT_RUN_ID: single-transformer-demo-v1
+    ports: ["127.0.0.1:${SINGLE_UI_PORT:-18300}:80"]
+    healthcheck:
+      test: [CMD, wget, --quiet, --spider, http://127.0.0.1/health]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      backend: {condition: service_healthy}
+volumes:
+  application_data:
