@@ -1,0 +1,58 @@
+# Standalone isolated Phase 5 rehearsal stack.
+# Uses unique container names, isolated ports (55435, 8802) and volume sentinel_phase5_rehearsal_data.
+# Never connects to development database or development ports (5433, 8000).
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: sentinel-phase5-rehearsal-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinel_phase5_pw
+      POSTGRES_DB: sentinel_phase5_db
+    ports:
+      - "127.0.0.1:55435:5432"
+    volumes:
+      - phase5_rehearsal_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinel -d sentinel_phase5_db"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    image: sentinel-backend:phase5-candidate-42db6aa
+    container_name: sentinel-phase5-rehearsal-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:sentinel_phase5_pw@db:5432/sentinel_phase5_db
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
+      CORS_ORIGINS: '["http://localhost:3000","http://localhost:3001","http://localhost:5173","http://127.0.0.1:5173"]'
+    ports:
+      - "127.0.0.1:8802:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  worker:
+    image: sentinel-backend:phase5-candidate-42db6aa
+    container_name: sentinel-phase5-rehearsal-worker
+    command: ["python", "-m", "backend.app.workers"]
+    restart: unless-stopped
+    stop_grace_period: 70s
+    environment:
+      DATABASE_URL: postgresql+psycopg://sentinel:sentinel_phase5_pw@db:5432/sentinel_phase5_db
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  phase5_rehearsal_data:
+    name: sentinel_phase5_rehearsal_data
