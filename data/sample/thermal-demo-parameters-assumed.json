@@ -1,0 +1,14 @@
+{
+  "thermal_parameters": {
+    "rated_top_oil_rise_c": 40,
+    "oil_time_constant_min": 180,
+    "loss_ratio": 5,
+    "oil_exponent": 0.8
+  },
+  "parameter_provenance": {
+    "thermal_parameters.rated_top_oil_rise_c": "assumed",
+    "thermal_parameters.oil_time_constant_min": "assumed",
+    "thermal_parameters.loss_ratio": "assumed",
+    "thermal_parameters.oil_exponent": "assumed"
+  }
+}
