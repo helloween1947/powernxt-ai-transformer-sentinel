@@ -449,7 +449,7 @@ def test_upgrade_preserves_existing_worker_data_and_matches_metadata(configured)
         command.check(cfg)
         assert (
             db.scalar(text("SELECT version_num FROM alembic_version"))
-            == "w001_what_if_snapshots"
+            == "d006_combined_integration"
         )
     assert rows(configured[1]) == before
     assert post(configured).status_code == 200

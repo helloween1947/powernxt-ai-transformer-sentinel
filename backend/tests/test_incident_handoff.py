@@ -192,9 +192,11 @@ def test_populated_a001_upgrade_backfills_pending_and_preserves_records(monitore
             config.attributes["connection"] = db
             command.upgrade(config, "a001_incident_registry")
             for table in tables:
+                names = db.execute(text("SELECT column_name FROM information_schema.columns WHERE table_schema=:schema AND table_name=:table ORDER BY ordinal_position"), {"schema":target_schema,"table":table}).scalars().all()
+                columns = ','.join('"'+n+'"' for n in names)
                 db.execute(
                     text(
-                        f'INSERT INTO "{table}" SELECT * FROM "{source_schema}"."{table}"'
+                        f'INSERT INTO "{table}" ({columns}) SELECT {columns} FROM "{source_schema}"."{table}"'
                     )
                 )
 
@@ -211,7 +213,12 @@ def test_populated_a001_upgrade_backfills_pending_and_preserves_records(monitore
             before = records()
             command.upgrade(config, "head")
             command.check(config)
-            assert records() == before
+            after = records()
+            for table, saved in before.items():
+                assert len(after[table]) == len(saved)
+                for old, new in zip(saved, after[table]):
+                    assert all(new[key] == value for key, value in old.items())
+                    assert all(value is None for key, value in new.items() if key not in old)
             assert db.scalar(text("SELECT count(*) FROM incident_deliveries")) == 2
             assert (
                 db.scalar(
@@ -223,7 +230,7 @@ def test_populated_a001_upgrade_backfills_pending_and_preserves_records(monitore
             )
             assert (
                 db.scalar(text("SELECT version_num FROM alembic_version"))
-                == "a002_incident_outbox"
+                == "d006_combined_integration"
             )
     finally:
         engine.dispose()
