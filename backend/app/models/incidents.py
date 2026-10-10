@@ -205,7 +205,7 @@ class IncidentEvidence(Base):
 
 
 class IncidentEvent(Base):
-    """Durable event/outbox records. No delivery transport is claimed."""
+    """Immutable history snapshots, also referenced by the delivery outbox."""
 
     __tablename__ = "incident_events"
     __table_args__ = (
@@ -245,3 +245,23 @@ class IncidentOperation(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+
+class IncidentDelivery(Base):
+    """Mutable delivery checkpoint; never edits the immutable event snapshot."""
+
+    __tablename__ = "incident_deliveries"
+    __table_args__ = (
+        CheckConstraint("attempts >= 0", name="ck_incident_delivery_attempts"),
+        CheckConstraint(
+            "(claim_token IS NULL) = (lease_until IS NULL)",
+            name="ck_incident_delivery_lease",
+        ),
+    )
+    event_id: Mapped[UUID] = mapped_column(
+        ForeignKey("incident_events.event_id", ondelete="RESTRICT"), primary_key=True
+    )
+    claim_token: Mapped[UUID | None] = mapped_column(Uuid)
+    lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    attempts: Mapped[int] = mapped_column(Integer, server_default="0")
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

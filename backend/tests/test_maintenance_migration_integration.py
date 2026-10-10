@@ -12,7 +12,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import IntegrityError
 
-HEAD = "a001_incident_registry"
+HEAD = "a002_incident_outbox"
 
 
 def rows(connection, table):

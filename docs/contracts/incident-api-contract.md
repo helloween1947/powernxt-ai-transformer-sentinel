@@ -80,7 +80,9 @@ Opening time/recovery/last-evaluated time are UTC measurement times. Evidence/ev
 `recorded_at` and acknowledgement time are separate UTC database clocks. Events
 are durable records with stable event UUIDs; they are not already published
 WebSocket/queue notifications and have no invented publication_time. Future
-publishers need their own durable delivery checkpoint. No `/api/v1/events` or
+publishers use A002's durable `incident_deliveries` checkpoint and the separately
+fenced post-commit dispatch interface. Delivery is at least once with `event_id`
+deduplication and per-incident version ordering; no transport is wired. No `/api/v1/events` or
 automatic maintenance recommendation is introduced.
 
 ## Acknowledgement and conflicts

@@ -149,7 +149,7 @@ def test_new_join_preserves_worker_results_state_and_maintenance(
         command.upgrade(cfg, "head")
         assert connection.execute(
             text("SELECT version_num FROM alembic_version")
-        ).scalars().all() == ["a001_incident_registry"]
+        ).scalars().all() == ["a002_incident_outbox"]
         for name, saved in before.items():
             after = (
                 connection.execute(
