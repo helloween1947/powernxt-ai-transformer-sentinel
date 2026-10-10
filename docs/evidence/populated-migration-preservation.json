@@ -1,0 +1,100 @@
+{
+  "migration_start": "d004_worker_maintenance",
+  "original_records": {
+    "assets": [
+      {
+        "name": "Historical migration fixture",
+        "asset_id": "d-review-existing",
+        "location": "Isolated synthetic test",
+        "timezone": "UTC",
+        "created_at": "2026-10-10T16:30:08.129415+00:00"
+      }
+    ],
+    "asset_configurations": [
+      {
+        "id": 1,
+        "version": 1,
+        "asset_id": "d-review-existing",
+        "rated_kva": 1000,
+        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "cooling_type": "ONAN",
+        "rated_current_a": 52.49,
+        "rated_voltage_v": 11000,
+        "measurement_side": "primary",
+        "operational_limits": {},
+        "thermal_parameters": {},
+        "voltage_convention": "line_to_line",
+        "parameter_provenance": {}
+      }
+    ],
+    "telemetry_readings": [
+      {
+        "id": 1,
+        "source": "device",
+        "run_key": "",
+        "asset_id": "d-review-existing",
+        "message_id": "73d086ee-71eb-41ec-ae0d-f46a5998bab1",
+        "arrival_time": "2026-10-10T16:30:08.129415+00:00",
+        "out_of_order": false,
+        "quality_flags": [],
+        "schema_version": "1.0.0",
+        "measurement_time": "2026-10-10T16:30:08.129415+00:00",
+        "original_payload": {},
+        "payload_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "normalized_telemetry": {},
+        "configuration_version": 1
+      }
+    ],
+    "analytics_results": [
+      {
+        "id": 1,
+        "status": "unavailable",
+        "payload": {},
+        "model_id": "historical-migration-fixture",
+        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "reading_id": 1,
+        "model_version": "original-fixture-version",
+        "schema_version": "fixture",
+        "parameter_version": "assumed"
+      }
+    ],
+    "maintenance_tasks": [
+      {
+        "id": "071bd27b-5df3-47ee-b5b3-fd581a29da86",
+        "notes": "Historical notes",
+        "owner": "Demo label",
+        "action": "Preserve sample",
+        "status": "open",
+        "version": 2,
+        "alert_id": "sample-existing-review",
+        "asset_id": "d-review-existing",
+        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "updated_at": "2026-10-10T16:30:08.129415+00:00",
+        "alert_source": "sample",
+        "alert_summary": "Synthetic migration fixture"
+      }
+    ],
+    "maintenance_task_history": [
+      {
+        "id": 1,
+        "actor": "Demo label",
+        "notes": "Historical notes",
+        "task_id": "071bd27b-5df3-47ee-b5b3-fd581a29da86",
+        "version": 2,
+        "new_owner": "Demo label",
+        "created_at": "2026-10-10T16:30:08.129415+00:00",
+        "event_type": "updated",
+        "new_status": "open",
+        "previous_notes": null,
+        "previous_owner": null,
+        "identity_source": "demo_header",
+        "previous_status": null
+      }
+    ]
+  },
+  "final_head": "d006_combined_integration",
+  "checks": [
+    "historical fields unchanged",
+    "additive fields null"
+  ]
+}

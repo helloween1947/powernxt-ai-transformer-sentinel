@@ -6,9 +6,13 @@
     "branch": "feature/persona-phase3-combined-integration",
     "worktree_path": "C:\\Users\\marka\\.gemini\\antigravity\\scratch\\powernxt-ai-transformer-sentinel\\.worktrees\\phase3-integration",
     "combined_merge_head_sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
-    "candidate_branch_commit_sha": "9c1fffd0a9f0f728e1912f25ea3b908d7ce160bb",
+    "tested_source_sha": "311c10a45f9b5fb5dbef695e2195b58436c0bbdd",
+    "runtime_source_changed_after_testing": false,
     "clean_merge": true,
-    "conflict_count": 0
+    "conflict_count": 0,
+    "evidence_index_path": "docs/phase3-evidence-index.md",
+    "startup_guide_path": "docs/phase3-isolated-startup-windows.md",
+    "evidence_checksums_path": "docs/evidence/evidence-checksums.sha256"
   },
   "incorporated_branches": {
     "main": {
